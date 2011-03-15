@@ -41,6 +41,11 @@ class TrataCliente extends Thread {
                         t.saveOrUpdate(obj);
                         break;
 
+                    case Mensagem.TIPO_EXCLUIR:
+                        obj = Montador.Montador(readLine);
+                        t.delete(obj);
+                        break;
+
                     case Mensagem.TIPO_LISTAR:
                         obj = Montador.Montador(readLine);
                         Lista lista = new Lista();
@@ -58,12 +63,13 @@ class TrataCliente extends Thread {
             }
 
 
-
+            reader.close();
+            pr.close();
             out.close();
+            in.close();
             cliente.close();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(1);
         }
     }
 }

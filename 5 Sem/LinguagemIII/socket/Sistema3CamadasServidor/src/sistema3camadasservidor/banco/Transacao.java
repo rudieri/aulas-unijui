@@ -57,6 +57,7 @@ public class Transacao {
 
     public List listar(String tabela) {
         Query lista = session.createQuery("from "+tabela);
+
         return  lista.list();
     }
     
