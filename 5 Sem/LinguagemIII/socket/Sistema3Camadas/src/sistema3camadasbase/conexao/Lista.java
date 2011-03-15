@@ -16,12 +16,11 @@ public class Lista extends ArrayList<Object> {
 
     @Override
     public String toString(){
-        String retorno = "[";
+        String retorno = "";
 
         for(int i = 0; i < this.size();i++){
-            retorno+=this.get(i).toString()+",";
+            retorno+=this.get(i).toString()+";";
         }
-        retorno+="]";
         return retorno;
     }
 
