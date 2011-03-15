@@ -24,6 +24,7 @@ class TrataCliente extends Thread {
 
     public void run() {
         try {
+            org.apache.log4j.BasicConfigurator.configure();
             OutputStream out = cliente.getOutputStream();
             InputStream in = cliente.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -42,7 +43,8 @@ class TrataCliente extends Thread {
 
                     case Mensagem.TIPO_LISTAR:
                         obj = Montador.Montador(readLine);
-                        Lista lista = (Lista) t.listar("album");
+                        Lista lista = new Lista();
+                        lista.addAll(t.listar("Album"));
                         pr.println(lista.toString());
                         break;
                 }
