@@ -1,22 +1,24 @@
 package sistema3camadasservidor.conexao;
 
-
+import sistema3camadasbase.conexao.Montador;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
+import sistema3camadasbase.conexao.Lista;
+import sistema3camadasbase.conexao.Mensagem;
+import sistema3camadasservidor.banco.Transacao;
 
 class TrataCliente extends Thread {
 
-    
-
     private Socket cliente;
-    private Servidor servidor;
 
-
-    public TrataCliente(Servidor servidor) throws IOException {
-        this.servidor = servidor;
-        cliente = servidor.getAccept();
+    public TrataCliente(Socket cliente) throws IOException {
+        this.cliente = cliente;
         start();
     }
 
@@ -24,12 +26,37 @@ class TrataCliente extends Thread {
         try {
             OutputStream out = cliente.getOutputStream();
             InputStream in = cliente.getInputStream();
-            while(servidor.isOn()){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            PrintWriter pr = new PrintWriter(cliente.getOutputStream(), true);
+            String readLine = reader.readLine();
+            try {
+                int tipo = Integer.valueOf(readLine.substring(0, 1));
+                Serializable obj = null;
+                Transacao t = new Transacao();
+                t.begin();
+                switch (tipo) {
+                    case Mensagem.TIPO_INCLUIR:
+                        obj = Montador.Montador(readLine);
+                        t.saveOrUpdate(obj);
+                        break;
 
-                
+                    case Mensagem.TIPO_LISTAR:
+                        obj = Montador.Montador(readLine);
+                        Lista lista = (Lista) t.listar("album");
+                        pr.println(lista.toString());
+                        break;
+                }
 
 
+                t.commit();
+                pr.println(String.valueOf("3&OK"));
+            } catch (Exception ex) {
+                pr.println(String.valueOf("3&" + ex.toString()));
+                ex.printStackTrace();
             }
+
+
+
             out.close();
             cliente.close();
         } catch (Exception e) {
@@ -37,6 +64,4 @@ class TrataCliente extends Thread {
             System.exit(1);
         }
     }
-
-    
 }

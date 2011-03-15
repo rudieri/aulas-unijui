@@ -7,6 +7,8 @@ package sistema3camadasservidor.conexao;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,19 +16,30 @@ import java.net.Socket;
  */
 public class Servidor implements Runnable {
 
-    private ServerSocket ss;
+    private static ServerSocket ss;
     private boolean on = true;
 
     public Servidor() throws IOException {
         ss = new ServerSocket(4445);
-        System.out.println("Servidor ouvindo na porta:" + 4444);
+        System.out.println("Servidor ouvindo na porta:" + ss.getLocalPort());
 
     }
 
     public void run() {
         try {
             while (on) {
-                TrataCliente trataCliente = new TrataCliente(this);
+                final Socket cliente = ss.accept();
+                new Thread(new Runnable() {
+
+                    public void run() {
+                        try {
+                            TrataCliente trataCliente = new TrataCliente(cliente);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }).start();
+
             }
 
         } catch (Exception e) {
@@ -34,13 +47,20 @@ public class Servidor implements Runnable {
         }
     }
 
-
-
-    public Socket getAccept() throws IOException{
+    public Socket getAccept() throws IOException {
         return ss.accept();
     }
 
-    public boolean isOn(){
+    public boolean isOn() {
         return on;
+    }
+
+    public static void main(String[] args) {
+        try {
+            new Thread(
+                    new Servidor()).start();
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
