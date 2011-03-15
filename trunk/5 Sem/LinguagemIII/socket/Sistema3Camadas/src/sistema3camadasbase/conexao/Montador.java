@@ -17,8 +17,12 @@ public class Montador {
 
 
     public static Serializable Montador(String s){
+        String classe = "";
+        if(s.substring(0, 2).indexOf("&") > -1)
+            classe = s.substring(2, s.indexOf("["));
+        else
+            classe = s.substring(0, s.indexOf("["));
 
-        String classe = s.substring(2, s.indexOf("["));
         if(classe.equals("Album")){
             Album album = new Album();
             if(s.indexOf("id") != -1){
