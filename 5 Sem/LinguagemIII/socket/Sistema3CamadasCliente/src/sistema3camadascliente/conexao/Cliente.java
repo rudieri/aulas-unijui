@@ -34,6 +34,11 @@ public class Cliente {
                     readLine = reader.readLine();
                     retorno = readLine.substring(readLine.indexOf("&") + 1);
                     break;
+                case Mensagem.TIPO_EXCLUIR:
+                    out.println(Mensagem.TIPO_EXCLUIR + "&" + obj.toString());
+                    readLine = reader.readLine();
+                    retorno = readLine.substring(readLine.indexOf("&") + 1);
+                    break;
                 case Mensagem.TIPO_LISTAR:
                     out.println(Mensagem.TIPO_LISTAR + "&" + obj.toString());
                     readLine = reader.readLine();
@@ -54,16 +59,15 @@ public class Cliente {
         }
     }
 
-    public static ArrayList toArrayList(String lista){
-   
+    public static ArrayList toArrayList(String lista) {
+
         ArrayList arrayList = new ArrayList();
         String[] split = lista.split(";");
         for (String string : split) {
-              arrayList.add(Montador.Montador(string));
+            arrayList.add(Montador.Montador(string));
         }
 
 
         return arrayList;
     }
-
 }
