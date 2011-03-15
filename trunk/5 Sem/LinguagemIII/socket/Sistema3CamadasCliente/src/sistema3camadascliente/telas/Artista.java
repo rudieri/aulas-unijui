@@ -10,6 +10,7 @@
  */
 package sistema3camadascliente.telas;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +30,35 @@ public class Artista extends javax.swing.JDialog {
     public Artista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jTable1.getColumnModel().removeColumn(jTable1.getColumn("Objeto"));
+        atualizarTabela();
+    }
+
+    private void atualizarTabela() {
+        try {
+            Album alb = new Album();
+            alb.setNome(jTextField_Filtro.getText());
+            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
+            ArrayList<Album> lista = Cliente.toArrayList(s);
+            DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
+            tm.setNumRows(0);
+            for (Album object : lista) {
+
+                Object row[] = new Object[3];
+                row[0] = object.getId();
+                row[1] = object.getNome();
+                row[2] = object;
+                tm.addRow(row);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void limparTela() {
+        jTextField_Cod.setText("");
+        jTextField_Nome.setText("");
     }
 
     /** This method is called from within the constructor to
@@ -50,7 +80,7 @@ public class Artista extends javax.swing.JDialog {
         jTextField_Nome = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButton_Delete = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -92,7 +122,7 @@ public class Artista extends javax.swing.JDialog {
 
         jPanel_Center.add(jPanel2);
 
-        jButton1.setText("Incluir/Alterar");
+        jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -100,8 +130,13 @@ public class Artista extends javax.swing.JDialog {
         });
         jPanel4.add(jButton1);
 
-        jButton2.setText("Delete");
-        jPanel4.add(jButton2);
+        jButton_Delete.setText("Delete");
+        jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_DeleteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton_Delete);
 
         jButton3.setText("Limpar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +192,11 @@ public class Artista extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -171,6 +211,9 @@ public class Artista extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Album album = new Album();
+        if (!jTextField_Cod.getText().equals("")) {
+            album.setId(Integer.valueOf(jTextField_Cod.getText()));
+        }
         album.setNome(jTextField_Nome.getText());
         try {
             String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, album);
@@ -178,34 +221,48 @@ public class Artista extends javax.swing.JDialog {
 
         } catch (Exception ex) {
             Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            atualizarTabela();
+            limparTela();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        jTextField_Cod.setText("");
-        jTextField_Nome.setText("");
+        limparTela();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField_FiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_FiltroKeyPressed
-        try {
-            Album alb = new Album();
-            alb.setNome(jTextField_Filtro.getText());
-            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
-            ArrayList<Album> lista = Cliente.toArrayList(s);
-            DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
-            for (Album object : lista) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            atualizarTabela();
+        }
 
-                Object row[] = new Object[3];
-                row[0] = object.getId();
-                row[1] = object.getNome();
-                row[2] = object;
-                tm.addRow(row);
-            }
+    }//GEN-LAST:event_jTextField_FiltroKeyPressed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (evt.getClickCount() == 2) {
+            Album album = (Album) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
+            jTextField_Cod.setText(String.valueOf(album.getId()));
+            jTextField_Nome.setText(album.getNome());
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
+        Album album = new Album();
+        if (!jTextField_Cod.getText().equals("")) {
+            album.setId(Integer.valueOf(jTextField_Cod.getText()));
+        }
+        album.setNome(jTextField_Nome.getText());
+        try {
+            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, album);
+            JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
             Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            atualizarTabela();
+            limparTela();
         }
-    }//GEN-LAST:event_jTextField_FiltroKeyPressed
+    }//GEN-LAST:event_jButton_DeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,8 +284,8 @@ public class Artista extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_Delete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
