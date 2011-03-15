@@ -8,8 +8,16 @@
  *
  * Created on 14/03/2011, 19:15:13
  */
-
 package sistema3camadascliente.telas;
+
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import sistema3camadasbase.conexao.Mensagem;
+import sistema3camadasbase.musica.album.Album;
+import sistema3camadascliente.conexao.Cliente;
 
 /**
  *
@@ -39,7 +47,7 @@ public class Artista extends javax.swing.JDialog {
         jTextField_Cod = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField_Cod1 = new javax.swing.JTextField();
+        jTextField_Nome = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -65,6 +73,9 @@ public class Artista extends javax.swing.JDialog {
         jLabel1.setPreferredSize(new java.awt.Dimension(55, 18));
         jPanel1.add(jLabel1);
 
+        jTextField_Cod.setEditable(false);
+        jTextField_Cod.setEnabled(false);
+        jTextField_Cod.setFocusable(false);
         jTextField_Cod.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel1.add(jTextField_Cod);
 
@@ -76,8 +87,8 @@ public class Artista extends javax.swing.JDialog {
         jLabel2.setPreferredSize(new java.awt.Dimension(55, 18));
         jPanel2.add(jLabel2);
 
-        jTextField_Cod1.setPreferredSize(new java.awt.Dimension(300, 30));
-        jPanel2.add(jTextField_Cod1);
+        jTextField_Nome.setPreferredSize(new java.awt.Dimension(300, 30));
+        jPanel2.add(jTextField_Nome);
 
         jPanel_Center.add(jPanel2);
 
@@ -93,6 +104,11 @@ public class Artista extends javax.swing.JDialog {
         jPanel4.add(jButton2);
 
         jButton3.setText("Limpar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton3);
 
         jPanel_Center.add(jPanel4);
@@ -107,6 +123,11 @@ public class Artista extends javax.swing.JDialog {
         jPanel5.add(jLabel3);
 
         jTextField_Filtro.setPreferredSize(new java.awt.Dimension(300, 30));
+        jTextField_Filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_FiltroKeyPressed(evt);
+            }
+        });
         jPanel5.add(jTextField_Filtro);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.PAGE_START);
@@ -149,17 +170,53 @@ public class Artista extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Album album = new Album();
+        album.setNome(jTextField_Nome.getText());
+        try {
+            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, album);
+            JOptionPane.showMessageDialog(this, msg.toString());
+
+        } catch (Exception ex) {
+            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jTextField_Cod.setText("");
+        jTextField_Nome.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField_FiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_FiltroKeyPressed
+        try {
+            Album alb = new Album();
+            alb.setNome(jTextField_Filtro.getText());
+            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
+            ArrayList<Album> lista = Cliente.toArrayList(s);
+            DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
+            for (Album object : lista) {
+
+                Object row[] = new Object[3];
+                row[0] = object.getId();
+                row[1] = object.getNome();
+                row[2] = object;
+                tm.addRow(row);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTextField_FiltroKeyPressed
+
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 Artista dialog = new Artista(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -168,7 +225,6 @@ public class Artista extends javax.swing.JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -186,8 +242,7 @@ public class Artista extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField_Cod;
-    private javax.swing.JTextField jTextField_Cod1;
     private javax.swing.JTextField jTextField_Filtro;
+    private javax.swing.JTextField jTextField_Nome;
     // End of variables declaration//GEN-END:variables
-
 }
