@@ -5,6 +5,8 @@
 package sistema3camadasservidor.banco;
 
 import java.io.Serializable;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -51,6 +53,11 @@ public class Transacao {
 
     public Object load(Serializable serial){
         return session.load(serial.getClass(), serial);
+    }
+
+    public List listar(String tabela) {
+        Query lista = session.createQuery("from "+tabela);
+        return  lista.list();
     }
     
 
