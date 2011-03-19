@@ -30,6 +30,8 @@ public class TelaVelha extends javax.swing.JDialog {
     private Marca pxis;
     private Marca pbol;
     private Tabuleiro tabuleiroReal;
+    public  int quemComeca;
+    
 
     /** Creates new form TelaVelha */
     public TelaVelha(java.awt.Frame parent, boolean modal) throws IOException {
@@ -122,6 +124,7 @@ public class TelaVelha extends javax.swing.JDialog {
         jMenu_Jogo = new javax.swing.JMenu();
         jMenuItem_NovoJogo = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem_Preferencias = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -168,6 +171,7 @@ public class TelaVelha extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jMenu_Jogo.setMnemonic('j');
         jMenu_Jogo.setText("Jogo");
 
         jMenuItem_NovoJogo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
@@ -181,7 +185,17 @@ public class TelaVelha extends javax.swing.JDialog {
 
         jMenuBar1.add(jMenu_Jogo);
 
-        jMenu2.setText("Edit");
+        jMenu2.setMnemonic('e');
+        jMenu2.setText("Editar");
+
+        jMenuItem_Preferencias.setText("Preferências");
+        jMenuItem_Preferencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_PreferenciasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem_Preferencias);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -203,11 +217,17 @@ public class TelaVelha extends javax.swing.JDialog {
         limpar();
         tabuleiroReal.start(Tabuleiro.JOGADOR_COMPUTADOR);
     }//GEN-LAST:event_jMenuItem_NovoJogoActionPerformed
+
+    private void jMenuItem_PreferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PreferenciasActionPerformed
+        // TODO add your handling code here:
+        new JPreferencias(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem_PreferenciasActionPerformed
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem_NovoJogo;
+    private javax.swing.JMenuItem jMenuItem_Preferencias;
     private javax.swing.JMenu jMenu_Jogo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
