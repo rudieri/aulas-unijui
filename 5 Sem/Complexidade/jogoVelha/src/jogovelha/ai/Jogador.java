@@ -13,7 +13,7 @@ import jogovelha.tela.TelaVelha;
  */
 public class Jogador {
 
-    private int tabuleiro[][];
+  /*  private int tabuleiro[][];
     private TelaVelha telaVelha;
     private int casasRestantes;
 
@@ -81,7 +81,7 @@ public class Jogador {
     private Ponto euPossoGanhar() {
         int i;
         int j = 0;
-       
+
         for (i = 0; i < tabuleiro.length; i++) {
             int somaV = 0;
             int somaH = 0;
@@ -111,5 +111,5 @@ public class Jogador {
 
     private boolean existemCasas() {
         return casasRestantes > 0;
-    }
+    }*/
 }

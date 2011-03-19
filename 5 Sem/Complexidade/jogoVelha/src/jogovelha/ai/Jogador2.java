@@ -4,8 +4,10 @@
  */
 package jogovelha.ai;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jogovelha.marcacao.Ponto;
-import jogovelha.tela.TelaVelha;
+import jogovelha.tabuleiro.Tabuleiro;
 
 /**
  *
@@ -13,79 +15,73 @@ import jogovelha.tela.TelaVelha;
  */
 public class Jogador2 {
 
-    private int tabuleiro[][];
-    private TelaVelha telaVelha;
-    private int casasRestantes;
+    private Tabuleiro tabuleiroReal;
+    private static final int eu = Tabuleiro.JOGADOR_COMPUTADOR;
 
-    public Jogador2(TelaVelha t) {
-        telaVelha = t;
-        inicializaMatriz();
+    public Jogador2() {
+        init();
     }
 
-    private void inicializaMatriz() {
-        tabuleiro = new int[3][3];
-        for (int i = 0; i < tabuleiro.length; i++) {
-            for (int j = 0; j < tabuleiro[i].length; j++) {
-                tabuleiro[i][j] = 0;
+    private void init() {
+     
+        
+
+    }
+
+    public void comecar() {
+        new Thread(new Runnable() {
+
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                    pense(new Ponto(0, 0));
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Jogador2.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-
-        for (int[] vetor : tabuleiro) {
-            for (int i : vetor) {
-                System.out.println("i: " + i);
-            }
-        }
-        casasRestantes = 9;
-    }
-
-    private boolean marcar(Ponto p, int jogador) {
-        if (tabuleiro[p.linha][p.coluna] == 0) {
-            tabuleiro[p.linha][p.coluna] = jogador;
-            casasRestantes--;
-            return true;
-        }
-        return false;
-    }
-
-    private boolean estaMarcado(Ponto p) {
-        return tabuleiro[p.linha][p.coluna] != 0;
+        }).start();
     }
 
     public void foiMarcado(Ponto p, int jogador) {
-        if (jogador==TelaVelha.JOGADOR_COMPUTADOR) {
-            return ;
+        if (jogador == Tabuleiro.JOGADOR_COMPUTADOR) {
+            return;
         }
-        marcar(p, TelaVelha.JOGADOR_HUMANO);
+        Ponto tp = tabuleiroReal.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
+        if (tp != null) {
+            jogue(tp);
+            return;
+        }
+        tp = tabuleiroReal.verificarPossivelVencedor(Tabuleiro.HUMANO_VENCER);
+        if (tp != null) {
+            jogue(tp);
+            return;
+        }
+        //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
-     //   if (p != null) {
-       //     jogue(p);
-     //   } else {
-            pense(new Ponto(0, 0));
-       // }
-    }
 
-    private boolean existemCasas() {
-        return casasRestantes > 0;
-    }
+        pense(new Ponto(0, 0));
 
-    private void pense() {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     private void pense(Ponto ponto) {
-        if (!existemCasas()) {
-            return ;
+        if (!tabuleiroReal.existemCasas()) {
+            return;
         }
-        if (estaMarcado(ponto)) {
-            ponto.somar(2);
-            pense(ponto);
-        } else {
+        if (tabuleiroReal.estaLivre(ponto)) {
             jogue(ponto);
-            marcar(ponto, TelaVelha.JOGADOR_COMPUTADOR);
+        } else {
+            ponto.somar(4);
+            pense(ponto);
+            // marcar(ponto, Tabuleiro.JOGADOR_COMPUTADOR);
         }
     }
 
     private void jogue(Ponto p) {
-        telaVelha.jogar(TelaVelha.JOGADOR_COMPUTADOR, p.linha, p.coluna);
+        tabuleiroReal.jogar(Tabuleiro.JOGADOR_COMPUTADOR, p.linha, p.coluna);
     }
+
+    public void setTabuleiroReal(Tabuleiro tabuleiroReal) {
+        this.tabuleiroReal = tabuleiroReal;
+    }
+    
 }
