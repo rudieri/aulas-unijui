@@ -48,14 +48,14 @@ public class Jogador {
 
     private void tenteJogar(Ponto p) {
         if (marcar(p, TelaVelha.JOGADOR_COMPUTADOR)) {
-            telaVelha.jogar(TelaVelha.JOGADOR_COMPUTADOR, p.x, p.y);
+            telaVelha.jogar(TelaVelha.JOGADOR_COMPUTADOR, p.linha, p.coluna);
         } else {
             pense();
         }
     }
 
     private void jogue(Ponto p) {
-        telaVelha.jogar(TelaVelha.JOGADOR_COMPUTADOR, p.x, p.y);
+        telaVelha.jogar(TelaVelha.JOGADOR_COMPUTADOR, p.linha, p.coluna);
     }
 
     public void inimigoMarcou(Ponto p) {
@@ -69,8 +69,8 @@ public class Jogador {
     }
 
     private boolean marcar(Ponto p, int jogador) {
-        if (tabuleiro[p.x][p.y] == 0) {
-            tabuleiro[p.x][p.y] = jogador;
+        if (tabuleiro[p.linha][p.coluna] == 0) {
+            tabuleiro[p.linha][p.coluna] = jogador;
             casasRestantes--;
             return true;
         }
