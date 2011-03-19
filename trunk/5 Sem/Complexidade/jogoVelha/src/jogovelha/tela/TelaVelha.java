@@ -5,11 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import jogovelha.ai.Jogador2;
 import jogovelha.marcacao.Marca;
 import jogovelha.marcacao.Mensageiro;
-import jogovelha.marcacao.Ponto;
+import jogovelha.tabuleiro.Tabuleiro;
 
 /*
  * To change this template, choose Tools | Templates
@@ -31,20 +29,11 @@ public class TelaVelha extends javax.swing.JDialog {
     private ImageIcon bolinha;
     private Marca pxis;
     private Marca pbol;
-    public static final int JOGADOR_HUMANO = -1;
-    public static final int JOGADOR_COMPUTADOR = 1;
-    private int vezDeJogar;
-    private Jogador2 jogadorPc;
-    private int[][] tabuleiro;
-    private int casasRestantes;
+    private Tabuleiro tabuleiroReal;
 
     /** Creates new form TelaVelha */
     public TelaVelha(java.awt.Frame parent, boolean modal) throws IOException {
         super(parent, modal);
-        init();
-    }
-
-    public TelaVelha() throws IOException {
         init();
     }
 
@@ -59,100 +48,23 @@ public class TelaVelha extends javax.swing.JDialog {
         jTable1.setDefaultRenderer(Object.class, new Render());
         pxis = new Marca(xis);
         pbol = new Marca(bolinha);
-        vezDeJogar = JOGADOR_HUMANO;
-        jogadorPc = new Jogador2(this);
-        tabuleiro = new int[3][3];
-
-        setVisible(true);
+        //tabuleiroReal.setTelaVelha(this);
+    
     }
 
-    private void inicializaMatriz() {
-        tabuleiro = new int[3][3];
-        for (int i = 0; i < tabuleiro.length; i++) {
-            for (int j = 0; j < tabuleiro[i].length; j++) {
-                tabuleiro[i][j] = 0;
+    private void limpar(){
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            for (int j= 0; j < jTable1.getColumnCount(); j++) {
+                jTable1.setValueAt(null, i, j);
             }
+
         }
-        casasRestantes = 9;
+    }
+    public void setTabuleiroReal(Tabuleiro tabuleiroReal) {
+        this.tabuleiroReal = tabuleiroReal;
     }
 
-    public boolean jogar(int jogador, int linha, int coluna) {
-        if (!estaLivre(linha, coluna)) {
-            return false;
-        }
-        if (jogador == this.vezDeJogar) {
-            if (jogador == JOGADOR_HUMANO) {
-                setValue(pbol, linha, coluna);
-                //  this.vezDeJogar = JOGADOR_COMPUTADOR;
-
-            } else {
-                setValue(pxis, linha, coluna);
-                // this.vezDeJogar = JOGADOR_HUMANO;
-            }
-        }
-        if (isGameOver()) {
-            return true;
-        }
-        this.vezDeJogar = -this.vezDeJogar;
-        jogadorPc.foiMarcado(new Ponto((byte) linha, (byte) coluna), -1 * this.vezDeJogar);
-        return true;
-    }
-
-    public void setValue(Marca v, int linha, int coluna) {
-        tabuleiro[linha][coluna] = this.vezDeJogar;
-        jTable1.setValueAt(v, linha, coluna);
-    }
-
-    public boolean estaLivre(int linha, int coluna) {
-        return tabuleiro[linha][coluna] == 0;
-        //return jTable1.getValueAt(linha, coluna) == null;
-    }
-
-    private boolean  isGameOver() {
-
-        int linhas;
-        int colunas;
-
-        int somaDiagonalPrincipal = 0;
-        int somaDiagonalSecundaria = 0;
-        int somaCols = 0;
-        int somaLinhas = 0;
-        Mensageiro m = null;
-        for (linhas = 0; linhas < tabuleiro.length; linhas++) {
-            somaCols = 0;
-            somaLinhas = 0;
-            somaDiagonalPrincipal+= tabuleiro[linhas][linhas];
-            somaDiagonalSecundaria += tabuleiro[linhas][2 - linhas];
-            for (colunas = 0; colunas < tabuleiro[linhas].length; colunas++) {
-                somaCols += tabuleiro[linhas][colunas];
-                somaLinhas += tabuleiro[colunas][linhas];
-            }
-            if (Math.abs(somaCols) == 3) {
-                m = new Mensageiro(vezDeJogar, new Ponto(linhas, 0), new Ponto(linhas, 1), new Ponto(linhas, 2));
-                break;
-            }
-            if (Math.abs(somaLinhas) == 3) {
-                m = new Mensageiro(vezDeJogar, new Ponto(0, linhas), new Ponto(1, linhas), new Ponto(2, linhas));
-                break;
-            }
-            if (Math.abs(somaDiagonalPrincipal)==3) {
-                m= new Mensageiro(vezDeJogar, new Ponto(0,0), new Ponto(1,1), new Ponto(2,2));
-                break;
-            }
-              if (Math.abs(somaDiagonalSecundaria)==3) {
-              m= new Mensageiro(vezDeJogar, new Ponto(0,2), new Ponto(1,1), new Ponto(2,0));
-                break;
-            }
-        }
-        if (m != null) {
-            gameOver(m);
-            return true;
-        }
-
-        return false;
-    }
-
-    private void gameOver(Mensageiro elFin) {
+    public void gameOver(Mensageiro elFin) {
         Rectangle cellRect = jTable1.getCellRect(elFin.cell1.linha, elFin.cell1.coluna, false);
         Rectangle cellRectF = jTable1.getCellRect(elFin.cell3.linha, elFin.cell3.coluna, false);
         pintarLinha(cellRect, cellRectF, elFin.getDirecao());
@@ -206,8 +118,16 @@ public class TelaVelha extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu_Jogo = new javax.swing.JMenu();
+        jMenuItem_NovoJogo = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -248,42 +168,56 @@ public class TelaVelha extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jMenu_Jogo.setText("Jogo");
+
+        jMenuItem_NovoJogo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItem_NovoJogo.setText("Novo Jogo");
+        jMenuItem_NovoJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_NovoJogoActionPerformed(evt);
+            }
+        });
+        jMenu_Jogo.add(jMenuItem_NovoJogo);
+
+        jMenuBar1.add(jMenu_Jogo);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-242)/2, (screenSize.height-192)/2, 242, 192);
+        setBounds((screenSize.width-237)/2, (screenSize.height-222)/2, 237, 222);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
         int col = jTable1.columnAtPoint(evt.getPoint());
-        jogar(JOGADOR_HUMANO, row, col);
+        tabuleiroReal.jogar(Tabuleiro.JOGADOR_HUMANO, row, col);
 
     }//GEN-LAST:event_jTable1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                try {
-                    TelaVelha dialog = new TelaVelha(new javax.swing.JFrame(), true);
-                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                        public void windowClosing(java.awt.event.WindowEvent e) {
-                            System.exit(0);
-                        }
-                    });
-                    dialog.setVisible(true);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível carregar as imagens!!!");
-                }
-            }
-        });
-    }
+    private void jMenuItem_NovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_NovoJogoActionPerformed
+        // TODO add your handling code here:
+        limpar();
+        tabuleiroReal.start(Tabuleiro.JOGADOR_COMPUTADOR);
+    }//GEN-LAST:event_jMenuItem_NovoJogoActionPerformed
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem_NovoJogo;
+    private javax.swing.JMenu jMenu_Jogo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    public void setValor(int jogador, int linha, int coluna) {
+        if (jogador == Tabuleiro.JOGADOR_COMPUTADOR) {
+            jTable1.setValueAt(pxis, linha, coluna);
+        } else {
+            jTable1.setValueAt(pbol, linha, coluna);
+        }
+    }
 }
