@@ -6,6 +6,7 @@ package jogovelha.tabuleiro;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import jogovelha.ai.Jogador2;
 import jogovelha.marcacao.Mensageiro;
 import jogovelha.marcacao.Ponto;
@@ -29,7 +30,7 @@ public class Tabuleiro {
     private int casasRestantes;
     private TelaVelha telaVelha;
     private Jogador2 computador;
-//    private boolean 
+    private boolean bloqueio=true;
 
     public Tabuleiro(TelaVelha telaVelha, Jogador2 computador) {
         init(telaVelha, computador);
@@ -46,6 +47,7 @@ public class Tabuleiro {
     }
 
     public void start(int quemComeca) {
+        bloqueio=false;
         vezDeJogar = quemComeca;
         tabuleiro = new int[LINHAS][COLUNAS];
         inicializaMatriz();
@@ -69,6 +71,10 @@ public class Tabuleiro {
     }
 
     public boolean jogar(int jogador, int linha, int coluna) {
+        if (bloqueio) {
+            JOptionPane.showMessageDialog(telaVelha, "O jogo ainda não começou!\nClique Novo Jogo paracomeçar.");
+            return false;
+        }
         if (!estaLivre(linha, coluna)) {
             return false;
         }
