@@ -30,7 +30,7 @@ public class TelaVelha extends javax.swing.JDialog {
     private Marca pxis;
     private Marca pbol;
     private Tabuleiro tabuleiroReal;
-    public  int quemComeca;
+    public  int quemComeca=Tabuleiro.JOGADOR_COMPUTADOR;
     
 
     /** Creates new form TelaVelha */
@@ -201,7 +201,7 @@ public class TelaVelha extends javax.swing.JDialog {
         setJMenuBar(jMenuBar1);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-237)/2, (screenSize.height-222)/2, 237, 222);
+        setBounds((screenSize.width-231)/2, (screenSize.height-209)/2, 231, 209);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -215,7 +215,7 @@ public class TelaVelha extends javax.swing.JDialog {
     private void jMenuItem_NovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_NovoJogoActionPerformed
         // TODO add your handling code here:
         limpar();
-        tabuleiroReal.start(Tabuleiro.JOGADOR_COMPUTADOR);
+        tabuleiroReal.start(quemComeca);
     }//GEN-LAST:event_jMenuItem_NovoJogoActionPerformed
 
     private void jMenuItem_PreferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PreferenciasActionPerformed
@@ -240,4 +240,6 @@ public class TelaVelha extends javax.swing.JDialog {
             jTable1.setValueAt(pbol, linha, coluna);
         }
     }
+
+    
 }

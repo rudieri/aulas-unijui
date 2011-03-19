@@ -72,7 +72,7 @@ public class Tabuleiro {
 
     public boolean jogar(int jogador, int linha, int coluna) {
         if (bloqueio) {
-            JOptionPane.showMessageDialog(telaVelha, "O jogo ainda não começou!\nClique Novo Jogo paracomeçar.");
+            JOptionPane.showMessageDialog(telaVelha, "Clique Novo Jogo para começar.");
             return false;
         }
         if (!estaLivre(linha, coluna)) {
@@ -82,6 +82,7 @@ public class Tabuleiro {
             setValue(jogador, linha, coluna);
         }
         if (isGameOver()) {
+            bloqueio=true;
             return true;
         }
         this.vezDeJogar = -this.vezDeJogar;

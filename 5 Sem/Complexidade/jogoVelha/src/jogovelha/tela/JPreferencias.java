@@ -25,6 +25,18 @@ public class JPreferencias extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.telaVelha = parent;
+        if (telaVelha.quemComeca==Tabuleiro.JOGADOR_HUMANO) {
+            jComboBox_Jogador.setSelectedItem("Humano");
+        }else{
+            jComboBox_Jogador.setSelectedItem("Computador");
+        }
+    }
+    private void salvar(){
+        if (((String) jComboBox_Jogador.getSelectedItem()).equalsIgnoreCase("humano")) {
+            telaVelha.quemComeca = Tabuleiro.JOGADOR_HUMANO;
+        } else {
+            telaVelha.quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
+        }
     }
 
     /** This method is called from within the constructor to
@@ -39,6 +51,8 @@ public class JPreferencias extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox_Jogador = new javax.swing.JComboBox();
+        jPanel2 = new javax.swing.JPanel();
+        jButton_Fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -68,7 +82,20 @@ public class JPreferencias extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1);
 
-        pack();
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButton_Fechar.setText("Fechar");
+        jButton_Fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_FecharActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton_Fechar);
+
+        getContentPane().add(jPanel2);
+
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-301)/2, (screenSize.height-99)/2, 301, 99);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox_JogadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_JogadorActionPerformed
@@ -82,15 +109,20 @@ public class JPreferencias extends javax.swing.JDialog {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        if (((String) jComboBox_Jogador.getSelectedItem()).equalsIgnoreCase("humano")) {
-            telaVelha.quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
-        } else {
-            telaVelha.quemComeca = Tabuleiro.JOGADOR_HUMANO;
-        }
+        dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton_FecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FecharActionPerformed
+        // TODO add your handling code here:
+        salvar();
+        dispose();
+    }//GEN-LAST:event_jButton_FecharActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_Fechar;
     private javax.swing.JComboBox jComboBox_Jogador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
