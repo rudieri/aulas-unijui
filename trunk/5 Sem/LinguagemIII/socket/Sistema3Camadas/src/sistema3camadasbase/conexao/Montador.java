@@ -7,6 +7,7 @@ package sistema3camadasbase.conexao;
 
 import java.io.Serializable;
 import sistema3camadasbase.musica.album.Album;
+import sistema3camadasbase.musica.artista.Artista;
 
 /**
  *
@@ -17,6 +18,8 @@ public class Montador {
 
 
     public static Serializable Montador(String s){
+        if(s.trim().equals(""))
+            return null;
         String classe = "";
         if(s.substring(0, 2).indexOf("&") > -1)
             classe = s.substring(2, s.indexOf("["));
@@ -34,6 +37,20 @@ public class Montador {
 
             return album;
         }
+
+        if(classe.equals("Artista")){
+            Artista artista = new Artista();
+            if(s.indexOf("id") != -1){
+                artista.setId(Integer.valueOf(aux("id",s)));
+            }
+            if(s.indexOf("nome") != -1){
+                artista.setNome(aux("nome",s));
+            }
+
+            return artista;
+        }
+
+
         return null;
         
     }
