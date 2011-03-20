@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.net.Socket;
 import sistema3camadasbase.conexao.Lista;
 import sistema3camadasbase.conexao.Mensagem;
+import sistema3camadasbase.musica.album.Album;
+import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasservidor.banco.Transacao;
 
 class TrataCliente extends Thread {
@@ -49,7 +51,11 @@ class TrataCliente extends Thread {
                     case Mensagem.TIPO_LISTAR:
                         obj = Montador.Montador(readLine);
                         Lista lista = new Lista();
-                        lista.addAll(t.listar("Album"));
+                        if(obj instanceof Album)
+                            lista.addAll(t.listar("Album","WHERE nome like '"+((Album)obj).getNome()+"%' "));
+                        if(obj instanceof Artista)
+                            lista.addAll(t.listar("Artista","WHERE nome like '"+((Artista)obj).getNome()+"%' "));
+
                         pr.println(lista.toString());
                         break;
                 }
