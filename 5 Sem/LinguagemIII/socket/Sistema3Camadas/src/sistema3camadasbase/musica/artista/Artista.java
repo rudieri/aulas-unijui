@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import sistema3camadasbase.util.Replace;
 
 /**
  *
@@ -27,7 +27,7 @@ public class Artista implements Serializable {
     private int id;
     
     @Column(name="nome",nullable=false)
-    private int nome;
+    private String nome;
 
     /**
      * @return the id
@@ -46,16 +46,22 @@ public class Artista implements Serializable {
     /**
      * @return the nome
      */
-    public int getNome() {
+    public String getNome() {
         return nome;
     }
 
     /**
      * @param nome the nome to set
      */
-    public void setNome(int nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
+        @Override
+    public String toString(){
+        return "Artista["+
+                "id="+getId()+","+
+                "nome="+Replace.clear(getNome())+"]";
+    }
 
 }
