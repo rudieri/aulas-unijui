@@ -55,10 +55,9 @@ public class Transacao {
         return session.load(serial.getClass(), serial);
     }
 
-    public List listar(String tabela) {
-        Query lista = session.createQuery("from "+tabela);
-
-        return  lista.list();
+    public List listar(String Objeto,String filtro) {
+        List lista =session.createQuery("select t from "+Objeto+" as t "+filtro).list();
+        return  lista;
     }
     
 
