@@ -64,7 +64,10 @@ public class Cliente {
         ArrayList arrayList = new ArrayList();
         String[] split = lista.split(";");
         for (String string : split) {
-            arrayList.add(Montador.Montador(string));
+            if (!string.trim().equals("")) {
+                arrayList.add(Montador.Montador(string));
+                
+            }
         }
 
 

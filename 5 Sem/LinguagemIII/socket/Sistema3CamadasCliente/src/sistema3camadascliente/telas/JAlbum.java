@@ -19,15 +19,14 @@ import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadascliente.conexao.Cliente;
-
 /**
  *
  * @author manchini
  */
-public class Artista extends javax.swing.JDialog {
+public class JAlbum extends javax.swing.JDialog {
 
     /** Creates new form NewJDialog */
-    public Artista(java.awt.Frame parent, boolean modal) {
+    public JAlbum(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jTable1.getColumnModel().removeColumn(jTable1.getColumn("Objeto"));
@@ -52,7 +51,7 @@ public class Artista extends javax.swing.JDialog {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,7 +89,7 @@ public class Artista extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Artistas");
+        setTitle("Cadastro Album");
 
         jPanel_Topo.setPreferredSize(new java.awt.Dimension(400, 20));
         getContentPane().add(jPanel_Topo, java.awt.BorderLayout.PAGE_START);
@@ -106,7 +105,7 @@ public class Artista extends javax.swing.JDialog {
         jTextField_Cod.setEditable(false);
         jTextField_Cod.setEnabled(false);
         jTextField_Cod.setFocusable(false);
-        jTextField_Cod.setPreferredSize(new java.awt.Dimension(100, 30));
+        jTextField_Cod.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel1.add(jTextField_Cod);
 
         jPanel_Center.add(jPanel1);
@@ -117,7 +116,7 @@ public class Artista extends javax.swing.JDialog {
         jLabel2.setPreferredSize(new java.awt.Dimension(55, 18));
         jPanel2.add(jLabel2);
 
-        jTextField_Nome.setPreferredSize(new java.awt.Dimension(300, 30));
+        jTextField_Nome.setPreferredSize(new java.awt.Dimension(300, 25));
         jPanel2.add(jTextField_Nome);
 
         jPanel_Center.add(jPanel2);
@@ -220,7 +219,7 @@ public class Artista extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
-            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             atualizarTabela();
             limparTela();
@@ -257,7 +256,7 @@ public class Artista extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
-            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             atualizarTabela();
             limparTela();
@@ -271,7 +270,7 @@ public class Artista extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                Artista dialog = new Artista(new javax.swing.JFrame(), true);
+                JAlbum dialog = new JAlbum(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {
