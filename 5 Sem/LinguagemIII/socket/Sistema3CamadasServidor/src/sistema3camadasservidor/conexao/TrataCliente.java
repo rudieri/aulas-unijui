@@ -13,6 +13,7 @@ import sistema3camadasbase.conexao.Lista;
 import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
+import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadasservidor.banco.Transacao;
 
 class TrataCliente extends Thread {
@@ -37,24 +38,27 @@ class TrataCliente extends Thread {
                 Serializable obj = null;
                 Transacao t = new Transacao(true);
                 t.begin();
+                obj = Montador.Montador(readLine);
                 switch (tipo) {
                     case Mensagem.TIPO_INCLUIR:
-                        obj = Montador.Montador(readLine);
                         t.saveOrUpdate(obj);
                         break;
 
                     case Mensagem.TIPO_EXCLUIR:
-                        obj = Montador.Montador(readLine);
                         t.delete(obj);
                         break;
 
                     case Mensagem.TIPO_LISTAR:
-                        obj = Montador.Montador(readLine);
                         Lista lista = new Lista();
-                        if(obj instanceof Album)
-                            lista.addAll(t.listar("Album","WHERE nome like '"+((Album)obj).getNome()+"%' "));
-                        if(obj instanceof Artista)
-                            lista.addAll(t.listar("Artista","WHERE nome like '"+((Artista)obj).getNome()+"%' "));
+                        if (obj instanceof Album) {
+                            lista.addAll(t.listar("Album", "WHERE nome like '" + ((Album) obj).getNome() + "%' "));
+                        }
+                        if (obj instanceof Artista) {
+                            lista.addAll(t.listar("Artista", "WHERE nome like '" + ((Artista) obj).getNome() + "%' "));
+                        }
+                        if (obj instanceof Genero) {
+                            lista.addAll(t.listar("Genero", "WHERE nome like '"+ ((Genero)obj).getNome() + "%' "));
+                        }
 
                         pr.println(lista.toString());
                         break;
