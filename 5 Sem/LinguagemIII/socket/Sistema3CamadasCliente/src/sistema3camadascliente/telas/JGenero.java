@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
-import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadascliente.conexao.Cliente;
 /**
@@ -36,13 +35,13 @@ public class JGenero extends javax.swing.JDialog {
 
     private void atualizarTabela() {
         try {
-            Artista alb = new Artista();
-            alb.setNome(jTextField_Filtro.getText());
-            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
-            ArrayList<Artista> lista = Cliente.toArrayList(s);
+            Genero genero = new Genero();
+            genero.setNome(jTextField_Filtro.getText());
+            String s = Cliente.comando(Mensagem.TIPO_LISTAR, genero);
+            ArrayList<Genero> lista = Cliente.toArrayList(s);
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
-            for (Artista object : lista) {
+            for (Genero object : lista) {
 
                 Object row[] = new Object[3];
                 row[0] = object.getId();
@@ -52,7 +51,7 @@ public class JGenero extends javax.swing.JDialog {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Genero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -220,7 +219,7 @@ public class JGenero extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
-            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Genero.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             atualizarTabela();
             limparTela();
@@ -240,24 +239,24 @@ public class JGenero extends javax.swing.JDialog {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) {
-            Artista artista = (Artista) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
-            jTextField_Cod.setText(String.valueOf(artista.getId()));
-            jTextField_Nome.setText(artista.getNome());
+            Genero Genero = (Genero) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
+            jTextField_Cod.setText(String.valueOf(Genero.getId()));
+            jTextField_Nome.setText(Genero.getNome());
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
-        Artista artista = new Artista();
+        Genero Genero = new Genero();
         if (!jTextField_Cod.getText().equals("")) {
-            artista.setId(Integer.valueOf(jTextField_Cod.getText()));
+            Genero.setId(Integer.valueOf(jTextField_Cod.getText()));
         }
-        artista.setNome(jTextField_Nome.getText());
+        Genero.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, artista);
+            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, Genero);
             JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
-            Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Genero.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             atualizarTabela();
             limparTela();
