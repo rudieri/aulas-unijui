@@ -4,8 +4,6 @@
  */
 package jogovelha.tabuleiro;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import jogovelha.ai.Jogador2;
 import jogovelha.marcacao.Mensageiro;
@@ -30,7 +28,7 @@ public class Tabuleiro {
     private int casasRestantes;
     private TelaVelha telaVelha;
     private Jogador2 computador;
-    private boolean bloqueio=true;
+    private boolean bloqueio = true;
 
     public Tabuleiro(TelaVelha telaVelha, Jogador2 computador) {
         init(telaVelha, computador);
@@ -47,7 +45,7 @@ public class Tabuleiro {
     }
 
     public void start(int quemComeca) {
-        bloqueio=false;
+        bloqueio = false;
         vezDeJogar = quemComeca;
         tabuleiro = new int[LINHAS][COLUNAS];
         inicializaMatriz();
@@ -82,7 +80,7 @@ public class Tabuleiro {
             setValue(jogador, linha, coluna);
         }
         if (isGameOver()) {
-            bloqueio=true;
+            bloqueio = true;
             return true;
         }
         this.vezDeJogar = -this.vezDeJogar;
@@ -138,21 +136,16 @@ public class Tabuleiro {
                 }
 
             }
-            if (somaDiagonalPrincipal == idWinJogador) {
-                TriPonto tp = new TriPonto(new Ponto(0, 0), new Ponto(1, 1), new Ponto(2, 2), this);
-                Ponto p = tp.getPontoLivre();
-                if (p != null) {
-                    return p;
-                }
+        }
 
-            }
-            if (somaDiagonalSecundaria == idWinJogador) {
-                TriPonto tp = new TriPonto(new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0), this);
-                Ponto p = tp.getPontoLivre();
-                if (p != null) {
-                    return p;
-                }
-            }
+        if (somaDiagonalPrincipal == idWinJogador) {
+            TriPonto tp = new TriPonto(new Ponto(0, 0), new Ponto(1, 1), new Ponto(2, 2), this);
+            return tp.getPontoLivre();
+
+        }
+        if (somaDiagonalSecundaria == idWinJogador) {
+            TriPonto tp = new TriPonto(new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0), this);
+            return tp.getPontoLivre();
         }
         return null;
     }
@@ -184,14 +177,13 @@ public class Tabuleiro {
                 m = new Mensageiro(vezDeJogar, new Ponto(0, linhas), new Ponto(1, linhas), new Ponto(2, linhas));
                 break;
             }
-            if (Math.abs(somaDiagonalPrincipal) == 3) {
-                m = new Mensageiro(vezDeJogar, new Ponto(0, 0), new Ponto(1, 1), new Ponto(2, 2));
-                break;
-            }
-            if (Math.abs(somaDiagonalSecundaria) == 3) {
-                m = new Mensageiro(vezDeJogar, new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0));
-                break;
-            }
+
+        }
+        if (Math.abs(somaDiagonalPrincipal) == 3) {
+            m = new Mensageiro(vezDeJogar, new Ponto(0, 0), new Ponto(1, 1), new Ponto(2, 2));
+        }
+        if (Math.abs(somaDiagonalSecundaria) == 3) {
+            m = new Mensageiro(vezDeJogar, new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0));
         }
         if (m != null) {
             telaVelha.gameOver(m);
