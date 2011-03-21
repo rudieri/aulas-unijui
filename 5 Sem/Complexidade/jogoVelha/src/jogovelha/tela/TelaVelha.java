@@ -3,6 +3,8 @@ package jogovelha.tela;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import jogovelha.marcacao.Marca;
@@ -30,8 +32,8 @@ public class TelaVelha extends javax.swing.JDialog {
     private Marca pxis;
     private Marca pbol;
     private Tabuleiro tabuleiroReal;
-    public  int quemComeca=Tabuleiro.JOGADOR_COMPUTADOR;
-    
+    public int quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
+    private Mensageiro elFin;
 
     /** Creates new form TelaVelha */
     public TelaVelha(java.awt.Frame parent, boolean modal) throws IOException {
@@ -51,25 +53,39 @@ public class TelaVelha extends javax.swing.JDialog {
         pxis = new Marca(xis);
         pbol = new Marca(bolinha);
         //tabuleiroReal.setTelaVelha(this);
-    
+
     }
 
-    private void limpar(){
+    private void limpar() {
         for (int i = 0; i < jTable1.getRowCount(); i++) {
-            for (int j= 0; j < jTable1.getColumnCount(); j++) {
+            for (int j = 0; j < jTable1.getColumnCount(); j++) {
                 jTable1.setValueAt(null, i, j);
             }
 
         }
     }
+
     public void setTabuleiroReal(Tabuleiro tabuleiroReal) {
         this.tabuleiroReal = tabuleiroReal;
     }
 
-    public void gameOver(Mensageiro elFin) {
-        Rectangle cellRect = jTable1.getCellRect(elFin.cell1.linha, elFin.cell1.coluna, false);
-        Rectangle cellRectF = jTable1.getCellRect(elFin.cell3.linha, elFin.cell3.coluna, false);
-        pintarLinha(cellRect, cellRectF, elFin.getDirecao());
+    public void gameOver(Mensageiro _elFin) {
+
+        this.elFin = _elFin;
+        new Thread(new Runnable() {
+
+            public void run() {
+                try {
+                    Rectangle cellRect = jTable1.getCellRect(elFin.cell1.linha, elFin.cell1.coluna, true);
+                    Rectangle cellRectF = jTable1.getCellRect(elFin.cell3.linha, elFin.cell3.coluna, true);
+                    Thread.sleep(50);
+                    pintarLinha(cellRect, cellRectF, elFin.getDirecao());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TelaVelha.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
+
     }
 
     private void pintarLinha(Rectangle rectI, Rectangle rectF, int direcao) {
@@ -105,7 +121,9 @@ public class TelaVelha extends javax.swing.JDialog {
             default:
                 throw new AssertionError();
         }
+        jTable1.setIgnoreRepaint(true);
         jTable1.getGraphics().drawLine(x1, y1, x2, y2);
+
 
     }
 
@@ -222,7 +240,6 @@ public class TelaVelha extends javax.swing.JDialog {
         // TODO add your handling code here:
         new JPreferencias(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuItem_PreferenciasActionPerformed
-   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -240,6 +257,4 @@ public class TelaVelha extends javax.swing.JDialog {
             jTable1.setValueAt(pbol, linha, coluna);
         }
     }
-
-    
 }
