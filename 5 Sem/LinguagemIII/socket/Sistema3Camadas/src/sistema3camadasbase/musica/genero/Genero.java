@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import sistema3camadasbase.util.Replace;
 
 /**
  *
@@ -59,8 +60,8 @@ public class Genero implements Serializable {
     @Override
     public String toString(){
         return "Genero["
-                +"id=" + getId()
-                +"Nome="+getNome()
+                +"id=" + getId() + ","
+                +"nome="+Replace.clear(getNome())
                 +"]";
     }
 
