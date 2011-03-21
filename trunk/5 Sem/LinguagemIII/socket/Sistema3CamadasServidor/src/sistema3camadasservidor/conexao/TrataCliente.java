@@ -35,7 +35,7 @@ class TrataCliente extends Thread {
             try {
                 int tipo = Integer.valueOf(readLine.substring(0, 1));
                 Serializable obj = null;
-                Transacao t = new Transacao();
+                Transacao t = new Transacao(true);
                 t.begin();
                 switch (tipo) {
                     case Mensagem.TIPO_INCLUIR:
