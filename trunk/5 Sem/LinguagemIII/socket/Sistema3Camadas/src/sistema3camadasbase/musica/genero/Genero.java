@@ -27,7 +27,7 @@ public class Genero implements Serializable {
     private int id;
 
     @Column(name="nome",nullable=false)
-    private int nome;
+    private String nome;
 
     /**
      * @return the id
@@ -46,14 +46,14 @@ public class Genero implements Serializable {
     /**
      * @return the nome
      */
-    public int getNome() {
+    public String getNome() {
         return nome;
     }
 
     /**
      * @param nome the nome to set
      */
-    public void setNome(int nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
