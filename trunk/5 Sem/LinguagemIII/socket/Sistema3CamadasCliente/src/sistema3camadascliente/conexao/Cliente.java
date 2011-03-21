@@ -21,7 +21,7 @@ public class Cliente {
     public static String comando(final int tipo, final Object obj) throws Exception {
         try {
 
-            Socket echoSocket = new Socket("192.168.10.223", 4445);
+            Socket echoSocket = new Socket("localhost", 4445);
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String retorno = "";
