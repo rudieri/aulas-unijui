@@ -51,8 +51,8 @@ public class Transacao {
     }
 
 
-    public Object load(Serializable serial){
-        return session.load(serial.getClass(), serial);
+    public Object load(Class classe,Serializable id){
+        return session.get(classe, id);
     }
 
     public List listar(String Objeto,String filtro) {

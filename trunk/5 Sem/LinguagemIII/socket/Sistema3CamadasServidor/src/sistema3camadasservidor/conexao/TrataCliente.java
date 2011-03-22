@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.net.Socket;
 import sistema3camadasbase.conexao.Lista;
 import sistema3camadasbase.conexao.Mensagem;
+import sistema3camadasbase.musica.Musica;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasbase.musica.genero.Genero;
@@ -26,8 +27,9 @@ class TrataCliente extends Thread {
     }
 
     public void run() {
+        boolean semMsg = false;
         try {
-            org.apache.log4j.BasicConfigurator.configure();
+//            org.apache.log4j.BasicConfigurator.configure();
             OutputStream out = cliente.getOutputStream();
             InputStream in = cliente.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -35,6 +37,7 @@ class TrataCliente extends Thread {
             String readLine = reader.readLine();
             try {
                 int tipo = Integer.valueOf(readLine.substring(0, 1));
+                System.out.println(readLine);
                 Serializable obj = null;
                 Transacao t = new Transacao(true);
                 t.begin();
@@ -57,16 +60,27 @@ class TrataCliente extends Thread {
                             lista.addAll(t.listar("Artista", "WHERE nome like '" + ((Artista) obj).getNome() + "%' "));
                         }
                         if (obj instanceof Genero) {
-                            lista.addAll(t.listar("Genero", "WHERE nome like '"+ ((Genero)obj).getNome() + "%' "));
+                            lista.addAll(t.listar("Genero", "WHERE nome like '" + ((Genero) obj).getNome() + "%' "));
+                        }
+                        if (obj instanceof Musica) {
+                            lista.addAll(t.listar("Musica", "WHERE nome like '" + ((Musica) obj).getNome() + "%' "));
                         }
 
                         pr.println(lista.toString());
+                        break;
+                    case Mensagem.TIPO_CARREGAR:
+                        obj = (Serializable) t.load(obj.getClass(),Integer.valueOf(obj.getClass().getMethod("getId", null).invoke(obj, null).toString()));
+                        semMsg = true;
+                         pr.println(String.valueOf(obj.toString()));
                         break;
                 }
 
 
                 t.commit();
-                pr.println(String.valueOf("3&OK"));
+                if (!semMsg) {
+                    pr.println(String.valueOf("3&OK"));
+                    System.out.println(String.valueOf("3&OK"));
+                }
             } catch (Exception ex) {
                 pr.println(String.valueOf("3&" + ex.toString()));
                 ex.printStackTrace();
