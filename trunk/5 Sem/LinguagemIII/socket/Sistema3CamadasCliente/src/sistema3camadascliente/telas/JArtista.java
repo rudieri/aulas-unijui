@@ -60,6 +60,11 @@ public class JArtista extends javax.swing.JDialog {
         jTextField_Nome.setText("");
     }
 
+
+    public Artista getArtista(){
+        return (Artista)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -274,7 +279,7 @@ public class JArtista extends javax.swing.JDialog {
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
+                        
                     }
                 });
                 dialog.setVisible(true);

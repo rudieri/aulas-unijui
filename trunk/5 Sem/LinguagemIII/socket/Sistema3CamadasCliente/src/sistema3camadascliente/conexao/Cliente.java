@@ -44,6 +44,11 @@ public class Cliente {
                     readLine = reader.readLine();
                     retorno = readLine.substring(readLine.indexOf("&") + 1);
                     break;
+                    case Mensagem.TIPO_CARREGAR:
+                    out.println(Mensagem.TIPO_CARREGAR + "&" + obj.toString());
+                    readLine = reader.readLine();
+                    retorno = readLine.substring(readLine.indexOf("&") + 1);
+                    break;
             }
 
 

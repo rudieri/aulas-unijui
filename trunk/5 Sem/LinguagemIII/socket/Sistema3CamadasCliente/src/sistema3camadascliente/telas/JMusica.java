@@ -17,16 +17,19 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
-import sistema3camadasbase.musica.album.Album;
+import sistema3camadasbase.conexao.Montador;
+import sistema3camadasbase.musica.Musica;
+import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadascliente.conexao.Cliente;
 /**
  *
  * @author manchini
  */
-public class JAlbum extends javax.swing.JDialog {
+public class JMusica extends javax.swing.JDialog {
+    private Artista artista;
 
     /** Creates new form NewJDialog */
-    public JAlbum(java.awt.Frame parent, boolean modal) {
+    public JMusica(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jTable1.getColumnModel().removeColumn(jTable1.getColumn("Objeto"));
@@ -35,13 +38,13 @@ public class JAlbum extends javax.swing.JDialog {
 
     private void atualizarTabela() {
         try {
-            Album alb = new Album();
+            Musica alb = new Musica();
             alb.setNome(jTextField_Filtro.getText());
             String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
-            ArrayList<Album> lista = Cliente.toArrayList(s);
+            ArrayList<Musica> lista = Cliente.toArrayList(s);
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
-            for (Album object : lista) {
+            for (Musica object : lista) {
 
                 Object row[] = new Object[3];
                 row[0] = object.getId();
@@ -51,13 +54,17 @@ public class JAlbum extends javax.swing.JDialog {
             }
 
         } catch (Exception ex) {
-            Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Musica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void limparTela() {
         jTextField_Cod.setText("");
         jTextField_Nome.setText("");
+        
+        jTextField_CodArtista.setText("");
+        jTextField_NomeArtista.setText("");
+        artista = null;
     }
 
     /** This method is called from within the constructor to
@@ -77,6 +84,21 @@ public class JAlbum extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField_Nome = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField_CodArtista = new javax.swing.JTextField();
+        jTextField_NomeArtista = new javax.swing.JTextField();
+        jButton_Artista = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField_CodAlbum = new javax.swing.JTextField();
+        jTextField_NomeAlbum = new javax.swing.JTextField();
+        jButton_Album = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField_CodGenero = new javax.swing.JTextField();
+        jTextField_NomeGenero = new javax.swing.JTextField();
+        jButton_Genero = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton_Delete = new javax.swing.JButton();
@@ -89,7 +111,7 @@ public class JAlbum extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Album");
+        setTitle("Cadastro Musica");
 
         jPanel_Topo.setPreferredSize(new java.awt.Dimension(400, 20));
         getContentPane().add(jPanel_Topo, java.awt.BorderLayout.PAGE_START);
@@ -99,7 +121,7 @@ public class JAlbum extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel1.setText("Codigo:");
-        jLabel1.setPreferredSize(new java.awt.Dimension(55, 18));
+        jLabel1.setPreferredSize(new java.awt.Dimension(60, 18));
         jPanel1.add(jLabel1);
 
         jTextField_Cod.setEditable(false);
@@ -113,13 +135,100 @@ public class JAlbum extends javax.swing.JDialog {
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel2.setText("Nome:");
-        jLabel2.setPreferredSize(new java.awt.Dimension(55, 18));
+        jLabel2.setPreferredSize(new java.awt.Dimension(60, 18));
         jPanel2.add(jLabel2);
 
         jTextField_Nome.setPreferredSize(new java.awt.Dimension(300, 25));
         jPanel2.add(jTextField_Nome);
 
         jPanel_Center.add(jPanel2);
+
+        jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel4.setText("Artista:");
+        jLabel4.setPreferredSize(new java.awt.Dimension(60, 18));
+        jPanel6.add(jLabel4);
+
+        jTextField_CodArtista.setEditable(false);
+        jTextField_CodArtista.setEnabled(false);
+        jTextField_CodArtista.setFocusable(false);
+        jTextField_CodArtista.setPreferredSize(new java.awt.Dimension(50, 25));
+        jPanel6.add(jTextField_CodArtista);
+
+        jTextField_NomeArtista.setEditable(false);
+        jTextField_NomeArtista.setEnabled(false);
+        jTextField_NomeArtista.setFocusable(false);
+        jTextField_NomeArtista.setPreferredSize(new java.awt.Dimension(245, 25));
+        jPanel6.add(jTextField_NomeArtista);
+
+        jButton_Artista.setText("...");
+        jButton_Artista.setPreferredSize(new java.awt.Dimension(34, 34));
+        jButton_Artista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ArtistaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton_Artista);
+
+        jPanel_Center.add(jPanel6);
+
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel5.setText("Album:");
+        jLabel5.setPreferredSize(new java.awt.Dimension(60, 18));
+        jPanel7.add(jLabel5);
+
+        jTextField_CodAlbum.setEditable(false);
+        jTextField_CodAlbum.setEnabled(false);
+        jTextField_CodAlbum.setFocusable(false);
+        jTextField_CodAlbum.setPreferredSize(new java.awt.Dimension(50, 25));
+        jPanel7.add(jTextField_CodAlbum);
+
+        jTextField_NomeAlbum.setEditable(false);
+        jTextField_NomeAlbum.setEnabled(false);
+        jTextField_NomeAlbum.setFocusable(false);
+        jTextField_NomeAlbum.setPreferredSize(new java.awt.Dimension(245, 25));
+        jPanel7.add(jTextField_NomeAlbum);
+
+        jButton_Album.setText("...");
+        jButton_Album.setPreferredSize(new java.awt.Dimension(34, 34));
+        jButton_Album.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_AlbumActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton_Album);
+
+        jPanel_Center.add(jPanel7);
+
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel6.setText("Genero:");
+        jLabel6.setPreferredSize(new java.awt.Dimension(60, 18));
+        jPanel8.add(jLabel6);
+
+        jTextField_CodGenero.setEditable(false);
+        jTextField_CodGenero.setEnabled(false);
+        jTextField_CodGenero.setFocusable(false);
+        jTextField_CodGenero.setPreferredSize(new java.awt.Dimension(50, 25));
+        jPanel8.add(jTextField_CodGenero);
+
+        jTextField_NomeGenero.setEditable(false);
+        jTextField_NomeGenero.setEnabled(false);
+        jTextField_NomeGenero.setFocusable(false);
+        jTextField_NomeGenero.setPreferredSize(new java.awt.Dimension(245, 25));
+        jPanel8.add(jTextField_NomeGenero);
+
+        jButton_Genero.setText("...");
+        jButton_Genero.setPreferredSize(new java.awt.Dimension(34, 34));
+        jButton_Genero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GeneroActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButton_Genero);
+
+        jPanel_Center.add(jPanel8);
 
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -209,17 +318,18 @@ public class JAlbum extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Album album = new Album();
+        Musica musica = new Musica();
         if (!jTextField_Cod.getText().equals("")) {
-            album.setId(Integer.valueOf(jTextField_Cod.getText()));
+            musica.setId(Integer.valueOf(jTextField_Cod.getText()));
         }
-        album.setNome(jTextField_Nome.getText());
+        musica.setNome(jTextField_Nome.getText());
+        musica.setAutor(artista);
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, album);
+            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, musica);
             JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
-            Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Musica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             atualizarTabela();
             limparTela();
@@ -239,29 +349,57 @@ public class JAlbum extends javax.swing.JDialog {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) {
-            Album album = (Album) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
-            jTextField_Cod.setText(String.valueOf(album.getId()));
-            jTextField_Nome.setText(album.getNome());
+            Musica musica = (Musica) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
+            if(musica!=null){                try {
+                    jTextField_Cod.setText(String.valueOf(musica.getId()));
+                    jTextField_Nome.setText(musica.getNome());
+
+                    artista = (Artista) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getAutor()));
+                    jTextField_CodArtista.setText(String.valueOf(artista.getId()));
+                    jTextField_NomeArtista.setText(artista.getNome());
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(JMusica.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
-        Album album = new Album();
+        Musica musica = new Musica();
         if (!jTextField_Cod.getText().equals("")) {
-            album.setId(Integer.valueOf(jTextField_Cod.getText()));
+            musica.setId(Integer.valueOf(jTextField_Cod.getText()));
         }
-        album.setNome(jTextField_Nome.getText());
+        musica.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, album);
+            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, musica);
             JOptionPane.showMessageDialog(this, msg.toString());
 
         } catch (Exception ex) {
-            Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Musica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             atualizarTabela();
             limparTela();
         }
     }//GEN-LAST:event_jButton_DeleteActionPerformed
+
+    private void jButton_ArtistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ArtistaActionPerformed
+        JArtista jArtista = new JArtista(null, true);
+        jArtista.setVisible(true);
+        artista = jArtista.getArtista();
+        if(artista!=null){
+            jTextField_CodArtista.setText(String.valueOf(artista.getId()));
+            jTextField_NomeArtista.setText(artista.getNome());
+        }
+    }//GEN-LAST:event_jButton_ArtistaActionPerformed
+
+    private void jButton_AlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AlbumActionPerformed
+      
+    }//GEN-LAST:event_jButton_AlbumActionPerformed
+
+    private void jButton_GeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_GeneroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,11 +408,11 @@ public class JAlbum extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                JAlbum dialog = new JAlbum(new javax.swing.JFrame(), true);
+                JMusica dialog = new JMusica(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
+                        System.exit(0);
                     }
                 });
                 dialog.setVisible(true);
@@ -284,21 +422,36 @@ public class JAlbum extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_Album;
+    private javax.swing.JButton jButton_Artista;
     private javax.swing.JButton jButton_Delete;
+    private javax.swing.JButton jButton_Genero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel_Center;
     private javax.swing.JPanel jPanel_Topo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField_Cod;
+    private javax.swing.JTextField jTextField_CodAlbum;
+    private javax.swing.JTextField jTextField_CodArtista;
+    private javax.swing.JTextField jTextField_CodGenero;
     private javax.swing.JTextField jTextField_Filtro;
     private javax.swing.JTextField jTextField_Nome;
+    private javax.swing.JTextField jTextField_NomeAlbum;
+    private javax.swing.JTextField jTextField_NomeArtista;
+    private javax.swing.JTextField jTextField_NomeGenero;
     // End of variables declaration//GEN-END:variables
 }
