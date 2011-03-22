@@ -31,11 +31,11 @@ public class Musica implements Serializable {
     private Integer id;
     @Column(name = "nome", length = 255, nullable = false)
     private String nome;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private Artista autor;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private Genero genero;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     private Album Album;
 
     /**
