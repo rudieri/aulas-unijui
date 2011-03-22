@@ -210,7 +210,7 @@ public class JArtista extends javax.swing.JDialog {
         getContentPane().add(jPanel_Center, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-100)/2, (screenSize.height-296)/2, 100, 296);
+        setBounds((screenSize.width-542)/2, (screenSize.height-409)/2, 542, 409);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
