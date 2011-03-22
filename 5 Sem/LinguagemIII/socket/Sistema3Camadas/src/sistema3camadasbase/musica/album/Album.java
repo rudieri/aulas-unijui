@@ -22,6 +22,18 @@ import sistema3camadasbase.util.Replace;
 @Table(name="album")
 public class Album implements Serializable {
 
+    public Album() {
+    }
+
+    public Album(String st) {
+        try {
+            id = new Integer(st);
+        } catch (Exception ex) {
+            System.out.print("Erro ao Montar Artista");
+        }
+    }
+
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;

@@ -15,6 +15,7 @@ public class Mensagem {
     public static final int TIPO_EXCLUIR = 1;
     public static final int TIPO_LISTAR= 2;
     public static final int TIPO_RETORNO= 3;
+    public static final int TIPO_CARREGAR= 4;
 
     private int tipo;
     private Object objeto;

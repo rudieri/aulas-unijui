@@ -5,6 +5,7 @@
 package sistema3camadasbase.conexao;
 
 import java.io.Serializable;
+import sistema3camadasbase.musica.Musica;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasbase.musica.genero.Genero;
@@ -49,15 +50,37 @@ public class Montador {
 
             return artista;
         }
-        if (classe.equals("Genero")) {
-            Genero genero = new Genero();
+
+        if (classe.equals("Musica")) {
+            Musica musica = new Musica();
             if (s.indexOf("id") != -1) {
-                genero.setId(Integer.valueOf(pegaCampo("id", s)));
+                musica.setId(Integer.valueOf(pegaCampo("id", s)));
             }
             if (s.indexOf("nome") != -1) {
-                genero.setNome(pegaCampo("nome", s));
+                musica.setNome(pegaCampo("nome", s));
             }
-            return genero;
+            if (s.indexOf("autor") != -1) {
+                musica.setAutor(new Artista(pegaCampo("autor", s)));
+            }
+            if (s.indexOf("genero") != -1) {
+                musica.setGenero(new Genero(pegaCampo("genero", s)));
+            }
+            if (s.indexOf("album") != -1) {
+                musica.setAlbum(new Album(pegaCampo("album", s)));
+            }
+            if (classe.equals("Genero")) {
+                Genero genero = new Genero();
+                if (s.indexOf("id") != -1) {
+                    genero.setId(Integer.valueOf(pegaCampo("id", s)));
+                }
+                if (s.indexOf("nome") != -1) {
+                    genero.setNome(pegaCampo("nome", s));
+                }
+                return genero;
+            }
+
+
+            return musica;
         }
 
 

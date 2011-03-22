@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sistema3camadasbase.util;
 
 /**
@@ -11,9 +10,12 @@ package sistema3camadasbase.util;
  */
 public class Replace {
 
-    public static String clear(String s){
-        return s.replace("[", "").replace("]", "").replace(",", "");
+    public static String clear(String s) {
+        if (s == null) {
+            return "";
+        } else {
+            return s.replace("[", "").replace("]", "").replace(",", "");
+        }
 
     }
-
 }
