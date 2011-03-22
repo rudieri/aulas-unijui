@@ -18,12 +18,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
-import sistema3camadasbase.conexao.Montador;
 import sistema3camadasbase.musica.Musica;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadascliente.conexao.Cliente;
+import sistema3camadascliente.telas.JArtista;
+import sistema3camadascliente.telas.Preferencias;
 
 /**
  *
@@ -52,8 +53,8 @@ public class JMusica extends javax.swing.JDialog {
         try {
             Musica alb = new Musica();
             alb.setNome(jTextField_Filtro.getText());
-            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
-            ArrayList<Musica> lista = Cliente.toArrayList(s);
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_LISTAR, alb);
+            ArrayList<Musica> lista = (ArrayList<Musica>) msg.getObjeto();
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
             for (Musica object : lista) {
@@ -341,8 +342,8 @@ public class JMusica extends javax.swing.JDialog {
         musica.setAlbum(album);
         musica.setGenero(genero);
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, musica);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_INCLUIR, musica);
+            JOptionPane.showMessageDialog(this, msg.getObjeto());
 
         } catch (Exception ex) {
             Logger.getLogger(Musica.class.getName()).log(Level.SEVERE, null, ex);
@@ -372,17 +373,17 @@ public class JMusica extends javax.swing.JDialog {
                     jTextField_Cod.setText(String.valueOf(musica.getId()));
                     jTextField_Nome.setText(musica.getNome());
                     if (musica.getAutor() != null) {
-                        artista = (Artista) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getAutor()));
+                        artista = musica.getAutor();
                         jTextField_CodArtista.setText(String.valueOf(artista.getId()));
                         jTextField_NomeArtista.setText(artista.getNome());
                     }
                     if (musica.getAlbum() != null) {
-                        album = (Album) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getAlbum()));
+                        album = musica.getAlbum();
                         jTextField_CodAlbum.setText(String.valueOf(album.getId()));
                         jTextField_NomeAlbum.setText(album.getNome());
                     }
                     if (musica.getGenero() != null) {
-                        genero = (Genero) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getGenero()));
+                        genero =musica.getGenero();
                         jTextField_CodGenero.setText(String.valueOf(genero.getId()));
                         jTextField_NomeGenero.setText(genero.getNome());
                     }
@@ -400,9 +401,8 @@ public class JMusica extends javax.swing.JDialog {
         }
         musica.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, musica);
-            JOptionPane.showMessageDialog(this, msg.toString());
-
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_EXCLUIR, musica);
+            JOptionPane.showMessageDialog(this, msg.getObjeto().toString());
         } catch (Exception ex) {
             Logger.getLogger(Musica.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

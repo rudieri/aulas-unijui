@@ -4,13 +4,12 @@
  */
 package sistema3camadascliente.conexao;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 import sistema3camadasbase.conexao.Mensagem;
-import sistema3camadasbase.conexao.Montador;
 
 /**
  *
@@ -21,66 +20,49 @@ public class Cliente {
     private static String ip = "localhost";
     private static int porta = 4445;
 
-    public static String comando(final int tipo, final Object obj) throws Exception {
+    public static Serializable comando(final int tipo, final Serializable obj) throws Exception {
         try {
 
             Socket echoSocket = new Socket(getIp(), getPorta());
-            PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-            String retorno = "";
-            String readLine;
-            Thread.sleep(1000);
-
+            ObjectOutputStream out = new ObjectOutputStream(echoSocket.getOutputStream());
+            ObjectInputStream inp = new ObjectInputStream(echoSocket.getInputStream());
+            Mensagem envio = new Mensagem();
+            Mensagem retorno = null;
             switch (tipo) {
                 case Mensagem.TIPO_INCLUIR:
-                    out.println(Mensagem.TIPO_INCLUIR + "&" + obj.toString());
-                    readLine = reader.readLine();
-                    retorno = readLine.substring(readLine.indexOf("&") + 1);
+                    envio.setTipo(Mensagem.TIPO_INCLUIR);
+                    envio.setObjeto(obj);
+                    out.writeObject(envio);
+                    retorno = (Mensagem) inp.readObject();
                     break;
                 case Mensagem.TIPO_EXCLUIR:
-                    out.println(Mensagem.TIPO_EXCLUIR + "&" + obj.toString());
-                    readLine = reader.readLine();
-                    retorno = readLine.substring(readLine.indexOf("&") + 1);
+                    envio.setTipo(Mensagem.TIPO_EXCLUIR);
+                    envio.setObjeto(obj);
+                    out.writeObject(envio);
+                    retorno = (Mensagem) inp.readObject();
                     break;
                 case Mensagem.TIPO_LISTAR:
-                    out.println(Mensagem.TIPO_LISTAR + "&" + obj.toString());
-                    readLine = reader.readLine();
-                    retorno = readLine.substring(readLine.indexOf("&") + 1);
+                    envio.setTipo(Mensagem.TIPO_LISTAR);
+                    envio.setObjeto(obj);
+                    out.writeObject(envio);
+                    retorno = (Mensagem) inp.readObject();
                     break;
-                    case Mensagem.TIPO_CARREGAR:
-                    out.println(Mensagem.TIPO_CARREGAR + "&" + obj.toString());
-                    readLine = reader.readLine();
-                    retorno = readLine.substring(readLine.indexOf("&") + 1);
+                case Mensagem.TIPO_CARREGAR:
+                    envio.setTipo(Mensagem.TIPO_CARREGAR);
+                    envio.setObjeto(obj);
+                    out.writeObject(envio);
+                    retorno = (Mensagem) inp.readObject();
                     break;
             }
 
 
             return retorno;
 
-
-
-
-
-
         } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public static ArrayList toArrayList(String lista) {
-
-        ArrayList arrayList = new ArrayList();
-        String[] split = lista.split(";");
-        for (String string : split) {
-            if (!string.trim().equals("")) {
-                arrayList.add(Montador.Montador(string));
-                
-            }
-        }
-
-
-        return arrayList;
-    }
 
     /**
      * @return the ip

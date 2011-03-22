@@ -38,8 +38,8 @@ public class JGenero extends javax.swing.JDialog {
         try {
             Genero genero = new Genero();
             genero.setNome(jTextField_Filtro.getText());
-            String s = Cliente.comando(Mensagem.TIPO_LISTAR, genero);
-            ArrayList<Genero> lista = Cliente.toArrayList(s);
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_LISTAR, genero);
+            ArrayList<Genero> lista = (ArrayList<Genero>) msg.getObjeto();
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
             for (Genero object : lista) {
@@ -220,8 +220,9 @@ public class JGenero extends javax.swing.JDialog {
         }
         genero.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, genero);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_INCLUIR, genero);
+            JOptionPane.showMessageDialog(this, msg.getObjeto());
+
 
         } catch (Exception ex) {
             Logger.getLogger(Genero.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,14 +252,14 @@ public class JGenero extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
-        Genero Genero = new Genero();
+        Genero genero = new Genero();
         if (!jTextField_Cod.getText().equals("")) {
-            Genero.setId(Integer.valueOf(jTextField_Cod.getText()));
+            genero.setId(Integer.valueOf(jTextField_Cod.getText()));
         }
-        Genero.setNome(jTextField_Nome.getText());
+        genero.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, Genero);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_EXCLUIR, genero);
+            JOptionPane.showMessageDialog(this, msg.getObjeto().toString());
 
         } catch (Exception ex) {
             Logger.getLogger(Genero.class.getName()).log(Level.SEVERE, null, ex);

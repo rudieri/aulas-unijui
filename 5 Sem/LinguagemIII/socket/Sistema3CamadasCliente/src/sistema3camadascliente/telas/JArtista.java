@@ -37,8 +37,8 @@ public class JArtista extends javax.swing.JDialog {
         try {
             Artista alb = new Artista();
             alb.setNome(jTextField_Filtro.getText());
-            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
-            ArrayList<Artista> lista = Cliente.toArrayList(s);
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_LISTAR, alb);
+            ArrayList<Artista> lista = (ArrayList<Artista>) msg.getObjeto();
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
             for (Artista object : lista) {
@@ -210,7 +210,7 @@ public class JArtista extends javax.swing.JDialog {
         getContentPane().add(jPanel_Center, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-542)/2, (screenSize.height-409)/2, 542, 409);
+        setBounds((screenSize.width-100)/2, (screenSize.height-296)/2, 100, 296);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -220,8 +220,8 @@ public class JArtista extends javax.swing.JDialog {
         }
         artista.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, artista);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_INCLUIR, artista);
+            JOptionPane.showMessageDialog(this, msg.getObjeto());
 
         } catch (Exception ex) {
             Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
@@ -257,8 +257,8 @@ public class JArtista extends javax.swing.JDialog {
         }
         artista.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, artista);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_EXCLUIR, artista);
+            JOptionPane.showMessageDialog(this, msg.getObjeto().toString());
 
         } catch (Exception ex) {
             Logger.getLogger(Artista.class.getName()).log(Level.SEVERE, null, ex);
