@@ -12,6 +12,7 @@ package sistema3camadascliente.telas;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,18 +20,29 @@ import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.conexao.Montador;
 import sistema3camadasbase.musica.Musica;
+import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
+import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadascliente.conexao.Cliente;
+
 /**
  *
  * @author manchini
  */
 public class JMusica extends javax.swing.JDialog {
+
     private Artista artista;
+    private Album album;
+    private Genero genero;
 
     /** Creates new form NewJDialog */
     public JMusica(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        Preferencias p = new Preferencias(parent, true);
+        HashMap mostrar = p.mostrar();
+        Cliente.setIp((String) mostrar.get("ip"));
+        Cliente.setPorta(Integer.parseInt(mostrar.get("porta").toString()));
+        
         initComponents();
         jTable1.getColumnModel().removeColumn(jTable1.getColumn("Objeto"));
         atualizarTabela();
@@ -61,10 +73,18 @@ public class JMusica extends javax.swing.JDialog {
     private void limparTela() {
         jTextField_Cod.setText("");
         jTextField_Nome.setText("");
-        
+
         jTextField_CodArtista.setText("");
         jTextField_NomeArtista.setText("");
         artista = null;
+
+        jTextField_CodAlbum.setText("");
+        jTextField_NomeAlbum.setText("");
+        album = null;
+
+        jTextField_CodGenero.setText("");
+        jTextField_NomeGenero.setText("");
+        genero = null;
     }
 
     /** This method is called from within the constructor to
@@ -150,19 +170,17 @@ public class JMusica extends javax.swing.JDialog {
         jPanel6.add(jLabel4);
 
         jTextField_CodArtista.setEditable(false);
-        jTextField_CodArtista.setEnabled(false);
         jTextField_CodArtista.setFocusable(false);
         jTextField_CodArtista.setPreferredSize(new java.awt.Dimension(50, 25));
         jPanel6.add(jTextField_CodArtista);
 
         jTextField_NomeArtista.setEditable(false);
-        jTextField_NomeArtista.setEnabled(false);
         jTextField_NomeArtista.setFocusable(false);
         jTextField_NomeArtista.setPreferredSize(new java.awt.Dimension(245, 25));
         jPanel6.add(jTextField_NomeArtista);
 
         jButton_Artista.setText("...");
-        jButton_Artista.setPreferredSize(new java.awt.Dimension(34, 34));
+        jButton_Artista.setPreferredSize(new java.awt.Dimension(28, 28));
         jButton_Artista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ArtistaActionPerformed(evt);
@@ -179,19 +197,17 @@ public class JMusica extends javax.swing.JDialog {
         jPanel7.add(jLabel5);
 
         jTextField_CodAlbum.setEditable(false);
-        jTextField_CodAlbum.setEnabled(false);
         jTextField_CodAlbum.setFocusable(false);
         jTextField_CodAlbum.setPreferredSize(new java.awt.Dimension(50, 25));
         jPanel7.add(jTextField_CodAlbum);
 
         jTextField_NomeAlbum.setEditable(false);
-        jTextField_NomeAlbum.setEnabled(false);
         jTextField_NomeAlbum.setFocusable(false);
         jTextField_NomeAlbum.setPreferredSize(new java.awt.Dimension(245, 25));
         jPanel7.add(jTextField_NomeAlbum);
 
         jButton_Album.setText("...");
-        jButton_Album.setPreferredSize(new java.awt.Dimension(34, 34));
+        jButton_Album.setPreferredSize(new java.awt.Dimension(28, 28));
         jButton_Album.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_AlbumActionPerformed(evt);
@@ -208,19 +224,17 @@ public class JMusica extends javax.swing.JDialog {
         jPanel8.add(jLabel6);
 
         jTextField_CodGenero.setEditable(false);
-        jTextField_CodGenero.setEnabled(false);
         jTextField_CodGenero.setFocusable(false);
         jTextField_CodGenero.setPreferredSize(new java.awt.Dimension(50, 25));
         jPanel8.add(jTextField_CodGenero);
 
         jTextField_NomeGenero.setEditable(false);
-        jTextField_NomeGenero.setEnabled(false);
         jTextField_NomeGenero.setFocusable(false);
         jTextField_NomeGenero.setPreferredSize(new java.awt.Dimension(245, 25));
         jPanel8.add(jTextField_NomeGenero);
 
         jButton_Genero.setText("...");
-        jButton_Genero.setPreferredSize(new java.awt.Dimension(34, 34));
+        jButton_Genero.setPreferredSize(new java.awt.Dimension(28, 28));
         jButton_Genero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_GeneroActionPerformed(evt);
@@ -314,7 +328,7 @@ public class JMusica extends javax.swing.JDialog {
         getContentPane().add(jPanel_Center, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-542)/2, (screenSize.height-409)/2, 542, 409);
+        setBounds((screenSize.width-542)/2, (screenSize.height-540)/2, 542, 540);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -324,6 +338,8 @@ public class JMusica extends javax.swing.JDialog {
         }
         musica.setNome(jTextField_Nome.getText());
         musica.setAutor(artista);
+        musica.setAlbum(album);
+        musica.setGenero(genero);
         try {
             String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, musica);
             JOptionPane.showMessageDialog(this, msg.toString());
@@ -349,15 +365,27 @@ public class JMusica extends javax.swing.JDialog {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if (evt.getClickCount() == 2) {
+            limparTela();
             Musica musica = (Musica) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
-            if(musica!=null){                try {
+            if (musica != null) {
+                try {
                     jTextField_Cod.setText(String.valueOf(musica.getId()));
                     jTextField_Nome.setText(musica.getNome());
-
-                    artista = (Artista) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getAutor()));
-                    jTextField_CodArtista.setText(String.valueOf(artista.getId()));
-                    jTextField_NomeArtista.setText(artista.getNome());
-                    
+                    if (musica.getAutor() != null) {
+                        artista = (Artista) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getAutor()));
+                        jTextField_CodArtista.setText(String.valueOf(artista.getId()));
+                        jTextField_NomeArtista.setText(artista.getNome());
+                    }
+                    if (musica.getAlbum() != null) {
+                        album = (Album) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getAlbum()));
+                        jTextField_CodAlbum.setText(String.valueOf(album.getId()));
+                        jTextField_NomeAlbum.setText(album.getNome());
+                    }
+                    if (musica.getGenero() != null) {
+                        genero = (Genero) Montador.Montador(Cliente.comando(Mensagem.TIPO_CARREGAR, musica.getGenero()));
+                        jTextField_CodGenero.setText(String.valueOf(genero.getId()));
+                        jTextField_NomeGenero.setText(genero.getNome());
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(JMusica.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -387,18 +415,31 @@ public class JMusica extends javax.swing.JDialog {
         JArtista jArtista = new JArtista(null, true);
         jArtista.setVisible(true);
         artista = jArtista.getArtista();
-        if(artista!=null){
+        if (artista != null) {
             jTextField_CodArtista.setText(String.valueOf(artista.getId()));
             jTextField_NomeArtista.setText(artista.getNome());
         }
     }//GEN-LAST:event_jButton_ArtistaActionPerformed
 
     private void jButton_AlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AlbumActionPerformed
-      
+
+        JAlbum jAlbum = new JAlbum(null, true);
+        jAlbum.setVisible(true);
+        album = jAlbum.getAlbum();
+        if (album != null) {
+            jTextField_CodAlbum.setText(String.valueOf(album.getId()));
+            jTextField_NomeAlbum.setText(album.getNome());
+        }
     }//GEN-LAST:event_jButton_AlbumActionPerformed
 
     private void jButton_GeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GeneroActionPerformed
-        // TODO add your handling code here:
+        JGenero jGenero = new JGenero(null, true);
+        jGenero.setVisible(true);
+        genero = jGenero.getGenero();
+        if (genero != null) {
+            jTextField_CodGenero.setText(String.valueOf(genero.getId()));
+            jTextField_NomeGenero.setText(genero.getNome());
+        }
     }//GEN-LAST:event_jButton_GeneroActionPerformed
 
     /**

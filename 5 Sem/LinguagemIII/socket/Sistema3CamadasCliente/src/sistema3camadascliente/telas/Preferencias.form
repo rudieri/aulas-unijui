@@ -80,7 +80,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButton_Fechar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fechar"/>
+            <Property name="text" type="java.lang.String" value="Conectar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_FecharActionPerformed"/>

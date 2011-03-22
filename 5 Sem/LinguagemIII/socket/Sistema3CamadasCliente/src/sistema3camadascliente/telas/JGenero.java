@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadascliente.conexao.Cliente;
+
 /**
  *
  * @author manchini
@@ -55,6 +56,10 @@ public class JGenero extends javax.swing.JDialog {
         }
     }
 
+    public Genero getGenero() {
+        return (Genero) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
+    }
+
     private void limparTela() {
         jTextField_Cod.setText("");
         jTextField_Nome.setText("");
@@ -89,7 +94,7 @@ public class JGenero extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro Artistas");
+        setTitle("Cadastro Genero");
 
         jPanel_Topo.setPreferredSize(new java.awt.Dimension(400, 20));
         getContentPane().add(jPanel_Topo, java.awt.BorderLayout.PAGE_START);
