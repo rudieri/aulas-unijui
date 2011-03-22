@@ -18,10 +18,13 @@ import sistema3camadasbase.conexao.Montador;
  */
 public class Cliente {
 
+    private static String ip = "localhost";
+    private static int porta = 4445;
+
     public static String comando(final int tipo, final Object obj) throws Exception {
         try {
 
-            Socket echoSocket = new Socket("localhost", 4445);
+            Socket echoSocket = new Socket(getIp(), getPorta());
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String retorno = "";
@@ -77,5 +80,33 @@ public class Cliente {
 
 
         return arrayList;
+    }
+
+    /**
+     * @return the ip
+     */
+    public static String getIp() {
+        return ip;
+    }
+
+    /**
+     * @param aIp the ip to set
+     */
+    public static void setIp(String aIp) {
+        ip = aIp;
+    }
+
+    /**
+     * @return the porta
+     */
+    public static int getPorta() {
+        return porta;
+    }
+
+    /**
+     * @param aPorta the porta to set
+     */
+    public static void setPorta(int aPorta) {
+        porta = aPorta;
     }
 }

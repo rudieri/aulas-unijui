@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.album.Album;
+import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadascliente.conexao.Cliente;
 /**
  *
@@ -53,6 +54,11 @@ public class JAlbum extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+
+    public Album getAlbum() {
+         return (Album)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount());
     }
 
     private void limparTela() {
@@ -301,4 +307,5 @@ public class JAlbum extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField_Filtro;
     private javax.swing.JTextField jTextField_Nome;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -13,6 +13,7 @@ package sistema3camadascliente.telas;
 
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import sistema3camadascliente.conexao.Cliente;
 
 /**
  *
@@ -27,6 +28,9 @@ public class Preferencias extends javax.swing.JDialog {
     }
 
     public HashMap mostrar(){
+        jTextField_Ip.setText(Cliente.getIp());
+        jTextField_Porta.setText(String.valueOf(Cliente.getPorta()));
+
         super.setVisible(true);
         HashMap ob = new HashMap();
         ob.put("ip", jTextField_Ip.getText());
@@ -85,7 +89,7 @@ public class Preferencias extends javax.swing.JDialog {
 
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton_Fechar.setText("Fechar");
+        jButton_Fechar.setText("Conectar");
         jButton_Fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_FecharActionPerformed(evt);
@@ -103,7 +107,7 @@ public class Preferencias extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_FecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FecharActionPerformed
-        // TODO add your handling code here:
+        
         dispose();
     }//GEN-LAST:event_jButton_FecharActionPerformed
 
