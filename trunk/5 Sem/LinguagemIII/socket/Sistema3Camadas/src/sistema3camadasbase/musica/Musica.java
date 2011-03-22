@@ -4,10 +4,10 @@
  */
 package sistema3camadasbase.musica;
 
-
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasbase.musica.genero.Genero;
+import sistema3camadasbase.util.Replace;
 
 /**
  *
@@ -30,14 +31,12 @@ public class Musica implements Serializable {
     private Integer id;
     @Column(name = "nome", length = 255, nullable = false)
     private String nome;
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     private Artista autor;
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     private Genero genero;
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     private Album Album;
-    
-
 
     /**
      * @return the nome
@@ -50,7 +49,8 @@ public class Musica implements Serializable {
      * @param nome the nome to set
      */
     public boolean setNome(String nome) {
-        if (nome == null || nome.equals("")) {            
+        if (nome == null || nome.equals("")) {
+            this.nome = "";
             return false;
         } else {
             this.nome = nome;
@@ -114,6 +114,15 @@ public class Musica implements Serializable {
         this.Album = Album;
     }
 
-
-
+    @Override
+    public String toString() {
+        String st = "Musica[";
+        st += getId()==null?"":("id=" + getId() + ",");
+        st += "nome=" + Replace.clear(getNome());
+        st += getAutor() == null ? "" : (",autor=" + getAutor().getId() + ",");
+        st += getGenero() == null ? "" : (",genero=" + getGenero().getId());
+        st += getAlbum() == null ? "" : (",album=" + getAlbum().getId());
+        st += "]";
+        return st;
+    }
 }

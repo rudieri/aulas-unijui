@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sistema3camadasbase.musica.artista;
 
 import java.io.Serializable;
@@ -19,14 +18,23 @@ import sistema3camadasbase.util.Replace;
  * @author manchini
  */
 @Entity
-@Table(name="artista")
+@Table(name = "artista")
 public class Artista implements Serializable {
 
+    public Artista() {
+    }
+
+    public Artista(String st) {
+        try {
+            id = new Integer(st);
+        } catch (Exception ex) {
+            System.out.print("Erro ao Montar Artista");
+        }
+    }
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
-    @Column(name="nome",nullable=false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
     /**
@@ -57,11 +65,10 @@ public class Artista implements Serializable {
         this.nome = nome;
     }
 
-        @Override
-    public String toString(){
-        return "Artista["+
-                "id="+getId()+","+
-                "nome="+Replace.clear(getNome())+"]";
+    @Override
+    public String toString() {
+        return "Artista["
+                + "id=" + getId() + ","
+                + "nome=" + Replace.clear(getNome()) + "]";
     }
-
 }
