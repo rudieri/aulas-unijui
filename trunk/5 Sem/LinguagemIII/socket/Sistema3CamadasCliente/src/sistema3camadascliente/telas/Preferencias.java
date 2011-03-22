@@ -98,7 +98,8 @@ public class Preferencias extends javax.swing.JDialog {
         jPanel3.setLayout(new java.awt.BorderLayout());
         getContentPane().add(jPanel3);
 
-        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-233)/2, (screenSize.height-146)/2, 233, 146);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_FecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FecharActionPerformed
