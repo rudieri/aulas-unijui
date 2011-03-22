@@ -1,12 +1,8 @@
 package sistema3camadasservidor.conexao;
 
-import sistema3camadasbase.conexao.Montador;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import sistema3camadasbase.conexao.Lista;
@@ -28,27 +24,25 @@ class TrataCliente extends Thread {
 
     public void run() {
         boolean semMsg = false;
+        Mensagem retorno;
         try {
 //            org.apache.log4j.BasicConfigurator.configure();
-            OutputStream out = cliente.getOutputStream();
-            InputStream in = cliente.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            PrintWriter pr = new PrintWriter(cliente.getOutputStream(), true);
-            String readLine = reader.readLine();
+            ObjectOutputStream out = new ObjectOutputStream(cliente.getOutputStream());
+            ObjectInputStream inp = new ObjectInputStream(cliente.getInputStream());
+             Transacao t = new Transacao(true);
             try {
-                int tipo = Integer.valueOf(readLine.substring(0, 1));
-                System.out.println(readLine);
-                Serializable obj = null;
-                Transacao t = new Transacao(true);
+                Mensagem entrada = (Mensagem) inp.readObject();
+                int tipo = entrada.getTipo();
+                Serializable obj = (Serializable) entrada.getObjeto();
+               
                 t.begin();
-                obj = Montador.Montador(readLine);
                 switch (tipo) {
                     case Mensagem.TIPO_INCLUIR:
-                        t.saveOrUpdate(obj);
+                        t.saveOrUpdate(entrada.getObjeto());
                         break;
 
                     case Mensagem.TIPO_EXCLUIR:
-                        t.delete(obj);
+                        t.delete(entrada.getObjeto());
                         break;
 
                     case Mensagem.TIPO_LISTAR:
@@ -65,35 +59,40 @@ class TrataCliente extends Thread {
                         if (obj instanceof Musica) {
                             lista.addAll(t.listar("Musica", "WHERE nome like '" + ((Musica) obj).getNome() + "%' "));
                         }
-
-                        pr.println(lista.toString());
+                        retorno = new Mensagem();
+                        retorno.setObjeto(lista);
+                        out.writeObject(retorno);
                         break;
                     case Mensagem.TIPO_CARREGAR:
-                        obj = (Serializable) t.load(obj.getClass(),Integer.valueOf(obj.getClass().getMethod("getId", null).invoke(obj, null).toString()));
+                        obj = (Serializable) t.load(obj.getClass(), Integer.valueOf(obj.getClass().getMethod("getId", null).invoke(obj, null).toString()));
                         semMsg = true;
-                         pr.println(String.valueOf(obj.toString()));
+                        retorno = new Mensagem();
+                        retorno.setObjeto(obj);
+                        out.writeObject(retorno);
                         break;
                 }
 
 
                 t.commit();
                 if (!semMsg) {
-                    pr.println(String.valueOf("3&OK"));
-                    System.out.println(String.valueOf("3&OK"));
+                    retorno = new Mensagem();
+                    retorno.setObjeto("OK");
+                    out.writeObject(retorno);
                 }
             } catch (Exception ex) {
-                pr.println(String.valueOf("3&" + ex.toString()));
+                t.rollback();
+                retorno = new Mensagem();
+                retorno.setObjeto(ex);
+                out.writeObject(retorno);
                 ex.printStackTrace();
             }
 
 
-            reader.close();
-            pr.close();
+            inp.close();
             out.close();
-            in.close();
             cliente.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("NULLL");
         }
     }
 }

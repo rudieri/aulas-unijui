@@ -50,19 +50,24 @@ public class Transacao {
         session.delete(obj);
     }
 
-
-    public Object load(Class classe,Serializable id){
+    public Object load(Class classe, Serializable id) {
         return session.get(classe, id);
     }
 
-    public List listar(String Objeto,String filtro) {
-        List lista =session.createQuery("select t from "+Objeto+" as t "+filtro).list();
-        return  lista;
+    public List listar(String Objeto, String filtro) {
+        List lista = session.createQuery("select t from " + Objeto + " as t " + filtro).list();
+        return lista;
     }
-    
 
     public void commit() {
         t.commit();
+        if (fecharSessao) {
+            session.close();
+        }
+    }
+
+    public void rollback() {
+        t.rollback();
         if (fecharSessao) {
             session.close();
         }
