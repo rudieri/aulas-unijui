@@ -68,19 +68,19 @@ public class Montador {
             if (s.indexOf("album") != -1) {
                 musica.setAlbum(new Album(pegaCampo("album", s)));
             }
-            if (classe.equals("Genero")) {
-                Genero genero = new Genero();
-                if (s.indexOf("id") != -1) {
-                    genero.setId(Integer.valueOf(pegaCampo("id", s)));
-                }
-                if (s.indexOf("nome") != -1) {
-                    genero.setNome(pegaCampo("nome", s));
-                }
-                return genero;
-            }
-
 
             return musica;
+        }
+
+        if (classe.equals("Genero")) {
+            Genero genero = new Genero();
+            if (s.indexOf("id") != -1) {
+                genero.setId(Integer.valueOf(pegaCampo("id", s)));
+            }
+            if (s.indexOf("nome") != -1) {
+                genero.setNome(pegaCampo("nome", s));
+            }
+            return genero;
         }
 
 
