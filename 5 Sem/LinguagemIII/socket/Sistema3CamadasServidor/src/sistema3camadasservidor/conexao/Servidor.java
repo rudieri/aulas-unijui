@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hsqldb.Server;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Servidor implements Runnable {
     private boolean on = true;
 
     public Servidor() throws IOException {
+        startBanco();
         ss = new ServerSocket(4445);
         System.out.println("Servidor ouvindo na porta:" + ss.getLocalPort());
 
@@ -62,5 +64,12 @@ public class Servidor implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void startBanco() {
+        Server server = new org.hsqldb.Server();
+        server.setDatabaseName(0, "camadas3");
+        server.setDatabasePath(0, "camadas3");
+        server.start();
     }
 }
