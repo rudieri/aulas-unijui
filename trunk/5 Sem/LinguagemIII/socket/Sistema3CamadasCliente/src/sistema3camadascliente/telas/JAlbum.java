@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.album.Album;
-import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadascliente.conexao.Cliente;
 /**
  *
@@ -38,8 +37,8 @@ public class JAlbum extends javax.swing.JDialog {
         try {
             Album alb = new Album();
             alb.setNome(jTextField_Filtro.getText());
-            String s = Cliente.comando(Mensagem.TIPO_LISTAR, alb);
-            ArrayList<Album> lista = Cliente.toArrayList(s);
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_LISTAR, alb);
+            ArrayList<Album> lista = (ArrayList<Album>) msg.getObjeto();
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
             for (Album object : lista) {
@@ -221,8 +220,8 @@ public class JAlbum extends javax.swing.JDialog {
         }
         album.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_INCLUIR, album);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_INCLUIR, album);
+            JOptionPane.showMessageDialog(this, msg.getObjeto());
 
         } catch (Exception ex) {
             Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,8 +257,8 @@ public class JAlbum extends javax.swing.JDialog {
         }
         album.setNome(jTextField_Nome.getText());
         try {
-            String msg = Cliente.comando(Mensagem.TIPO_EXCLUIR, album);
-            JOptionPane.showMessageDialog(this, msg.toString());
+            Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_EXCLUIR, album);
+            JOptionPane.showMessageDialog(this, msg.getObjeto().toString());
 
         } catch (Exception ex) {
             Logger.getLogger(Album.class.getName()).log(Level.SEVERE, null, ex);
