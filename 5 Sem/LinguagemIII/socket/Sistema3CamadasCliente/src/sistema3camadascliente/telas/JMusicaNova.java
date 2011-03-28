@@ -13,7 +13,6 @@ package sistema3camadascliente.telas;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
