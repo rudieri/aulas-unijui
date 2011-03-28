@@ -27,32 +27,39 @@ public class Cliente {
             ObjectInputStream inp = new ObjectInputStream(echoSocket.getInputStream());
             Mensagem envio = new Mensagem();
             Mensagem retorno = null;
-            switch (tipo) {
-                case Mensagem.TIPO_INCLUIR:
-                    envio.setTipo(Mensagem.TIPO_INCLUIR);
-                    envio.setObjeto(obj);
-                    out.writeObject(envio);
-                    retorno = (Mensagem) inp.readObject();
-                    break;
-                case Mensagem.TIPO_EXCLUIR:
-                    envio.setTipo(Mensagem.TIPO_EXCLUIR);
-                    envio.setObjeto(obj);
-                    out.writeObject(envio);
-                    retorno = (Mensagem) inp.readObject();
-                    break;
-                case Mensagem.TIPO_LISTAR:
-                    envio.setTipo(Mensagem.TIPO_LISTAR);
-                    envio.setObjeto(obj);
-                    out.writeObject(envio);
-                    retorno = (Mensagem) inp.readObject();
-                    break;
-                case Mensagem.TIPO_CARREGAR:
-                    envio.setTipo(Mensagem.TIPO_CARREGAR);
-                    envio.setObjeto(obj);
-                    out.writeObject(envio);
-                    retorno = (Mensagem) inp.readObject();
-                    break;
-            }
+
+            envio.setTipo(tipo);
+            envio.setObjeto(obj);
+            out.writeObject(envio);
+            retorno = (Mensagem) inp.readObject();
+
+            /*switch (tipo) {
+
+            case Mensagem.TIPO_INCLUIR:
+            envio.setTipo(Mensagem.TIPO_INCLUIR);
+            envio.setObjeto(obj);
+            out.writeObject(envio);
+            retorno = (Mensagem) inp.readObject();
+            break;
+            case Mensagem.TIPO_EXCLUIR:
+            envio.setTipo(Mensagem.TIPO_EXCLUIR);
+            envio.setObjeto(obj);
+            out.writeObject(envio);
+            retorno = (Mensagem) inp.readObject();
+            break;
+            case Mensagem.TIPO_LISTAR:
+            envio.setTipo(Mensagem.TIPO_LISTAR);
+            envio.setObjeto(obj);
+            out.writeObject(envio);
+            retorno = (Mensagem) inp.readObject();
+            break;
+            case Mensagem.TIPO_CARREGAR:
+            envio.setTipo(Mensagem.TIPO_CARREGAR);
+            envio.setObjeto(obj);
+            out.writeObject(envio);
+            retorno = (Mensagem) inp.readObject();
+            break;
+            }*/
 
 
             return retorno;
@@ -61,7 +68,6 @@ public class Cliente {
             throw ex;
         }
     }
-
 
     /**
      * @return the ip
