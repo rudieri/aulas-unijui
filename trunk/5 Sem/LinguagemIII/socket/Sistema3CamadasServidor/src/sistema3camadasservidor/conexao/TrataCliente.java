@@ -22,6 +22,7 @@ class TrataCliente extends Thread {
         start();
     }
 
+    @Override
     public void run() {
         boolean semMsg = false;
         Mensagem retorno;
