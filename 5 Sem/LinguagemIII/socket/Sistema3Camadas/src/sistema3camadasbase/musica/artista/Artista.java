@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import sistema3camadasbase.util.Nomeavel;
 import sistema3camadasbase.util.Replace;
 
 /**
@@ -19,7 +20,7 @@ import sistema3camadasbase.util.Replace;
  */
 @Entity
 @Table(name = "artista")
-public class Artista implements Serializable {
+public class Artista extends Nomeavel implements Serializable {
 
     public Artista() {
     }
@@ -40,7 +41,7 @@ public class Artista implements Serializable {
     /**
      * @return the id
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -61,8 +62,14 @@ public class Artista implements Serializable {
     /**
      * @param nome the nome to set
      */
-    public void setNome(String nome) {
-        this.nome = nome;
+    public boolean  setNome(String nome) {
+        if (nome == null || nome.equals("")) {
+            this.nome = "";
+            return false;
+        } else {
+            this.nome = nome;
+            return true;
+        }
     }
 
     @Override

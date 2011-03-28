@@ -7,7 +7,6 @@ package sistema3camadasbase.musica;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +15,7 @@ import javax.persistence.Table;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
 import sistema3camadasbase.musica.genero.Genero;
+import sistema3camadasbase.util.Nomeavel;
 import sistema3camadasbase.util.Replace;
 
 /**
@@ -24,7 +24,7 @@ import sistema3camadasbase.util.Replace;
  */
 @Entity
 @Table(name = "musica")
-public class Musica implements Serializable {
+public class Musica extends Nomeavel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +48,7 @@ public class Musica implements Serializable {
     /**
      * @param nome the nome to set
      */
+    @Override
     public boolean setNome(String nome) {
         if (nome == null || nome.equals("")) {
             this.nome = "";
@@ -61,6 +62,7 @@ public class Musica implements Serializable {
     /**
      * @return the id
      */
+    @Override
     public Integer getId() {
         return id;
     }

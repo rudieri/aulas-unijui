@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sistema3camadasbase.musica.album;
 
 import java.io.Serializable;
@@ -12,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import sistema3camadasbase.util.Nomeavel;
 import sistema3camadasbase.util.Replace;
 
 /**
@@ -19,8 +19,8 @@ import sistema3camadasbase.util.Replace;
  * @author manchini
  */
 @Entity
-@Table(name="album")
-public class Album implements Serializable {
+@Table(name = "album")
+public class Album extends Nomeavel implements Serializable {
 
     public Album() {
     }
@@ -32,19 +32,17 @@ public class Album implements Serializable {
             System.out.print("Erro ao Montar Artista");
         }
     }
-
-
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    @Column(name="nome",nullable=false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
     /**
      * @return the id
      */
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
@@ -58,6 +56,7 @@ public class Album implements Serializable {
     /**
      * @return the nome
      */
+    @Override
     public String getNome() {
         return nome;
     }
@@ -65,17 +64,21 @@ public class Album implements Serializable {
     /**
      * @param nome the nome to set
      */
-    public void setNome(String nome) {
-        this.nome = nome;
+   @Override
+    public boolean setNome(String nome) {
+        if (nome == null || nome.equals("")) {
+            this.nome = "";
+            return false;
+        } else {
+            this.nome = nome;
+            return true;
+        }
     }
-
 
     @Override
-    public String toString(){
-        return "Album["+
-                "id="+getId()+","+
-                "nome="+Replace.clear(getNome())+"]";
+    public String toString() {
+        return "Album["
+                + "id=" + getId() + ","
+                + "nome=" + Replace.clear(getNome()) + "]";
     }
-
-
 }
