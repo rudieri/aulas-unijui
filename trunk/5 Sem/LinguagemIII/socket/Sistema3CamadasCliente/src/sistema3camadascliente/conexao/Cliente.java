@@ -33,35 +33,6 @@ public class Cliente {
             out.writeObject(envio);
             retorno = (Mensagem) inp.readObject();
 
-            /*switch (tipo) {
-
-            case Mensagem.TIPO_INCLUIR:
-            envio.setTipo(Mensagem.TIPO_INCLUIR);
-            envio.setObjeto(obj);
-            out.writeObject(envio);
-            retorno = (Mensagem) inp.readObject();
-            break;
-            case Mensagem.TIPO_EXCLUIR:
-            envio.setTipo(Mensagem.TIPO_EXCLUIR);
-            envio.setObjeto(obj);
-            out.writeObject(envio);
-            retorno = (Mensagem) inp.readObject();
-            break;
-            case Mensagem.TIPO_LISTAR:
-            envio.setTipo(Mensagem.TIPO_LISTAR);
-            envio.setObjeto(obj);
-            out.writeObject(envio);
-            retorno = (Mensagem) inp.readObject();
-            break;
-            case Mensagem.TIPO_CARREGAR:
-            envio.setTipo(Mensagem.TIPO_CARREGAR);
-            envio.setObjeto(obj);
-            out.writeObject(envio);
-            retorno = (Mensagem) inp.readObject();
-            break;
-            }*/
-
-
             return retorno;
 
         } catch (Exception ex) {
