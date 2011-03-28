@@ -49,16 +49,16 @@ class TrataCliente extends Thread {
                     case Mensagem.TIPO_LISTAR:
                         Lista lista = new Lista();
                         if (obj instanceof Album) {
-                            lista.addAll(t.listar("Album", "WHERE nome like '" + ((Album) obj).getNome() + "%' "));
+                            lista.addAll(t.listar("Album", "WHERE upper(nome) like '" + ((Album) obj).getNome().toUpperCase() + "%' "));
                         }
                         if (obj instanceof Artista) {
-                            lista.addAll(t.listar("Artista", "WHERE nome like '" + ((Artista) obj).getNome() + "%' "));
+                            lista.addAll(t.listar("Artista", "WHERE upper(nome) like '" + ((Artista) obj).getNome().toUpperCase() + "%' "));
                         }
                         if (obj instanceof Genero) {
-                            lista.addAll(t.listar("Genero", "WHERE nome like '" + ((Genero) obj).getNome() + "%' "));
+                            lista.addAll(t.listar("Genero", "WHERE upper(nome) like '" + ((Genero) obj).getNome().toUpperCase() + "%' "));
                         }
                         if (obj instanceof Musica) {
-                            lista.addAll(t.listar("Musica", "WHERE nome like '" + ((Musica) obj).getNome() + "%' "));
+                            lista.addAll(t.listar("Musica", "WHERE upper(nome) like '" + ((Musica) obj).getNome().toUpperCase() + "%' "));
                         }
                         retorno = new Mensagem();
                         retorno.setObjeto(lista);
