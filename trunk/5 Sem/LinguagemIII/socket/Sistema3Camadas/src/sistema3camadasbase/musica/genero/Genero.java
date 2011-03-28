@@ -2,9 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sistema3camadasbase.musica.genero;
-
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -13,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import sistema3camadasbase.util.Nomeavel;
 import sistema3camadasbase.util.Replace;
 
 /**
@@ -20,36 +19,31 @@ import sistema3camadasbase.util.Replace;
  * @author manchini
  */
 @Entity
-@Table(name="genero")
-public class Genero implements Serializable {
+@Table(name = "genero")
+public class Genero extends Nomeavel implements Serializable {
 
     public Genero() {
     }
 
-     public Genero(String st) {
+    public Genero(String st) {
         try {
             id = new Integer(st);
         } catch (Exception ex) {
             System.out.print("Erro ao Montar Artista");
         }
     }
-
-
-
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    @Column(name="nome",nullable=false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
     /**
      * @return the id
      */
-    public int getId() {
-        return id;
+     public  Integer getId() {
+    return id;
     }
-
     /**
      * @param id the id to set
      */
@@ -60,6 +54,7 @@ public class Genero implements Serializable {
     /**
      * @return the nome
      */
+    @Override
     public String getNome() {
         return nome;
     }
@@ -67,15 +62,22 @@ public class Genero implements Serializable {
     /**
      * @param nome the nome to set
      */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
     @Override
-    public String toString(){
-        return "Genero["
-                +"id=" + getId() + ","
-                +"nome="+Replace.clear(getNome())
-                +"]";
+    public boolean setNome(String nome) {
+        if (nome == null || nome.equals("")) {
+            this.nome = "";
+            return false;
+        } else {
+            this.nome = nome;
+            return true;
+        }
     }
 
+    @Override
+    public String toString() {
+        return "Genero["
+                + "id=" + getId() + ","
+                + "nome=" + Replace.clear(getNome())
+                + "]";
+    }
 }
