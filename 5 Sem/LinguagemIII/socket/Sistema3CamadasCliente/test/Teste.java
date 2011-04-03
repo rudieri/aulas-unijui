@@ -95,6 +95,8 @@ public class Teste extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
 
@@ -131,6 +133,22 @@ public class Teste extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        jPanel2.add(jScrollPane1, java.awt.BorderLayout.PAGE_START);
+
         getContentPane().add(jPanel2);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
@@ -161,6 +179,10 @@ public class Teste extends javax.swing.JFrame {
         fazerAlgo(jTextField2, evt);
     }//GEN-LAST:event_jTextField2KeyReleased
 
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList1ValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -173,10 +195,12 @@ public class Teste extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
