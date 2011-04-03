@@ -59,10 +59,10 @@ public class JMusicaNova extends javax.swing.JDialog {
             Musica musica = new Musica();
             musica.setNome(jTextField_Filtro.getText());
             Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_LISTAR, musica);
-            ArrayList<Musica> lista = (ArrayList<Musica>) msg.getObjeto();
+            ArrayList<Musica> list = (ArrayList<Musica>) msg.getObjeto();
             DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
             tm.setNumRows(0);
-            for (Musica object : lista) {
+            for (Musica object : list) {
 
                 Object row[] = new Object[3];
                 row[0] = object.getId();
@@ -135,7 +135,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         buscarGenero(true);
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getNome().equalsIgnoreCase(nome)) {
-                return (Genero)  lista.get(i);
+                return (Genero) lista.get(i);
             }
         }
         return null;
@@ -179,15 +179,12 @@ public class JMusicaNova extends javax.swing.JDialog {
         jTextField_Cod.setText("");
         jTextField_Nome.setText("");
 
-//        jTextField_CodArtista.setText("");
         jTextField_NomeArtista.setText("");
         artista = null;
 
-        //   jTextField_CodAlbum.setText("");
         jTextField_NomeAlbum.setText("");
         album = null;
-
-        //  jTextField_CodGenero.setText("");
+        
         jTextField_NomeGenero.setText("");
         genero = null;
     }
@@ -295,9 +292,6 @@ public class JMusicaNova extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_NomeFocusGained(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_NomeFocusLost(evt);
-            }
         });
         jTextField_Nome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -318,9 +312,6 @@ public class JMusicaNova extends javax.swing.JDialog {
         jTextField_NomeArtista.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_NomeArtistaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_NomeArtistaFocusLost(evt);
             }
         });
         jTextField_NomeArtista.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -343,9 +334,6 @@ public class JMusicaNova extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_NomeAlbumFocusGained(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_NomeAlbumFocusLost(evt);
-            }
         });
         jTextField_NomeAlbum.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -366,9 +354,6 @@ public class JMusicaNova extends javax.swing.JDialog {
         jTextField_NomeGenero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_NomeGeneroFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_NomeGeneroFocusLost(evt);
             }
         });
         jTextField_NomeGenero.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -475,30 +460,25 @@ public class JMusicaNova extends javax.swing.JDialog {
 
         musica.setNome(jTextField_Nome.getText());
         try {
-            artista = incluirArtista(jTextField_NomeArtista.getText());
-            genero = incluirGenero(jTextField_NomeGenero.getText());
-            album = incluirAlbum(jTextField_NomeAlbum.getText());
+            if (!(jTextField_NomeArtista.getText() == null || jTextField_NomeArtista.getText().equals(""))) {
+                artista = incluirArtista(jTextField_NomeArtista.getText());
+                musica.setAutor(artista);
+            }
+            if (!(jTextField_NomeGenero.getText() == null || jTextField_NomeGenero.getText().equals(""))) {
+                genero = incluirGenero(jTextField_NomeGenero.getText());
+                musica.setGenero(genero);
+            }
+            if (!(jTextField_NomeAlbum.getText() == null || jTextField_NomeAlbum.getText().equals(""))) {
+                album = incluirAlbum(jTextField_NomeAlbum.getText());
+                musica.setAlbum(album);
+            }
+
         } catch (Exception ex) {
             Logger.getLogger(JMusicaNova.class.getName()).log(Level.SEVERE, null, ex);
         }
-        musica.setAlbum(album);
-        musica.setAutor(artista);
-        musica.setGenero(genero);
-
-
-        try {
-            Cliente.comando(Mensagem.TIPO_INCLUIR, artista);
-            // Cliente.comando(Mensagem.TIPO_, evt)
-        } catch (Exception ex) {
-            Logger.getLogger(JMusicaNova.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        musica.setAutor(artista);
-        //   musica.setAlbum(album);
-        musica.setGenero(genero);
+        
         try {
 
-            //    Cliente.comando(Mensagem.TIPO_INCLUIR, album);
-            Cliente.comando(Mensagem.TIPO_INCLUIR, genero);
             Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_INCLUIR, musica);
             JOptionPane.showMessageDialog(this, msg.getObjeto());
 
@@ -607,26 +587,6 @@ public class JMusicaNova extends javax.swing.JDialog {
         // TODO add your handling code here:
         mostrarDica(jTextField_NomeGenero, evt);
     }//GEN-LAST:event_jTextField_NomeGeneroKeyReleased
-
-    private void jTextField_NomeAlbumFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_NomeAlbumFocusLost
-        // TODO add your handling code here:
-        dicaDeTexto.remove();
-    }//GEN-LAST:event_jTextField_NomeAlbumFocusLost
-
-    private void jTextField_NomeArtistaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_NomeArtistaFocusLost
-        // TODO add your handling code here:
-        dicaDeTexto.remove();
-    }//GEN-LAST:event_jTextField_NomeArtistaFocusLost
-
-    private void jTextField_NomeGeneroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_NomeGeneroFocusLost
-        // TODO add your handling code here:
-        dicaDeTexto.remove();
-    }//GEN-LAST:event_jTextField_NomeGeneroFocusLost
-
-    private void jTextField_NomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_NomeFocusLost
-        // TODO add your handling code here:
-        dicaDeTexto.remove();
-    }//GEN-LAST:event_jTextField_NomeFocusLost
 
     /**
      * @param args the command line arguments
