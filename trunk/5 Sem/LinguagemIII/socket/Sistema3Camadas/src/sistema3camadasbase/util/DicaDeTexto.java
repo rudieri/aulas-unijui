@@ -1,18 +1,25 @@
 package sistema3camadasbase.util;
 
-
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /*
  * To change this template, choose Tools | Templates
@@ -31,6 +38,8 @@ public class DicaDeTexto {
     private Container parentPane;
     private JTextField parentTextField;
     private boolean existo;
+    private boolean mouseIsOnList;
+    public boolean mouseIsHoverList;
 
     public DicaDeTexto(Container painel) {
         parentPane = painel;
@@ -40,25 +49,29 @@ public class DicaDeTexto {
     }
 
     public void paintBox(JTextField base, ArrayList<String> lista) {
+        mouseIsOnList = false;
         parentTextField = (JTextField) base;
 
         linCont = -1;
-        Container pane=getContentPane();
-        if (!(pane.getComponent(pane.getComponentCount() - 1).equals(scrollArea)||pane.getComponent(0).equals(scrollArea))) {
-           pane.add(scrollArea,pane.getComponentCount());
+        Container pane = getContentPane();
+        if (!(pane.getComponent(pane.getComponentCount() - 1).equals(scrollArea) || pane.getComponent(0).equals(scrollArea))) {
+            pane.add(scrollArea, pane.getComponentCount());
             //   getContentPane().setComponentZOrder(scrollArea, getContentPane().getComponentCount() - 1);
             pane.setComponentZOrder(scrollArea, 0);
-            int y=base.getLocationOnScreen().y-pane.getLocationOnScreen().y;
+            int y = base.getLocationOnScreen().y - pane.getLocationOnScreen().y;
             scrollArea.setBounds(base.getX(), y + base.getHeight(), base.getWidth(), 60);
             //base.getParent().getLocationOnScreen().y
+            base.addFocusListener(textFocus);
             base.addKeyListener(textAreaKeyEvent);
             scrollArea.setViewportView(jList);
             ///setAllEnable(false);
             getContentPane().repaint();
+            jList.clearSelection();
         }
         jList.setModel(listModel);
         jList.setListData(lista.toArray());
-        existo=true;
+        existo = true;
+
     }
 
     private void setAllEnable(boolean b) {
@@ -81,6 +94,8 @@ public class DicaDeTexto {
         scrollArea.setViewportView(jList);
         scrollArea.setBorder(new BevelBorder(BevelBorder.RAISED));
         jList.addMouseListener(listMouseClicked);
+        jList.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jList.addMouseMotionListener(listMotionAdapter);
 
 
     }
@@ -94,6 +109,20 @@ public class DicaDeTexto {
                 }
             }
 
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.getButton() == 1) {
+                mouseIsOnList = true;
+            }
+        }
+    };
+    MouseMotionAdapter listMotionAdapter = new MouseMotionAdapter() {
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            jList.setSelectedIndex(jList.locationToIndex(e.getPoint()));
         }
     };
     KeyAdapter textAreaKeyEvent = new KeyAdapter() {
@@ -127,19 +156,41 @@ public class DicaDeTexto {
             }
         }
     };
+    FocusAdapter textFocus = new FocusAdapter() {
 
-    public boolean existe(){
+        @Override
+        public void focusLost(FocusEvent e) {
+            super.focusLost(e);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(DicaDeTexto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (mouseIsOnList) {
+                seleciona();
+            } else {
+                remove();
+            }
+
+
+
+        }
+    };
+
+    public boolean existe() {
         return existo;
     }
-    public  void remove() {
+
+    public void remove() {
 //        setAllEnable(true);
-        if (!existe()||parentTextField==null||parentTextField.getKeyListeners().length<1) {
-            return ;
+        if (!existe() || parentTextField == null || parentTextField.getKeyListeners().length < 1) {
+            return;
         }
         parentTextField.removeKeyListener(textAreaKeyEvent);
+        parentTextField.removeFocusListener(textFocus);
         getContentPane().remove(scrollArea);
         getContentPane().repaint();
-        existo=false;
+        existo = false;
     }
 
     private void seleciona() {

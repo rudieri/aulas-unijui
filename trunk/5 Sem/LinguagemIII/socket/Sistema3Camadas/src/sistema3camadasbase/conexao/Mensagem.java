@@ -12,11 +12,11 @@ import java.io.Serializable;
  */
 public class Mensagem implements Serializable {
 
-    public static final int TIPO_INCLUIR = 0;
-    public static final int TIPO_EXCLUIR = 1;
-    public static final int TIPO_LISTAR = 2;
-    public static final int TIPO_RETORNO = 3;
-    public static final int TIPO_CARREGAR = 4;
+    public static final byte TIPO_INCLUIR = 0;
+    public static final byte TIPO_EXCLUIR = 1;
+    public static final byte TIPO_LISTAR = 2;
+    public static final byte TIPO_RETORNO = 3;
+    public static final byte TIPO_CARREGAR = 4;
     private int tipo;
     private Serializable objeto;
 
