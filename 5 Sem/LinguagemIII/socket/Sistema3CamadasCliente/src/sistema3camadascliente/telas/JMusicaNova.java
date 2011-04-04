@@ -291,7 +291,6 @@ public class JMusicaNova extends javax.swing.JDialog {
         jButton_Delete = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
         jLabel_Capa = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -308,7 +307,7 @@ public class JMusicaNova extends javax.swing.JDialog {
 
         jPanel_Center.setLayout(new javax.swing.BoxLayout(jPanel_Center, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel9.setLayout(new java.awt.BorderLayout());
 
         jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.Y_AXIS));
 
@@ -436,23 +435,20 @@ public class JMusicaNova extends javax.swing.JDialog {
 
         jPanel10.add(jPanel4);
 
-        jPanel9.add(jPanel10);
+        jPanel9.add(jPanel10, java.awt.BorderLayout.WEST);
 
-        jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.Y_AXIS));
+        jPanel12.setLayout(new java.awt.BorderLayout());
 
-        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
+        jLabel_Capa.setMaximumSize(new java.awt.Dimension(101, 101));
         jLabel_Capa.setPreferredSize(new java.awt.Dimension(101, 101));
         jLabel_Capa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel_CapaMouseClicked(evt);
             }
         });
-        jPanel11.add(jLabel_Capa);
+        jPanel12.add(jLabel_Capa, java.awt.BorderLayout.CENTER);
 
-        jPanel12.add(jPanel11);
-
-        jPanel9.add(jPanel12);
+        jPanel9.add(jPanel12, java.awt.BorderLayout.CENTER);
 
         jPanel_Center.add(jPanel9);
 
@@ -706,7 +702,6 @@ public class JMusicaNova extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel_Capa;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
