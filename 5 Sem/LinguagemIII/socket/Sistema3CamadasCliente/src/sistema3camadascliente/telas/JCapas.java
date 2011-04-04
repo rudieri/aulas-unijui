@@ -42,15 +42,14 @@ public class JCapas extends javax.swing.JDialog {
 
     private String salvarMiniatura(RenderedImage icon) {
         try {
-            Capa c = new Capa();
             long time = new Date().getTime();
-            c.setNome("image/"+time+".jpg");
-            Cliente.comando(Mensagem.TIPO_INCLUIR_IMAGEM, c);
+            capa.setNome("image/"+time+".jpg");
+            Cliente.comando(Mensagem.TIPO_INCLUIR_IMAGEM, capa);
            // String nome = "teste.jpg";
-            File teste = new File(c.getNome());
+            File teste = new File(capa.getNome());
 
             FileUtils.gravaArquivoImagem(icon, teste);
-            return c.getNome();
+            return capa.getNome();
         } catch (Exception ex) {
             Logger.getLogger(JCapas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,12 +133,11 @@ public class JCapas extends javax.swing.JDialog {
             BufferedImage read2 = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 
             Graphics2D g = read2.createGraphics();
-            g.drawImage(read, 0, 0, 100, 100, null);
-            String nome = salvarMiniatura(read2);
-            g.dispose();
+            g.drawImage(read, 0, 0, 100, 100, null);            
             capa = new Capa();
-            capa.setNome(nome);
             capa.setImage(new ImageIcon(read.getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH)));
+            salvarMiniatura(read2);
+            g.dispose();
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
