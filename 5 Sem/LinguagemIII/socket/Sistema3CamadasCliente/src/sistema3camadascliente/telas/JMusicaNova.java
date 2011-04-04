@@ -11,11 +11,13 @@
 package sistema3camadascliente.telas;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +25,7 @@ import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.Musica;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
+import sistema3camadasbase.musica.capas.Capa;
 import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadasbase.util.DicaDeTexto;
 import sistema3camadasbase.util.Nomeavel;
@@ -39,6 +42,8 @@ public class JMusicaNova extends javax.swing.JDialog {
     private Genero genero;
     private ArrayList<Nomeavel> lista;
     private final DicaDeTexto dicaDeTexto;
+    private Capa capa;
+    private Capa capaTela;
 
     /** Creates new form NewJDialog */
     public JMusicaNova(java.awt.Frame parent, boolean modal) {
@@ -52,6 +57,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         jTable1.getColumnModel().removeColumn(jTable1.getColumn("Objeto"));
         atualizarTabela();
         dicaDeTexto = new DicaDeTexto(this.getContentPane());
+        capaTela = new Capa();
     }
 
     private void atualizarTabela() {
@@ -121,6 +127,12 @@ public class JMusicaNova extends javax.swing.JDialog {
         buscar(objeto, limpar);
     }
 
+    private void buscarCapa(boolean limpar) {
+        Capa objeto = new Capa();
+        objeto.setNome(capaTela.getNome());
+        buscar(objeto, limpar);
+    }
+
     private Musica carregarMusicaPorNome(String nome) {
         buscarMusica(true);
         for (int i = 0; i < lista.size(); i++) {
@@ -161,6 +173,16 @@ public class JMusicaNova extends javax.swing.JDialog {
         return null;
     }
 
+    private Capa carregarCapaPorNome(String nome) throws Exception {
+        buscarCapa(true);
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNome().equalsIgnoreCase(nome)) {
+                return (Capa) lista.get(i);
+            }
+        }
+        return null;
+    }
+
     private void buscar(Serializable objeto, boolean limparArray) {
         try {
             Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_LISTAR, objeto);
@@ -184,9 +206,12 @@ public class JMusicaNova extends javax.swing.JDialog {
 
         jTextField_NomeAlbum.setText("");
         album = null;
-        
+
         jTextField_NomeGenero.setText("");
         genero = null;
+
+        capaTela = new Capa();
+        jLabel_Capa.setIcon(null);
     }
 
     private Artista incluirArtista(String nome) throws Exception {
@@ -222,6 +247,17 @@ public class JMusicaNova extends javax.swing.JDialog {
         return genero;
     }
 
+    private Capa incluirCapa(String nome) throws Exception {
+        capa = carregarCapaPorNome(capaTela.getNome());
+        if (capa == null) {
+            capa = new Capa();
+            capa.setNome(capaTela.getNome());
+            Cliente.comando(Mensagem.TIPO_INCLUIR, capa);
+            capa = carregarCapaPorNome(capaTela.getNome());
+        }
+        return capa;
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -233,6 +269,8 @@ public class JMusicaNova extends javax.swing.JDialog {
 
         jPanel_Topo = new javax.swing.JPanel();
         jPanel_Center = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField_Cod = new javax.swing.JTextField();
@@ -252,6 +290,9 @@ public class JMusicaNova extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton_Delete = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel_Capa = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -267,6 +308,10 @@ public class JMusicaNova extends javax.swing.JDialog {
 
         jPanel_Center.setLayout(new javax.swing.BoxLayout(jPanel_Center, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.Y_AXIS));
+
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel1.setText("Codigo:");
@@ -279,7 +324,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         jTextField_Cod.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel1.add(jTextField_Cod);
 
-        jPanel_Center.add(jPanel1);
+        jPanel10.add(jPanel1);
 
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -300,7 +345,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         });
         jPanel2.add(jTextField_Nome);
 
-        jPanel_Center.add(jPanel2);
+        jPanel10.add(jPanel2);
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -321,7 +366,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         });
         jPanel6.add(jTextField_NomeArtista);
 
-        jPanel_Center.add(jPanel6);
+        jPanel10.add(jPanel6);
 
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -342,7 +387,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         });
         jPanel7.add(jTextField_NomeAlbum);
 
-        jPanel_Center.add(jPanel7);
+        jPanel10.add(jPanel7);
 
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -363,7 +408,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         });
         jPanel8.add(jTextField_NomeGenero);
 
-        jPanel_Center.add(jPanel8);
+        jPanel10.add(jPanel8);
 
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -389,7 +434,27 @@ public class JMusicaNova extends javax.swing.JDialog {
         });
         jPanel4.add(jButton3);
 
-        jPanel_Center.add(jPanel4);
+        jPanel10.add(jPanel4);
+
+        jPanel9.add(jPanel10);
+
+        jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabel_Capa.setPreferredSize(new java.awt.Dimension(101, 101));
+        jLabel_Capa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_CapaMouseClicked(evt);
+            }
+        });
+        jPanel11.add(jLabel_Capa);
+
+        jPanel12.add(jPanel11);
+
+        jPanel9.add(jPanel12);
+
+        jPanel_Center.add(jPanel9);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Artistas"));
         jPanel3.setLayout(new java.awt.BorderLayout());
@@ -449,7 +514,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         getContentPane().add(jPanel_Center, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-542)/2, (screenSize.height-540)/2, 542, 540);
+        setBounds((screenSize.width-546)/2, (screenSize.height-540)/2, 546, 540);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -473,10 +538,14 @@ public class JMusicaNova extends javax.swing.JDialog {
                 musica.setAlbum(album);
             }
 
+            capa = incluirCapa(capaTela.getNome());
+            musica.setCapa(capa);
+
+
         } catch (Exception ex) {
             Logger.getLogger(JMusicaNova.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
 
             Mensagem msg = (Mensagem) Cliente.comando(Mensagem.TIPO_INCLUIR, musica);
@@ -523,6 +592,13 @@ public class JMusicaNova extends javax.swing.JDialog {
                         genero = musica.getGenero();
                         //     jTextField_CodGenero.setText(String.valueOf(genero.getId()));
                         jTextField_NomeGenero.setText(genero.getNome());
+                    }
+                    if (musica.getCapa() != null) {
+                        capaTela = musica.getCapa();
+                       // capaTela = new JCapas(null, true).selecionarCapa();
+                        ImageIcon icon = new ImageIcon(capaTela.getNome());
+                        jLabel_Capa.setIcon(icon);
+
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(JMusicaNova.class.getName()).log(Level.SEVERE, null, ex);
@@ -588,6 +664,17 @@ public class JMusicaNova extends javax.swing.JDialog {
         mostrarDica(jTextField_NomeGenero, evt);
     }//GEN-LAST:event_jTextField_NomeGeneroKeyReleased
 
+    private void jLabel_CapaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_CapaMouseClicked
+        // TODO add your handling code here:
+        capaTela = new JCapas(null, true).selecionarCapa();
+        if (capaTela == null) {
+            jLabel_Capa.setIcon(null);
+            return;
+        }
+        ImageIcon icon = new ImageIcon(capaTela.getNome());
+        jLabel_Capa.setIcon(icon);
+    }//GEN-LAST:event_jLabel_CapaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -616,7 +703,11 @@ public class JMusicaNova extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel_Capa;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -624,6 +715,7 @@ public class JMusicaNova extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanel_Center;
     private javax.swing.JPanel jPanel_Topo;
     private javax.swing.JScrollPane jScrollPane1;
