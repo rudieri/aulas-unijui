@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
+import sistema3camadasbase.musica.capas.Capa;
 import sistema3camadasbase.musica.genero.Genero;
 import sistema3camadasbase.util.Nomeavel;
 import sistema3camadasbase.util.Replace;
@@ -37,6 +38,8 @@ public class Musica extends Nomeavel implements Serializable {
     private Genero genero;
     @ManyToOne
     private Album Album;
+    @ManyToOne
+    private Capa capa;
 
     /**
      * @return the nome
@@ -116,6 +119,16 @@ public class Musica extends Nomeavel implements Serializable {
         this.Album = Album;
     }
 
+    public void setCapa(Capa capa) {
+        this.capa = capa;
+    }
+
+    public Capa getCapa() {
+        return capa;
+    }
+    
+    
+
     @Override
     public String toString() {
         String st = "Musica[";
@@ -127,4 +140,5 @@ public class Musica extends Nomeavel implements Serializable {
         st += "]";
         return st;
     }
+    
 }
