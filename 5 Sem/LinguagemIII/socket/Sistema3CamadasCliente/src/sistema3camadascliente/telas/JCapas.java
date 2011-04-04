@@ -10,14 +10,20 @@
  */
 package sistema3camadascliente.telas;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import sistema3camadasbase.conexao.Mensagem;
 import sistema3camadasbase.musica.capas.Capa;
 import sistema3camadasbase.util.FileUtils;
+import sistema3camadascliente.conexao.Cliente;
 
 /**
  *
@@ -34,19 +40,29 @@ public class JCapas extends javax.swing.JDialog {
         initComponents();
     }
 
-    private String salvarMiniatura(BufferedImage icon) {
-        String nome = "teste.jpg";
-        File teste = new File(nome);
-        
-        FileUtils.gravaArquivoImagem(icon, teste);
-        return nome;
+    private String salvarMiniatura(RenderedImage icon) {
+        try {
+            Capa c = new Capa();
+            long time = new Date().getTime();
+            c.setNome("image/"+time+".jpg");
+            Cliente.comando(Mensagem.TIPO_INCLUIR_IMAGEM, c);
+           // String nome = "teste.jpg";
+            File teste = new File(c.getNome());
+
+            FileUtils.gravaArquivoImagem(icon, teste);
+            return c.getNome();
+        } catch (Exception ex) {
+            Logger.getLogger(JCapas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
 
     }
 
-    public Capa selecionarCapa(){
+    public Capa selecionarCapa() {
         setVisible(true);
         return capa;
     }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -113,14 +129,16 @@ public class JCapas extends javax.swing.JDialog {
             }
         });
         if (JFileChooser.APPROVE_OPTION == fil.showOpenDialog(this)) {
-
             BufferedImage read = FileUtils.leArquivoImagem(fil.getSelectedFile());
-            Graphics g = read.getGraphics();
-            ImageIcon imageIcon = new ImageIcon(read.getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH));
-            g.drawImage(read, 0, 0, null);
-            String nome = salvarMiniatura(read);
+            BufferedImage read2 = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+
+            Graphics2D g = read2.createGraphics();
+            g.drawImage(read, 0, 0, 100, 100, null);
+            String nome = salvarMiniatura(read2);
+            g.dispose();
             capa = new Capa();
             capa.setNome(nome);
+            capa.setImage(new ImageIcon(read.getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH)));
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
