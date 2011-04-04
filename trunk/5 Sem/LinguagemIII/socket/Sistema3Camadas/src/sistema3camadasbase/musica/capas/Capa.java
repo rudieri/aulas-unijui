@@ -4,12 +4,14 @@
  */
 package sistema3camadasbase.musica.capas;
 
+import java.awt.Image;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.swing.ImageIcon;
 import sistema3camadasbase.util.Nomeavel;
 
 /**
@@ -25,6 +27,8 @@ public class Capa extends Nomeavel {
     private int id;
     @Column(name = "nome", nullable = false)
     private String nome;
+    @Column(name="imagem")
+    private ImageIcon image;
 
     public Capa() {
     }
@@ -49,6 +53,14 @@ public class Capa extends Nomeavel {
     @Override
     public String getNome() {
         return nome;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
+    }
+
+    public ImageIcon getImage() {
+        return image;
     }
 
    

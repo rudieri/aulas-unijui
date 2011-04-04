@@ -121,8 +121,9 @@ public class FileUtils {
 
     public static boolean gravaArquivoImagem(RenderedImage conteudo, File file)  {
         try {
+
             if (!file.exists()) {
-                file.createNewFile();
+                file.mkdirs();
             }
             return ImageIO.write(conteudo, "jpg", file);
         } catch (IOException ex) {
