@@ -592,7 +592,7 @@ public class JMusicaNova extends javax.swing.JDialog {
                     if (musica.getCapa() != null) {
                         capaTela = musica.getCapa();
                        // capaTela = new JCapas(null, true).selecionarCapa();
-                        ImageIcon icon = capaTela.getImage();
+                        ImageIcon icon = new ImageIcon(capaTela.getNome());
                         jLabel_Capa.setIcon(icon);
 
                     }
