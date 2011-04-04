@@ -120,14 +120,15 @@ public class JCapas extends javax.swing.JDialog {
 
             @Override
             public boolean accept(File f) {
-                return f.getName().indexOf(".jpg") != -1;
+                return f.getName().indexOf(".jpg") != -1 || f.isDirectory();
             }
 
             @Override
             public String getDescription() {
-                return "nothing";
+                return "Imagens";
             }
         });
+      
         if (JFileChooser.APPROVE_OPTION == fil.showOpenDialog(this)) {
             BufferedImage read = FileUtils.leArquivoImagem(fil.getSelectedFile());
             BufferedImage read2 = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
