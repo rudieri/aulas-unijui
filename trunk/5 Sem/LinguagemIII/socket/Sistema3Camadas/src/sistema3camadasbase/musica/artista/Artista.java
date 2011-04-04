@@ -41,6 +41,7 @@ public class Artista extends Nomeavel implements Serializable {
     /**
      * @return the id
      */
+    @Override
     public Integer getId() {
         return id;
     }
@@ -55,6 +56,7 @@ public class Artista extends Nomeavel implements Serializable {
     /**
      * @return the nome
      */
+    @Override
     public String getNome() {
         return nome;
     }
@@ -62,6 +64,7 @@ public class Artista extends Nomeavel implements Serializable {
     /**
      * @param nome the nome to set
      */
+    @Override
     public boolean  setNome(String nome) {
         if (nome == null || nome.equals("")) {
             this.nome = "";

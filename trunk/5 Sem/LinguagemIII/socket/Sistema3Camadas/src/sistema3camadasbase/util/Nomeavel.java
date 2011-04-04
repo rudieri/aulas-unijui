@@ -11,10 +11,20 @@ import java.io.Serializable;
  *
  * @author rudieri
  */
+
 public class Nomeavel implements Serializable{
     private String nome;
     private Integer id;
 
+    public Nomeavel() {
+    }
+
+    
+    public Nomeavel(String nome) {
+        this.nome = nome;
+    }
+
+    
     /**
      * @return the nome
      */

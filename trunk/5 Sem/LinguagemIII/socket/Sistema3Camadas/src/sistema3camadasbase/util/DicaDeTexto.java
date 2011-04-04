@@ -18,8 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /*
  * To change this template, choose Tools | Templates
@@ -29,7 +27,7 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author rudieri
  */
-public class DicaDeTexto {
+public class DicaDeTexto  {
 
     private MyListModel listModel;
     private JList jList;
