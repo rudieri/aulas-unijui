@@ -18,6 +18,7 @@ import org.hsqldb.Server;
 public class Servidor implements Runnable {
 
     private static ServerSocket ss;
+    private static Server server;
     private boolean on = true;
 
     public Servidor() throws IOException {
@@ -67,9 +68,13 @@ public class Servidor implements Runnable {
     }
 
     public static void startBanco() {
-        Server server = new org.hsqldb.Server();
+        server = new org.hsqldb.Server();
         server.setDatabaseName(0, "camadas3");
         server.setDatabasePath(0, "camadas3");
         server.start();
+    }
+    
+    public static void stopBanco(){
+        server.stop();
     }
 }
