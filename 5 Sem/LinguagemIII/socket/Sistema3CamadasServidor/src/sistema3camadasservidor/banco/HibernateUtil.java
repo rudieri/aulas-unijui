@@ -9,6 +9,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import sistema3camadasbase.musica.Musica;
 import sistema3camadasbase.musica.album.Album;
 import sistema3camadasbase.musica.artista.Artista;
+import sistema3camadasbase.musica.capas.Capa;
 import sistema3camadasbase.musica.genero.Genero;
 
 
@@ -30,6 +31,7 @@ public class HibernateUtil {
             getCfg().addAnnotatedClass(Artista.class);
             getCfg().addAnnotatedClass(Genero.class);
             getCfg().addAnnotatedClass(Album.class);
+            getCfg().addAnnotatedClass(Capa.class);
             sessionFactory = getCfg().buildSessionFactory();
 
 
