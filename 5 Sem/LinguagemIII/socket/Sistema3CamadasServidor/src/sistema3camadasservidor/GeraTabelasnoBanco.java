@@ -18,7 +18,7 @@ public class GeraTabelasnoBanco {
         SchemaExport se = new SchemaExport(HibernateUtil.getCfg());
         se.create(true, true);
         Servidor.stopBanco();
-//        System.exit(0);
+
 
     }
 }
