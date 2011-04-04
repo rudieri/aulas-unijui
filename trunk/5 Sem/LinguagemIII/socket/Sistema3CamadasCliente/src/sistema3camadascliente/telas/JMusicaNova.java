@@ -446,7 +446,7 @@ public class JMusicaNova extends javax.swing.JDialog {
                 jLabel_CapaMouseClicked(evt);
             }
         });
-        jPanel12.add(jLabel_Capa, java.awt.BorderLayout.CENTER);
+        jPanel12.add(jLabel_Capa, java.awt.BorderLayout.NORTH);
 
         jPanel9.add(jPanel12, java.awt.BorderLayout.CENTER);
 
@@ -510,7 +510,7 @@ public class JMusicaNova extends javax.swing.JDialog {
         getContentPane().add(jPanel_Center, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-546)/2, (screenSize.height-540)/2, 546, 540);
+        setBounds((screenSize.width-537)/2, (screenSize.height-540)/2, 537, 540);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -592,7 +592,7 @@ public class JMusicaNova extends javax.swing.JDialog {
                     if (musica.getCapa() != null) {
                         capaTela = musica.getCapa();
                        // capaTela = new JCapas(null, true).selecionarCapa();
-                        ImageIcon icon = new ImageIcon(capaTela.getNome());
+                        ImageIcon icon = capaTela.getImage();
                         jLabel_Capa.setIcon(icon);
 
                     }
