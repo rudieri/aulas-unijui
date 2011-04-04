@@ -135,7 +135,7 @@ public class JCapas extends javax.swing.JDialog {
             Graphics2D g = read2.createGraphics();
             g.drawImage(read, 0, 0, 100, 100, null);            
             capa = new Capa();
-            capa.setImage(new ImageIcon(read.getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH)));
+//            capa.setImage(new ImageIcon(read.getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH)));
             salvarMiniatura(read2);
             g.dispose();
 
