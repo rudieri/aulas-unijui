@@ -17,6 +17,7 @@ public class Mensagem implements Serializable {
     public static final byte TIPO_LISTAR = 2;
     public static final byte TIPO_RETORNO = 3;
     public static final byte TIPO_CARREGAR = 4;
+    public static final byte TIPO_INCLUIR_IMAGEM = 5;
     private int tipo;
     private Serializable objeto;
 
