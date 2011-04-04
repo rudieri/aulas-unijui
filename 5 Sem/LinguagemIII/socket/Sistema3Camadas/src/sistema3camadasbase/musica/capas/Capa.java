@@ -27,7 +27,7 @@ public class Capa extends Nomeavel {
     @Column(name = "nome", nullable = false)
     private String nome;
    // @Column(name="imagem",length=99999)
-    private ImageIcon image;
+//    private ImageIcon image;
 
     public Capa() {
     }
@@ -54,13 +54,13 @@ public class Capa extends Nomeavel {
         return nome;
     }
 
-    public void setImage(ImageIcon image) {
-        this.image = image;
-    }
-
-    public ImageIcon getImage() {
-        return image;
-    }
+//    public void setImage(ImageIcon image) {
+//        this.image = image;
+//    }
+//
+//    public ImageIcon getImage() {
+//        return image;
+//    }
 
    
 
