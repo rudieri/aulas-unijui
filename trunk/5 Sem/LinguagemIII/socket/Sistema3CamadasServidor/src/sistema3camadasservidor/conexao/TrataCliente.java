@@ -42,6 +42,10 @@ class TrataCliente extends Thread {
                     case Mensagem.TIPO_INCLUIR:
                         t.saveOrUpdate(entrada.getObjeto());
                         break;
+                    case Mensagem.TIPO_INCLUIR_IMAGEM:
+                        t.saveOrUpdate(obj);
+                        System.out.println("idCapa: " + ((Capa)obj).getId());
+                        break;
 
                     case Mensagem.TIPO_EXCLUIR:
                         t.delete(entrada.getObjeto());
