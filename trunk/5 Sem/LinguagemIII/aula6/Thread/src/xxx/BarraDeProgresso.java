@@ -20,7 +20,6 @@ public class BarraDeProgresso extends Thread {
             }
             JOptionPane.showMessageDialog(null, "Tarefa concluída.");
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
