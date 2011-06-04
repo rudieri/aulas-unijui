@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jogovelha.marcacao;
 
 /**
@@ -10,32 +9,36 @@ package jogovelha.marcacao;
  * @author rudieri
  */
 public class Ponto {
+
     public byte linha;
     public byte coluna;
-    private byte limiteLinhas=3;
-    private byte limiteColunas=3;
+    private byte limiteLinhas = 3;
+    private byte limiteColunas = 3;
 
     public Ponto(byte linha, byte coluna) {
         this.linha = linha;
         this.coluna = coluna;
     }
-     public Ponto(int linha, int coluna) {
+
+    public Ponto(int linha, int coluna) {
         this.linha = (byte) linha;
         this.coluna = (byte) coluna;
     }
-    public void somar(byte n){
-        n+=coluna+getLimiteLinhas()*linha;
-        byte nLinha=(byte) (n / limiteLinhas);
-        byte nColuna=(byte) (n % limiteColunas);
-        if (nLinha>=limiteLinhas) {
-            nLinha=(byte) (nLinha % limiteLinhas);
+
+    public void somar(byte n) {
+        n += coluna + getLimiteLinhas() * linha;
+        byte nLinha = (byte) (n / limiteLinhas);
+        byte nColuna = (byte) (n % limiteColunas);
+        if (nLinha >= limiteLinhas) {
+            nLinha = (byte) (nLinha % limiteLinhas);
         }
-        linha=nLinha;
-        coluna=nColuna;
+        linha = nLinha;
+        coluna = nColuna;
 
     }
-    public void somar(int n){
-        somar((byte)n);
+
+    public void somar(int n) {
+        somar((byte) n);
     }
 
     /**
@@ -64,9 +67,21 @@ public class Ponto {
      */
     public void setLimiteColunas(byte limiteColunas) {
         this.limiteColunas = limiteColunas;
-    };
+    }
+
+    ;
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Ponto)) {
+            return false;
+        }
+        Ponto p = (Ponto) o;
+        if (this.coluna == p.coluna && this.linha == p.linha) {
+            return true;
+        } else {
+            return false;
     
-     
-    
-    
+        }
+    }
 }
