@@ -7,6 +7,7 @@ package jogovelha.ai;
 import jogovelha.interfaces.Jogador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import jogovelha.marcacao.Ponto;
 import jogovelha.tabuleiro.Tabuleiro;
 
@@ -83,6 +84,14 @@ public class Jogador2 implements Jogador {
     @Override
     public void setTabuleiro(Tabuleiro tabuleiroReal) {
         this.tabuleiro = tabuleiroReal;
+    }
+
+    public void gamaIsOver(byte vencedor) {
+        if (vencedor==eu) {
+            JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!","Computador diz...",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...","Computador diz...",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
 }

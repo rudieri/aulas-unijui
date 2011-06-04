@@ -39,6 +39,7 @@ public class TelaVelha extends javax.swing.JDialog {
     public TelaVelha(java.awt.Frame parent, boolean modal) throws IOException {
         super(parent, modal);
         init();
+//        pack();
     }
 
     private void init() throws IOException {
@@ -50,6 +51,7 @@ public class TelaVelha extends javax.swing.JDialog {
         xis = new ImageIcon(fbx.getScaledInstance(w, h, BufferedImage.SCALE_SMOOTH));
         bolinha = new ImageIcon(fbb.getScaledInstance(w, h, BufferedImage.SCALE_SMOOTH));
         jTable1.setDefaultRenderer(Object.class, new Render());
+        jTable1.setIgnoreRepaint(true);
         pxis = new Marca(xis);
         pbol = new Marca(bolinha);
         //tabuleiroReal.setTelaVelha(this);
@@ -138,6 +140,8 @@ public class TelaVelha extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel_Status = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_Jogo = new javax.swing.JMenu();
         jMenuItem_NovoJogo = new javax.swing.JMenuItem();
@@ -146,9 +150,15 @@ public class TelaVelha extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(220, 150));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,10 +186,16 @@ public class TelaVelha extends javax.swing.JDialog {
             }
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTable1.setRowHeight(48);
+        jTable1.setPreferredSize(new java.awt.Dimension(220, 150));
+        jTable1.setRowHeight(50);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable1FocusGained(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -188,6 +204,14 @@ public class TelaVelha extends javax.swing.JDialog {
         jTable1.getColumnModel().getColumn(2).setResizable(false);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 1));
+
+        jLabel_Status.setText("...");
+        jLabel_Status.setOpaque(true);
+        jPanel1.add(jLabel_Status);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         jMenu_Jogo.setMnemonic('j');
         jMenu_Jogo.setText("Jogo");
@@ -219,7 +243,7 @@ public class TelaVelha extends javax.swing.JDialog {
         setJMenuBar(jMenuBar1);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-231)/2, (screenSize.height-209)/2, 231, 209);
+        setBounds((screenSize.width-224)/2, (screenSize.height-220)/2, 224, 220);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -240,12 +264,29 @@ public class TelaVelha extends javax.swing.JDialog {
         // TODO add your handling code here:
         new JPreferencias(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuItem_PreferenciasActionPerformed
+
+    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+        // TODO add your handling code here:
+        if (elFin!=null) {
+            gameOver(elFin);
+        }
+    }//GEN-LAST:event_jTable1FocusGained
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        // TODO add your handling code here:
+         if (elFin!=null) {
+            gameOver(elFin);
+        }
+    }//GEN-LAST:event_formFocusGained
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel_Status;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem_NovoJogo;
     private javax.swing.JMenuItem jMenuItem_Preferencias;
     private javax.swing.JMenu jMenu_Jogo;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
