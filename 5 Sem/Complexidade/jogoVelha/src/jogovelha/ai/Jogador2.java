@@ -4,6 +4,7 @@
  */
 package jogovelha.ai;
 
+import jogovelha.interfaces.Jogador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jogovelha.marcacao.Ponto;
@@ -13,10 +14,10 @@ import jogovelha.tabuleiro.Tabuleiro;
  *
  * @author rudieri
  */
-public class Jogador2 {
+public class Jogador2 implements Jogador {
 
-    private Tabuleiro tabuleiroReal;
-    private static final int eu = Tabuleiro.JOGADOR_COMPUTADOR;
+    private Tabuleiro tabuleiro;
+    private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
 
     public Jogador2() {
         init();
@@ -28,6 +29,7 @@ public class Jogador2 {
 
     }
 
+    @Override
     public void comecar() {
         new Thread(new Runnable() {
 
@@ -42,16 +44,14 @@ public class Jogador2 {
         }).start();
     }
 
-    public void foiMarcado(Ponto p, int jogador) {
-        if (jogador == Tabuleiro.JOGADOR_COMPUTADOR) {
-            return;
-        }
-        Ponto tp = tabuleiroReal.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
+    public void minhaVez(Ponto ponto) {
+       
+        Ponto tp = tabuleiro.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
         if (tp != null) {
             jogue(tp);
             return;
         }
-        tp = tabuleiroReal.verificarPossivelVencedor(Tabuleiro.HUMANO_VENCER);
+        tp = tabuleiro.verificarPossivelVencedor(Tabuleiro.HUMANO_VENCER);
         if (tp != null) {
             jogue(tp);
             return;
@@ -64,10 +64,10 @@ public class Jogador2 {
     }
 
     private void pense(Ponto ponto) {
-        if (!tabuleiroReal.existemCasas()) {
+        if (!tabuleiro.existemCasas()) {
             return;
         }
-        if (tabuleiroReal.estaLivre(ponto)) {
+        if (tabuleiro.estaLivre(ponto)) {
             jogue(ponto);
         } else {
             ponto.somar(4);
@@ -77,11 +77,12 @@ public class Jogador2 {
     }
 
     private void jogue(Ponto p) {
-        tabuleiroReal.jogar(Tabuleiro.JOGADOR_COMPUTADOR, p.linha, p.coluna);
+        tabuleiro.jogar(eu, p.linha, p.coluna);
     }
 
-    public void setTabuleiroReal(Tabuleiro tabuleiroReal) {
-        this.tabuleiroReal = tabuleiroReal;
+    @Override
+    public void setTabuleiro(Tabuleiro tabuleiroReal) {
+        this.tabuleiro = tabuleiroReal;
     }
     
 }

@@ -26,7 +26,7 @@ public class Loader {
             telaVelha = new TelaVelha(null, true);
             computador = new Jogador2();
             tabuleiro = new Tabuleiro(telaVelha, computador);
-            computador.setTabuleiroReal(tabuleiro);
+            computador.setTabuleiro(tabuleiro);
             telaVelha.setTabuleiroReal(tabuleiro);
             telaVelha.setVisible(true);
 

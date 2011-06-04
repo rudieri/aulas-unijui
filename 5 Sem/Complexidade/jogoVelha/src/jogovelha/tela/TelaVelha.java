@@ -32,7 +32,7 @@ public class TelaVelha extends javax.swing.JDialog {
     private Marca pxis;
     private Marca pbol;
     private Tabuleiro tabuleiroReal;
-    public int quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
+    public byte quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
     private Mensageiro elFin;
 
     /** Creates new form TelaVelha */
@@ -226,7 +226,7 @@ public class TelaVelha extends javax.swing.JDialog {
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
         int col = jTable1.columnAtPoint(evt.getPoint());
-        tabuleiroReal.jogar(Tabuleiro.JOGADOR_HUMANO, row, col);
+        tabuleiroReal.jogar(Tabuleiro.JOGADOR_HUMANO, (byte)row, (byte)col);
 
     }//GEN-LAST:event_jTable1MouseClicked
 
