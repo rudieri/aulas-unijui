@@ -17,15 +17,15 @@ import jogovelha.tela.TelaVelha;
  */
 public class Tabuleiro {
 
-    private static final int LINHAS = 3;
-    private static final int COLUNAS = 3;
-    public static final int JOGADOR_HUMANO = -1;
-    public static final int JOGADOR_COMPUTADOR = 1;
-    public static final int COMPUATADOR_VENCER = 2;
-    public static final int HUMANO_VENCER = -2;
-    private int vezDeJogar;
-    private int[][] tabuleiro;
-    private int casasRestantes;
+    private static final byte LINHAS = 3;
+    private static final byte COLUNAS = 3;
+    public static final byte JOGADOR_HUMANO = -1;
+    public static final byte JOGADOR_COMPUTADOR = 1;
+    public static final byte COMPUATADOR_VENCER = 2;
+    public static final byte HUMANO_VENCER = -2;
+    private byte vezDeJogar;
+    private byte[][] tabuleiro;
+    private byte casasRestantes;
     private TelaVelha telaVelha;
     private Jogador2 computador;
     private boolean bloqueio = true;
@@ -44,10 +44,10 @@ public class Tabuleiro {
         this.computador = _computador;
     }
 
-    public void start(int quemComeca) {
+    public void start(byte quemComeca) {
         bloqueio = false;
         vezDeJogar = quemComeca;
-        tabuleiro = new int[LINHAS][COLUNAS];
+        tabuleiro = new byte[LINHAS][COLUNAS];
         inicializaMatriz();
         if (vezDeJogar == JOGADOR_COMPUTADOR) {
             computador.comecar();
@@ -59,7 +59,7 @@ public class Tabuleiro {
     }
 
     private void inicializaMatriz() {
-        tabuleiro = new int[3][3];
+        tabuleiro = new byte[3][3];
         for (int i = 0; i < LINHAS; i++) {
             for (int j = 0; j < COLUNAS; j++) {
                 tabuleiro[i][j] = 0;
@@ -68,7 +68,7 @@ public class Tabuleiro {
         casasRestantes = 9;
     }
 
-    public boolean jogar(int jogador, int linha, int coluna) {
+    public boolean jogar(byte jogador, byte linha, byte coluna) {
         if (bloqueio) {
             JOptionPane.showMessageDialog(telaVelha, "Clique Novo Jogo para começar.");
             return false;
@@ -83,12 +83,14 @@ public class Tabuleiro {
             bloqueio = true;
             return true;
         }
-        this.vezDeJogar = -this.vezDeJogar;
-        computador.foiMarcado(new Ponto((byte) linha, (byte) coluna), jogador);
+        this.vezDeJogar =  (byte) -this.vezDeJogar;
+        if (vezDeJogar == JOGADOR_COMPUTADOR) {
+            computador.minhaVez(new Ponto((byte) linha, (byte) coluna));
+        }
         return true;
     }
 
-    public void setValue(int jogador, int linha, int coluna) {
+    private  void setValue(int jogador, int linha, int coluna) {
         casasRestantes--;
         tabuleiro[linha][coluna] = this.vezDeJogar;
         telaVelha.setValor(jogador, linha, coluna);
