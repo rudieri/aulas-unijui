@@ -5,8 +5,6 @@
 package jogovelha.ai;
 
 import jogovelha.interfaces.Jogador;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import jogovelha.marcacao.Ponto;
 import jogovelha.tabuleiro.Tabuleiro;
@@ -57,8 +55,7 @@ public class RJogador implements Jogador {
             jogue(tp);
             return;
         }
-        //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
-        //  p = euPossoGanhar();
+
         leuPontos = 0;
         pense(new Ponto(0, 0), new Ponto(-1, -1));
         
@@ -77,11 +74,11 @@ public class RJogador implements Jogador {
         ponto.somar(1);
 
         //Se estiver no Meio e livre Melhor Ponto
-        if (ponto.linha ==1
-                && ponto.coluna == 1
-                && tabuleiro.estaLivre(ponto)) {
-            melhorPonto = new Ponto(ponto.linha, ponto.coluna);
-        }
+//        if (ponto.linha ==1
+//                && ponto.coluna == 1
+//                && tabuleiro.estaLivre(ponto)) {
+//            melhorPonto = new Ponto(ponto.linha, ponto.coluna);
+//        }
         /*
          * Se não for o centro e  melhor ponto nao for o centro
          * e for um canto
