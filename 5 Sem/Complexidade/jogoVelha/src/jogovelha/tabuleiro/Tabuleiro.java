@@ -5,10 +5,9 @@
 package jogovelha.tabuleiro;
 
 import javax.swing.JOptionPane;
-import jogovelha.ai.Jogador2;
+import jogovelha.interfaces.Jogador;
 import jogovelha.marcacao.Mensageiro;
 import jogovelha.marcacao.Ponto;
-import jogovelha.marcacao.TriPonto;
 import jogovelha.tela.TelaVelha;
 
 /**
@@ -27,20 +26,20 @@ public class Tabuleiro {
     private byte[][] tabuleiro;
     private byte casasRestantes;
     private TelaVelha telaVelha;
-    private Jogador2 computador;
+    private Jogador computador;
     private boolean bloqueio = true;
 
-    public Tabuleiro(TelaVelha telaVelha, Jogador2 computador) {
+    public Tabuleiro(TelaVelha telaVelha, Jogador computador) {
         init(telaVelha, computador);
     }
 
-    private void init(TelaVelha telaVelha, Jogador2 computador) {
+    private void init(TelaVelha telaVelha, Jogador computador) {
         this.telaVelha = telaVelha;
         this.computador = computador;
 
     }
 
-    public void setComputador(Jogador2 _computador) {
+    public void setComputador(Jogador _computador) {
         this.computador = _computador;
     }
 
@@ -84,20 +83,20 @@ public class Tabuleiro {
             computador.gamaIsOver(vezDeJogar);
             return true;
         }
-        this.vezDeJogar =  (byte) -this.vezDeJogar;
+        this.vezDeJogar = (byte) -this.vezDeJogar;
         if (vezDeJogar == JOGADOR_COMPUTADOR) {
             computador.minhaVez(new Ponto((byte) linha, (byte) coluna));
         }
         return true;
     }
 
-    private  void setValue(int jogador, int linha, int coluna) {
+    private void setValue(byte jogador, byte linha, byte coluna) {
         casasRestantes--;
         tabuleiro[linha][coluna] = this.vezDeJogar;
         telaVelha.setValor(jogador, linha, coluna);
     }
 
-    public boolean estaLivre(int linha, int coluna) {
+    public boolean estaLivre(byte linha, byte coluna) {
         return tabuleiro[linha][coluna] == 0;
     }
 
@@ -107,13 +106,13 @@ public class Tabuleiro {
 
     public Ponto verificarPossivelVencedor(int idWinJogador) {
 
-        int linhas;
-        int colunas;
+        byte linhas;
+        byte colunas;
 
-        int somaDiagonalPrincipal = 0;
-        int somaDiagonalSecundaria = 0;
-        int somaCols = 0;
-        int somaLinhas = 0;
+        byte somaDiagonalPrincipal = 0;
+        byte somaDiagonalSecundaria = 0;
+        byte somaCols = 0;
+        byte somaLinhas = 0;
         for (linhas = 0; linhas < LINHAS; linhas++) {
             somaCols = 0;
             somaLinhas = 0;
@@ -124,16 +123,15 @@ public class Tabuleiro {
                 somaLinhas += tabuleiro[colunas][linhas];
             }
             if (somaCols == idWinJogador) {
-                TriPonto tp = new TriPonto(new Ponto(linhas, 0), new Ponto(linhas, 1), new Ponto(linhas, 2), this);
-                Ponto p = tp.getPontoLivre();
+                Ponto p = getPontoLivre(new Ponto(linhas, 0), new Ponto(linhas, 1), new Ponto(linhas, 2));
                 if (p != null) {
                     return p;
                 }
 
             }
             if (somaLinhas == idWinJogador) {
-                TriPonto tp = new TriPonto(new Ponto(0, linhas), new Ponto(1, linhas), new Ponto(2, linhas), this);
-                Ponto p = tp.getPontoLivre();
+             
+                Ponto p = getPontoLivre(new Ponto(0, linhas), new Ponto(1, linhas), new Ponto(2, linhas));
                 if (p != null) {
                     return p;
                 }
@@ -142,15 +140,25 @@ public class Tabuleiro {
         }
 
         if (somaDiagonalPrincipal == idWinJogador) {
-            TriPonto tp = new TriPonto(new Ponto(0, 0), new Ponto(1, 1), new Ponto(2, 2), this);
-            return tp.getPontoLivre();
+            return getPontoLivre(new Ponto(0, 0), new Ponto(1, 1), new Ponto(2, 2));
 
         }
         if (somaDiagonalSecundaria == idWinJogador) {
-            TriPonto tp = new TriPonto(new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0), this);
-            return tp.getPontoLivre();
+            return getPontoLivre(new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0));
         }
         return null;
+    }
+
+    private Ponto getPontoLivre(Ponto p1, Ponto p2, Ponto p3) {
+        if (estaLivre(p1)) {
+            return p1;
+        } else if (estaLivre(p2)) {
+            return p2;
+        } else if (estaLivre(p3)) {
+            return p3;
+        } else {
+            return null;
+        }
     }
 
     private boolean isGameOver() {

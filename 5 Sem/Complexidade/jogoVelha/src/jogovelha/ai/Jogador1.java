@@ -11,13 +11,13 @@ import jogovelha.tela.TelaVelha;
  *
  * @author rudieri
  */
-public class Jogador {
+public class Jogador1 {
 
   /*  private int tabuleiro[][];
     private TelaVelha telaVelha;
     private int casasRestantes;
 
-    public Jogador(TelaVelha t) {
+    public Jogador1(TelaVelha t) {
         tabuleiro = new int[3][3];
         telaVelha = t;
         for (int i = 0; i < tabuleiro.length; i++) {
