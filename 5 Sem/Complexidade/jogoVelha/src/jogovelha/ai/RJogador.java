@@ -73,7 +73,7 @@ public class RJogador implements Jogador {
             return;
         }
 
-        ponto.somar(new Double(Math.random() * 10).intValue());
+        ponto.somar(new Double(Math.random() * 9).intValue());
 
         //Se estiver no Meio e livre Melhor Ponto
         if (ponto.linha == ponto.getLimiteLinhas() / 2
