@@ -81,6 +81,7 @@ public class Tabuleiro {
         }
         if (isGameOver()) {
             bloqueio = true;
+            computador.gamaIsOver(vezDeJogar);
             return true;
         }
         this.vezDeJogar =  (byte) -this.vezDeJogar;
@@ -154,13 +155,13 @@ public class Tabuleiro {
 
     private boolean isGameOver() {
 
-        int linhas;
-        int colunas;
+        byte linhas;
+        byte colunas;
 
-        int somaDiagonalPrincipal = 0;
-        int somaDiagonalSecundaria = 0;
-        int somaCols = 0;
-        int somaLinhas = 0;
+        byte somaDiagonalPrincipal = 0;
+        byte somaDiagonalSecundaria = 0;
+        byte somaCols = 0;
+        byte somaLinhas = 0;
         Mensageiro m = null;
         for (linhas = 0; linhas < LINHAS; linhas++) {
             somaCols = 0;
