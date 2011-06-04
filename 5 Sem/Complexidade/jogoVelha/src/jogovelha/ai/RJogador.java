@@ -35,8 +35,9 @@ public class RJogador implements Jogador {
 //            public void run() {
 //                try {
 //                    Thread.sleep(500);
-        pense(new Ponto(0, 0), new Ponto(-1, -1));
         leuPontos = 0;
+        pense(new Ponto(0, 0), new Ponto(-1, -1));
+        
 //                } catch (InterruptedException ex) {
 //                    Logger.getLogger(RJogador.class.getName()).log(Level.SEVERE, null, ex);
 //                }
@@ -58,9 +59,9 @@ public class RJogador implements Jogador {
         }
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
-
-        pense(new Ponto(0, 0), new Ponto(-1, -1));
         leuPontos = 0;
+        pense(new Ponto(0, 0), new Ponto(-1, -1));
+        
 
     }
 
@@ -76,20 +77,19 @@ public class RJogador implements Jogador {
         ponto.somar(1);
 
         //Se estiver no Meio e livre Melhor Ponto
-        if (ponto.linha == ponto.getLimiteLinhas() / 2
-                && ponto.coluna == ponto.getLimiteColunas() / 2
+        if (ponto.linha ==1
+                && ponto.coluna == 1
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
-            leuPontos = 9;
         }
         /*
          * Se não for o centro e  melhor ponto nao for o centro
          * e for um canto
          */
-        if (melhorPonto != null && !melhorPonto.equals(new Ponto(ponto.getLimiteLinhas() / 2, ponto.getLimiteColunas() / 2))
-                && (ponto.linha == 0 || ponto.linha == ponto.getLimiteLinhas())
-                && (ponto.coluna == 0 || ponto.coluna == ponto.getLimiteColunas())
-              && tabuleiro.estaLivre(ponto)) {
+        if (melhorPonto != null && !melhorPonto.equals(new Ponto(1, 1))
+                && (ponto.linha == 0 || ponto.linha == 2)
+                && (ponto.coluna == 0 || ponto.coluna == 2)
+                && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
         }
 
@@ -98,15 +98,15 @@ public class RJogador implements Jogador {
          * Se o melhor ponto nao for o meio e nem um canto
          */
         if (melhorPonto != null
-                && !melhorPonto.equals(new Ponto(ponto.getLimiteLinhas() / 2, ponto.getLimiteColunas() / 2))
-                && !(melhorPonto.linha == 0 || melhorPonto.linha == ponto.getLimiteLinhas())
-                && !(melhorPonto.coluna == 0 || melhorPonto.coluna == ponto.getLimiteColunas())
-                && (ponto.linha > 0 && ponto.linha < ponto.getLimiteLinhas())
-                && (ponto.coluna > 0 || ponto.coluna < ponto.getLimiteColunas())
+                && !melhorPonto.equals(new Ponto(1, 1))
+                && !(melhorPonto.linha == 0 || melhorPonto.linha == 2)
+                && !(melhorPonto.coluna == 0 || melhorPonto.coluna == 2)
+                && (ponto.linha > 0 && ponto.linha <2)
+                && (ponto.coluna > 0 || ponto.coluna < 2)
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
         }
-        
+
         leuPontos++;
         pense(ponto, melhorPonto);
 
@@ -116,6 +116,7 @@ public class RJogador implements Jogador {
 
     private void jogue(Ponto p) {
         tabuleiro.jogar(eu, p.linha, p.coluna);
+        leuPontos = 9;
     }
 
     @Override
