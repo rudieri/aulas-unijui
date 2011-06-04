@@ -22,7 +22,7 @@ public class Loader {
     private Jogador computador;
     private Tabuleiro tabuleiro;
     private TelaVelha telaVelha;
-    private final String jogadorPadrao="jogovelha.ai.Jogador2";
+    private final String jogadorPadrao="jogovelha.ai.RJogador";
 
     public Loader() {
         try {
