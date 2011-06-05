@@ -75,11 +75,11 @@ public class MyComboBoxModel implements ComboBoxModel {
 
     public void addListDataListener(ListDataListener l) {
 //        dataListener.add(l);
-        System.err.print("Listeners não implementados.");
+        System.err.println("Listeners não implementados.");
     }
 
     public void removeListDataListener(ListDataListener l) {
 //        dataListener.remove(l);
-        System.err.print("Listeners não implementados.");
+        System.err.println("Listeners não implementados.");
     }
 }

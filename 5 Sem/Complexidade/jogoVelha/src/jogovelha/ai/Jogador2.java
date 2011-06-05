@@ -60,11 +60,12 @@ public class Jogador2 implements Jogador {
         ArrayList<Ponto> pl = tabuleiro.getPosicoesLivres();
         if (pl.size()<=2) {
             pense(pl.get(0), masqPadrao);
+            return ;
         }
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
         if (ponto.isCanto() ) {
-            pense(1, 1, ponto.linha+ponto.coluna+1);
+            pense(1, 1, ponto.linha+ponto.coluna+3);
         } else {
 
             pense(new Ponto(0, 0), masqPadrao);
@@ -84,9 +85,12 @@ public class Jogador2 implements Jogador {
             jogue(ponto);
         } else {
             ponto.somar(masq);
-            pense(ponto, masq);
+            pense(ponto);
             // marcar(ponto, Tabuleiro.JOGADOR_COMPUTADOR);
         }
+    }
+    private void pense(Ponto ponto) {
+       pense(ponto, masqPadrao);
     }
 
     private void jogue(Ponto p) {
@@ -107,6 +111,6 @@ public class Jogador2 implements Jogador {
     }
 
     public void novoJogo() {
-
+       
     }
 }

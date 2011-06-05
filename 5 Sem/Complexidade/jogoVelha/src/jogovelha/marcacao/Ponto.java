@@ -12,8 +12,8 @@ public class Ponto {
 
     public byte linha;
     public byte coluna;
-    private byte limiteLinhas = 3;
-    private byte limiteColunas = 3;
+    private final byte limiteLinhas = 3;
+    private final byte limiteColunas = 3;
 
     public Ponto(byte linha, byte coluna) {
         this.linha = linha;
@@ -26,7 +26,7 @@ public class Ponto {
     }
 
     public void somar(byte n) {
-        n += coluna + getLimiteLinhas() * linha;
+        n += Math.abs(coluna) + getLimiteLinhas() * Math.abs(linha);
         byte nLinha = (byte) (n / limiteLinhas);
         byte nColuna = (byte) (n % limiteColunas);
         if (nLinha >= limiteLinhas) {
@@ -57,12 +57,7 @@ public class Ponto {
         return limiteLinhas;
     }
 
-    /**
-     * @param limiteLinhas the limiteLinhas to set
-     */
-    public void setLimiteLinhas(byte limiteLinhas) {
-        this.limiteLinhas = limiteLinhas;
-    }
+ 
 
     /**
      * @return the limiteColunas
@@ -71,12 +66,7 @@ public class Ponto {
         return limiteColunas;
     }
 
-    /**
-     * @param limiteColunas the limiteColunas to set
-     */
-    public void setLimiteColunas(byte limiteColunas) {
-        this.limiteColunas = limiteColunas;
-    }
+ 
 
     ;
 

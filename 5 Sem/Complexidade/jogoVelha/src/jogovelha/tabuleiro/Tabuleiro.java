@@ -126,6 +126,9 @@ public class Tabuleiro {
     }
 
     public boolean estaLivre(byte linha, byte coluna) {
+        if (linha==-1||coluna==-1) {
+            return false;
+        }
         return getTabuleiro()[linha][coluna] == 0;
     }
 
