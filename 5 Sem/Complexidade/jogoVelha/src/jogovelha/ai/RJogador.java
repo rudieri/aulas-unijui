@@ -88,7 +88,7 @@ public class RJogador implements Jogador {
 
         /*
          * Se for Primeira rodada e o humano comecar
-         * e o humano jogar em um canto
+         *  em um canto
          * ele joga no meio
          * para evitar a jogada diagonal
          */
@@ -96,8 +96,10 @@ public class RJogador implements Jogador {
                 && (ponto.linha == 0 || ponto.linha==2) 
                 && (ponto.coluna == 0 || ponto.coluna == 2)) {
            
-                melhorPonto = new Ponto(1, 1);
-            
+                melhorPonto = new Ponto(1, 1);    
+                leuPontos=9;
+                jogue(melhorPonto);
+                return;
 
         }
         
@@ -111,7 +113,7 @@ public class RJogador implements Jogador {
          * Se não for o centro e  melhor ponto nao for o centro
          * e for um canto
          */
-        if (melhorPonto != null && !melhorPonto.equals(new Ponto(1, 1))
+        if (melhorPonto != null
                 && (ponto.linha == 0 || ponto.linha == 2)
                 && (ponto.coluna == 0 || ponto.coluna == 2)
                 && tabuleiro.estaLivre(ponto)) {
@@ -120,10 +122,9 @@ public class RJogador implements Jogador {
 
 
         /***a
-         * Se o melhor ponto nao for o meio e nem um canto
+         * Se o melhor ponto nao for nem um canto
          */
         if (melhorPonto != null
-                && !melhorPonto.equals(new Ponto(1, 1))
                 && !(melhorPonto.linha == 0 || melhorPonto.linha == 2)
                 && !(melhorPonto.coluna == 0 || melhorPonto.coluna == 2)
                 && (ponto.linha > 0 && ponto.linha < 2)
