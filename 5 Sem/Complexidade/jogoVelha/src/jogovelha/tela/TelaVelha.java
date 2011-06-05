@@ -452,11 +452,11 @@ public class TelaVelha extends javax.swing.JDialog {
     private void setTime(int segundos) {
         int minutos = segundos / 60;
         segundos = segundos - minutos * 60;
-        String min = String.valueOf(minutos);
+        String min = String.valueOf(minutos)+":";
         String seg = String.valueOf(segundos);
-        if (min.length() == 1) {
-            min = "0" + min + ":";
-            if (min.equals("00:")) {
+        if (min.length() == 2) {
+            min = "0" + min;
+            if (min.equals("00")) {
                 min = "";
             }
         }
