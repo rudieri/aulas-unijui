@@ -69,7 +69,7 @@ public class RJogador implements Jogador {
         if (!tabuleiro.existemCasas()) {
             return;
         }
-        pense(new Ponto(0, 0), new Ponto(-1, -1));
+        pense(ponto, new Ponto(-1, -1));
         if (primeiraRodada) {
             primeiraRodada = false;
         }
@@ -102,6 +102,8 @@ public class RJogador implements Jogador {
                 jogue(melhorPonto);
                 return;
 
+        }else if(primeiraRodada){
+            primeiraRodada = false;
         }
         
         /**
