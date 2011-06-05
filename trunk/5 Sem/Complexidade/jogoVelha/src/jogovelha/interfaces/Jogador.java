@@ -32,4 +32,6 @@ public interface Jogador {
     void setTabuleiro(Tabuleiro tabuleiro);
     
     void gamaIsOver(byte vencedor);
+    
+    void novoJogo();
 }

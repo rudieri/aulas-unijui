@@ -93,5 +93,9 @@ public class Jogador2 implements Jogador {
             JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...","Computador diz...",JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    public void novoJogo() {
+        
+    }
     
 }
