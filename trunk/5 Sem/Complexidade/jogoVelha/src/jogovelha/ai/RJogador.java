@@ -109,7 +109,7 @@ public class RJogador implements Jogador {
         /**
          * Anda pelas Casas
          */
-        ponto.somar(1);
+        ponto.somar(3);
         
         
         /*
