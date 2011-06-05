@@ -48,6 +48,7 @@ public class Tabuleiro {
         vezDeJogar = quemComeca;
         tabuleiro = new byte[LINHAS][COLUNAS];
         inicializaMatriz();
+        computador.novoJogo();
         if (vezDeJogar == JOGADOR_COMPUTADOR) {
             computador.comecar();
         }
@@ -97,7 +98,7 @@ public class Tabuleiro {
     }
 
     public boolean estaLivre(byte linha, byte coluna) {
-        return tabuleiro[linha][coluna] == 0;
+        return getTabuleiro()[linha][coluna] == 0;
     }
 
     public boolean estaLivre(Ponto p) {
@@ -116,11 +117,11 @@ public class Tabuleiro {
         for (linhas = 0; linhas < LINHAS; linhas++) {
             somaCols = 0;
             somaLinhas = 0;
-            somaDiagonalPrincipal += tabuleiro[linhas][linhas];
-            somaDiagonalSecundaria += tabuleiro[linhas][2 - linhas];
+            somaDiagonalPrincipal += getTabuleiro()[linhas][linhas];
+            somaDiagonalSecundaria += getTabuleiro()[linhas][2 - linhas];
             for (colunas = 0; colunas < COLUNAS; colunas++) {
-                somaCols += tabuleiro[linhas][colunas];
-                somaLinhas += tabuleiro[colunas][linhas];
+                somaCols += getTabuleiro()[linhas][colunas];
+                somaLinhas += getTabuleiro()[colunas][linhas];
             }
             if (somaCols == idWinJogador) {
                 Ponto p = getPontoLivre(new Ponto(linhas, 0), new Ponto(linhas, 1), new Ponto(linhas, 2));
@@ -174,11 +175,11 @@ public class Tabuleiro {
         for (linhas = 0; linhas < LINHAS; linhas++) {
             somaCols = 0;
             somaLinhas = 0;
-            somaDiagonalPrincipal += tabuleiro[linhas][linhas];
-            somaDiagonalSecundaria += tabuleiro[linhas][2 - linhas];
+            somaDiagonalPrincipal += getTabuleiro()[linhas][linhas];
+            somaDiagonalSecundaria += getTabuleiro()[linhas][2 - linhas];
             for (colunas = 0; colunas < COLUNAS; colunas++) {
-                somaCols += tabuleiro[linhas][colunas];
-                somaLinhas += tabuleiro[colunas][linhas];
+                somaCols += getTabuleiro()[linhas][colunas];
+                somaLinhas += getTabuleiro()[colunas][linhas];
             }
             if (Math.abs(somaCols) == 3) {
                 m = new Mensageiro(vezDeJogar, new Ponto(linhas, 0), new Ponto(linhas, 1), new Ponto(linhas, 2));
@@ -206,5 +207,12 @@ public class Tabuleiro {
 
     public boolean existemCasas() {
         return casasRestantes > 0;
+    }
+
+    /**
+     * @return the tabuleiro
+     */
+    public byte[][] getTabuleiro() {
+        return tabuleiro;
     }
 }

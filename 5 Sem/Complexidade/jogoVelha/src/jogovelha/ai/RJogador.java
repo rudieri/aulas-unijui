@@ -4,6 +4,7 @@
  */
 package jogovelha.ai;
 
+import java.util.ArrayList;
 import jogovelha.interfaces.Jogador;
 import javax.swing.JOptionPane;
 import jogovelha.marcacao.Ponto;
@@ -18,6 +19,7 @@ public class RJogador implements Jogador {
     private Tabuleiro tabuleiro;
     private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
     private int leuPontos = 0;
+    private boolean primeiraRodada = true;
 
     public RJogador() {
         init();
@@ -34,8 +36,9 @@ public class RJogador implements Jogador {
 //                try {
 //                    Thread.sleep(500);
         leuPontos = 0;
-        pense(new Ponto(0, 0), new Ponto(-1, -1));
-        
+        primeiraRodada = false;
+        pense(new Ponto(-1, -1), new Ponto(-1, -1));
+
 //                } catch (InterruptedException ex) {
 //                    Logger.getLogger(RJogador.class.getName()).log(Level.SEVERE, null, ex);
 //                }
@@ -55,10 +58,18 @@ public class RJogador implements Jogador {
             jogue(tp);
             return;
         }
+        
+        tp = verificaJogadaDiagonal();
+        if(tp!=null){
+            jogue(tp);
+            return;
+        }
 
         leuPontos = 0;
         pense(new Ponto(0, 0), new Ponto(-1, -1));
-        
+        if (primeiraRodada) {
+            primeiraRodada = false;
+        }
 
     }
 
@@ -73,12 +84,15 @@ public class RJogador implements Jogador {
 
         ponto.somar(1);
 
-        //Se estiver no Meio e livre Melhor Ponto
-//        if (ponto.linha ==1
-//                && ponto.coluna == 1
-//                && tabuleiro.estaLivre(ponto)) {
-//            melhorPonto = new Ponto(ponto.linha, ponto.coluna);
-//        }
+        if (primeiraRodada && ponto.linha >= 0 && ponto.coluna >= 0) {
+//            Se estiver no Meio e livre Melhor Ponto
+            if (ponto.linha == 1
+                    && ponto.coluna == 1
+                    && tabuleiro.estaLivre(ponto)) {
+                melhorPonto = new Ponto(ponto.linha, ponto.coluna);
+            }
+
+        }
         /*
          * Se não for o centro e  melhor ponto nao for o centro
          * e for um canto
@@ -98,7 +112,7 @@ public class RJogador implements Jogador {
                 && !melhorPonto.equals(new Ponto(1, 1))
                 && !(melhorPonto.linha == 0 || melhorPonto.linha == 2)
                 && !(melhorPonto.coluna == 0 || melhorPonto.coluna == 2)
-                && (ponto.linha > 0 && ponto.linha <2)
+                && (ponto.linha > 0 && ponto.linha < 2)
                 && (ponto.coluna > 0 || ponto.coluna < 2)
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
@@ -107,8 +121,32 @@ public class RJogador implements Jogador {
         leuPontos++;
         pense(ponto, melhorPonto);
 
+    }
 
-
+    private Ponto verificaJogadaDiagonal() {
+        ArrayList<Ponto> listaPontosHumano = new ArrayList<Ponto>();
+        int pontosHumandos = 0;
+        for (int l = 0; l < tabuleiro.getTabuleiro().length; l++) {
+            for (int c = 0; c < tabuleiro.getTabuleiro()[l].length; c++) {
+                if ((l == 0 || l == 2) && (c == 0 || c == 2)) {
+                    if (tabuleiro.getTabuleiro()[l][c] == Tabuleiro.JOGADOR_HUMANO) {
+                        listaPontosHumano.add(new Ponto(l, c));
+                    }
+                }
+                if (tabuleiro.getTabuleiro()[l][c] == Tabuleiro.JOGADOR_HUMANO) {
+                    pontosHumandos++;
+                }
+                
+            }
+        }
+        //Se Tiver 2 pontos nos Cantros 
+        //Cuidado ele vai fazer a diagonal
+        if(pontosHumandos==2 && listaPontosHumano.size()==2){
+            listaPontosHumano.get(0).somar(3);
+            return listaPontosHumano.get(0);
+        }else{
+            return null;
+        }
     }
 
     private void jogue(Ponto p) {
@@ -127,5 +165,9 @@ public class RJogador implements Jogador {
         } else {
             JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    public void novoJogo() {
+        primeiraRodada = true;
     }
 }
