@@ -95,7 +95,8 @@ public class RJogador implements Jogador {
          */
         if (primeiraRodada 
                 && (ponto.linha == 0 || ponto.linha==2) 
-                && (ponto.coluna == 0 || ponto.coluna == 2)) {
+                && (ponto.coluna == 0 || ponto.coluna == 2)
+                && tabuleiro.estaLivre(new Ponto(1, 1))) {
            
                 melhorPonto = new Ponto(1, 1);    
                 leuPontos=9;
