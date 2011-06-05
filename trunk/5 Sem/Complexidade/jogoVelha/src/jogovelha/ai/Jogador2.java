@@ -59,13 +59,18 @@ public class Jogador2 implements Jogador {
         }
         ArrayList<Ponto> pl = tabuleiro.getPosicoesLivres();
         if (pl.size()<=2) {
+            if (pl.isEmpty()) {
+                return ;
+            }
             pense(pl.get(0), masqPadrao);
             return ;
         }
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
-        if (ponto.isCanto() ) {
-            pense(1, 1, ponto.linha+ponto.coluna+3);
+        if (!ponto.isCenter() ) {
+           byte dono= tabuleiro.getDonoDoMeio();
+           dono=dono==eu?dono:0;
+            pense(1, 1, 7+dono);
         } else {
 
             pense(new Ponto(0, 0), masqPadrao);
