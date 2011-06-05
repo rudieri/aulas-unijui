@@ -69,6 +69,7 @@ public class RJogador implements Jogador {
         if (!tabuleiro.existemCasas()) {
             return;
         }
+        primeiraRodada = true;
         pense(ponto, new Ponto(-1, -1));
         if (primeiraRodada) {
             primeiraRodada = false;
