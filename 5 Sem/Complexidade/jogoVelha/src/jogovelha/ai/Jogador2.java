@@ -107,6 +107,6 @@ public class Jogador2 implements Jogador {
     }
 
     public void novoJogo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 }
