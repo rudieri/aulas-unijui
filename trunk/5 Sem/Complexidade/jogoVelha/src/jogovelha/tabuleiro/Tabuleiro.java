@@ -4,6 +4,7 @@
  */
 package jogovelha.tabuleiro;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jogovelha.interfaces.Jogador;
 import jogovelha.marcacao.Mensageiro;
@@ -33,11 +34,30 @@ public class Tabuleiro {
         init(telaVelha, computador);
     }
 
+    public Tabuleiro newInstance(){
+        return new Tabuleiro(telaVelha, computador);
+    }
     private void init(TelaVelha telaVelha, Jogador computador) {
         this.telaVelha = telaVelha;
         this.computador = computador;
 
     }
+    public ArrayList<Ponto> getPosicoesLivres(){
+        ArrayList<Ponto> list = new ArrayList<Ponto>();
+        for (byte i = 0; i < tabuleiro.length; i++) {
+            byte[] bs = tabuleiro[i];
+            for (byte j = 0; j < bs.length; j++) {
+                if (bs[j]==0) {
+                    list.add(new Ponto(i, j));
+                }
+                
+            }
+        }
+        return  list;
+    }
+    public byte[][] getcloneMatriz(){
+        return tabuleiro.clone();
+    }       
 
     public void setComputador(Jogador _computador) {
         this.computador = _computador;
@@ -73,6 +93,7 @@ public class Tabuleiro {
             JOptionPane.showMessageDialog(telaVelha, "Clique Novo Jogo para começar.");
             return false;
         }
+        
         if (!estaLivre(linha, coluna)) {
             return false;
         }
@@ -80,13 +101,20 @@ public class Tabuleiro {
             setValue(jogador, linha, coluna);
         }
         if (isGameOver()) {
+            telaVelha.acabou();
             bloqueio = true;
-            computador.gamaIsOver(vezDeJogar);
+            computador.gameIsOver(vezDeJogar);
             return true;
+        }
+        if (!existemCasas()) {
+            telaVelha.acabou();
+            bloqueio=true;
         }
         this.vezDeJogar = (byte) -this.vezDeJogar;
         if (vezDeJogar == JOGADOR_COMPUTADOR) {
             computador.minhaVez(new Ponto((byte) linha, (byte) coluna));
+        }else{
+            //
         }
         return true;
     }

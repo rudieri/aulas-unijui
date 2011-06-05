@@ -34,11 +34,20 @@ public class Ponto {
         }
         linha = nLinha;
         coluna = nColuna;
-
     }
-
-    public void somar(int n) {
-        somar((byte) n);
+    public byte getValor(){
+        if (linha==coluna) {
+            return 3;
+        }else{
+            return 1;
+        }
+    }
+    public Ponto somar(int n){
+        somar((byte)n);
+        return this;
+    }
+    public boolean isCanto(){
+        return linha%2==0&&coluna%2==0;
     }
 
     /**
@@ -84,4 +93,11 @@ public class Ponto {
     
         }
     }
+
+    @Override
+    public String toString() {
+        return "["+linha+","+coluna+"]";
+    }
+    
+    
 }
