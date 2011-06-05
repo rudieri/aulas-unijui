@@ -58,19 +58,26 @@ public class Jogador2 implements Jogador {
             return;
         }
         ArrayList<Ponto> pl = tabuleiro.getPosicoesLivres();
-        if (pl.size()<=2) {
+        if (pl.size() <= 2) {
             if (pl.isEmpty()) {
-                return ;
+                return;
             }
             pense(pl.get(0), masqPadrao);
-            return ;
+            return;
         }
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
-        if (!ponto.isCenter() ) {
-           byte dono= tabuleiro.getDonoDoMeio();
-           dono=dono==eu?dono:0;
-            pense(1, 1, 7+dono);
+        if (!ponto.isCenter()) {
+            byte dono = tabuleiro.getDonoDoMeio();
+            if (dono == eu ) {
+                dono = 1;
+            }
+//           dono=dono==eu?dono:tabuleiro.getDonoDoPonto(ponto);
+            if (!ponto.isCanto()) {
+                pense(1, 1,getVariante());
+            } else {
+                pense(1, 1, 8 + dono);
+            }
         } else {
 
             pense(new Ponto(0, 0), masqPadrao);
@@ -81,6 +88,22 @@ public class Jogador2 implements Jogador {
     private void pense(int linha, int coluna, int masq) {
         pense(new Ponto(linha, coluna), (byte) masq);
     }
+    private byte getVariante(){
+        byte var=0;
+        byte[][] cloneMatriz = tabuleiro.getcloneMatriz();
+        for (int i = 0; i < cloneMatriz.length; i++) {
+            byte[] bs = cloneMatriz[i];
+            for (int j = 0; j < bs.length; j++) {
+                byte b = bs[j];
+                if (b==Tabuleiro.JOGADOR_HUMANO) {
+//                    if (new Ponto(i, j).isTranposta()) {
+                       var = (byte) (-var+(i*3+j));
+//                    }
+                }
+            }
+        }
+        return var;
+    }
 
     private void pense(Ponto ponto, byte masq) {
         if (!tabuleiro.existemCasas()) {
@@ -90,12 +113,16 @@ public class Jogador2 implements Jogador {
             jogue(ponto);
         } else {
             ponto.somar(masq);
-            pense(ponto);
+//            if (masq==0) {
+//                masq=4;
+//            }
+            pense(ponto, ++masq);
             // marcar(ponto, Tabuleiro.JOGADOR_COMPUTADOR);
         }
     }
+
     private void pense(Ponto ponto) {
-       pense(ponto, masqPadrao);
+        pense(ponto, masqPadrao);
     }
 
     private void jogue(Ponto p) {
@@ -116,6 +143,5 @@ public class Jogador2 implements Jogador {
     }
 
     public void novoJogo() {
-       
     }
 }

@@ -5,6 +5,8 @@
 package jogovelha.tabuleiro;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import jogovelha.interfaces.Jogador;
 import jogovelha.marcacao.Mensageiro;
@@ -88,7 +90,7 @@ public class Tabuleiro {
         casasRestantes = 9;
     }
 
-    public boolean jogar(byte jogador, byte linha, byte coluna) {
+    public boolean jogar(byte jogador, final byte linha, final byte coluna) {
         if (bloqueio) {
             JOptionPane.showMessageDialog(telaVelha, "Clique Novo Jogo para começar.");
             return false;
@@ -112,7 +114,17 @@ public class Tabuleiro {
         }
         this.vezDeJogar = (byte) -this.vezDeJogar;
         if (vezDeJogar == JOGADOR_COMPUTADOR) {
-            computador.minhaVez(new Ponto((byte) linha, (byte) coluna));
+            new Thread(new Runnable() {
+
+                public void run() {
+                    try {
+                        Thread.sleep(100);
+                        computador.minhaVez(new Ponto((byte) linha, (byte) coluna));
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Tabuleiro.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }).start();
         }else{
             //
         }
@@ -248,5 +260,9 @@ public class Tabuleiro {
      */
     public byte[][] getTabuleiro() {
         return tabuleiro;
+    }
+
+    public byte getDonoDoPonto(Ponto ponto) {
+        return tabuleiro[ponto.linha][ponto.coluna];
     }
 }
