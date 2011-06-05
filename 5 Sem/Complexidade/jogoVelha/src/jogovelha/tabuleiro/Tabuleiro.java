@@ -131,6 +131,9 @@ public class Tabuleiro {
         }
         return getTabuleiro()[linha][coluna] == 0;
     }
+    public byte getDonoDoMeio(){
+        return tabuleiro[1][1];
+    }
 
     public boolean estaLivre(Ponto p) {
         return estaLivre(p.linha, p.coluna);

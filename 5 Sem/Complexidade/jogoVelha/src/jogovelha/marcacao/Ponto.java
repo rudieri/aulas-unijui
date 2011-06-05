@@ -49,6 +49,9 @@ public class Ponto {
     public boolean isCanto(){
         return linha%2==0&&coluna%2==0;
     }
+    public boolean isCenter(){
+        return linha==1&&coluna==1;
+    }
 
     /**
      * @return the limiteLinhas
