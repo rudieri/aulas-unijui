@@ -52,6 +52,9 @@ public class Ponto {
     public boolean isCenter(){
         return linha==1&&coluna==1;
     }
+    public boolean isTranposta(){
+        return linha>0&&coluna>0;
+    }
 
     /**
      * @return the limiteLinhas
