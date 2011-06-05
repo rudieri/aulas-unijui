@@ -1,12 +1,16 @@
 package jogovelha.tela;
 
+import jogovelha.utils.Render;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import jogovelha.Loader;
+import jogovelha.interfaces.Jogador;
 import jogovelha.marcacao.Marca;
 import jogovelha.marcacao.Mensageiro;
 import jogovelha.tabuleiro.Tabuleiro;
@@ -34,12 +38,25 @@ public class TelaVelha extends javax.swing.JDialog {
     private Tabuleiro tabuleiroReal;
     public byte quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
     private Mensageiro elFin;
+    private final Loader loader;
+    private final JPreferencias preferencias;
+    private Thread t;
+    private boolean contar = false;
+    private int secs = 0;
 
     /** Creates new form TelaVelha */
-    public TelaVelha(java.awt.Frame parent, boolean modal) throws IOException {
+    public TelaVelha(java.awt.Frame parent, boolean modal, Loader loader) {
         super(parent, modal);
-        init();
-//        pack();
+        this.loader = loader;
+        try {
+            init();
+            //        pack();
+            jLabel_Status.setText(Loader.pacotePadrao + Loader.jogadorPadrao);
+        } catch (IOException ex) {
+            Logger.getLogger(TelaVelha.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        preferencias = new JPreferencias(this, true);
+        jLabel_Tempo.setText("");
     }
 
     private void init() throws IOException {
@@ -65,6 +82,7 @@ public class TelaVelha extends javax.swing.JDialog {
             }
 
         }
+        elFin = null;
     }
 
     public void setTabuleiroReal(Tabuleiro tabuleiroReal) {
@@ -138,10 +156,19 @@ public class TelaVelha extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel_Ferramentas = new javax.swing.JPanel();
+        jLabel_Novo = new javax.swing.JLabel();
+        jLabel_Pref = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel_Nada = new javax.swing.JPanel();
+        jPanel_Status = new javax.swing.JPanel();
         jLabel_Status = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel_Tempo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_Jogo = new javax.swing.JMenu();
         jMenuItem_NovoJogo = new javax.swing.JMenuItem();
@@ -155,11 +182,42 @@ public class TelaVelha extends javax.swing.JDialog {
                 formFocusGained(evt);
             }
         });
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel_Ferramentas.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 4));
+
+        jLabel_Novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jogovelha/bitmaps/new.png"))); // NOI18N
+        jLabel_Novo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_Novo.setPreferredSize(new java.awt.Dimension(24, 24));
+        jLabel_Novo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_NovoMouseClicked(evt);
+            }
+        });
+        jPanel_Ferramentas.add(jLabel_Novo);
+
+        jLabel_Pref.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jogovelha/bitmaps/config.png"))); // NOI18N
+        jLabel_Pref.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_Pref.setPreferredSize(new java.awt.Dimension(24, 24));
+        jLabel_Pref.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_PrefMouseClicked(evt);
+            }
+        });
+        jPanel_Ferramentas.add(jLabel_Pref);
+
+        getContentPane().add(jPanel_Ferramentas);
+
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(jPanel4);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(220, 150));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(220, 165));
 
+        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -186,8 +244,8 @@ public class TelaVelha extends javax.swing.JDialog {
             }
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTable1.setPreferredSize(new java.awt.Dimension(220, 150));
-        jTable1.setRowHeight(50);
+        jTable1.setPreferredSize(new java.awt.Dimension(220, 165));
+        jTable1.setRowHeight(55);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -203,15 +261,32 @@ public class TelaVelha extends javax.swing.JDialog {
         jTable1.getColumnModel().getColumn(1).setResizable(false);
         jTable1.getColumnModel().getColumn(2).setResizable(false);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jScrollPane1);
 
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 1));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(jPanel3);
+
+        getContentPane().add(jPanel2);
+
+        jPanel_Nada.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(jPanel_Nada);
+
+        jPanel_Status.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 1));
 
         jLabel_Status.setText("...");
         jLabel_Status.setOpaque(true);
-        jPanel1.add(jLabel_Status);
+        jLabel_Status.setPreferredSize(new java.awt.Dimension(200, 18));
+        jPanel_Status.add(jLabel_Status);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 1));
+
+        jLabel_Tempo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel_Tempo.setText("01:00");
+        jPanel1.add(jLabel_Tempo);
+
+        jPanel_Status.add(jPanel1);
+
+        getContentPane().add(jPanel_Status);
 
         jMenu_Jogo.setMnemonic('j');
         jMenu_Jogo.setText("Jogo");
@@ -243,50 +318,67 @@ public class TelaVelha extends javax.swing.JDialog {
         setJMenuBar(jMenuBar1);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-224)/2, (screenSize.height-220)/2, 224, 220);
+        setBounds((screenSize.width-264)/2, (screenSize.height-275)/2, 264, 275);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int row = jTable1.rowAtPoint(evt.getPoint());
         int col = jTable1.columnAtPoint(evt.getPoint());
-        tabuleiroReal.jogar(Tabuleiro.JOGADOR_HUMANO, (byte)row, (byte)col);
+        tabuleiroReal.jogar(Tabuleiro.JOGADOR_HUMANO, (byte) row, (byte) col);
 
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jMenuItem_NovoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_NovoJogoActionPerformed
         // TODO add your handling code here:
-        limpar();
-        tabuleiroReal.start(quemComeca);
+        novoJogo();
     }//GEN-LAST:event_jMenuItem_NovoJogoActionPerformed
 
     private void jMenuItem_PreferenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PreferenciasActionPerformed
         // TODO add your handling code here:
-        new JPreferencias(this, true).setVisible(true);
+        mostrarPreferencias();
     }//GEN-LAST:event_jMenuItem_PreferenciasActionPerformed
 
     private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
         // TODO add your handling code here:
-        if (elFin!=null) {
+        if (elFin != null) {
             gameOver(elFin);
         }
     }//GEN-LAST:event_jTable1FocusGained
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
         // TODO add your handling code here:
-         if (elFin!=null) {
+        if (elFin != null) {
             gameOver(elFin);
         }
     }//GEN-LAST:event_formFocusGained
 
+    private void jLabel_NovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_NovoMouseClicked
+        // TODO add your handling code here:
+        novoJogo();
+    }//GEN-LAST:event_jLabel_NovoMouseClicked
+
+    private void jLabel_PrefMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_PrefMouseClicked
+        // TODO add your handling code here:
+        mostrarPreferencias();
+    }//GEN-LAST:event_jLabel_PrefMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel_Novo;
+    private javax.swing.JLabel jLabel_Pref;
     private javax.swing.JLabel jLabel_Status;
+    private javax.swing.JLabel jLabel_Tempo;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem_NovoJogo;
     private javax.swing.JMenuItem jMenuItem_Preferencias;
     private javax.swing.JMenu jMenu_Jogo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel_Ferramentas;
+    private javax.swing.JPanel jPanel_Nada;
+    private javax.swing.JPanel jPanel_Status;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
@@ -297,5 +389,85 @@ public class TelaVelha extends javax.swing.JDialog {
         } else {
             jTable1.setValueAt(pbol, linha, coluna);
         }
+    }
+
+    public String getNomeDoMeuAdversario() {
+        return loader.getComputerName();
+    }
+
+    public void alterarAiJogador(String jogador) {
+        try {
+            Jogador pc;
+            if (jogador == null) {
+                return;
+            }
+            if (jogador.indexOf(".") != -1) {
+                pc = (Jogador) Class.forName(jogador).newInstance();
+            } else {
+                pc = (Jogador) Class.forName(Loader.pacotePadrao + jogador).newInstance();
+            }
+            loader.alterarJogador(pc);
+            jLabel_Status.setText(loader.getComputerName());
+        } catch (Exception ex) {
+            Logger.getLogger(this.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }
+
+    private void novoJogo() {
+        limpar();
+        tabuleiroReal.start(quemComeca);
+        startTimer();
+    }
+
+    private void mostrarPreferencias() {
+        preferencias.setVisible(true);
+    }
+
+    private void startTimer() {
+        secs = 0;
+        if (t == null) {
+            t = new Thread(new Runnable() {
+
+                public void run() {
+                    while (true) {
+                        if (contar) {
+                            secs++;
+                            setTime(secs);
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(TelaVelha.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                }
+            });
+            t.start();
+        }
+        contar = true;
+
+    }
+
+    private void setTime(int segundos) {
+        int minutos = segundos / 60;
+        segundos = segundos - minutos * 60;
+        String min = String.valueOf(minutos);
+        String seg = String.valueOf(segundos);
+        if (min.length() == 1) {
+            min = "0" + min + ":";
+            if (min.equals("00:")) {
+                min = "";
+            }
+        }
+        if (seg.length() == 1) {
+            seg = "0" + seg;
+        }
+        jLabel_Tempo.setText(min + seg);
+    }
+
+    public void acabou() {
+        contar=false;
+       
     }
 }

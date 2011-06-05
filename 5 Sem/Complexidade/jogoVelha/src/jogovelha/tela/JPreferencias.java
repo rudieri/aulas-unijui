@@ -10,7 +10,9 @@
  */
 package jogovelha.tela;
 
+import jogovelha.Loader;
 import jogovelha.tabuleiro.Tabuleiro;
+import jogovelha.utils.MyComboBoxModel;
 
 /**
  *
@@ -19,24 +21,50 @@ import jogovelha.tabuleiro.Tabuleiro;
 public class JPreferencias extends javax.swing.JDialog {
 
     private TelaVelha telaVelha;
+    private MyComboBoxModel aiModel;
 
     /** Creates new form JPreferencias */
     public JPreferencias(TelaVelha parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.telaVelha = parent;
-        if (telaVelha.quemComeca==Tabuleiro.JOGADOR_HUMANO) {
-            jComboBox_Jogador.setSelectedItem("Humano");
-        }else{
-            jComboBox_Jogador.setSelectedItem("Computador");
-        }
+        aiModel = new MyComboBoxModel();
+        aiModel.addElementIfNotExist(Loader.pacotePadrao + "Jogador2");
+        aiModel.addElementIfNotExist(Loader.pacotePadrao + "RJogador");
+        jComboBox_AiComputador.setModel(aiModel);
     }
-    private void salvar(){
+
+    @Override
+    public void setVisible(boolean b) {
+
+        if (b) {
+            if (telaVelha.quemComeca == Tabuleiro.JOGADOR_HUMANO) {
+                jComboBox_Jogador.setSelectedItem("Humano");
+            } else {
+                jComboBox_Jogador.setSelectedItem("Computador");
+            }
+            short index = aiModel.getIndexOfElement(telaVelha.getNomeDoMeuAdversario());
+            if (index == -1) {
+                jComboBox_AiComputador.setSelectedItem(telaVelha.getNomeDoMeuAdversario());
+            } else {
+                jComboBox_AiComputador.setSelectedIndex(index);
+            }
+        }
+        super.setVisible(b);
+    }
+
+    private void salvarJogadorComeca() {
         if (((String) jComboBox_Jogador.getSelectedItem()).equalsIgnoreCase("humano")) {
             telaVelha.quemComeca = Tabuleiro.JOGADOR_HUMANO;
         } else {
             telaVelha.quemComeca = Tabuleiro.JOGADOR_COMPUTADOR;
         }
+    }
+
+    private void salvarAiJogador() {
+        String jogador = (String) jComboBox_AiComputador.getSelectedItem();
+        aiModel.addElementIfNotExist(jogador);
+        telaVelha.alterarAiJogador(jogador);
     }
 
     /** This method is called from within the constructor to
@@ -51,6 +79,9 @@ public class JPreferencias extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox_Jogador = new javax.swing.JComboBox();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox_AiComputador = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         jButton_Fechar = new javax.swing.JButton();
 
@@ -65,9 +96,11 @@ public class JPreferencias extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 2));
 
         jLabel1.setText("Quem começa o jogo: ");
+        jLabel1.setPreferredSize(new java.awt.Dimension(200, 18));
         jPanel1.add(jLabel1);
 
         jComboBox_Jogador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Humano", "Computador" }));
+        jComboBox_Jogador.setPreferredSize(new java.awt.Dimension(180, 28));
         jComboBox_Jogador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_JogadorActionPerformed(evt);
@@ -82,6 +115,29 @@ public class JPreferencias extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1);
 
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 2));
+
+        jLabel2.setText("AI do Computador:");
+        jLabel2.setPreferredSize(new java.awt.Dimension(200, 18));
+        jPanel3.add(jLabel2);
+
+        jComboBox_AiComputador.setEditable(true);
+        jComboBox_AiComputador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jogador2", "RJogador" }));
+        jComboBox_AiComputador.setPreferredSize(new java.awt.Dimension(180, 28));
+        jComboBox_AiComputador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_AiComputadorActionPerformed(evt);
+            }
+        });
+        jComboBox_AiComputador.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBox_AiComputadorPropertyChange(evt);
+            }
+        });
+        jPanel3.add(jComboBox_AiComputador);
+
+        getContentPane().add(jPanel3);
+
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButton_Fechar.setText("Fechar");
@@ -95,7 +151,7 @@ public class JPreferencias extends javax.swing.JDialog {
         getContentPane().add(jPanel2);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-301)/2, (screenSize.height-99)/2, 301, 99);
+        setBounds((screenSize.width-395)/2, (screenSize.height-129)/2, 395, 129);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox_JogadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_JogadorActionPerformed
@@ -114,15 +170,27 @@ public class JPreferencias extends javax.swing.JDialog {
 
     private void jButton_FecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FecharActionPerformed
         // TODO add your handling code here:
-        salvar();
+        salvarJogadorComeca();
         dispose();
     }//GEN-LAST:event_jButton_FecharActionPerformed
 
+    private void jComboBox_AiComputadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_AiComputadorActionPerformed
+        // TODO add your handling code here:
+        salvarAiJogador();
+//        dispose();
+    }//GEN-LAST:event_jComboBox_AiComputadorActionPerformed
+
+    private void jComboBox_AiComputadorPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox_AiComputadorPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_AiComputadorPropertyChange
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Fechar;
+    private javax.swing.JComboBox jComboBox_AiComputador;
     private javax.swing.JComboBox jComboBox_Jogador;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

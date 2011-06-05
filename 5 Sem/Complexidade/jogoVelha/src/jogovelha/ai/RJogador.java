@@ -27,6 +27,7 @@ public class RJogador implements Jogador {
     }
 
     private void init() {
+
     }
 
     @Override
@@ -174,7 +175,7 @@ public class RJogador implements Jogador {
         this.tabuleiro = tabuleiroReal;
     }
 
-    public void gamaIsOver(byte vencedor) {
+    public void gameIsOver(byte vencedor) {
         if (vencedor == eu) {
             JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
         } else {

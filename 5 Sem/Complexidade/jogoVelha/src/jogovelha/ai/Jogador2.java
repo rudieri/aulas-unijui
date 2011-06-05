@@ -4,6 +4,7 @@
  */
 package jogovelha.ai;
 
+import java.util.ArrayList;
 import jogovelha.interfaces.Jogador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,15 +20,14 @@ public class Jogador2 implements Jogador {
 
     private Tabuleiro tabuleiro;
     private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
+    private final byte masqPadrao = 4;
+    private final Ponto zero = new Ponto(0, 0);
 
     public Jogador2() {
         init();
     }
 
     private void init() {
-     
-        
-
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Jogador2 implements Jogador {
             public void run() {
                 try {
                     Thread.sleep(500);
-                    pense(new Ponto(0, 0));
+                    pense(new Ponto(0, 0), masqPadrao);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jogador2.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -46,7 +46,7 @@ public class Jogador2 implements Jogador {
     }
 
     public void minhaVez(Ponto ponto) {
-       
+
         Ponto tp = tabuleiro.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
         if (tp != null) {
             jogue(tp);
@@ -57,22 +57,34 @@ public class Jogador2 implements Jogador {
             jogue(tp);
             return;
         }
+        ArrayList<Ponto> pl = tabuleiro.getPosicoesLivres();
+        if (pl.size()<=2) {
+            pense(pl.get(0), masqPadrao);
+        }
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
+        if (ponto.isCanto() ) {
+            pense(1, 1, ponto.linha+ponto.coluna+1);
+        } else {
 
-        pense(new Ponto(0, 0));
+            pense(new Ponto(0, 0), masqPadrao);
+        }
 
     }
 
-    private void pense(Ponto ponto) {
+    private void pense(int linha, int coluna, int masq) {
+        pense(new Ponto(linha, coluna), (byte) masq);
+    }
+
+    private void pense(Ponto ponto, byte masq) {
         if (!tabuleiro.existemCasas()) {
             return;
         }
         if (tabuleiro.estaLivre(ponto)) {
             jogue(ponto);
         } else {
-            ponto.somar(4);
-            pense(ponto);
+            ponto.somar(masq);
+            pense(ponto, masq);
             // marcar(ponto, Tabuleiro.JOGADOR_COMPUTADOR);
         }
     }
@@ -86,16 +98,15 @@ public class Jogador2 implements Jogador {
         this.tabuleiro = tabuleiroReal;
     }
 
-    public void gamaIsOver(byte vencedor) {
-        if (vencedor==eu) {
-            JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!","Computador diz...",JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...","Computador diz...",JOptionPane.INFORMATION_MESSAGE);
+    public void gameIsOver(byte vencedor) {
+        if (vencedor == eu) {
+            JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     public void novoJogo() {
-        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }
