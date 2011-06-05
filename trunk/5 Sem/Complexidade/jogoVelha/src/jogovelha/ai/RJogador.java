@@ -94,8 +94,7 @@ public class RJogador implements Jogador {
          * para evitar a jogada diagonal
          */
         if (primeiraRodada 
-                && (ponto.linha == 0 || ponto.linha==2) 
-                && (ponto.coluna == 0 || ponto.coluna == 2)
+                && ponto.isCanto()
                 && tabuleiro.estaLivre(new Ponto(1, 1))) {
            
                 melhorPonto = new Ponto(1, 1);    
@@ -116,8 +115,7 @@ public class RJogador implements Jogador {
          * e for um canto
          */
         if (melhorPonto != null
-                && (ponto.linha == 0 || ponto.linha == 2)
-                && (ponto.coluna == 0 || ponto.coluna == 2)
+                && ponto.isCanto()
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
         }
@@ -127,10 +125,8 @@ public class RJogador implements Jogador {
          * Se o melhor ponto nao for nem um canto
          */
         if (melhorPonto != null
-                && !(melhorPonto.linha == 0 || melhorPonto.linha == 2)
-                && !(melhorPonto.coluna == 0 || melhorPonto.coluna == 2)
-                && (ponto.linha > 0 && ponto.linha < 2)
-                && (ponto.coluna > 0 || ponto.coluna < 2)
+                && !(melhorPonto.isCanto())
+                && !ponto.isCanto()
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
         }
