@@ -77,7 +77,12 @@ public class Jogador2 implements Jogador {
             if (!ponto.isCanto() && !ponto.isCenter()) {
                 pense(1, 1, getVariante());
             } else {
-                pense(1, 1, 4);
+              byte var=  getVariante();
+                if (var%2!=0) {
+                    var=(byte) (var/2-3);
+                }
+//              var=var==5?3:var;
+                pense(1, 1, 4+var);
             }
         } else {
 
