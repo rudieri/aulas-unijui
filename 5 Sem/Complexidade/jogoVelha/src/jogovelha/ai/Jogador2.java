@@ -22,7 +22,7 @@ public class Jogador2 implements Jogador {
     private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
     private final byte masqPadrao = 4;
     private final Ponto zero = new Ponto(0, 0);
-    private byte conta=0;
+    private byte conta = 0;
 
     public Jogador2() {
         init();
@@ -47,7 +47,7 @@ public class Jogador2 implements Jogador {
     }
 
     public void minhaVez(Ponto ponto) {
-        conta=0;
+        conta = 0;
         Ponto tp = tabuleiro.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
         if (tp != null) {
             jogue(tp);
@@ -69,15 +69,15 @@ public class Jogador2 implements Jogador {
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
         if (!ponto.isCenter()) {
-            byte dono = tabuleiro.getDonoDoMeio();
-            if (dono == eu ) {
-                dono = 1;
-            }
+//            byte dono = tabuleiro.getDonoDoMeio();
+//            if (dono == eu) {
+//                dono = 1;
+//            }
 //           dono=dono==eu?dono:tabuleiro.getDonoDoPonto(ponto);
-            if (!ponto.isCanto()&&!ponto.isCenter()) {
-                pense(1, 1,getVariante());
+            if (!ponto.isCanto() && !ponto.isCenter()) {
+                pense(1, 1, getVariante());
             } else {
-                pense(1, 1, 8 + dono);
+                pense(1, 1, 4);
             }
         } else {
 
@@ -89,17 +89,16 @@ public class Jogador2 implements Jogador {
     private void pense(int linha, int coluna, int masq) {
         pense(new Ponto(linha, coluna), (byte) masq);
     }
-    private byte getVariante(){
-        byte var=0;
+
+    private byte getVariante() {
+        byte var = 0;
         byte[][] cloneMatriz = tabuleiro.getcloneMatriz();
         for (int i = 0; i < cloneMatriz.length; i++) {
             byte[] bs = cloneMatriz[i];
             for (int j = 0; j < bs.length; j++) {
                 byte b = bs[j];
-                if (b==Tabuleiro.JOGADOR_HUMANO) {
-//                    if (new Ponto(i, j).isTranposta()) {
-                       var = (byte) (-var+(i*3+j));
-//                    }
+                if (b == Tabuleiro.JOGADOR_HUMANO) {
+                    var = (byte) (-var + (i * 3 + j));
                 }
             }
         }
@@ -114,11 +113,11 @@ public class Jogador2 implements Jogador {
             jogue(ponto);
         } else {
             ponto.somar(masq);
-            if (masq==0) {
-                masq=4;
+            if (masq == 0) {
+                masq = 4;
             }
-            if (conta>10) {
-                conta=0;
+            if (conta > 10) {
+                conta = 0;
                 masq--;
             }
             conta++;
