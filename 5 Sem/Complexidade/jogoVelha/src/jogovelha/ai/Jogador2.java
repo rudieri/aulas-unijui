@@ -22,6 +22,7 @@ public class Jogador2 implements Jogador {
     private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
     private final byte masqPadrao = 4;
     private final Ponto zero = new Ponto(0, 0);
+    private byte conta=0;
 
     public Jogador2() {
         init();
@@ -46,7 +47,7 @@ public class Jogador2 implements Jogador {
     }
 
     public void minhaVez(Ponto ponto) {
-
+        conta=0;
         Ponto tp = tabuleiro.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
         if (tp != null) {
             jogue(tp);
@@ -73,7 +74,7 @@ public class Jogador2 implements Jogador {
                 dono = 1;
             }
 //           dono=dono==eu?dono:tabuleiro.getDonoDoPonto(ponto);
-            if (!ponto.isCanto()) {
+            if (!ponto.isCanto()&&!ponto.isCenter()) {
                 pense(1, 1,getVariante());
             } else {
                 pense(1, 1, 8 + dono);
@@ -113,10 +114,15 @@ public class Jogador2 implements Jogador {
             jogue(ponto);
         } else {
             ponto.somar(masq);
-//            if (masq==0) {
-//                masq=4;
-//            }
-            pense(ponto, ++masq);
+            if (masq==0) {
+                masq=4;
+            }
+            if (conta>10) {
+                conta=0;
+                masq--;
+            }
+            conta++;
+            pense(ponto, masq);
             // marcar(ponto, Tabuleiro.JOGADOR_COMPUTADOR);
         }
     }
