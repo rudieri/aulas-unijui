@@ -4,7 +4,10 @@
  */
 package jogovelha.ai;
 
+import java.io.File;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import jogovelha.interfaces.Jogador;
 import javax.swing.JOptionPane;
 import jogovelha.marcacao.Ponto;
@@ -27,7 +30,6 @@ public class RJogador implements Jogador {
     }
 
     private void init() {
-
     }
 
     @Override
@@ -86,7 +88,7 @@ public class RJogador implements Jogador {
         if (leuPontos >= 9) {
             jogue(melhorPonto);
             return;
-        }       
+        }
 
         /*
          * Se for Primeira rodada e o humano comecar
@@ -94,30 +96,38 @@ public class RJogador implements Jogador {
          * ele joga no meio
          * para evitar a jogada diagonal
          */
-        if (primeiraRodada 
+        if (primeiraRodada
                 && ponto.isCanto()
                 && tabuleiro.estaLivre(new Ponto(1, 1))) {
-           
-                melhorPonto = new Ponto(1, 1);    
-                leuPontos=9;
-                jogue(melhorPonto);
-                return;
 
-        }else if(primeiraRodada){
+            melhorPonto = new Ponto(1, 1);
+            leuPontos = 9;
+            jogue(melhorPonto);
+            return;
+
+        } else if (primeiraRodada) {
             primeiraRodada = false;
         }
-        
+
         /**
          * Anda pelas Casas
          */
         ponto.somar(1);
-        
-        
+
+
+        if (melhorPonto != null
+                && ponto.isCenter()
+                && tabuleiro.estaLivre(ponto)) {
+            melhorPonto = new Ponto(ponto.linha, ponto.coluna);
+
+        }
+
         /*
          * Se não for o centro e  melhor ponto nao for o centro
          * e for um canto
          */
         if (melhorPonto != null
+                && !melhorPonto.isCenter()
                 && ponto.isCanto()
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
@@ -129,6 +139,7 @@ public class RJogador implements Jogador {
          */
         if (melhorPonto != null
                 && !(melhorPonto.isCanto())
+                && !melhorPonto.isCenter()
                 && !ponto.isCanto()
                 && tabuleiro.estaLivre(ponto)) {
             melhorPonto = new Ponto(ponto.linha, ponto.coluna);
@@ -179,7 +190,7 @@ public class RJogador implements Jogador {
         if (vencedor == eu) {
             JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE,new javax.swing.ImageIcon(getClass().getResource("/jogovelha/bitmaps/chapolin.png")));
         }
     }
 
