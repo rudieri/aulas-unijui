@@ -33,17 +33,17 @@ public class Jogador2 implements Jogador {
 
     @Override
     public void comecar() {
-        new Thread(new Runnable() {
-
-            public void run() {
-                try {
-                    Thread.sleep(500);
-                    pense(new Ponto(0, 0), masqPadrao);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Jogador2.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//
+//            public void run() {
+        try {
+            Thread.sleep(500);
+            pense(new Ponto(0, 0), masqPadrao);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Jogador2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//            }
+//        }).start();
     }
 
     public void minhaVez(Ponto ponto) {
@@ -77,12 +77,11 @@ public class Jogador2 implements Jogador {
             if (!ponto.isCanto() && !ponto.isCenter()) {
                 pense(1, 1, getVariante());
             } else {
-              byte var=  getVariante();
-                if (var%2!=0) {
-                    var=(byte) (var/2-3);
+                byte var = getVariante();
+                if (var % 2 != 0) {
+                    var = (byte) (var / 2 - 2);
                 }
-//              var=var==5?3:var;
-                pense(1, 1, 4+var);
+                pense(1, 1, 4 + var);
             }
         } else {
 
@@ -148,7 +147,7 @@ public class Jogador2 implements Jogador {
         if (vencedor == eu) {
             JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/jogovelha/bitmaps/chapolin.png")));
         }
     }
 
