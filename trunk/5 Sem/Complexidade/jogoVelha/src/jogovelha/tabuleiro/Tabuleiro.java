@@ -37,7 +37,7 @@ public class Tabuleiro {
     }
 
     public Tabuleiro newInstance(){
-        return new Tabuleiro(telaVelha, computador);
+        return new Tabuleiro(getTelaVelha(), computador);
     }
     private void init(TelaVelha telaVelha, Jogador computador) {
         this.telaVelha = telaVelha;
@@ -92,7 +92,7 @@ public class Tabuleiro {
 
     public boolean jogar(byte jogador, final byte linha, final byte coluna) {
         if (bloqueio) {
-            JOptionPane.showMessageDialog(telaVelha, "Clique Novo Jogo para começar.");
+            JOptionPane.showMessageDialog(getTelaVelha(), "Clique Novo Jogo para começar.");
             return false;
         }
         
@@ -103,13 +103,13 @@ public class Tabuleiro {
             setValue(jogador, linha, coluna);
         }
         if (isGameOver()) {
-            telaVelha.acabou();
+            getTelaVelha().acabou();
             bloqueio = true;
             computador.gameIsOver(vezDeJogar);
             return true;
         }
         if (!existemCasas()) {
-            telaVelha.acabou();
+            getTelaVelha().acabou();
             bloqueio=true;
         }
         this.vezDeJogar = (byte) -this.vezDeJogar;
@@ -134,7 +134,7 @@ public class Tabuleiro {
     private void setValue(byte jogador, byte linha, byte coluna) {
         casasRestantes--;
         tabuleiro[linha][coluna] = this.vezDeJogar;
-        telaVelha.setValor(jogador, linha, coluna);
+        getTelaVelha().setValor(jogador, linha, coluna);
     }
 
     public boolean estaLivre(byte linha, byte coluna) {
@@ -244,7 +244,7 @@ public class Tabuleiro {
             m = new Mensageiro(vezDeJogar, new Ponto(0, 2), new Ponto(1, 1), new Ponto(2, 0));
         }
         if (m != null) {
-            telaVelha.gameOver(m);
+            getTelaVelha().gameOver(m);
             return true;
         }
 
@@ -264,5 +264,12 @@ public class Tabuleiro {
 
     public byte getDonoDoPonto(Ponto ponto) {
         return tabuleiro[ponto.linha][ponto.coluna];
+    }
+
+    /**
+     * @return the telaVelha
+     */
+    public TelaVelha getTelaVelha() {
+        return telaVelha;
     }
 }

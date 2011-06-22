@@ -4,12 +4,12 @@
  */
 package jogovelha.ai;
 
-import java.io.File;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import jogovelha.interfaces.Jogador;
 import javax.swing.JOptionPane;
+import jogovelha.banco.Transacao;
+import jogovelha.dados.Jogada;
+import jogovelha.dados.Peca;
 import jogovelha.marcacao.Ponto;
 import jogovelha.tabuleiro.Tabuleiro;
 
@@ -24,6 +24,7 @@ public class RJogador implements Jogador {
     private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
     private int leuPontos = 0;
     private boolean primeiraRodada = true;
+    private ArrayList<Jogada> listaDeJogadas = new ArrayList<Jogada>();
 
     public RJogador() {
         init();
@@ -89,7 +90,7 @@ public class RJogador implements Jogador {
             jogue(melhorPonto);
             return;
         }
-
+        Jogada tabuleiroToJogada = tabuleiroToJogada();
         /*
          * Se for Primeira rodada e o humano comecar
          *  em um canto
@@ -192,9 +193,96 @@ public class RJogador implements Jogador {
         } else {
             JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/jogovelha/bitmaps/chapolin.png")));
         }
+        
+        salvarEstatistica(vencedor);
+
+    }
+    
+    
+    
+    private Jogada tabuleiroToJogada(){
+        Jogada j = new Jogada();
+        for (int i = 0; i < 3; i++) {
+            for (int k = 0; k < 3; k++) {
+                if(tabuleiro.getTelaVelha().getTabela().getValueAt(i, k)==null)
+                    continue;
+                
+                int aux = new Byte(tabuleiro.getTabuleiro()[i][k]).intValue();
+                if(aux== -1)
+                    continue;
+                
+                if(i==0&&k==0)
+                    j.setP1(Peca.values()[aux]);
+                
+                if(i==1&&k==0)
+                    j.setP2(Peca.values()[aux]);
+                
+                if(i==2&&k==0)
+                    j.setP3(Peca.values()[aux]);
+                
+                if(i==0&&k==1)
+                    j.setP4(Peca.values()[aux]);
+                
+                if(i==1&&k==1)
+                    j.setP5(Peca.values()[aux]);
+                
+                if(i==2&&k==1)
+                    j.setP6(Peca.values()[aux]);
+                
+                if(i==0&&k==2)
+                    j.setP7(Peca.values()[aux]);
+                
+                if(i==1&&k==2)
+                    j.setP8(Peca.values()[aux]);
+                
+                if(i==2&&k==2)
+                    j.setP9(Peca.values()[aux]);
+                
+
+        
+                
+            }
+            
+        }
+        
+        
+        return j;
+        
+        
     }
 
     public void novoJogo() {
+        salvarEstatistica(Integer.valueOf(666).byteValue());
         primeiraRodada = true;
+        listaDeJogadas = new ArrayList<Jogada>();
+    }
+
+    private void salvarEstatistica(byte vencedor) {
+        if (listaDeJogadas.size() > 0) {
+            Transacao t = new Transacao();
+            try {
+                t.begin();
+                for (int i = 0; i < listaDeJogadas.size(); i++) {
+                    Jogada jogada = listaDeJogadas.get(i);
+                    if (vencedor == Tabuleiro.JOGADOR_HUMANO) {
+                        jogada.setVitorias(jogada.getVitorias() + 1);
+                    } else if (vencedor == Tabuleiro.JOGADOR_COMPUTADOR) {
+                        jogada.setDerrotas(jogada.getDerrotas() + 1);
+                    } else {
+                        jogada.setEmpate(jogada.getEmpate() + 1);
+                    }
+
+                    t.saveOrUpdate(jogada);
+
+                }
+                t.commit();
+
+            } catch (Exception ex) {
+                t.rollback();
+                ex.printStackTrace();
+            }finally{
+                listaDeJogadas = new ArrayList<Jogada>();
+            }
+        }
     }
 }
