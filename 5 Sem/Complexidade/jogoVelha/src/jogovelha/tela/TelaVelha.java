@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 import jogovelha.Loader;
 import jogovelha.interfaces.Jogador;
 import jogovelha.marcacao.Marca;
@@ -144,6 +145,11 @@ public class TelaVelha extends javax.swing.JDialog {
         jTable1.getGraphics().drawLine(x1, y1, x2, y2);
 
 
+    }
+    
+    
+    public DefaultTableModel getTabela(){
+        return (DefaultTableModel) jTable1.getModel();
     }
 
     /** This method is called from within the constructor to
