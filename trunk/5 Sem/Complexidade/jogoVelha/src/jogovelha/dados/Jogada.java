@@ -5,7 +5,10 @@
 package jogovelha.dados;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -15,22 +18,23 @@ import javax.persistence.UniqueConstraint;
  * @author manchini
  */
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"p1","p2","p3","p4","p5","p6","p7","p8","p9"})})
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"})})
 public class Jogada implements Serializable {
-    
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
-    private Peca p1;
-    private Peca p2;
-    private Peca p3;
-    private Peca p4;
-    private Peca p5;
-    private Peca p6;
-    private Peca p7;
-    private Peca p8;
-    private Peca p9;
-    
+    private Peca p1 = Peca.NULO;
+    private Peca p2 = Peca.NULO;
+    private Peca p3 = Peca.NULO;
+    private Peca p4 = Peca.NULO;
+    private Peca p5 = Peca.NULO;
+    private Peca p6 = Peca.NULO;
+    private Peca p7 = Peca.NULO;
+    private Peca p8 = Peca.NULO;
+    private Peca p9 = Peca.NULO;
     private int vitorias;
     private int derrotas;
     private int empate;
@@ -216,7 +220,4 @@ public class Jogada implements Serializable {
     public void setEmpate(int empate) {
         this.empate = empate;
     }
-    
-    
-    
 }

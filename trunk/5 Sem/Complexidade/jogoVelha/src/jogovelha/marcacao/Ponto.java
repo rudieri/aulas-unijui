@@ -14,6 +14,8 @@ public class Ponto {
     public byte coluna;
     private final byte limiteLinhas = 3;
     private final byte limiteColunas = 3;
+    
+    private Double estatistica = -666d;
 
     public Ponto(byte linha, byte coluna) {
         this.linha = linha;
@@ -93,6 +95,20 @@ public class Ponto {
     @Override
     public String toString() {
         return "["+linha+","+coluna+"]";
+    }
+
+    /**
+     * @return the estatistica
+     */
+    public Double getEstatistica() {
+        return estatistica;
+    }
+
+    /**
+     * @param estatistica the estatistica to set
+     */
+    public void setEstatistica(Double estatistica) {
+        this.estatistica = estatistica;
     }
     
     
