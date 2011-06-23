@@ -88,12 +88,13 @@ public class RJogador implements Jogador {
      * @param melhorPonto 
      */
     public void pense(Ponto ponto, Ponto melhorPonto) {
-        if (leuPontos >= 8) {
-            if(tabuleiro.estaLivre(melhorPonto)){
-            jogue(melhorPonto);
-            return;
-            }else
-                leuPontos=0;
+        if (leuPontos >= 9) {
+            if (tabuleiro.estaLivre(melhorPonto)) {
+                jogue(melhorPonto);
+                return;
+            } else {
+                leuPontos = 0;
+            }
         }
 
 
@@ -112,7 +113,7 @@ public class RJogador implements Jogador {
                 indice = indice / totalJogadas;
             }
 
-            if (melhorPonto.getEstatistica() < indice || ponto.getEstatistica() == -666) {
+            if (melhorPonto.getEstatistica() < indice || melhorPonto.getEstatistica() == -666) {
                 if (tabuleiro.estaLivre(ponto)) {
                     melhorPonto = ponto;
                     melhorPonto.setEstatistica(indice);
@@ -122,10 +123,10 @@ public class RJogador implements Jogador {
 
 
             //se nao joga na IA antiga
-        } 
-        
-        
-        if( melhorPonto.getEstatistica() == -666 ){
+        }
+
+
+        if (melhorPonto.getEstatistica() == -666) {
 
             /*
              * Se for Primeira rodada e o humano comecar
