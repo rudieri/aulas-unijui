@@ -23,7 +23,7 @@ public class RJogador implements Jogador {
 
     private Tabuleiro tabuleiro;
     private static final byte eu = Tabuleiro.JOGADOR_COMPUTADOR;
-    private int leuPontos = 0;
+    private byte leuPontos = 0;
     private boolean primeiraRodada = true;
     private ArrayList<Jogada> listaDeJogadas = new ArrayList<Jogada>();
 
@@ -190,9 +190,9 @@ public class RJogador implements Jogador {
 
     private Ponto verificaJogadaDiagonal() {
         ArrayList<Ponto> listaPontosHumano = new ArrayList<Ponto>();
-        int pontosHumandos = 0;
-        for (int l = 0; l < tabuleiro.getTabuleiro().length; l++) {
-            for (int c = 0; c < tabuleiro.getTabuleiro()[l].length; c++) {
+        byte pontosHumandos = 0;
+        for (byte l = 0; l < tabuleiro.getTabuleiro().length; l++) {
+            for (byte c = 0; c < tabuleiro.getTabuleiro()[l].length; c++) {
                 if ((l == 0 || l == 2) && (c == 0 || c == 2)) {
                     if (tabuleiro.getTabuleiro()[l][c] == Tabuleiro.JOGADOR_HUMANO) {
                         listaPontosHumano.add(new Ponto(l, c));
@@ -238,13 +238,13 @@ public class RJogador implements Jogador {
 
     private Jogada tabuleiroToJogada() {
         Jogada j = new Jogada();
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
+        for (byte x = 0; x < 3; x++) {
+            for (byte y = 0; y < 3; y++) {
                 if (tabuleiro.getTelaVelha().getTabela().getValueAt(x, y) == null) {
                     continue;
                 }
 
-                int aux = new Byte(tabuleiro.getTabuleiro()[x][y]).intValue();
+                byte aux = tabuleiro.getTabuleiro()[x][y];
                 if (aux == 0) {
                     continue;
                 }
@@ -268,10 +268,10 @@ public class RJogador implements Jogador {
     }
 
     private void pontoNaJogada(Ponto ponto, Jogada j) {
-        int x = ponto.linha;
-        int y = ponto.coluna;
+        byte x = ponto.linha;
+        byte y = ponto.coluna;
 
-        int aux = Tabuleiro.JOGADOR_COMPUTADOR;
+        byte aux = Tabuleiro.JOGADOR_COMPUTADOR;
         aux++;
 
         setarPonto(j, x, y, aux);
@@ -279,7 +279,7 @@ public class RJogador implements Jogador {
 
     }
 
-    private void setarPonto(Jogada j, int x, int y, int aux) {
+    private void setarPonto(Jogada j, byte x, byte y, byte aux) {
         if (x == 0 && y == 0) {
             j.setP1(Peca.values()[aux]);
         }
@@ -329,7 +329,7 @@ public class RJogador implements Jogador {
             try {
                 t.begin();
 
-                for (int i = 0; i < listaDeJogadas.size(); i++) {
+                for (byte i = 0; i < listaDeJogadas.size(); i++) {
                     Jogada jogada = listaDeJogadas.get(i);
                     Jogada aux = JogadaDAO.getJogadaBanco(jogada);
                     if (aux != null) {
