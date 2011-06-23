@@ -35,9 +35,9 @@ public class Jogada implements Serializable {
     private Peca p7 = Peca.NULO;
     private Peca p8 = Peca.NULO;
     private Peca p9 = Peca.NULO;
-    private int vitorias;
-    private int derrotas;
-    private int empate;
+    private Integer vitorias = 0;
+    private Integer derrotas = 0;
+    private Integer empate = 0;
 
     /**
      * @return the id
@@ -182,42 +182,43 @@ public class Jogada implements Serializable {
     /**
      * @return the vitorias
      */
-    public int getVitorias() {
+    public Integer getVitorias() {
         return vitorias;
     }
 
     /**
      * @param vitorias the vitorias to set
      */
-    public void setVitorias(int vitorias) {
+    public void setVitorias(Integer vitorias) {
         this.vitorias = vitorias;
     }
 
     /**
      * @return the derrotas
      */
-    public int getDerrotas() {
+    public Integer getDerrotas() {
         return derrotas;
     }
 
     /**
      * @param derrotas the derrotas to set
      */
-    public void setDerrotas(int derrotas) {
+    public void setDerrotas(Integer derrotas) {
         this.derrotas = derrotas;
     }
 
     /**
      * @return the empate
      */
-    public int getEmpate() {
+    public Integer getEmpate() {
         return empate;
     }
 
     /**
      * @param empate the empate to set
      */
-    public void setEmpate(int empate) {
+    public void setEmpate(Integer empate) {
         this.empate = empate;
     }
+
 }
