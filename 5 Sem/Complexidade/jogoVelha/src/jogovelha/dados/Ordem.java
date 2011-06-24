@@ -6,27 +6,28 @@ package jogovelha.dados;
 
 /**
  *
- * @author manchini
+ * @author rudieri
  */
-public enum Peca {
-    NULO(0),JOGADOR(1),COMPUTADOR(2);
-    
+
+public enum Ordem {
+    J0(0),
+    J1(1),
+    J2(2),
+    J3(3),
+    J4(4),
+    J5(5),
+    J6(6),
+    J7(7),
+    J8(8);
     private int id;
-    
-    
-    private Peca(int id){
+
+    private Ordem(int id) {
         this.id = id;
-    }
-    
-    public int getId(){
-        return id;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.valueOf(id);
     }
-    
-    
     
 }
