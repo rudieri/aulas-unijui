@@ -14,7 +14,6 @@ public class Ponto {
     public byte coluna;
     private final byte limiteLinhas = 3;
     private final byte limiteColunas = 3;
-    
     private Double estatistica = -666d;
 
     public Ponto(byte linha, byte coluna) {
@@ -27,6 +26,15 @@ public class Ponto {
         this.coluna = (byte) coluna;
     }
 
+    public Ponto(byte sequencial) {
+        sequencial = (byte) (sequencial - (sequencial / 8) * 8);
+        linha = (byte) (sequencial / 3);
+        coluna = (byte) (sequencial % 3);
+    }
+    public Ponto(int sequencial){
+        this((byte)sequencial);
+    }
+
     public void somar(byte n) {
         n += Math.abs(coluna) + getLimiteLinhas() * Math.abs(linha);
         byte nLinha = (byte) (n / limiteLinhas);
@@ -37,25 +45,34 @@ public class Ponto {
         linha = nLinha;
         coluna = nColuna;
     }
-    public byte getValor(){
-        if (linha==coluna) {
+
+    public byte getValor() {
+        if (linha == coluna) {
             return 3;
-        }else{
+        } else {
             return 1;
         }
     }
-    public Ponto somar(int n){
-        somar((byte)n);
+
+    public byte toNumero() {
+        return (byte) (linha * 3 + coluna);
+    }
+
+    public Ponto somar(int n) {
+        somar((byte) n);
         return this;
     }
-    public boolean isCanto(){
-        return linha%2==0&&coluna%2==0;
+
+    public boolean isCanto() {
+        return linha % 2 == 0 && coluna % 2 == 0;
     }
-    public boolean isCenter(){
-        return linha==1&&coluna==1;
+
+    public boolean isCenter() {
+        return linha == 1 && coluna == 1;
     }
-    public boolean isTranposta(){
-        return linha>0&&coluna>0;
+
+    public boolean isTranposta() {
+        return linha > 0 && coluna > 0;
     }
 
     /**
@@ -65,16 +82,12 @@ public class Ponto {
         return limiteLinhas;
     }
 
- 
-
     /**
      * @return the limiteColunas
      */
     public byte getLimiteColunas() {
         return limiteColunas;
     }
-
- 
 
     ;
 
@@ -88,13 +101,13 @@ public class Ponto {
             return true;
         } else {
             return false;
-    
+
         }
     }
 
     @Override
     public String toString() {
-        return "["+linha+","+coluna+"]";
+        return "[" + linha + "," + coluna + "]";
     }
 
     /**
@@ -110,6 +123,4 @@ public class Ponto {
     public void setEstatistica(Double estatistica) {
         this.estatistica = estatistica;
     }
-    
-    
 }
