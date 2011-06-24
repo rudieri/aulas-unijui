@@ -5,6 +5,7 @@
 package jogovelha.banco;
 
 import jogovelha.dados.Jogada;
+import jogovelha.dados.Jogo;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
@@ -24,7 +25,8 @@ public class HibernateUtil {
 
             cfg = new AnnotationConfiguration();
             getCfg().addAnnotatedClass(Jogada.class);
-            sessionFactory = getCfg().buildSessionFactory();
+            getCfg().addAnnotatedClass(Jogo.class);
+            sessionFactory = getCfg().configure().buildSessionFactory();
 
 
 
