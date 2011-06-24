@@ -5,10 +5,18 @@
 package jogovelha.ai;
 
 import java.util.ArrayList;
+import jogovelha.dados.Jogo;
 import jogovelha.interfaces.Jogador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import jogovelha.dados.Estado;
+import jogovelha.dados.Jogada;
+import jogovelha.dados.JogadaDAO;
+import jogovelha.dados.JogadaFiltro;
+import jogovelha.dados.JogadorTipo;
+import jogovelha.dados.Local;
+import jogovelha.dados.Ordem;
 import jogovelha.marcacao.Ponto;
 import jogovelha.tabuleiro.Tabuleiro;
 
@@ -23,6 +31,8 @@ public class Jogador2 implements Jogador {
     private final byte masqPadrao = 4;
     private final Ponto zero = new Ponto(0, 0);
     private byte conta = 0;
+    private byte contaJogadas = 0;
+    ArrayList<Jogada> jogadas;
 
     public Jogador2() {
         init();
@@ -33,21 +43,22 @@ public class Jogador2 implements Jogador {
 
     @Override
     public void comecar() {
-//        new Thread(new Runnable() {
-//
-//            public void run() {
         try {
             Thread.sleep(500);
+
+            contaJogadas = 0;
+            addJogada(Ordem.J0, Local.J0, JogadorTipo.COMPUTADOR);
+            contaJogadas++;
             pense(new Ponto(0, 0), masqPadrao);
         } catch (InterruptedException ex) {
             Logger.getLogger(Jogador2.class.getName()).log(Level.SEVERE, null, ex);
         }
-//            }
-//        }).start();
     }
 
     public void minhaVez(Ponto ponto) {
         conta = 0;
+        addJogada(Ordem.values()[contaJogadas], Local.values()[ponto.toNumero()], JogadorTipo.HUMANO);
+        contaJogadas++;
         Ponto tp = tabuleiro.verificarPossivelVencedor(Tabuleiro.COMPUATADOR_VENCER);
         if (tp != null) {
             jogue(tp);
@@ -66,6 +77,7 @@ public class Jogador2 implements Jogador {
             pense(pl.get(0), masqPadrao);
             return;
         }
+
         //   marcar(p, Tabuleiro.JOGADOR_HUMANO);
         //  p = euPossoGanhar();
         if (!ponto.isCenter()) {
@@ -135,7 +147,50 @@ public class Jogador2 implements Jogador {
     }
 
     private void jogue(Ponto p) {
-        tabuleiro.jogar(eu, p.linha, p.coluna);
+//        Jogo jogo = JogadaDAO.existeJogo(jogadas);
+        JogadaFiltro filtro = new JogadaFiltro();
+        filtro.local = Local.values()[p.toNumero()];
+        filtro.ordem = Ordem.values()[contaJogadas];
+        ArrayList<Jogada> listaJogadas = JogadaDAO.listarJogadas(filtro);
+        Jogo maior = JogadaDAO.carregarJogo(listaJogadas.get(listaJogadas.size() - 1).getJogo());
+        filtro = new JogadaFiltro();
+        filtro.jogo = maior;
+        listaJogadas = JogadaDAO.listarJogadas(filtro);
+        maior=JogadaDAO.existeJogo(jogadas) ;
+
+        if (maior == null) {
+            addJogada(Ordem.values()[contaJogadas], Local.valueOf((int) p.toNumero()), JogadorTipo.COMPUTADOR);
+            contaJogadas++;
+            tabuleiro.jogar(eu, p.linha, p.coluna);
+        } else {
+            if (maior.getSaldo() <= 0 && maior.getEmpates() < maior.getDerrotas()) {
+                addJogada(Ordem.values()[contaJogadas], Local.valueOf((int) p.toNumero()), JogadorTipo.COMPUTADOR);
+                contaJogadas++;
+                p.somar(1);
+                pense(p, (byte) 1);
+                return;
+            } else {
+                if (listaJogadas.size() <= contaJogadas) {
+                    p.somar(1);
+                    pense(p, (byte) 1);
+                    return;
+                }
+                Ponto np = new Ponto(listaJogadas.get(contaJogadas).getLocalJogada().getId());
+                addJogada(Ordem.values()[contaJogadas], Local.valueOf((int) np.toNumero()), JogadorTipo.COMPUTADOR);
+                contaJogadas++;
+
+                tabuleiro.jogar(eu, np.linha, np.coluna);
+            }
+        }
+
+    }
+
+    private void addJogada(Ordem ordem, Local local, JogadorTipo jogadorTipo) {
+        Jogada jogada = new Jogada();
+        jogada.setJogadorTipo(jogadorTipo);
+        jogada.setLocalJogada(local);
+        jogada.setOrdemJogada(ordem);
+        jogadas.add(jogada);
     }
 
     @Override
@@ -145,12 +200,16 @@ public class Jogador2 implements Jogador {
 
     public void gameIsOver(byte vencedor) {
         if (vencedor == eu) {
+            JogadaDAO.mergeJogo(Estado.GANHO, jogadas);
             JOptionPane.showMessageDialog(null, "MUHHUAHAHAHAHA!!!", "Computador diz...", JOptionPane.INFORMATION_MESSAGE);
         } else {
+            JogadaDAO.mergeJogo(Estado.PERDIDO, jogadas);
             JOptionPane.showMessageDialog(null, "Se aproveitam de minha nobreza...", "Computador diz...", JOptionPane.INFORMATION_MESSAGE, new javax.swing.ImageIcon(getClass().getResource("/jogovelha/bitmaps/chapolin.png")));
         }
     }
 
     public void novoJogo() {
+        jogadas = new ArrayList<Jogada>();
+        contaJogadas = 0;
     }
 }
