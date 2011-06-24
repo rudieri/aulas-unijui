@@ -13,6 +13,7 @@ public class GeraTabelasnoBanco {
     public static void gerar() {
 //        org.apache.log4j.BasicConfigurator.configure();
         SchemaExport se = new SchemaExport(HibernateUtil.getCfg());
+        se.drop(true, true);
         se.create(true, true);
 
 
