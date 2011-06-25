@@ -1,0 +1,91 @@
+
+
+
+options {
+
+STATIC = false; // para desempenho - estático(somente uma compilacao) ou estanciado
+DEBUG_PARSER = false; // depurar
+IGNORE_CASE = true; // se true - nao diferencia a de A
+UNICODE_INPUT = true; // se false - somente reconhece a tabela asci
+
+}
+
+PARSER_BEGIN(JMenos)
+import java.util.*;
+public class JMenos {
+    	ArrayList<Simbolo> tab = new ArrayList<Simbolo>();
+   public static void main(String[] args) {
+        JMenos parser = new JMenos(System.in);
+        try {			
+			parser.I();
+			System.out.println("Reconheceu!");
+            } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Não Reconheceu!");
+        }catch(TokenMgrError e){
+            System.out.println(e.getMessage());
+            System.out.println("Não Reconheceu!");
+        }         
+     }
+    
+}
+
+
+class Simbolo{
+	public String nome;
+	public int valor;
+}
+PARSER_END(JMenos)
+
+
+
+TOKEN:
+{
+	
+	
+	< TEXTO: (["a" - "z"])+>|
+	< NUM: (["0" - "9"])+>|
+	< AC: "{">|
+	< DC: "}">|
+	< CLASS: "$">|
+	< METHOD: "#">|	
+	< MAE: "mae">|
+	< IMPRIME: "imprime" > |
+	< LER: "ler">
+}
+
+//o que o programa deve ignorar    
+SKIP: {
+	" "|
+	"\t"
+}  
+
+
+void I():
+{
+// DeclaraçÃo de variáveis auxiliares
+	String res;
+}
+{
+	//corpo do i
+ 	<CLASS><TEXTO>{
+ 		System.out.println();
+ 		System.out.println("public class " + token.image);
+ 		System.out.println();
+ 	}
+ 	<AC>{
+ 		System.out.println("{");
+ 		}
+ 	res=S() 
+ 	<DC>{
+ 	 	System.out.println(res);
+ 	 	System.out.println("}");
+ 	}
+}
+String S():{
+	
+}
+{
+	<TEXTO>{return token.image;}
+}
+
