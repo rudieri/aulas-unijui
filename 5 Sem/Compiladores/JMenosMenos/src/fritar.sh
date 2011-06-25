@@ -3,6 +3,6 @@
 javacc J--
 javac JMenos.java
 echo "WOoooooooooooooooW\n"
-java JMenos
+java JMenos entrada.j--
 
 
