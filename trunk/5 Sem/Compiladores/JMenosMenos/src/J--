@@ -12,20 +12,19 @@ UNICODE_INPUT = true; // se false - somente reconhece a tabela asci
 
 PARSER_BEGIN(JMenos)
 import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
 public class JMenos {
     	ArrayList<Simbolo> tab = new ArrayList<Simbolo>();
    public static void main(String[] args) {
-        JMenos parser = new JMenos(System.in);
+        
         try {			
-			parser.I();
-			System.out.println("Reconheceu!");
-            } catch (ParseException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Não Reconheceu!");
-        }catch(TokenMgrError e){
-            System.out.println(e.getMessage());
-            System.out.println("Não Reconheceu!");
-        }         
+		JMenos parser = new JMenos(new FileInputStream(new File((String)args[0])));
+		parser.I();
+		System.out.println("Reconheceu!");
+    	} catch (Exception ex) {
+            ex.printStackTrace();
+        }      
      }
     
 }
