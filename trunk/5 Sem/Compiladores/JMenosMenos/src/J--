@@ -113,8 +113,7 @@ void I():
 			addSaida("\tpublic "+token.image,false);
 		}
 		<AC>{
-			System.out.println("\t{");
- 		addSaida("{",true);
+	 		addSaida("\t{");
 		}
 		S()
 		<DC>{			
@@ -125,11 +124,11 @@ void I():
 			addSaida("\tpublic static void main(String[] args)",false);
 		}
 		<AC>{
- 			addSaida("\t{",true);
+ 			addSaida("\t{");
 		}
 		S()
 		<DC>{
- 			addSaida("\t}",true);
+ 			addSaida("\t}");
 		}
 	)* 
 	
