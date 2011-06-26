@@ -40,51 +40,93 @@ PARSER_END(JMenos)
 
 TOKEN:
 {
-	
-	
-	< TEXTO: (["a" - "z"])+>|
 	< NUM: (["0" - "9"])+>|
 	< AC: "{">|
 	< DC: "}">|
 	< CLASS: "$">|
 	< METHOD: "#">|	
-	< MAE: "mae">|
-	< IMPRIME: "imprime" > |
-	< LER: "ler">
+	< MAE: "mae" | "mae ">|
+	< IMPRIME: "imprime"> |
+	< LER: "ler">|
+	< TEXTO: (["a" - "z"] | "("  | ")" | "\""  | "\"" |" " | ";" | "="| "+")+>
 }
 
 //o que o programa deve ignorar    
 SKIP: {
-	" "|
-	"\t"
+	
+	"\t"|
+	"\n"
 }  
 
 
 void I():
 {
 // DeclaraçÃo de variáveis auxiliares
-	String res;
 }
 {
 	//corpo do i
  	<CLASS><TEXTO>{
  		System.out.println();
  		System.out.println("public class " + token.image);
- 		System.out.println();
  	}
  	<AC>{
  		System.out.println("{");
- 		}
- 	res=S() 
- 	<DC>{
- 	 	System.out.println(res);
+ 	}
+
+	(
+		<METHOD><TEXTO>{
+			System.out.println("\tpublic "+token.image);
+		}
+		<AC>{
+			System.out.println("\t{");
+		}
+		S()
+		<DC>{			
+			System.out.println("\t}");
+		} 
+	|
+		<MAE>{
+			System.out.println("\tpublic static void main(String[] args)");
+		}
+		<AC>{
+			System.out.println("\t{");
+		}
+		S()
+		<DC>{
+			System.out.println("\t}");
+		}
+	)* 
+	
+<DC>{
  	 	System.out.println("}");
  	}
 }
-String S():{
+void S():{	
+	String res;
+}
+{	
 	
+	(
+		<IMPRIME>
+		{
+			System.out.println("\tSystem.out.println");			
+		 } |
+			
+		
+		<LER>
+		{
+			System.out.println("\tnew Scanner(System.in).next()");
+	 	 }
+		|
+		
+		<TEXTO>
+		{
+			System.out.println(token.image);
+		}
+		
+	)*
+	
+
 }
-{
-	<TEXTO>{return token.image;}
-}
+
 

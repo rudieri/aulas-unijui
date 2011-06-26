@@ -16,25 +16,86 @@ public class JMenos implements JMenosConstants {
      }
 
   final public void I() throws ParseException {
-// DeclaraçÃo de variáveis auxiliares
-        String res;
     jj_consume_token(CLASS);
     jj_consume_token(TEXTO);
                 System.out.println();
                 System.out.println("public class " + token.image);
-                System.out.println();
     jj_consume_token(AC);
                 System.out.println("{");
-    res = S();
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case METHOD:
+      case MAE:
+        ;
+        break;
+      default:
+        jj_la1[0] = jj_gen;
+        break label_1;
+      }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case METHOD:
+        jj_consume_token(METHOD);
+        jj_consume_token(TEXTO);
+                        System.out.println("\u005ctpublic "+token.image);
+        jj_consume_token(AC);
+                        System.out.println("\u005ct{");
+        S();
+        jj_consume_token(DC);
+                        System.out.println("\u005ct}");
+        break;
+      case MAE:
+        jj_consume_token(MAE);
+                        System.out.println("\u005ctpublic static void main(String[] args)");
+        jj_consume_token(AC);
+                        System.out.println("\u005ct{");
+        S();
+        jj_consume_token(DC);
+                        System.out.println("\u005ct}");
+        break;
+      default:
+        jj_la1[1] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
     jj_consume_token(DC);
-                System.out.println(res);
                 System.out.println("}");
   }
 
-  final public String S() throws ParseException {
-    jj_consume_token(TEXTO);
-                {if (true) return token.image;}
-    throw new Error("Missing return statement in function");
+  final public void S() throws ParseException {
+        String res;
+    label_2:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IMPRIME:
+      case LER:
+      case TEXTO:
+        ;
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        break label_2;
+      }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IMPRIME:
+        jj_consume_token(IMPRIME);
+                        System.out.println("\u005ctSystem.out.println");
+        break;
+      case LER:
+        jj_consume_token(LER);
+                        System.out.println("\u005ctnew Scanner(System.in).next()");
+        break;
+      case TEXTO:
+        jj_consume_token(TEXTO);
+                        System.out.println(token.image);
+        break;
+      default:
+        jj_la1[3] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
   }
 
   /** Generated Token Manager. */
@@ -46,13 +107,13 @@ public class JMenos implements JMenosConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[0];
+  final private int[] jj_la1 = new int[4];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {};
+      jj_la1_0 = new int[] {0x60,0x60,0x380,0x380,};
    }
 
   /** Constructor with InputStream. */
@@ -66,7 +127,7 @@ public class JMenos implements JMenosConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -80,7 +141,7 @@ public class JMenos implements JMenosConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -90,7 +151,7 @@ public class JMenos implements JMenosConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -100,7 +161,7 @@ public class JMenos implements JMenosConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -109,7 +170,7 @@ public class JMenos implements JMenosConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -118,7 +179,7 @@ public class JMenos implements JMenosConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -174,7 +235,7 @@ public class JMenos implements JMenosConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 0; i++) {
+    for (int i = 0; i < 4; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
