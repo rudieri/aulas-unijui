@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Scanner;
 
 /*
  * To change this template, choose Tools | Templates
@@ -16,6 +17,7 @@ public class abrir {
         try {
    
             FileInputStream st = new FileInputStream(new File((String)args[0]));
+            new Scanner(System.in).next();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
