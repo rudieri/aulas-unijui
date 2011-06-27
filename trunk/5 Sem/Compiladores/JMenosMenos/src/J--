@@ -1,6 +1,3 @@
-
-
-
 options {
 
 STATIC = false; // para desempenho - estático(somente uma compilacao) ou estanciado
@@ -16,15 +13,17 @@ import java.io.*;
 public class JMenos {
     	ArrayList<Simbolo> tab = new ArrayList<Simbolo>();
     	String saida;
+	String nome = "saida";
    public static void main(String[] args) {
         
         try {			
 		JMenos parser = new JMenos(new FileInputStream(new File((String)args[0])));
+		parser.addSaida("import java.util.*;");
 		parser.I();
 		System.out.println("Reconheceu!");
 		System.out.println("--------------");
 		System.out.println(parser.getSaida());
-		File novoArq=new File(args[0].replace(".j--",".java"));
+		File novoArq=new File(parser.nome+".java");
 		if (!novoArq.exists()) { // 
 		   novoArq.createNewFile();
 		}
@@ -75,15 +74,15 @@ PARSER_END(JMenos)
 
 TOKEN:
 {
-	< NUM: (["0" - "9"])+>|
 	< AC: "{">|
 	< DC: "}">|
 	< CLASS: "$">|
 	< METHOD: "#">|	
-	< MAE: "mae" | "mae ">|
-	< IMPRIME: "imprime"> |
+	< MAE: "mae">|
+	< IMPRIME: "imprime" | "imprime "> |
 	< LER: "ler">|
-	< TEXTO: (["a" - "z"] | "("  | ")" | "\""  | "\"" |" " | ";" | "="| "+")+>
+	< TEXTO: (["0" - "9"]|["a" - "z"] | "("  | ")" | "\""  | "\""  | ";" | "="| "+" | ".")+>|
+	<SPACE: (" ")*>
 }
 
 //o que o programa deve ignorar    
@@ -91,6 +90,7 @@ SKIP: {
 	
 	"\t"|
 	"\n"
+	
 }  
 
 
@@ -100,24 +100,27 @@ void I():
 }
 {
 	//corpo do i
- 	<CLASS><TEXTO>{
+ 	<CLASS><SPACE><TEXTO>{
  		System.out.println();
- 		addSaida("public class " + token.image,false);
+		nome = token.image;
+ 		addSaida("public class " + nome,false);
  	}
  	<AC>{
  		addSaida("{",true);
  	}
 
 	(
-		<METHOD><TEXTO>{
-			addSaida("\tpublic "+token.image,false);
+		<METHOD><SPACE><TEXTO>{
+		addSaida("\tpublic "+token.image,false);
+		}<SPACE><TEXTO>{
+			addSaida(" "+token.image,false);
 		}
 		<AC>{
 	 		addSaida("\t{");
 		}
 		S()
 		<DC>{			
-			addSaida("\t}");
+			addSaida("\n\t}");
 		} 
 	|
 		<MAE>{
@@ -128,7 +131,7 @@ void I():
 		}
 		S()
 		<DC>{
- 			addSaida("\t}");
+ 			addSaida("\n\t}");
 		}
 	)* 
 	
@@ -144,19 +147,22 @@ void S():{
 	(
 		<IMPRIME>
 		{
-			addSaida("\t\tSystem.out.println");			
-		 } |
-			
+			addSaida("System.out.println",false);			
+		 } |				
 		
 		<LER>
 		{
-			addSaida("\t\tnew Scanner(System.in).next()");
+			addSaida("new Scanner(System.in).nextLine()",false);
 	 	 }
 		|
 		
 		<TEXTO>
 		{
-			addSaida("\t\t"+token.image);
+			addSaida(token.image,false);
+		} |
+		<SPACE>
+		{
+			addSaida(token.image,false);
 		}
 		
 	)*
