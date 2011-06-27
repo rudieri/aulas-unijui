@@ -1,0 +1,16 @@
+$ Entradadois{
+# String xexto(){
+return ler ;
+ }
+mae{
+imprime ( "Digite seu Primeiro nome" );
+Entradadois e = new Entradadois();
+String n1 = e.xexto();
+
+imprime ( "Digite seu Segundo nome" );
+String n2 = e.xexto();
+imprime ("Seu nome ehh ");
+imprime (n1 +" "+ n2);
+
+}
+}
