@@ -7,7 +7,7 @@ Integer n1 = new Integer(e.xexto());
 imprime ( "Digite outro Numero" );
 Integer n2 = new Integer(e.xexto());
 
-imprime (n1+" + "+n2+" eh "+ (n1+n2));
+imprime (n1+" + "+n2+" eh "+ (n1+n2)); 
 
 
 }

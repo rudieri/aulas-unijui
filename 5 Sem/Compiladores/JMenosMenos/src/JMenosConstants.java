@@ -9,23 +9,23 @@ public interface JMenosConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int NUM = 1;
+  int AC = 1;
   /** RegularExpression Id. */
-  int AC = 2;
+  int DC = 2;
   /** RegularExpression Id. */
-  int DC = 3;
+  int CLASS = 3;
   /** RegularExpression Id. */
-  int CLASS = 4;
+  int METHOD = 4;
   /** RegularExpression Id. */
-  int METHOD = 5;
+  int MAE = 5;
   /** RegularExpression Id. */
-  int MAE = 6;
+  int IMPRIME = 6;
   /** RegularExpression Id. */
-  int IMPRIME = 7;
+  int LER = 7;
   /** RegularExpression Id. */
-  int LER = 8;
+  int TEXTO = 8;
   /** RegularExpression Id. */
-  int TEXTO = 9;
+  int SPACE = 9;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -33,15 +33,15 @@ public interface JMenosConstants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
-    "<NUM>",
     "\"{\"",
     "\"}\"",
     "\"$\"",
     "\"#\"",
-    "<MAE>",
-    "\"imprime\"",
+    "\"mae\"",
+    "<IMPRIME>",
     "\"ler\"",
     "<TEXTO>",
+    "<SPACE>",
     "\"\\t\"",
     "\"\\n\"",
   };

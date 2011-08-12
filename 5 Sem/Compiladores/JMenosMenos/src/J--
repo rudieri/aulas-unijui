@@ -43,7 +43,6 @@ public class JMenos {
 		if (quebrarLinha) { // 
 		   nL+="\n";
 		}
-	  	//System.out.print(str+nL);
 	  		
 	  	
      	if (saida==null) {
@@ -133,7 +132,13 @@ void I():
 		<DC>{
  			addSaida("\n\t}");
 		}
-	)* 
+	
+	| <TEXTO>{
+		addSaida(token.image,false);
+	}<SPACE><TEXTO>{
+		addSaida(" "+token.image,false);
+	}
+)* 
 	
 <DC>{
  		addSaida("}",true);
