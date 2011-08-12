@@ -15,10 +15,10 @@ package multmatriz;
  * @author -moNGe_
  */
 public class frmMatriz extends javax.swing.JFrame {
-    
+
     /** Creates new form frmMatriz */
     public frmMatriz() {
-        initComponents();     
+        initComponents();
     }
 
     /** This method is called from within the constructor to
@@ -64,11 +64,6 @@ public class frmMatriz extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Calcular");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
-            }
-        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -191,9 +186,9 @@ public class frmMatriz extends javax.swing.JFrame {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         //cria a tabela 2x2
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(2,2){}); 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(2,2){});
-        jTableResultado.setModel(new javax.swing.table.DefaultTableModel(2,2){});
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(2, 2) {});
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(2, 2) {});
+        jTableResultado.setModel(new javax.swing.table.DefaultTableModel(2, 2) {});
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -205,55 +200,37 @@ public class frmMatriz extends javax.swing.JFrame {
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         //cria a tabela 3x3
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(3,3){});
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(3,3){});
-        jTableResultado.setModel(new javax.swing.table.DefaultTableModel(3,3){});
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(3, 3) {});
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(3, 3) {});
+        jTableResultado.setModel(new javax.swing.table.DefaultTableModel(3, 3) {});
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //se o nb deixou a célula em modo de edição da pau, então tive q garantir a saida do modo de edição
-        if(jTable1.getCellEditor() != null){
-         jTable1.getCellEditor().stopCellEditing();
+        if (jTable1.getCellEditor() != null) {
+            jTable1.getCellEditor().stopCellEditing();
         }
         if (jTable2.getCellEditor() != null) {
-             jTable2.getCellEditor().stopCellEditing();
-        }      
-        
-        String valorgrd = jTable1.getValueAt(0,0).toString();
-        //primeira verificação
-        Boolean enumero = true;
-        for(int i = 1;i<=valorgrd.length(); i++){
-            Character caractere = valorgrd.charAt(i-1);
-            if(!Character.isDigit(caractere)){
-                enumero = false;
-                break;
+            jTable2.getCellEditor().stopCellEditing();
+        }
+
+        for (int row = 0; row < jTable1.getRowCount(); row++) {
+            for (int column = 0; column < jTable1.getColumnCount(); column++) {
+                int somar = 0;
+                for (int i = 0; i < jTable1.getRowCount(); i++) {
+                    try {
+                        Integer.parseInt(jTable1.getValueAt(row, i).toString());
+                        Integer.parseInt(jTable2.getValueAt(i, column).toString());
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Erro= " + ex.getMessage());
+                        System.exit(0);
+                    }
+                    somar += Integer.parseInt(jTable1.getValueAt(row, i).toString()) * Integer.parseInt(jTable2.getValueAt(i, column).toString());
+                }
+                jTableResultado.setValueAt(somar, row, column);
             }
         }
-        //outra verificação
-        try{
-            int num = Integer.parseInt(valorgrd);
-        }catch(NumberFormatException ex){
-            System.out.println("Erro= "+ex.getMessage());
-            System.exit(0);
-        } 
-        
-        if(enumero){
-            for(int row = 0;row<jTable1.getRowCount();row++){
-                for(int column = 0;column<jTable1.getColumnCount();column++){
-                    int somar = 0;
-                    for(int i = 0;i<jTable1.getRowCount();i++){
-                        somar += Integer.parseInt(jTable1.getValueAt(row, i).toString()) * Integer.parseInt(jTable2.getValueAt(i, column).toString());
-                    }
-                    jTableResultado.setValueAt(somar, row, column);
-                }
-            }            
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        // TODO add your handling code here:
-        jButton1.requestFocus();
-    }//GEN-LAST:event_jButton1MousePressed
 
     /**
      * @param args the command line arguments
