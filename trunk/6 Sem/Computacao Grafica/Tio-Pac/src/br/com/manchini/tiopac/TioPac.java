@@ -31,7 +31,7 @@ public class TioPac extends javax.swing.JFrame {
             public void run() {
                 while (true) {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(200);
                         tioPacman1.paint(tioPacman1.getGraphics());
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -48,12 +48,12 @@ public class TioPac extends javax.swing.JFrame {
         int xAnt = tioPacman1.getX();
         int yAnt = tioPacman1.getY();
 //        while (x != xAnt && y != yAnt) {
-            try {
-                Thread.sleep(50);
-                tioPacman1.move(x-tioPacman1.getHeight()/2, y-tioPacman1.getWidth()/2);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+        try {
+//                Thread.sleep(100);
+            tioPacman1.move(x - tioPacman1.getHeight() / 2, y - tioPacman1.getWidth() / 2);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 //        }
     }
 
@@ -79,6 +79,11 @@ public class TioPac extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(1, 1, 1));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
         jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jPanel1MouseMoved(evt);
@@ -109,12 +114,14 @@ public class TioPac extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-
 }//GEN-LAST:event_formMouseClicked
 
 private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
-    vaiPara(evt.getX(), evt.getY());
 }//GEN-LAST:event_jPanel1MouseMoved
+
+private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+    vaiPara(evt.getX(), evt.getY());
+}//GEN-LAST:event_jPanel1MouseClicked
 
     /**
      * @param args the command line arguments

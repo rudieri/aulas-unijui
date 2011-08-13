@@ -19,13 +19,19 @@ public class TioPacman extends JPanel {
     @Override
     public void paint(Graphics grphcs) {
         super.paint(grphcs);
+        paintS(grphcs);
+    }
+    
+    
+  
+    public synchronized  void paintS(Graphics grphcs) {
         grphcs.setColor(Color.black);
 //        grphcs.clearRect(0, 0, this.getWidth(), this.getHeight());
         if (fechado) {
-            desenarAberto(grphcs,Color.black);
+//            desenarAberto(grphcs,Color.black);
             desenarFechado(grphcs,Color.yellow);
         } else {
-             desenarFechado(grphcs,Color.black);
+//             desenarFechado(grphcs,Color.black);
             desenarAberto(grphcs,Color.yellow);
         }
         fechado= !fechado;
