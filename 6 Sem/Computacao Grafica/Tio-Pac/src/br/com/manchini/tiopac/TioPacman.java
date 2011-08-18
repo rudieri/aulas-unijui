@@ -27,7 +27,7 @@ public class TioPacman extends JPanel {
     public synchronized void paintS(Graphics grphcs) {
         grphcs.setColor(Color.black);
 //        grphcs.clearRect(0, 0, this.getWidth(), this.getHeight());
-        fechado = new Date().getTime() / 500 % 2 == 0;
+        fechado = new Date().getTime() / 200 % 2 == 0;
         if (fechado) {
 //            desenarAberto(grphcs,Color.black);
             desenarFechado(grphcs, Color.yellow);
