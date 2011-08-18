@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class TioPacman extends JPanel {
 
     boolean fechado = true;
-    IndoPara indoPara = IndoPara.DIREITA;
+    IndoPara indoPara = IndoPara.ESQUERDA;
 
     @Override
     public void paint(Graphics grphcs) {
@@ -39,10 +39,14 @@ public class TioPacman extends JPanel {
 
     private void desenarAberto(Graphics g, Color cor) {
         g.setColor(cor);
-        if (indoPara == IndoPara.ESQUERDA) {
+        if (indoPara == IndoPara.DIREITA) {
             g.fillArc(0, 0, 50, 50, 30, 300);
-        } else if (indoPara == IndoPara.DIREITA) {
-            g.fillArc(0, 0, 50, 50, 200, 300);
+        } else if (indoPara == IndoPara.ESQUERDA) {
+            g.fillArc(0, 0, 50, 50, 210, 300);
+        } else if (indoPara == IndoPara.BAIXO) {
+            g.fillArc(0, 0, 50, 50, 300, 300);
+        } else if (indoPara == IndoPara.CIMA) {
+            g.fillArc(0, 0, 50, 50, 120, 300);
         }
     }
 
@@ -50,4 +54,10 @@ public class TioPacman extends JPanel {
         g.setColor(cor);
         g.fillArc(0, 0, 50, 50, 0, 360);
     }
+
+    public void setIndoPara(IndoPara indoPara) {
+        this.indoPara = indoPara;
+    }
+    
+    
 }
