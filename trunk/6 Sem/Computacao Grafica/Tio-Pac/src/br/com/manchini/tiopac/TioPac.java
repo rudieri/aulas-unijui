@@ -11,6 +11,8 @@
 package br.com.manchini.tiopac;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,10 +20,17 @@ import java.awt.Color;
  */
 public class TioPac extends javax.swing.JFrame {
 
+    boolean estaMovendo;
+    private int goX;
+    private int goY;
+
     /** Creates new form TioPac */
     public TioPac() {
         initComponents();
-
+        estaMovendo = false;
+        goX=tioPacman1.getX();
+        goY=tioPacman1.getY();
+        moveRun();
     }
 
     private void loop() {
@@ -43,18 +52,65 @@ public class TioPac extends javax.swing.JFrame {
     }
 
     private void vaiPara(int x, int y) {
-        tioPacman1.getGraphics().setColor(Color.black);
-        jPanel1.getGraphics().clearRect(0, 0, this.getWidth(), this.getHeight());
-        int xAnt = tioPacman1.getX();
-        int yAnt = tioPacman1.getY();
-//        while (x != xAnt && y != yAnt) {
-        try {
-//                Thread.sleep(100);
-            tioPacman1.move(x - tioPacman1.getHeight() / 2, y - tioPacman1.getWidth() / 2);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (estaMovendo) {
+            return;
         }
+        estaMovendo = true;
+        goX = x;
+        goY = y;
+
+//        tioPacman1.getGraphics().setColor(Color.black);
+//        jPanel1.getGraphics().clearRect(0, 0, this.getWidth(), this.getHeight());
+//        int xAnt = tioPacman1.getX();
+//        int yAnt = tioPacman1.getY();
+////        while (x != xAnt && y != yAnt) {
+//        try {
+////                Thread.sleep(100);
+//            tioPacman1.move(x - tioPacman1.getHeight() / 2, y - tioPacman1.getWidth() / 2);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
 //        }
+//        }
+    }
+
+    private void moveRun() {
+        new Thread(new Runnable() {
+
+            @Override
+            @SuppressWarnings("SleepWhileInLoop")
+            public void run() {
+                try {
+                    while (true) {
+                        int ax = -2;
+                        int ay = -2;
+                        if (tioPacman1.getX() <= goX) {
+                            ax = 2;
+                        }
+                        if (tioPacman1.getY() <= goY) {
+                            ay = 2;
+                        }
+                        for (int i = tioPacman1.getX(); i != goX; i += ax) {
+                            for (int j = tioPacman1.getY(); j != goY; j += ay) {
+                                if ((tioPacman1.getY() - goY) * ay > 0) {
+                                    break;
+                                }
+                                Thread.sleep(10);
+                                tioPacman1.setLocation(i, j);
+                            }
+                            tioPacman1.setLocation(i, tioPacman1.getY());
+                            if ((tioPacman1.getX() - goX) * ax > 0) {
+                                break;
+                            }
+                            Thread.sleep(10);
+                        }
+                        Thread.sleep(50);
+                        estaMovendo = false;
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TioPac.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
     }
 
     /** This method is called from within the constructor to
