@@ -10,7 +10,6 @@
  */
 package br.com.manchini.tiopac;
 
-import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,13 +22,14 @@ public class TioPac extends javax.swing.JFrame {
     boolean estaMovendo;
     private int goX;
     private int goY;
+    private static final int ERRO=3;
 
     /** Creates new form TioPac */
     public TioPac() {
         initComponents();
         estaMovendo = false;
-        goX=tioPacman1.getX();
-        goY=tioPacman1.getY();
+        goX = tioPacman1.getX();
+        goY = tioPacman1.getY();
         moveRun();
     }
 
@@ -56,8 +56,8 @@ public class TioPac extends javax.swing.JFrame {
             return;
         }
         estaMovendo = true;
-        goX = x;
         goY = y;
+        goX = x;
 
 //        tioPacman1.getGraphics().setColor(Color.black);
 //        jPanel1.getGraphics().clearRect(0, 0, this.getWidth(), this.getHeight());
@@ -81,6 +81,10 @@ public class TioPac extends javax.swing.JFrame {
             public void run() {
                 try {
                     while (true) {
+                        if (estaNoLocal()) {
+                            Thread.sleep(20);
+                            continue;
+                        }
                         int ax = -2;
                         int ay = -2;
                         if (tioPacman1.getX() <= goX) {
@@ -89,19 +93,25 @@ public class TioPac extends javax.swing.JFrame {
                         if (tioPacman1.getY() <= goY) {
                             ay = 2;
                         }
+
                         for (int i = tioPacman1.getX(); i != goX; i += ax) {
                             for (int j = tioPacman1.getY(); j != goY; j += ay) {
-                                if ((tioPacman1.getY() - goY) * ay > 0) {
+                                if ((tioPacman1.getY() - goY) * ay >= 0 || estaNoY()) {
                                     break;
                                 }
+                                tioPacman1.setIndoPara(ay > 0 ? IndoPara.BAIXO : IndoPara.CIMA);
+//                                System.out.println("On Y: " + tioPacman1.indoPara);
                                 Thread.sleep(10);
                                 tioPacman1.setLocation(i, j);
                             }
-                            tioPacman1.setLocation(i, tioPacman1.getY());
-                            if ((tioPacman1.getX() - goX) * ax > 0) {
+                            if ((tioPacman1.getX() - goX) * ax >= 0 || estaNoX()) {
                                 break;
                             }
+                            tioPacman1.setIndoPara(ax > 0 ? IndoPara.DIREITA : IndoPara.ESQUERDA);
+//                            System.out.println("On X: " + tioPacman1.indoPara);
                             Thread.sleep(10);
+                            tioPacman1.setLocation(i, tioPacman1.getY());
+
                         }
                         Thread.sleep(50);
                         estaMovendo = false;
@@ -111,6 +121,18 @@ public class TioPac extends javax.swing.JFrame {
                 }
             }
         }).start();
+    }
+
+    public boolean estaNoLocal() {
+        return Math.abs(tioPacman1.getX() - goX) < ERRO && Math.abs(tioPacman1.getY() - goY) < ERRO;
+    }
+
+    public boolean estaNoY() {
+        return Math.abs(tioPacman1.getY() - goY) < ERRO;
+    }
+
+    public boolean estaNoX() {
+        return Math.abs(tioPacman1.getX() - goX) < ERRO;
     }
 
     /** This method is called from within the constructor to
