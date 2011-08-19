@@ -148,6 +148,7 @@ public class TioPac extends javax.swing.JFrame {
         tioPacman1 = new br.com.manchini.tiopac.TioPacman();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tio-Pac Versão: 0.00000001");
         setBackground(new java.awt.Color(1, 1, 1));
         setForeground(java.awt.Color.black);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -175,15 +176,15 @@ public class TioPac extends javax.swing.JFrame {
         tioPacman1.setLayout(tioPacman1Layout);
         tioPacman1Layout.setHorizontalGroup(
             tioPacman1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
         tioPacman1Layout.setVerticalGroup(
             tioPacman1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
         jPanel1.add(tioPacman1);
-        tioPacman1.setBounds(353, 187, 70, 60);
+        tioPacman1.setBounds(353, 187, 50, 50);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
