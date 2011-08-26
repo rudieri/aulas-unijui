@@ -13,6 +13,7 @@ public class TipoFerramenta {
     public  static final byte POLIGONO_LIVRE = 0;
     public  static final byte RETANGULO = 1;
     public  static final byte CIRCULO = 2;
+    public static final byte SELECAO=3;
     private byte ferramenta;
 
     public TipoFerramenta() {
