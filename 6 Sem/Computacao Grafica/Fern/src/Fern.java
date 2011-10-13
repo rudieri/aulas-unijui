@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -60,12 +61,20 @@ public class Fern extends javax.swing.JFrame {
     private static final int perc2 = 8;
     private static final int perc3 = 15;
     private static final int perc4 = 85;
-    private byte amplScroll = 2;
+    private float amplScroll = 2;
     private Long numIter;
+    private boolean autoRepaint;
+    private final Cursor moveCursor;
+    private final Cursor waitCursor;
+    private final Cursor defaultCursor;
 
     /** Creates new form Fern */
     public Fern() {
+        moveCursor = new Cursor(Cursor.MOVE_CURSOR);
+        waitCursor = new Cursor(Cursor.WAIT_CURSOR);
+        defaultCursor =new Cursor(Cursor.DEFAULT_CURSOR);
         initComponents();
+        autoRepaint = true;
         escala = 100;
         numIter = 500000l;
         X = getWidth() / 2;
@@ -100,7 +109,11 @@ public class Fern extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
+                    setCursor(defaultCursor);
                     jPopupMenu1.show(Fern.this, e.getX(), e.getY());
+                }
+                if (e.getButton()==MouseEvent.BUTTON2) {
+                    repaint();
                 }
             }
         });
@@ -124,10 +137,10 @@ public class Fern extends javax.swing.JFrame {
 
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation()<0) {
-                    escala*=amplScroll;
-                }else{
-                    escala/=amplScroll;
+                if (e.getWheelRotation() < 0) {
+                    escala *= amplScroll;
+                } else {
+                    escala /= amplScroll;
                 }
 //                escala -= e.getWheelRotation() * amplScroll;
                 repaint();
@@ -141,11 +154,15 @@ public class Fern extends javax.swing.JFrame {
 
             @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                repaint();
+                if (autoRepaint) {
+                    repaint();
+                }
+                setCursor(moveCursor);
             }
 
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
+                repaint();
             }
         });
     }
@@ -155,7 +172,9 @@ public class Fern extends javax.swing.JFrame {
 //        super.paint(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
+        this.setCursor(waitCursor);
         geraFern(g, numIter.intValue(), X, Y, escala, Color.green);
+        this.setCursor(moveCursor);
     }
 
     private void geraFern(Graphics g, long iIterations, int xInicio, int xFim, float dScale, Color cor) {
@@ -206,14 +225,25 @@ public class Fern extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jCheckBoxMenuItem_AutoRepaint = new javax.swing.JCheckBoxMenuItem();
         jMenuItem_Iteracoes = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jRadioButtonMenuItem_2X = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem_4X = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem_8X = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem_16X = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem_32X = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem_64X = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_1_01X = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_1_1X = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_1_4X = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_1_8X = new javax.swing.JRadioButtonMenuItem();
+
+        jCheckBoxMenuItem_AutoRepaint.setSelected(true);
+        jCheckBoxMenuItem_AutoRepaint.setText("Repaint ao selecionar itens dos Menus");
+        jCheckBoxMenuItem_AutoRepaint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem_AutoRepaintActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jCheckBoxMenuItem_AutoRepaint);
 
         jMenuItem_Iteracoes.setText("Iteracoes");
         jMenuItem_Iteracoes.addActionListener(new java.awt.event.ActionListener() {
@@ -252,32 +282,42 @@ public class Fern extends javax.swing.JFrame {
         });
         jMenu1.add(jRadioButtonMenuItem_8X);
 
-        buttonGroup1.add(jRadioButtonMenuItem_16X);
-        jRadioButtonMenuItem_16X.setText("16X");
-        jRadioButtonMenuItem_16X.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jRadioButtonMenuItem_1_01X);
+        jRadioButtonMenuItem_1_01X.setSelected(true);
+        jRadioButtonMenuItem_1_01X.setText("0,01X");
+        jRadioButtonMenuItem_1_01X.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonMenuItem_16XActionPerformed(evt);
+                jRadioButtonMenuItem_1_01XActionPerformed(evt);
             }
         });
-        jMenu1.add(jRadioButtonMenuItem_16X);
+        jMenu1.add(jRadioButtonMenuItem_1_01X);
 
-        buttonGroup1.add(jRadioButtonMenuItem_32X);
-        jRadioButtonMenuItem_32X.setText("32X");
-        jRadioButtonMenuItem_32X.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jRadioButtonMenuItem_1_1X);
+        jRadioButtonMenuItem_1_1X.setText("1,1X");
+        jRadioButtonMenuItem_1_1X.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonMenuItem_32XActionPerformed(evt);
+                jRadioButtonMenuItem_1_1XActionPerformed(evt);
             }
         });
-        jMenu1.add(jRadioButtonMenuItem_32X);
+        jMenu1.add(jRadioButtonMenuItem_1_1X);
 
-        buttonGroup1.add(jRadioButtonMenuItem_64X);
-        jRadioButtonMenuItem_64X.setText("64X");
-        jRadioButtonMenuItem_64X.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(jRadioButtonMenuItem_1_4X);
+        jRadioButtonMenuItem_1_4X.setText("1,4X");
+        jRadioButtonMenuItem_1_4X.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonMenuItem_64XActionPerformed(evt);
+                jRadioButtonMenuItem_1_4XActionPerformed(evt);
             }
         });
-        jMenu1.add(jRadioButtonMenuItem_64X);
+        jMenu1.add(jRadioButtonMenuItem_1_4X);
+
+        buttonGroup1.add(jRadioButtonMenuItem_1_8X);
+        jRadioButtonMenuItem_1_8X.setText("1,8X");
+        jRadioButtonMenuItem_1_8X.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_1_8XActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jRadioButtonMenuItem_1_8X);
 
         jPopupMenu1.add(jMenu1);
 
@@ -309,22 +349,30 @@ public class Fern extends javax.swing.JFrame {
         amplScroll = 8;
     }//GEN-LAST:event_jRadioButtonMenuItem_8XActionPerformed
 
-    private void jRadioButtonMenuItem_16XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_16XActionPerformed
-        amplScroll = 16;
-    }//GEN-LAST:event_jRadioButtonMenuItem_16XActionPerformed
+    private void jRadioButtonMenuItem_1_1XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_1_1XActionPerformed
+        amplScroll = 1.1f;
+    }//GEN-LAST:event_jRadioButtonMenuItem_1_1XActionPerformed
 
-    private void jRadioButtonMenuItem_32XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_32XActionPerformed
-        amplScroll = 32;
-    }//GEN-LAST:event_jRadioButtonMenuItem_32XActionPerformed
+    private void jRadioButtonMenuItem_1_4XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_1_4XActionPerformed
+        amplScroll = 1.4f;
+    }//GEN-LAST:event_jRadioButtonMenuItem_1_4XActionPerformed
 
-    private void jRadioButtonMenuItem_64XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_64XActionPerformed
-        amplScroll = 64;
-    }//GEN-LAST:event_jRadioButtonMenuItem_64XActionPerformed
+    private void jRadioButtonMenuItem_1_8XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_1_8XActionPerformed
+        amplScroll = 1.8f;
+    }//GEN-LAST:event_jRadioButtonMenuItem_1_8XActionPerformed
 
     private void jMenuItem_IteracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_IteracoesActionPerformed
         numIter = Long.valueOf(JOptionPane.showInputDialog(this, "Informe o número de iterações que serão executadas", numIter));
         repaint();
     }//GEN-LAST:event_jMenuItem_IteracoesActionPerformed
+
+    private void jRadioButtonMenuItem_1_01XActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_1_01XActionPerformed
+        amplScroll = 1.01f;
+    }//GEN-LAST:event_jRadioButtonMenuItem_1_01XActionPerformed
+
+    private void jCheckBoxMenuItem_AutoRepaintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem_AutoRepaintActionPerformed
+        autoRepaint = jCheckBoxMenuItem_AutoRepaint.isSelected();
+    }//GEN-LAST:event_jCheckBoxMenuItem_AutoRepaintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,14 +412,16 @@ public class Fern extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem_AutoRepaint;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem_Iteracoes;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_16X;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_1_01X;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_1_1X;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_1_4X;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_1_8X;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_2X;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_32X;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_4X;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_64X;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_8X;
     // End of variables declaration//GEN-END:variables
 }
