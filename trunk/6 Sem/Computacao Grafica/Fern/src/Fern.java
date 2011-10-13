@@ -36,20 +36,24 @@ public class Fern extends javax.swing.JFrame {
     private int difX;
     private int difY;
     private float escala;
+    // constantes da fórmula 1
     private static final float a1 = 0f;
     private static final float b1 = 0.16f;
+    // constantes da fórmula 2
     private static final float a2 = 0.2f;
     private static final float b2 = -0.26f;
     private static final float c2 = 0f;
     private static final float d2 = 0.23f;
     private static final float e2 = 0.22f;
     private static final float f2 = 1.6f;
+    // constantes da fórmula 3
     private static final float a3 = -0.15f;
     private static final float b3 = 0.28f;
     private static final float c3 = 0f;
     private static final float d3 = 0.26f;
     private static final float e3 = 0.25f;
     private static final float f3 = 0.44f;
+    // constantes da fórmula 4
     private static final float a4 = 0.85f;
     private static final float b4 = 0.04f;
     private static final float c4 = 0f;
@@ -57,10 +61,10 @@ public class Fern extends javax.swing.JFrame {
     private static final float e4 = 0.85f;
     private static final float f4 = 1.6f;
     // Porcentagens
-    private static final int perc1 = 1;
-    private static final int perc2 = 8;
-    private static final int perc3 = 15;
-    private static final int perc4 = 85;
+    private static final byte perc1 = 1;
+    private static final byte perc2 = 8;
+    private static final byte perc3 = 15;
+    private static final byte perc4 = 85;
     private float amplScroll = 2;
     private Long numIter;
     private boolean autoRepaint;
@@ -72,7 +76,7 @@ public class Fern extends javax.swing.JFrame {
     public Fern() {
         moveCursor = new Cursor(Cursor.MOVE_CURSOR);
         waitCursor = new Cursor(Cursor.WAIT_CURSOR);
-        defaultCursor =new Cursor(Cursor.DEFAULT_CURSOR);
+        defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
         initComponents();
         autoRepaint = true;
         escala = 100;
@@ -112,7 +116,7 @@ public class Fern extends javax.swing.JFrame {
                     setCursor(defaultCursor);
                     jPopupMenu1.show(Fern.this, e.getX(), e.getY());
                 }
-                if (e.getButton()==MouseEvent.BUTTON2) {
+                if (e.getButton() == MouseEvent.BUTTON2) {
                     repaint();
                 }
             }
@@ -169,47 +173,49 @@ public class Fern extends javax.swing.JFrame {
 
     @Override
     public void paint(Graphics g) {
-//        super.paint(g);
+        super.paint(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         this.setCursor(waitCursor);
-        geraFern(g, numIter.intValue(), X, Y, escala, Color.green);
+        geraFern(g, numIter.intValue());
         this.setCursor(moveCursor);
     }
 
-    private void geraFern(Graphics g, long iIterations, int xInicio, int xFim, float dScale, Color cor) {
+    private void geraFern(Graphics g, long iIterations) {
 
-        int random;
         float x = 0;
         float y = 0;
         float novoX = 0;
         float novoY = 0;
-//        g.setColor(Color.green);
+
         for (long i = 0; i < iIterations; i++) {
 
             // porcentagens de vezes que certa fórmula é usada
-            random = (int) (Math.random() * 100);
+            byte random = (byte) (Math.random() * 100);
             if (random < perc1) {
+                //Caule 0 - 1
                 novoX = a1;
                 novoY = b1 * y;
                 g.setColor(Color.white);
-
             } else if (random < perc2) {
+                //Lado esquero 1 - 8 
                 novoX = (a2 * x) + (b2 * y) + c2;
                 novoY = (d2 * x) + (e2 * y) + f2;
                 g.setColor(Color.PINK);
             } else if (random < perc3) {
+                // Lado direito 8 - 15
                 novoX = (a3 * x) + (b3 * y) + c3;
                 novoY = (d3 * x) + (e3 * y) + f3;
                 g.setColor(Color.red);
             } else {
+                // Toda a parte verde 15 - 100
                 novoX = (a4 * x) + (b4 * y) + c4;
                 novoY = (d4 * x) + (e4 * y) + f4;
-                g.setColor(cor);
+                g.setColor(Color.green);
             }
             x = novoX;
             y = novoY;
-            g.fillRect(Math.round(xInicio + (novoX * dScale)), Math.round(xFim - (novoY * dScale)), 1, 1);
+            g.fillRect((int) (X + (novoX * escala)), (int) (Y - (novoY * escala)), 1, 1);
         }
 
     }
