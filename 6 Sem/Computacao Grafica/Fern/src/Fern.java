@@ -36,38 +36,10 @@ public class Fern extends javax.swing.JFrame {
     private int difX;
     private int difY;
     private float escala;
-    // constantes da fórmula 1
-    private static final float a1 = 0f;
-    private static final float b1 = 0.16f;
-    // constantes da fórmula 2
-    private static final float a2 = 0.2f;
-    private static final float b2 = -0.26f;
-    private static final float c2 = 0f;
-    private static final float d2 = 0.23f;
-    private static final float e2 = 0.22f;
-    private static final float f2 = 1.6f;
-    // constantes da fórmula 3
-    private static final float a3 = -0.15f;
-    private static final float b3 = 0.28f;
-    private static final float c3 = 0f;
-    private static final float d3 = 0.26f;
-    private static final float e3 = 0.25f;
-    private static final float f3 = 0.44f;
-    // constantes da fórmula 4
-    private static final float a4 = 0.85f;
-    private static final float b4 = 0.04f;
-    private static final float c4 = 0f;
-    private static final float d4 = -0.04f;
-    private static final float e4 = 0.85f;
-    private static final float f4 = 1.6f;
-    // Porcentagens
-    private static final byte perc1 = 1;
-    private static final byte perc2 = 8;
-    private static final byte perc3 = 15;
-    private static final byte perc4 = 85;
     private float amplScroll = 2;
     private Long numIter;
     private boolean autoRepaint;
+    private boolean estaMovendo;
     private final Cursor moveCursor;
     private final Cursor waitCursor;
     private final Cursor defaultCursor;
@@ -78,7 +50,9 @@ public class Fern extends javax.swing.JFrame {
         waitCursor = new Cursor(Cursor.WAIT_CURSOR);
         defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
         initComponents();
-        autoRepaint = true;
+        autoRepaint = false;
+        estaMovendo=false;
+        jCheckBoxMenuItem_AutoRepaint.setSelected(autoRepaint);
         escala = 100;
         numIter = 500000l;
         X = getWidth() / 2;
@@ -111,6 +85,15 @@ public class Fern extends javax.swing.JFrame {
             }
 
             @Override
+            public void mouseReleased(MouseEvent e) {
+                if (estaMovendo) {
+                    estaMovendo=false;
+                    repaint();
+                }
+            }
+            
+
+            @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     setCursor(defaultCursor);
@@ -132,6 +115,7 @@ public class Fern extends javax.swing.JFrame {
                 count++;
                 super.mouseDragged(e);
                 if (count > 5) {
+                    estaMovendo = true;
                     count = 0;
                     repaint();
                 }
@@ -177,7 +161,11 @@ public class Fern extends javax.swing.JFrame {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         this.setCursor(waitCursor);
-        geraFern(g, numIter.intValue());
+        if (estaMovendo) {
+            geraFern(g, 9000);
+        } else {
+            geraFern(g, numIter.intValue());
+        }
         this.setCursor(moveCursor);
     }
 
@@ -192,25 +180,25 @@ public class Fern extends javax.swing.JFrame {
 
             // porcentagens de vezes que certa fórmula é usada
             byte random = (byte) (Math.random() * 100);
-            if (random < perc1) {
+            if (random < 1) {
                 //Caule 0 - 1
-                novoX = a1;
-                novoY = b1 * y;
+                novoX = 0f;
+                novoY = 0.16f * y;
                 g.setColor(Color.white);
-            } else if (random < perc2) {
+            } else if (random < 8) {
                 //Lado esquero 1 - 8 
-                novoX = (a2 * x) + (b2 * y) + c2;
-                novoY = (d2 * x) + (e2 * y) + f2;
+                novoX = (0.2f * x) + (-0.26f * y);
+                novoY = (0.23f * x) + (0.22f * y) + 1.6f;
                 g.setColor(Color.PINK);
-            } else if (random < perc3) {
+            } else if (random < 15) {
                 // Lado direito 8 - 15
-                novoX = (a3 * x) + (b3 * y) + c3;
-                novoY = (d3 * x) + (e3 * y) + f3;
+                novoX = (-0.15f * x) + (0.28f * y);
+                novoY = (0.26f * x) + (0.24f * y) + 0.44f;
                 g.setColor(Color.red);
             } else {
                 // Toda a parte verde 15 - 100
-                novoX = (a4 * x) + (b4 * y) + c4;
-                novoY = (d4 * x) + (e4 * y) + f4;
+                novoX = (0.85f * x) + (0.04f * y);
+                novoY = (-0.004f * x) + (0.85f * y) + 1.6f;
                 g.setColor(Color.green);
             }
             x = novoX;
@@ -262,6 +250,7 @@ public class Fern extends javax.swing.JFrame {
         jMenu1.setText("Amplificacao x Scroll");
 
         buttonGroup1.add(jRadioButtonMenuItem_2X);
+        jRadioButtonMenuItem_2X.setSelected(true);
         jRadioButtonMenuItem_2X.setText("2X");
         jRadioButtonMenuItem_2X.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,7 +278,6 @@ public class Fern extends javax.swing.JFrame {
         jMenu1.add(jRadioButtonMenuItem_8X);
 
         buttonGroup1.add(jRadioButtonMenuItem_1_01X);
-        jRadioButtonMenuItem_1_01X.setSelected(true);
         jRadioButtonMenuItem_1_01X.setText("0,01X");
         jRadioButtonMenuItem_1_01X.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
