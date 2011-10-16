@@ -16,6 +16,7 @@ public class TipoFerramenta {
     public  static final byte RETANGULO = 1;
     public  static final byte CIRCULO = 2;
     public static final byte SELECAO=3;
+    public static final byte SUB_SELECAO=4;
     private byte ferramenta;
     
     private ArrayList<FerramentaListener> listeners;
