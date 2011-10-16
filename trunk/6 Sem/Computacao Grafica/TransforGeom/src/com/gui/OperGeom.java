@@ -41,13 +41,13 @@ public class OperGeom extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         container = new ArrayList<Pontos>();
-        Pontos desenho = new Pontos(100, 100);
+        Pontos desenho = new Pontos(100, 200);
         desenho.addPoint(-50, -50);
         desenho.addPoint(-50, 50);
         desenho.addPoint(50, 50);
         container.add(desenho);
         Pontos desenho2 = (Pontos) desenho.clone();
-        desenho2.setLocation(200, 100);
+        desenho2.setLocation(300, 200);
         container.add(desenho2);
         tipoFerramenta = new TipoFerramenta();
         jPopupMenu1.addPopupMenuListener(new PopupMenuListener() {
@@ -75,48 +75,87 @@ public class OperGeom extends javax.swing.JDialog {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    return;
-                }
-                switch (tipoFerramenta.get()) {
-                    case TipoFerramenta.POLIGONO_LIVRE:
-                        poligonoLivrePressed(e.getX(), e.getY());
-                    case TipoFerramenta.CIRCULO:
+                switch (e.getButton()) {
+                    case 1:
+                        switch (tipoFerramenta.get()) {
+                            case TipoFerramenta.POLIGONO_LIVRE:
+                                poligonoLivrePressed(e.getX(), e.getY());
+                            case TipoFerramenta.CIRCULO:
 //                        circloPressed(e.getX(), e.getY());
-                        break;
-                    case TipoFerramenta.RETANGULO:
+                                break;
+                            case TipoFerramenta.RETANGULO:
 //                        retanguloPressed(e.getX(), e.getY());
-                        break;
-                    case TipoFerramenta.SELECAO:
-                        selecionado = getDesenhoAtPoin(e.getPoint());
-                        if (selecionado != null) {
-                            desenhoFoiSelecionado();
-                            setControlesEnabled(true);
-                        }else{
-                            setControlesEnabled(false);
+                                break;
+                            case TipoFerramenta.SELECAO:
+
+                                boolean sucesso = selecionar(e);
+                                if (sucesso) {
+                                    desenhoFoiSelecionado();
+                                    setControlesEnabled(true);
+                                } else {
+                                    setControlesEnabled(false);
+                                }
+                                break;
                         }
                         break;
+                    case 2:
+                        switch (tipoFerramenta.get()) {
+                            case TipoFerramenta.SELECAO:
+                                boolean sucesso = selecionar(e);
+                                if (sucesso) {
+                                    desenhoFoiSelecionado();
+                                    setControlesEnabled(true);
+                                    selecionado.centralizar();
+                                } else {
+                                    setControlesEnabled(false);
+                                }
+                                break;
+                        }
+                        break;
+                    case 3:
+
+                        break;
                 }
+
+            }
+
+            private boolean selecionar(MouseEvent e) {
+                if (selecionado!=null) {
+                    selecionado.setSelecionado(false);
+                }
+                selecionado = getDesenhoAtPoin(e.getPoint());
+                if (selecionado != null) {
+                    selecionado.setSelecionado(true);
+                    repaint();
+                    return true;
+                }
+                return false;
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    jPopupMenu1.show(OperGeom.this, e.getX(), e.getY());
-                    return;
-                }
-                switch (tipoFerramenta.get()) {
-                    case TipoFerramenta.POLIGONO_LIVRE:
-                        poligonoLivreReleased(e.getX(), e.getY());
-                        break;
-                    case TipoFerramenta.CIRCULO:
+                switch (e.getButton()) {
+                    case 1:
+                        switch (tipoFerramenta.get()) {
+                            case TipoFerramenta.POLIGONO_LIVRE:
+                                poligonoLivreReleased(e.getX(), e.getY());
+                                break;
+                            case TipoFerramenta.CIRCULO:
 //                        circloReleased(e.getX(), e.getY());
-                        break;
-                    case TipoFerramenta.RETANGULO:
+                                break;
+                            case TipoFerramenta.RETANGULO:
 //                        retanguloReleased(e.getX(), e.getY());
-                        break;
-                    case TipoFerramenta.SELECAO:
+                                break;
+                            case TipoFerramenta.SELECAO:
 //                        selecaoReleased(e);
+                                break;
+                        }
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+                        jPopupMenu1.show(OperGeom.this, e.getX(), e.getY());
                         break;
                 }
             }
@@ -141,18 +180,29 @@ public class OperGeom extends javax.swing.JDialog {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+                switch (e.getButton()) {
+                    case 1:
+                        switch (tipoFerramenta.get()) {
+                            case TipoFerramenta.POLIGONO_LIVRE:
+                                break;
+                            case TipoFerramenta.CIRCULO:
+                                break;
+                            case TipoFerramenta.RETANGULO:
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (tipoFerramenta.get()) {
+                            case TipoFerramenta.SELECAO:
 
-                switch (tipoFerramenta.get()) {
-                    case TipoFerramenta.POLIGONO_LIVRE:
+                                break;
+                        }
                         break;
-                    case TipoFerramenta.CIRCULO:
+                    case 3:
+
                         break;
-                    case TipoFerramenta.RETANGULO:
-                        break;
-//                    case TipoFerramenta.SELECAO:
-//                        selecaoDraged(e);
-//                        break;
                 }
+
             }
         };
         addMouseMotionListener(mma);
@@ -161,7 +211,7 @@ public class OperGeom extends javax.swing.JDialog {
 
             @Override
             public void ferramentaMudou(byte antiga, byte nova) {
-                selecionado=null;
+                removerSelecao();
                 String nome = null;
                 switch (nova) {
                     case TipoFerramenta.SELECAO:
@@ -176,6 +226,9 @@ public class OperGeom extends javax.swing.JDialog {
                     case TipoFerramenta.RETANGULO:
                         nome = "Retângulo";
                         break;
+                    case TipoFerramenta.SUB_SELECAO:
+                        nome="Mudar Centro";
+                                break;
                 }
                 jLabel_Ferramenta.setText(nome);
             }
@@ -183,8 +236,16 @@ public class OperGeom extends javax.swing.JDialog {
         tipoFerramenta.addListener(ferrList);
         addMouseListener(adapter);
     }
-    
-    public void setControlesEnabled(boolean b){
+
+    public void removerSelecao() {
+        if (selecionado != null) {
+            selecionado.setSelecionado(false);
+            selecionado = null;
+        }
+        repaint();
+    }
+
+    public void setControlesEnabled(boolean b) {
         jSpinner_Rotacao.setEnabled(b);
         jSpinner_X.setEnabled(b);
         jSpinner_Y.setEnabled(b);
@@ -194,6 +255,7 @@ public class OperGeom extends javax.swing.JDialog {
         jSpinner_Rotacao.setValue(selecionado.getRotacao());
         jSpinner_X.setValue(selecionado.getTransacao().x);
         jSpinner_Y.setValue(selecionado.getTransacao().y);
+        jSpinner_Escala.setValue(selecionado.getEscala());
     }
 
     public void poligonoLivrePressed(int x, int y) {
@@ -218,19 +280,24 @@ public class OperGeom extends javax.swing.JDialog {
         }
         if (selecionado.isEqualsStart(x - local.x, y - local.y)) {
             container.add(selecionado);
-            repaint();
-            selecionado = null;
+            removerSelecao();
         }
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.red);
         for (int i = 0; i < container.size(); i++) {
+            g.setColor(Color.red);
             Pontos d = container.get(i);
             if (d.getSize() >= 0) {
                 g.drawPolygon(d.getXs(), d.getYs(), d.getSize());
+            }
+            if (d.isSelecionado()) {
+                g.setColor(Color.white);
+                g.fillOval(d.getCentro().x - 2, d.getCentro().y - 2, 4, 4);
+                g.setColor(Color.black);
+                g.drawOval(d.getCentro().x - 3, d.getCentro().y - 3, 6, 6);
             }
 
         }
@@ -263,9 +330,13 @@ public class OperGeom extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jSpinner_X = new javax.swing.JSpinner();
         jSpinner_Y = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSpinner_Rotacao = new javax.swing.JSpinner();
-        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSpinner_Escala = new javax.swing.JSpinner();
+        jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel_Ferramenta = new javax.swing.JLabel();
 
@@ -298,7 +369,7 @@ public class OperGeom extends javax.swing.JDialog {
                 formMouseReleased(evt);
             }
         });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -323,6 +394,9 @@ public class OperGeom extends javax.swing.JDialog {
         });
         jPanel1.add(jSpinner_Y);
 
+        jLabel7.setPreferredSize(new java.awt.Dimension(20, 10));
+        jPanel1.add(jLabel7);
+
         jLabel2.setText("Rotação:");
         jPanel1.add(jLabel2);
 
@@ -334,20 +408,39 @@ public class OperGeom extends javax.swing.JDialog {
         });
         jPanel1.add(jSpinner_Rotacao);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 28));
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jLabel6.setPreferredSize(new java.awt.Dimension(20, 10));
+        jPanel1.add(jLabel6);
+
+        jLabel4.setText("Escala:");
+        jPanel1.add(jLabel4);
+
+        jSpinner_Escala.setModel(new javax.swing.SpinnerNumberModel(100, 1, 200, 1));
+        jSpinner_Escala.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner_EscalaStateChanged(evt);
+            }
+        });
+        jPanel1.add(jSpinner_Escala);
+
+        jLabel5.setPreferredSize(new java.awt.Dimension(20, 10));
+        jPanel1.add(jLabel5);
 
         jLabel3.setText("Ferramenta: ");
-        jPanel2.add(jLabel3);
+        jPanel1.add(jLabel3);
 
+        jLabel_Ferramenta.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel_Ferramenta.setText("Seleção");
-        jPanel2.add(jLabel_Ferramenta);
+        jLabel_Ferramenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_FerramentaMouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel_Ferramenta);
 
-        jPanel1.add(jPanel2);
+        getContentPane().add(jPanel1);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 590, -1));
-
-        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-800)/2, (screenSize.height-600)/2, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSpinner_XStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner_XStateChanged
@@ -389,6 +482,18 @@ public class OperGeom extends javax.swing.JDialog {
     private void jMenuItem_FerPoligonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FerPoligonoActionPerformed
         tipoFerramenta.set(TipoFerramenta.POLIGONO_LIVRE);
     }//GEN-LAST:event_jMenuItem_FerPoligonoActionPerformed
+
+    private void jSpinner_EscalaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner_EscalaStateChanged
+        if (selecionado == null) {
+            return;
+        }
+        selecionado.setEscala((Integer) jSpinner_Escala.getValue());
+        this.repaint();
+    }//GEN-LAST:event_jSpinner_EscalaStateChanged
+
+    private void jLabel_FerramentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_FerramentaMouseClicked
+        jPopupMenu1.show(this, jLabel_Ferramenta.getX()+jLabel_Ferramenta.getWidth()/2, jLabel_Ferramenta.getY()+jLabel_Ferramenta.getHeight()+30);
+    }//GEN-LAST:event_jLabel_FerramentaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -438,13 +543,17 @@ public class OperGeom extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel_Ferramenta;
     private javax.swing.JMenuItem jMenuItem_FerPoligono;
     private javax.swing.JMenuItem jMenuItem_FerSelecao;
     private javax.swing.JMenu jMenu_Ferramentas;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JSpinner jSpinner_Escala;
     private javax.swing.JSpinner jSpinner_Rotacao;
     private javax.swing.JSpinner jSpinner_X;
     private javax.swing.JSpinner jSpinner_Y;

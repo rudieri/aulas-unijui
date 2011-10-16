@@ -18,9 +18,17 @@ public class Ponto {
         this.y = y;
     }
 
+    public void subtrair(Ponto p) {
+        this.x -= p.x;
+        this.y -= p.y;
+    }
+    public void adicionar(Ponto p) {
+        this.x += p.x;
+        this.y += p.y;
+    }
+
     @Override
     public String toString() {
-        return "["+x+", "+y+"]";
+        return "[" + x + ", " + y + "]";
     }
-    
 }

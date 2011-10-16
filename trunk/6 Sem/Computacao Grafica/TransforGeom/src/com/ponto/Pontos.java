@@ -27,6 +27,8 @@ public class Pontos implements Cloneable {
     private double cos;
     private double sen;
     private int graus;
+    private float escala;
+    private boolean selecionado;
 
     public Pontos(int x, int y) {
         this.X = x;
@@ -39,6 +41,7 @@ public class Pontos implements Cloneable {
         size = 0;
         translacaoX = 0;
         translacaoY = 0;
+        escala=1;
         setRotacao(0);
 
     }
@@ -158,7 +161,8 @@ public class Pontos implements Cloneable {
         for (int i = 0; i < size; i++) {
             float x = pontos[i].x;
             float y = pontos[i].y;
-            int novoX = ((int) ((x * cos) + y * -sen)) + translacaoX;
+            int novoX = ((int) ((x * cos) + y * -sen));
+            novoX*=escala;
             if (novoX > maiorX || i == 0) {
                 maiorX = novoX;
             }
@@ -176,6 +180,7 @@ public class Pontos implements Cloneable {
             float x = pontos[i].x;
             float y = pontos[i].y;
             int novoY = ((int) ((x * sen) + y * cos));
+            novoY*=escala;
             if (novoY > maiorY || i == 0) {
                 maiorY = novoY;
             }
@@ -194,15 +199,30 @@ public class Pontos implements Cloneable {
     public int getHeight() {
         return Math.abs(maiorY - menorY);
     }
+    
+    public Ponto getCentroMassa(){
+        return new Ponto(menorX + getWidth() / 2, menorY + getHeight() / 2);  
+    }
 
-    public Ponto getCenter() {
-//        return new Ponto(menorX + getWidth() / 2, menorY + getHeight() / 2);
-        return new Ponto(X, Y);
+    public Ponto getCentro() {
+        return new Ponto(X+translacaoX, Y+translacaoY);
+    }
+    
+    public void centralizar(){
+        Ponto centroMassa = getCentroMassa();
+        System.out.println("Centro Massa: " + centroMassa);
+        for (int i = 0; i < pontos.length; i++) {
+            if (pontos[i]==null) {
+                continue;
+            }
+            pontos[i].x-=centroMassa.x;
+            pontos[i].y-=centroMassa.y;
+        }
     }
 
     public boolean hit(int x, int y) {
         System.out.println("=============== Inicio dos Testes ===================");
-        System.out.println("1 - hit(" + x + ", " + y + ")");
+        System.out.println("1 - hitOriginal(" + x + ", " + y + ")");
         x -= (X + translacaoX);
         y -= (Y + translacaoY);
         System.out.println("2 - hit(" + x + ", " + y + ")");
@@ -210,7 +230,6 @@ public class Pontos implements Cloneable {
         System.out.println(" = [" + menorX + " ~ " + maiorX + ", " + menorY + " ~ " + maiorY + "] => " + saida);
         return saida;
     }
-
     public boolean hit(Ponto p) {
         return hit(p.x, p.y);
     }
@@ -227,4 +246,24 @@ public class Pontos implements Cloneable {
         }
         return p;
     }
+
+    /** Muda a escala do desenho, 100 = normal*/
+    public void setEscala(Integer escala) {
+        this.escala=((float)escala)/100;
+    }
+
+    public Integer getEscala() {
+        return Math.round(escala*100);
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado=selecionado;
+    }
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+    
+    
+    
 }
