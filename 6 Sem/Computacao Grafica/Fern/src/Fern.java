@@ -169,14 +169,14 @@ public class Fern extends javax.swing.JFrame {
         this.setCursor(moveCursor);
     }
 
-    private void geraFern(Graphics g, long iIterations) {
+    private void geraFern(Graphics g, long iteracoes) {
 
         float x = 0;
         float y = 0;
         float novoX = 0;
         float novoY = 0;
 
-        for (long i = 0; i < iIterations; i++) {
+        for (long i = 0; i < iteracoes; i++) {
 
             // porcentagens de vezes que certa fórmula é usada
             byte random = (byte) (Math.random() * 100);
