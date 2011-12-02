@@ -80,6 +80,15 @@ public class Pontos implements Cloneable {
     }
 
     public void setTranslacao(int x, int y) {
+        int difX=x-translacaoX;
+        int difY=y-translacaoY;
+        for (int i = 0; i < pontos.length; i++) {
+            if ( pontos[i]==null) {
+                continue;
+            }
+            pontos[i].x+=difX;
+            pontos[i].y+=difY;
+        }
         translacaoX = x;
         translacaoY = y;
     }
@@ -169,7 +178,7 @@ public class Pontos implements Cloneable {
             if (novoX < menorX || i == 0) {
                 menorX = novoX;
             }
-            saida[i] = X + novoX + translacaoX;
+            saida[i] = X + novoX;
         }
         return saida;
     }
@@ -187,7 +196,7 @@ public class Pontos implements Cloneable {
             if (novoY < menorY || i == 0) {
                 menorY = novoY;
             }
-            saida[i] = Y + novoY + translacaoY;
+            saida[i] = Y + novoY;
         }
         return saida;
     }
@@ -205,7 +214,7 @@ public class Pontos implements Cloneable {
     }
 
     public Ponto getCentro() {
-        return new Ponto(X+translacaoX, Y+translacaoY);
+        return new Ponto(X, Y);
     }
     
     public void centralizar(){
@@ -217,14 +226,16 @@ public class Pontos implements Cloneable {
             }
             pontos[i].x-=centroMassa.x;
             pontos[i].y-=centroMassa.y;
+            translacaoX=0;
+            translacaoY=0;
         }
     }
 
     public boolean hit(int x, int y) {
         System.out.println("=============== Inicio dos Testes ===================");
         System.out.println("1 - hitOriginal(" + x + ", " + y + ")");
-        x -= (X + translacaoX);
-        y -= (Y + translacaoY);
+        x -= X;
+        y -= Y;
         System.out.println("2 - hit(" + x + ", " + y + ")");
         boolean saida = menorX <= x && maiorX >= x && menorY <= y && maiorY >= y;
         System.out.println(" = [" + menorX + " ~ " + maiorX + ", " + menorY + " ~ " + maiorY + "] => " + saida);

@@ -35,6 +35,8 @@ public class OperGeom extends javax.swing.JDialog {
     private TipoFerramenta tipoFerramenta;
     private int oldX;
     private int oldY;
+    private int difX;
+    private int difY;
 
     /** Creates new form OperGeom */
     public OperGeom(java.awt.Frame parent, boolean modal) {
@@ -70,21 +72,26 @@ public class OperGeom extends javax.swing.JDialog {
         initListeners();
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Inicializa os ouvintes... Tem código aqui... Não apague!!!">
     private void initListeners() {
         MouseAdapter adapter = new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                oldX = e.getX();
+                oldY = e.getY();
+                
+
                 switch (e.getButton()) {
                     case 1:
                         switch (tipoFerramenta.get()) {
                             case TipoFerramenta.POLIGONO_LIVRE:
                                 poligonoLivrePressed(e.getX(), e.getY());
                             case TipoFerramenta.CIRCULO:
-//                        circloPressed(e.getX(), e.getY());
+                                //                        circloPressed(e.getX(), e.getY());
                                 break;
                             case TipoFerramenta.RETANGULO:
-//                        retanguloPressed(e.getX(), e.getY());
+                                //                        retanguloPressed(e.getX(), e.getY());
                                 break;
                             case TipoFerramenta.SELECAO:
 
@@ -92,6 +99,8 @@ public class OperGeom extends javax.swing.JDialog {
                                 if (sucesso) {
                                     desenhoFoiSelecionado();
                                     setControlesEnabled(true);
+                                    difX=selecionado.getLocation().x-e.getX();
+                                    difY=selecionado.getLocation().y-e.getY();
                                 } else {
                                     setControlesEnabled(false);
                                 }
@@ -120,7 +129,7 @@ public class OperGeom extends javax.swing.JDialog {
             }
 
             private boolean selecionar(MouseEvent e) {
-                if (selecionado!=null) {
+                if (selecionado != null) {
                     selecionado.setSelecionado(false);
                 }
                 selecionado = getDesenhoAtPoin(e.getPoint());
@@ -141,13 +150,13 @@ public class OperGeom extends javax.swing.JDialog {
                                 poligonoLivreReleased(e.getX(), e.getY());
                                 break;
                             case TipoFerramenta.CIRCULO:
-//                        circloReleased(e.getX(), e.getY());
+                                //                        circloReleased(e.getX(), e.getY());
                                 break;
                             case TipoFerramenta.RETANGULO:
-//                        retanguloReleased(e.getX(), e.getY());
+                                //                        retanguloReleased(e.getX(), e.getY());
                                 break;
                             case TipoFerramenta.SELECAO:
-//                        selecaoReleased(e);
+                                //                        selecaoReleased(e);
                                 break;
                         }
                         break;
@@ -173,7 +182,7 @@ public class OperGeom extends javax.swing.JDialog {
                     case TipoFerramenta.RETANGULO:
                         break;
                     case TipoFerramenta.SELECAO:
-//                        selecaoMoved(e);
+                        //                        selecaoMoved(e);
                         break;
                 }
             }
@@ -181,6 +190,7 @@ public class OperGeom extends javax.swing.JDialog {
             @Override
             public void mouseDragged(MouseEvent e) {
                 switch (e.getButton()) {
+                    case 0:
                     case 1:
                         switch (tipoFerramenta.get()) {
                             case TipoFerramenta.POLIGONO_LIVRE:
@@ -188,6 +198,13 @@ public class OperGeom extends javax.swing.JDialog {
                             case TipoFerramenta.CIRCULO:
                                 break;
                             case TipoFerramenta.RETANGULO:
+                                break;
+                            case TipoFerramenta.SELECAO:
+//                System.out.println("DRAG: "+ e.getButton());
+                                if (selecionado != null) {
+                                    selecionado.setLocation( e.getX()+difX,e.getY()+difY);
+                                    repaint();
+                                }
                                 break;
                         }
                         break;
@@ -227,8 +244,8 @@ public class OperGeom extends javax.swing.JDialog {
                         nome = "Retângulo";
                         break;
                     case TipoFerramenta.SUB_SELECAO:
-                        nome="Mudar Centro";
-                                break;
+                        nome = "Mudar Centro";
+                        break;
                 }
                 jLabel_Ferramenta.setText(nome);
             }
@@ -236,6 +253,7 @@ public class OperGeom extends javax.swing.JDialog {
         tipoFerramenta.addListener(ferrList);
         addMouseListener(adapter);
     }
+    //</editor-fold>
 
     public void removerSelecao() {
         if (selecionado != null) {
@@ -249,6 +267,7 @@ public class OperGeom extends javax.swing.JDialog {
         jSpinner_Rotacao.setEnabled(b);
         jSpinner_X.setEnabled(b);
         jSpinner_Y.setEnabled(b);
+        jSpinner_Escala.setEnabled(b);
     }
 
     private void desenhoFoiSelecionado() {
@@ -259,8 +278,6 @@ public class OperGeom extends javax.swing.JDialog {
     }
 
     public void poligonoLivrePressed(int x, int y) {
-        oldX = x;
-        oldY = y;
         if (selecionado == null) {
             selecionado = new Pontos(x, y);
         }
@@ -400,7 +417,8 @@ public class OperGeom extends javax.swing.JDialog {
         jLabel2.setText("Rotação:");
         jPanel1.add(jLabel2);
 
-        jSpinner_Rotacao.setModel(new javax.swing.SpinnerNumberModel(0, 0, 360, 1));
+        jSpinner_Rotacao.setModel(new javax.swing.SpinnerNumberModel());
+        jSpinner_Rotacao.setPreferredSize(new java.awt.Dimension(60, 28));
         jSpinner_Rotacao.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner_RotacaoStateChanged(evt);
@@ -414,7 +432,7 @@ public class OperGeom extends javax.swing.JDialog {
         jLabel4.setText("Escala:");
         jPanel1.add(jLabel4);
 
-        jSpinner_Escala.setModel(new javax.swing.SpinnerNumberModel(100, 1, 200, 1));
+        jSpinner_Escala.setModel(new javax.swing.SpinnerNumberModel(100, -800, 800, 1));
         jSpinner_Escala.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner_EscalaStateChanged(evt);
@@ -428,7 +446,7 @@ public class OperGeom extends javax.swing.JDialog {
         jLabel3.setText("Ferramenta: ");
         jPanel1.add(jLabel3);
 
-        jLabel_Ferramenta.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel_Ferramenta.setFont(new java.awt.Font("Ubuntu", 1, 15));
         jLabel_Ferramenta.setText("Seleção");
         jLabel_Ferramenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -463,7 +481,16 @@ public class OperGeom extends javax.swing.JDialog {
         if (selecionado == null) {
             return;
         }
-        selecionado.setRotacao((Integer) jSpinner_Rotacao.getValue());
+        int value = (Integer) jSpinner_Rotacao.getValue();
+        if (value < 0) {
+            value = 360 + (value % 360);
+            jSpinner_Rotacao.setValue(value);
+        }
+        if (value > 359) {
+            value = value % 360;
+            jSpinner_Rotacao.setValue(value);
+        }
+        selecionado.setRotacao(value);
         this.repaint();
     }//GEN-LAST:event_jSpinner_RotacaoStateChanged
 
@@ -492,7 +519,7 @@ public class OperGeom extends javax.swing.JDialog {
     }//GEN-LAST:event_jSpinner_EscalaStateChanged
 
     private void jLabel_FerramentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_FerramentaMouseClicked
-        jPopupMenu1.show(this, jLabel_Ferramenta.getX()+jLabel_Ferramenta.getWidth()/2, jLabel_Ferramenta.getY()+jLabel_Ferramenta.getHeight()+30);
+        jPopupMenu1.show(this, jLabel_Ferramenta.getX() + jLabel_Ferramenta.getWidth() / 2, jLabel_Ferramenta.getY() + jLabel_Ferramenta.getHeight() + 30);
     }//GEN-LAST:event_jLabel_FerramentaMouseClicked
 
     /**
