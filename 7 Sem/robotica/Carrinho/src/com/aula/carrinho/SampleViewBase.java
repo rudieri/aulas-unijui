@@ -71,6 +71,7 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
     public void surfaceCreated(SurfaceHolder holder) {
         Log.i(TAG, "surfaceCreated");
         mCamera = Camera.open();
+        
         mCamera.setPreviewCallback(new PreviewCallback() {
             public void onPreviewFrame(byte[] data, Camera camera) {
                 synchronized (SampleViewBase.this) {
