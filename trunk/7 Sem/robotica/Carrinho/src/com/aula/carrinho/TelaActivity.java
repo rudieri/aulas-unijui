@@ -5,8 +5,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.FrameLayout;
+import com.aula.carrinho.utils.Alert;
+import java.io.IOException;
+import java.util.Set;
+import java.util.UUID;
 import javax.microedition.khronos.opengles.GL10;
-
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
@@ -22,13 +27,6 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
-
-import android.util.Log;
-import android.widget.FrameLayout;
-import com.aula.carrinho.utils.Alert;
-import java.io.IOException;
-import java.util.Set;
-import java.util.UUID;
 import org.anddev.andengine.opengl.view.RenderSurfaceView;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
@@ -184,7 +182,7 @@ public class TelaActivity extends BaseGameActivity {
                 }
                 if (!tecla.equals("")) {
                     try {
-                        Log.i("CARRINHO", tecla);
+//                        Log.i("CARRINHO", tecla);
                         if (bluetoothSocket != null) {
                             bluetoothSocket.getOutputStream().write(tecla.getBytes());
                         }
