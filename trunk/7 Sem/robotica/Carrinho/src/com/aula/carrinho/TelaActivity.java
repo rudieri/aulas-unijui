@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
-import java.io.IOException;
+import java.io.*;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.microedition.khronos.opengles.GL10;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
@@ -56,7 +58,7 @@ public class TelaActivity extends BaseGameActivity {
     private BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
-
+    private boolean modoAutonomo = true; 
     private void carregaBluetooth() {
         if (procurando) {
             return;
@@ -118,6 +120,23 @@ public class TelaActivity extends BaseGameActivity {
                 bluetoothSocket = carrinho.createRfcommSocketToServiceRecord(MY_UUID);
                 bluetoothSocket.connect();
                 Log.i("CARRINHO", "DEU CERTO ....");
+                new Thread(new Runnable() {
+
+                    public void run() {
+                        while (true) {
+                            try {
+                                InputStream inputStream = bluetoothSocket.getInputStream();
+//                                BufferedInputStream bis = new BufferedInputStream(inputStream);
+                                InputStreamReader reader = new InputStreamReader(inputStream);
+                                BufferedReader br = new BufferedReader(reader);
+                                Log.i("ARDUINO", br.readLine());
+                            } catch (IOException ex) {
+                                Logger.getLogger(TelaActivity.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
+                        }
+                    }
+                }).start();
                 ////
                 //this.mDigitalOnScreenControl = new DigitalOnScreenControl(0, CAMERA_HEIGHT - this.mOnScreenControlBaseTextureRegion.getHeight(), this.mCamera, this.mOnScreenControlBaseTextureRegion, this.mOnScreenControlKnobTextureRegion, 0.1f, new IOnScreenControlListener() {
 
@@ -167,9 +186,14 @@ public class TelaActivity extends BaseGameActivity {
 
         ionScreenControlListener = new IOnScreenControlListener() {
 
+            
+
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
 
+                if (modoAutonomo) {
+                    return;
+                }
                 String tecla = "x";
                 if (pValueY > 0) {
                     tecla = "s";
@@ -184,11 +208,12 @@ public class TelaActivity extends BaseGameActivity {
                     try {
 //                        Log.i("CARRINHO", tecla);
                         if (bluetoothSocket != null) {
+                            tecla += "\n";
                             bluetoothSocket.getOutputStream().write(tecla.getBytes());
                         }
 
                     } catch (IOException ex) {
-                        Log.e("CARRINHO", "Fudeu quando mandou o camndo", ex);
+//                        Log.e("CARRINHO", "Fudeu quando mandou o camndo", ex);
                     }
                 }
             }
@@ -235,4 +260,25 @@ public class TelaActivity extends BaseGameActivity {
     // ===========================================================
     // Inner and Anonymous Classes
     // ===========================================================
+
+    void enviarPotencia(int potenciaEsquerda, int potenciaDireita) {
+        String pd = String.valueOf(potenciaDireita);
+        String pe = String.valueOf(potenciaEsquerda);
+        if (pd.length() == 1) {
+            pd = "0" + pd;
+        }
+        if (pe.length() == 1) {
+            pe = "0" + pe;
+        }
+        String tecla = "+" + pd + "+" + pe;
+        if (bluetoothSocket != null) {
+            try {
+                tecla += "\n";
+                System.out.println("Mandei: " + tecla);
+                bluetoothSocket.getOutputStream().write(tecla.getBytes());
+            } catch (IOException ex) {
+                Log.e("CARRINHO", "Erro ao mandar comando ", ex);
+            }
+        }
+    }
 }
