@@ -6,21 +6,25 @@ import android.graphics.Color;
 import android.view.SurfaceHolder;
 import com.geomanalitica.utils.Vetorizador;
 import com.geomanalitica.utils._2d.Ponto2D;
+import com.geomanalitica.utils._2d.Vetor2D;
 import java.util.ArrayList;
-import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 class Sample4View extends SampleViewBase {
 
+    public static final int ALTURA = 800;
     private Mat mYuv;
     private Mat mRgba;
     private Mat mGraySubmat;
     private Mat mIntermediateMat;
+    private boolean pintar;
+    private final TelaActivity tela;
 
     public Sample4View(Context context) {
         super(context);
+        this.tela = (TelaActivity) context;
     }
 
     @Override
@@ -40,11 +44,6 @@ class Sample4View extends SampleViewBase {
 
     @Override
     protected Bitmap processFrame(byte[] data) {
-        if (contaPrint++ == 6) {
-            contaPrint = 0;
-        }else{
-            return null;
-        }
         mYuv.put(0, 0, data);
 
 
@@ -55,26 +54,69 @@ class Sample4View extends SampleViewBase {
 
         Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
 
+//        if (contaPrint++ == 10) {
+        System.out.println("Print");
+        contaPrint = 0;
+        for (int i = 0; i < bmp.getWidth(); i++) {
+            for (int j = 0; j < bmp.getHeight(); j++) {
+                bmp.setPixel(i, j, Color.BLACK);
+            }
+        }
+//        } else {
+//            bmp.recycle();
+//            return null;
+//        }
         ArrayList<Ponto2D> pontos;
 //            boolean[][] pretoBranco = converterParaPretoBranco(mRgba);
-            pontos = Vetorizador.vetorizar(mRgba);
+        pontos = Vetorizador.vetorizar(mRgba);
+//        Utils.matToBitmap(mRgba, bmp);
+//        if (Utils.matToBitmap(mRgba, bmp)) {
 
-        if (Utils.matToBitmap(mRgba, bmp)) {
-//            Mat mat = new Mat(pontos., GONE, GONE, null)
-            if (pontos != null) {
-                System.out.println("Pontos: " + pontos.size());
-            }
-            for (int i = 0; pontos != null && i < pontos.size() - 1; i++) {
-                Ponto2D ponto = pontos.get(i);
-                Ponto2D proxPonto = pontos.get(i + 1);
-                linhaToBmp((int) ponto.getX(), (int) ponto.getY(), (int) proxPonto.getX(), (int) proxPonto.getY(), bmp);
-            }
+//        if (pintar) {
+
+        if (pontos != null && pontos.size() > 1) {
+//            System.out.println("Pontos: " + pontos.size());
+        } else {
             return bmp;
         }
+//        if (pontos == null || pontos.isEmpty()) {
+//            bmp.recycle();
+//            
+//            return null;
+//        }
+//        bmp.prepareToDraw();
 
+        ArrayList<Ponto2D> otm = new ArrayList<Ponto2D>(2);
+        otm.add(pontos.get(0));
+        otm.add(pontos.get(pontos.size() - 1));
+        Vetor2D centro = new Vetor2D(new Ponto2D(mRgba.rows() / 2, 0), new Ponto2D(mRgba.rows() / 2, mRgba.cols()));
+        Vetor2D vetor2D = new Vetor2D(pontos.get(0), pontos.get(pontos.size() - 1));
+        final float anguloInterno = Vetor2D.anguloInterno(centro, vetor2D);
+        System.out.println("Angulo: " + anguloInterno);
 
-        bmp.recycle();
-        return null;
+        int potenciaEsquerda = 99;
+        int potenciaDireita = 99;
+        float dif = anguloInterno - 90;
+        if (dif > 0) {
+            potenciaEsquerda -= dif * 3;
+        } else {
+            potenciaDireita += dif * 3;
+        }
+        tela.enviarPotencia(potenciaEsquerda, potenciaDireita);
+
+        for (int i = 0; otm != null && i < otm.size() - 1; i++) {
+            Ponto2D ponto = otm.get(i);
+            Ponto2D proxPonto = otm.get(i + 1);
+            linhaToBmp((int) ponto.getX(), (int) ponto.getY(), (int) proxPonto.getX(), (int) proxPonto.getY(), bmp);
+        }
+//            pintar = false;
+        return bmp;
+//        }
+//        }
+//
+//        pintar = true;
+//        bmp.recycle();
+//        return null;
     }
 
     private byte sinal(int x) {

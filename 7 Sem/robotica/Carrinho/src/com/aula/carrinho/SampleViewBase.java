@@ -109,7 +109,7 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
                     this.wait();
                     bmp = processFrame(mFrame);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d("CARRINHO", e.getMessage(), e);
                 }
             }
 
