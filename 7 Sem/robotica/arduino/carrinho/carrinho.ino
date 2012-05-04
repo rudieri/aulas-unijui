@@ -1,110 +1,204 @@
 
 #include <Servo.h>
-Servo servoRoda; // Define  Servo
 Servo servoCam; // Define  Servo
+int posCam = 180; //POsicao Camera Inicial
 
-//Standard PWM DC control
-int E1 = 5;     //M1 Speed Control
-int E2 = 6;     //M2 Speed Control
-int M1 = 4;    //M1 Direction Control
-int M2 = 7;    //M1 Direction Control
- 
-int posCam = 0; 
- 
-void stop(void)                    //Stop
+int S1 = 5;     //V1 Controle Velocidade
+int S2 = 6;     //V2 Controle Velocidade
+int V1 = 4;    //V1 Direcao 
+int V2 = 7;    //V1 Direcao
+
+//
+String inputString = "";         
+boolean stringCompleta = false;  
+
+
+void stop(void)                    //Parar
 {
-  digitalWrite(E1,LOW);  
-  digitalWrite(E2,LOW);     
+  digitalWrite(S1,LOW);  
+  digitalWrite(S2,LOW);     
 }  
-void advance(char a,char b)          //Move forward
+void frente(char a,char b)          //Move forward
 {
-  analogWrite (E1,a);      //PWM Speed Control
-  digitalWrite(M1,HIGH);   
-  analogWrite (E2,b);   
-  digitalWrite(M2,HIGH);
+  analogWrite (S1,a);      //PWM Speed Control
+  digitalWrite(V1,HIGH);   
+  analogWrite (S2,b);   
+  digitalWrite(V2,HIGH);
 } 
-void back_off (char a,char b)          //Move backward
+void atras (char a,char b)          //Move backward
 {
-  analogWrite (E1,a);
-  digitalWrite(M1,LOW);  
-  analogWrite (E2,b);   
-  digitalWrite(M2,LOW);
+  analogWrite (S1,a);
+  digitalWrite(V1,LOW);  
+  analogWrite (S2,b);   
+  digitalWrite(V2,LOW);
 }
-void turn_L (char a,char b)             //Turn Left
+void girar_esquerda (char a,char b)             //Turn Left
 {
-  analogWrite (E1,a);
-  digitalWrite(M1,LOW);   
-  analogWrite (E2,b);   
-  digitalWrite(M2,HIGH);
+  analogWrite (S1,a);
+  digitalWrite(V1,LOW);   
+  analogWrite (S2,b);   
+  digitalWrite(V2,HIGH);
 }
-void turn_R (char a,char b)             //Turn Right
+void girar_direita (char a,char b)             //Turn Right
 {
-  analogWrite (E1,a);
-  digitalWrite(M1,HIGH);   
-  analogWrite (E2,b);   
-  digitalWrite(M2,LOW);
+  analogWrite (S1,a);
+  digitalWrite(V1,HIGH);   
+  analogWrite (S2,b);   
+  digitalWrite(V2,LOW);
 }
+
+void manual (char sentido1, int potencia1,char sentido2,int potencia2)             //Turn Right
+{
+  Serial.print("Paramentos Manual: ");
+  Serial.print(sentido1);
+  Serial.print(";");
+  Serial.print(potencia1);
+  Serial.print(";");
+  Serial.print(sentido2);
+  Serial.print(";");
+  Serial.println(potencia2);
+
+  analogWrite (S1,potencia1);
+  digitalWrite(V1,sentido1);   
+  analogWrite (S2,potencia2);   
+  digitalWrite(V2,sentido2);
+}
+
 void setup(void)
 {
-  servoRoda.attach(13);
-  servoRoda.write(45);
-  
-  servoCam.attach(11);
-  servoCam.write(45);
-  
+
+  servoCam.attach(13);
+  servoCam.write(0);
+
   int i;
   for(i=4;i<=7;i++)
     pinMode(i, OUTPUT); 
   Serial.begin(9600);      //Set Baud Rate
-  Serial.println("Run keyboard control");
+  Serial.println("Starteo....");
+  inputString.reserve(200);
 }
-void loop(void)
-{
-  if(Serial.available()){
-    char val = Serial.read();
-    if(val != -1)
-    {
-      switch(val)
+void loop(void){
+  //Recebe Caracter Normal
+  if(stringCompleta){
+    if(inputString.length()==1){
+      Serial.println(inputString);
+      char val = inputString.charAt(0);
+      Serial.print("Comando Direto: ");
+      Serial.println(val);
+
+      if(val != -1)
       {
-      case 'w'://Move Forward
-        advance (255,255);   //move forward in max speed
-        servoRoda.write(45);
-        break;
-      case 's'://Move Backward
-        back_off (255,255);   //move back in max speed
-        break;
-      case 'a'://Turn Left
-        turn_L (255,255);
-        break;      
-      case 'd'://Turn Right
-        turn_R (255,255);
-        break;
-        case 'q'://Turn Right
-        servoRoda.write(65);
-        break;
-        case 'e'://Turn Left
-        servoRoda.write(30);
-        break;
-      case 'x':
-        stop();
-        break;
-      case '+'://camera ++
-        posCam= posCam+20;
-        if(posCam>180)
-          posCam = 180;
-        servoCam.write(posCam);
-        Serial.println("Camera "+posCam);
-        break;
+        switch(val)
+        {
+        case 'w'://Pra Frente
+          frente (255,255);   //move forward in max speed        
+          break;
+        case 's'://Tra Tras
+          atras (255,255);   //move back in max speed
+          break;
+        case 'a'://Pra Esquerda
+          girar_esquerda (255,255);
+          break;      
+        case 'd'://Pra Direita
+          girar_direita (255,255);
+          break;
+        case 'x': // Para
+          stop();
+          break;
+        case '+'://camera ++
+          posCam= posCam+20;
+          if(posCam>180)
+            posCam = 180;
+          servoCam.write(posCam);
+          Serial.println("Camera "+posCam);
+          break;
         case '-'://camera ++
-        posCam= posCam-20;
-        if(posCam<0)
-          posCam = 0;
+          posCam= posCam-20;
+          if(posCam<0)
+            posCam = 0;
+          servoCam.write(posCam);
+          Serial.println("Camera "+posCam);
+          break;
+        }
+      }
+      else stop(); 
+      inputString = "";
+      stringCompleta = false;
+    }
+    if(inputString.length()>1){
+
+      if(inputString.charAt(0)=='+' || inputString.charAt(0)=='-'){
+        //Recebe Potencia Motores
+        // +99-30  ou  -99-99
+
+        int sentido1 = inputString.charAt(0)=='+'?HIGH:LOW;
+        Serial.println(inputString.substring(1,3));
+        int potencia1 = int(StringToInt(inputString.substring(1,3))*2.55);
+
+        int sentido2 = inputString.charAt(3)=='+'?HIGH:LOW;
+        int potencia2 = int(StringToInt(inputString.substring(4,6))*2.55);
+
+        //Manda Potencia Manual
+        manual(sentido1,potencia1,sentido2,potencia2);
+        Serial.print("Recebi Potencia Motor: ");
+        Serial.println(inputString);
+
+      }
+
+      if(inputString.charAt(0)=='c'){
+        //Cotrole Camera
+        //C000  // C090 // C180       
+        posCam = StringToInt(inputString.substring(1,3));
         servoCam.write(posCam);
-        Serial.println("Camera "+posCam);
-        break;
+        Serial.print("Recebi Posicao Camera: ");
+        Serial.println(posCam);
+
+      }    
+      inputString = "";
+      stringCompleta = false;
     }
-    }
-    else stop(); 
   }
 }
+
+void serialEvent() {
+  while (Serial.available()) {
+    char inChar = (char)Serial.read();    
+    if (inChar == '\n' || inChar == '\r') {
+      stringCompleta = true;
+    }
+    else if(inChar == 'w'|| inChar == 'a'
+    || inChar == 's'|| inChar == 'd'
+      || inChar == 'x') {
+      Serial.println("Modo_Teclado");
+      inputString += inChar;
+      stringCompleta = true;
+    }   
+    else{
+      inputString += inChar;
+    }
+  }
+}
+
+int StringToInt(String st) {
+  Serial.println("StringToInt");
+  Serial.println(st);
+  Serial.println("to");
+
+  char aux[st.length()] ;
+  for(int i =0; i < st.length();i++){
+    aux[i] = st.charAt(i);
+  }
+
+  Serial.print(aux);
+  Serial.println(atoi(aux));
+
+  return atoi(aux);
+
+}
+
+
+
+
+
+
 
