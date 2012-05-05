@@ -4,6 +4,7 @@
  */
 package com.geomanalitica.utils;
 
+import com.aula.carrinho.Sample4View;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ import org.opencv.core.Mat;
  * @author rudieri
  */
 public class Vetorizador {
-    public static final int MAX_ERROS = 20;
+
+    public static final int MAX_ERROS = 25;
 
     public static ArrayList<Ponto2D> vetorizar(boolean[][] vetor) {
         int i = 0;
@@ -40,20 +42,22 @@ public class Vetorizador {
     }
 
     public static ArrayList<Ponto2D> vetorizar(Mat vetor) {
-        int i = 0;
+        int X = Sample4View.X_INICIAL;
 
-        System.out.println("Linhas: " + vetor.rows());
-        System.out.println("Colunas: " + vetor.cols());
+//        System.out.println("Linhas: " + vetor.rows());
+//        System.out.println("Colunas: " + vetor.cols());
         ArrayList<Ponto2D> pontos = new ArrayList<Ponto2D>(vetor.cols());
-        for (int j = 0; j < vetor.rows(); j++) {
-            if (vetor.get(j, i)[0] > 0) {
-                Ponto2D pinicial = new Ponto2D(i, j);
-                Ponto2D pfinal = new Ponto2D(i, j);
-                boolean chegouNoFim = vetorizar(vetor, i, j, pinicial, pfinal, pontos);
-                if (!chegouNoFim) {
-                    pontos.clear();
-                } else {
-                    return pontos;
+        for (; X < Sample4View.X_INICIAL + 5; X++) {
+            for (int Y = 0; Y < vetor.rows(); Y++) {
+                if (vetor.get(Y, X)[0] > 0) {
+                    Ponto2D pinicial = new Ponto2D(X, Y);
+                    Ponto2D pfinal = new Ponto2D(X, Y);
+                    boolean chegouNoFim = vetorizar(vetor, X, Y, pinicial, pfinal, pontos);
+                    if (!chegouNoFim) {
+                        pontos.clear();
+                    } else {
+                        return pontos;
+                    }
                 }
             }
         }
@@ -148,20 +152,20 @@ public class Vetorizador {
         return chegou;
     }
 
-    private static boolean vetorizar(Mat vetor, int i, int j, Ponto2D pInicial, Ponto2D pFinal, ArrayList<Ponto2D> pontos) {
+    private static boolean vetorizar(Mat vetor, int xInicial, int yInicial, Ponto2D pInicial, Ponto2D pFinal, ArrayList<Ponto2D> pontos) {
         boolean chegou = false;
-        int iAv = i + 1;
+        int x = xInicial + 1;
         boolean temPontos = true;
         byte contaErro = 0;
         while (temPontos) {
             temPontos = false;
-            if (iAv < vetor.cols()) {
-                for (int k = j - 1 - contaErro; k < j + 2 + contaErro; k++) {
-                    if (k >= 0 && k < vetor.rows()) {
-                        if (vetor.get(k, iAv)[0] > 0) {
+            if (x < vetor.cols()) {
+                for (int y = yInicial - 1 - contaErro; y < yInicial + 2 + contaErro; y++) {
+                    if (y >= 0 && y < vetor.rows()) {
+                        if (vetor.get(y, x)[0] > 0) {
                             contaErro = 0;
                             temPontos = true;
-                            final Ponto2D novoFinal = new Ponto2D(iAv, k);
+                            final Ponto2D novoFinal = new Ponto2D(x, y);
                             Vetor2D v1 = new Vetor2D(pInicial, pFinal);
                             Vetor2D v2 = new Vetor2D(pInicial, novoFinal);
                             if (!Vetor2D.isParalelo(v1, v2)) {
@@ -173,7 +177,7 @@ public class Vetorizador {
                                 pInicial = pFinal;
                             }
                             pFinal = novoFinal;
-                            j = k; // sem recursividade
+                            yInicial = y; // sem recursividade
                         }
                     }
                 }
@@ -188,7 +192,7 @@ public class Vetorizador {
                 pontos.add(pFinal);
                 chegou = true;
             }
-            iAv++;
+            x++;
         }
         return chegou;
     }
