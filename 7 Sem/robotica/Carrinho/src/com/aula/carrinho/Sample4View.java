@@ -12,14 +12,14 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-class Sample4View extends SampleViewBase {
+public class Sample4View extends SampleViewBase {
 
-    public static final int ALTURA = 800;
+    public static final int X_INICIAL = 160;
+    public static final int Y_INICIAL = 1;
     private Mat mYuv;
     private Mat mRgba;
     private Mat mGraySubmat;
     private Mat mIntermediateMat;
-    private boolean pintar;
     private final TelaActivity tela;
 
     public Sample4View(Context context) {
@@ -54,7 +54,6 @@ class Sample4View extends SampleViewBase {
 
         Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
 
-//        if (contaPrint++ == 10) {
         System.out.println("Print");
         contaPrint = 0;
         for (int i = 0; i < bmp.getWidth(); i++) {
@@ -62,35 +61,34 @@ class Sample4View extends SampleViewBase {
                 bmp.setPixel(i, j, Color.BLACK);
             }
         }
-//        } else {
-//            bmp.recycle();
-//            return null;
-//        }
         ArrayList<Ponto2D> pontos;
 //            boolean[][] pretoBranco = converterParaPretoBranco(mRgba);
         pontos = Vetorizador.vetorizar(mRgba);
-//        Utils.matToBitmap(mRgba, bmp);
-//        if (Utils.matToBitmap(mRgba, bmp)) {
 
-//        if (pintar) {
+//        Utils.matToBitmap(mRgba, bmp);
 
         if (pontos != null && pontos.size() > 1) {
 //            System.out.println("Pontos: " + pontos.size());
         } else {
             return bmp;
         }
-//        if (pontos == null || pontos.isEmpty()) {
-//            bmp.recycle();
-//            
-//            return null;
-//        }
-//        bmp.prepareToDraw();
-
-        ArrayList<Ponto2D> otm = new ArrayList<Ponto2D>(2);
-        otm.add(pontos.get(0));
-        otm.add(pontos.get(pontos.size() - 1));
         Vetor2D centro = new Vetor2D(new Ponto2D(mRgba.rows() / 2, 0), new Ponto2D(mRgba.rows() / 2, mRgba.cols()));
-        Vetor2D vetor2D = new Vetor2D(pontos.get(0), pontos.get(pontos.size() - 1));
+
+        ArrayList<Ponto2D> otm = new ArrayList<Ponto2D>(3);
+        otm.add(pontos.get(0));
+        if (pontos.size() > 2) {
+            otm.add(pontos.get(pontos.size() / 2 + 1));
+        }
+        otm.add(pontos.get(pontos.size() - 1));
+        Vetor2D vetor2D;
+        if (otm.size() == 3) {
+            vetor2D = new Vetor2D(otm.get(1), otm.get(2));
+
+        } else {
+            vetor2D = new Vetor2D(otm.get(0), otm.get(1));
+        }
+//        System.out.println("Centro: " + centro);
+//        System.out.println("Vetor: " + vetor2D);
         final float anguloInterno = Vetor2D.anguloInterno(centro, vetor2D);
         System.out.println("Angulo: " + anguloInterno);
 
@@ -98,9 +96,9 @@ class Sample4View extends SampleViewBase {
         int potenciaDireita = 99;
         float dif = anguloInterno - 90;
         if (dif > 0) {
-            potenciaEsquerda -= dif * 3;
+            potenciaDireita -= dif * 3;
         } else {
-            potenciaDireita += dif * 3;
+            potenciaEsquerda += dif * 3;
         }
         tela.enviarPotencia(potenciaEsquerda, potenciaDireita);
 
@@ -121,7 +119,7 @@ class Sample4View extends SampleViewBase {
 
     private byte sinal(int x) {
         return (byte) ((x < 0) ? -1 : ((x > 0) ? 1 : 0));
-    }//macro que retorna o sinal de um número
+    }
 
     private void linhaToBmp(int x1, int y1, int x2, int y2, Bitmap bmp) {
         int dx, dy, sdx, sdy, px, py, dxabs, dyabs, i;
