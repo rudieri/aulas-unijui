@@ -68,15 +68,15 @@ public class TelaActivity extends BaseGameActivity {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             Log.e("CARRINHO", "NÂO PEGO O BLUETOOTH");
-            Alert alert = new Alert(this);
-            alert.setMessage("HAAA HAAA.. Tu não tem Bluetooth");
-            alert.addButton(" Então Tá.", new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface di, int i) {
-//                    finish();
-                }
-            });
-            alert.show();
+//            Alert alert = new Alert(this);
+//            alert.setMessage("HAAA HAAA.. Tu não tem Bluetooth");
+//            alert.addButton(" Então Tá.", new DialogInterface.OnClickListener() {
+//
+//                public void onClick(DialogInterface di, int i) {
+////                    finish();
+//                }
+//            });
+//            alert.show();
 
         } else {
             try {
@@ -174,6 +174,16 @@ public class TelaActivity extends BaseGameActivity {
         this.mEngine.getTextureManager().loadTextures(this.mBitmapTextureAtlas, this.mOnScreenControlTexture);
     }
 
+    public void setModoAutonomo(boolean modoAutonomo) {
+        this.modoAutonomo = modoAutonomo;
+    }
+
+    public boolean isModoAutonomo() {
+        return modoAutonomo;
+    }
+
+    
+    
     @Override
     public Scene onLoadScene() {
         carregaBluetooth();
@@ -271,6 +281,7 @@ public class TelaActivity extends BaseGameActivity {
             pe = "0" + pe;
         }
         String tecla = "+" + pd + "+" + pe;
+        System.out.println("Tentando mandar... " + tecla);
         if (bluetoothSocket != null) {
             try {
                 tecla += "\n";
@@ -279,6 +290,17 @@ public class TelaActivity extends BaseGameActivity {
             } catch (IOException ex) {
                 Log.e("CARRINHO", "Erro ao mandar comando ", ex);
             }
+        }else{
+            System.out.println("Falhou");
         }
     }
+
+    @Override
+    protected void onStop() {
+        enviarPotencia(0, 0);
+        super.onStop();
+    }
+    
+    
+    
 }
