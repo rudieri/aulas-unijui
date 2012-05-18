@@ -1,29 +1,33 @@
 package com.aula.carrinho;
 
+import android.app.Activity;
 import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.hardware.Camera;
+import android.graphics.ImageFormat;
+import android.hardware.*;
 import android.hardware.Camera.PreviewCallback;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public abstract class SampleViewBase extends SurfaceView implements SurfaceHolder.Callback, Runnable {
-    private static final String TAG = "Sample::SurfaceView";
 
-    private Camera              mCamera;
-    private SurfaceHolder       mHolder;
-    private int                 mFrameWidth;
-    private int                 mFrameHeight;
-    private byte[]              mFrame;
-    private boolean             mThreadRun;
+    private static final String TAG = "Sample::SurfaceView";
+    private Camera mCamera;
+    private SurfaceHolder mHolder;
+    private int mFrameWidth;
+    private int mFrameHeight;
+    private byte[] mFrame;
+    private boolean mThreadRun;
+    private final Context context;
 
     public SampleViewBase(Context context) {
         super(context);
+        this.context = context;
         mHolder = getHolder();
         mHolder.addCallback(this);
         Log.i(TAG, "Instantiated new " + this.getClass());
@@ -41,6 +45,7 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
         Log.i(TAG, "surfaceCreated");
         if (mCamera != null) {
             Camera.Parameters params = mCamera.getParameters();
+            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             List<Camera.Size> sizes = params.getSupportedPreviewSizes();
             mFrameWidth = width;
             mFrameHeight = height;
@@ -60,10 +65,10 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
             params.setPreviewSize(getFrameWidth(), getFrameHeight());
             mCamera.setParameters(params);
             try {
-				mCamera.setPreviewDisplay(null);
-			} catch (IOException e) {
-				Log.e(TAG, "mCamera.setPreviewDisplay fails: " + e);
-			}
+                mCamera.setPreviewDisplay(null);
+            } catch (IOException e) {
+                Log.e(TAG, "mCamera.setPreviewDisplay fails: " + e);
+            }
             mCamera.startPreview();
         }
     }
@@ -71,8 +76,31 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
     public void surfaceCreated(SurfaceHolder holder) {
         Log.i(TAG, "surfaceCreated");
         mCamera = Camera.open();
-        
+        mCamera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        mCamera.getParameters().setPreviewFormat(ImageFormat.RGB_565);
+        mCamera.setParameters(mCamera.getParameters());
+        SensorManager mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
+        Sensor gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        mSensorManager.registerListener(new SensorEventListener() {
+
+            public void onSensorChanged(SensorEvent event) {
+                System.out.println("Accuracy: " + event.accuracy);
+                System.out.println("Sensor: " + event.sensor);
+                System.out.println("Timestamp: " + event.timestamp);
+                StringBuilder values = new StringBuilder(event.values.length);
+                for (int i = 0; i < event.values.length; i++) {
+                    float f = event.values[i];
+                    values.append(f);
+                }
+                System.out.println("Values: " + values);
+            }
+
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                System.out.println("Sensor: " + sensor + " - Accuracy: " + accuracy);
+            }
+        }, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         mCamera.setPreviewCallback(new PreviewCallback() {
+
             public void onPreviewFrame(byte[] data, Camera camera) {
                 synchronized (SampleViewBase.this) {
                     mFrame = data;

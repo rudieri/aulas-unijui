@@ -1,13 +1,13 @@
 package com.aula.carrinho;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.*;
 import android.view.SurfaceHolder;
 import com.geomanalitica.utils.Vetorizador;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;
 import java.util.ArrayList;
+import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
@@ -41,6 +41,7 @@ public class Sample4View extends SampleViewBase {
         }
     }
     byte contaPrint = 0;
+    byte contagemParaParada = 3;
 
     @Override
     protected Bitmap processFrame(byte[] data) {
@@ -54,7 +55,7 @@ public class Sample4View extends SampleViewBase {
 
         Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
 
-        System.out.println("Print");
+//        System.out.println("Print");
         contaPrint = 0;
         for (int i = 0; i < bmp.getWidth(); i++) {
             for (int j = 0; j < bmp.getHeight(); j++) {
@@ -65,13 +66,23 @@ public class Sample4View extends SampleViewBase {
 //            boolean[][] pretoBranco = converterParaPretoBranco(mRgba);
         pontos = Vetorizador.vetorizar(mRgba);
 
-//        Utils.matToBitmap(mRgba, bmp);
+        Utils.matToBitmap(mRgba, bmp);
 
         if (pontos != null && pontos.size() > 1) {
 //            System.out.println("Pontos: " + pontos.size());
         } else {
+            contagemParaParada--;
+            if (contagemParaParada <= 0) {
+                if (tela.isModoAutonomo()) {
+
+                    tela.enviarPotencia(0, 0);
+                    tela.setModoAutonomo(false);
+                }
+                contagemParaParada = 3;
+            }
             return bmp;
         }
+        tela.setModoAutonomo(true);
         Vetor2D centro = new Vetor2D(new Ponto2D(mRgba.rows() / 2, 0), new Ponto2D(mRgba.rows() / 2, mRgba.cols()));
 
         ArrayList<Ponto2D> otm = new ArrayList<Ponto2D>(3);
@@ -90,16 +101,34 @@ public class Sample4View extends SampleViewBase {
 //        System.out.println("Centro: " + centro);
 //        System.out.println("Vetor: " + vetor2D);
         final float anguloInterno = Vetor2D.anguloInterno(centro, vetor2D);
-        System.out.println("Angulo: " + anguloInterno);
 
-        int potenciaEsquerda = 99;
-        int potenciaDireita = 99;
+        int potenciaEsquerda = 70;
+        int potenciaDireita = 70;
+//        int distanciaCentro = (int) (mRgba.rows() / 2 - otm.get(0).getX());
+//        if (Math.abs(distanciaCentro) > 10) {
+//            float difAngulo = anguloInterno - 90;
+//            if (Math.abs(difAngulo) > 5) {
+//            System.out.println("Dist Centro: " + distanciaCentro + " @ " +  difAngulo);
+//                if (distanciaCentro > 0) {
+//                    potenciaDireita -= distanciaCentro;
+//                } else {
+//                    potenciaEsquerda += distanciaCentro;
+//                }
+//            }
+//        } else {
+        System.out.println("Angulo: " + anguloInterno);
         float dif = anguloInterno - 90;
         if (dif > 0) {
-            potenciaDireita -= dif * 3;
+            potenciaDireita -= dif * 2;
         } else {
-            potenciaEsquerda += dif * 3;
+            potenciaEsquerda += dif * 2;
         }
+//        }
+        potenciaEsquerda = Math.max(0, potenciaEsquerda);
+        potenciaEsquerda = Math.min(potenciaEsquerda, 70);
+        potenciaDireita = Math.max(0, potenciaDireita);
+        potenciaDireita = Math.min(potenciaDireita, 70);
+
         tela.enviarPotencia(potenciaEsquerda, potenciaDireita);
 
         for (int i = 0; otm != null && i < otm.size() - 1; i++) {
@@ -154,6 +183,16 @@ public class Sample4View extends SampleViewBase {
                 py = i + y1;
                 bmp.setPixel(px, py, Color.RED);
             }
+        }
+    }
+
+    private void linhaToBmp(double x1, double y1, double x2, double y2, Bitmap bmp) {
+        linhaToBmp((int) x1, (int) y1, (int) x2, (int) y2, bmp);
+    }
+
+    private void converterParaPretoBranco(byte[] rgb, int limiar) {
+        for (int i = 0; i < rgb.length; i++) {
+            rgb[i] = (byte) (rgb[i] > limiar ? 255 : 0);
         }
     }
 
