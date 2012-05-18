@@ -21,30 +21,30 @@ void stop(void)                    //Parar
 void frente(char a,char b)          //Move forward
 {
   analogWrite (S1,a);      //PWM Speed Control
-  digitalWrite(V1,HIGH);   
+  digitalWrite(V1,LOW);   
   analogWrite (S2,b);   
-  digitalWrite(V2,HIGH);
+  digitalWrite(V2,LOW);
 } 
 void atras (char a,char b)          //Move backward
 {
   analogWrite (S1,a);
-  digitalWrite(V1,LOW);  
+  digitalWrite(V1,HIGH);  
+  analogWrite (S2,b);   
+  digitalWrite(V2,HIGH);
+}
+void girar_esquerda (char a,char b)             //Turn Left
+{
+  analogWrite (S1,a);
+  digitalWrite(V1,HIGH);   
   analogWrite (S2,b);   
   digitalWrite(V2,LOW);
 }
-void girar_esquerda (char a,char b)             //Turn Left
+void girar_direita (char a,char b)             //Turn Right
 {
   analogWrite (S1,a);
   digitalWrite(V1,LOW);   
   analogWrite (S2,b);   
   digitalWrite(V2,HIGH);
-}
-void girar_direita (char a,char b)             //Turn Right
-{
-  analogWrite (S1,a);
-  digitalWrite(V1,HIGH);   
-  analogWrite (S2,b);   
-  digitalWrite(V2,LOW);
 }
 
 void manual (char sentido1, int potencia1,char sentido2,int potencia2)             //Turn Right
@@ -91,16 +91,16 @@ void loop(void){
         switch(val)
         {
         case 'w'://Pra Frente
-          frente (255,255);   //move forward in max speed        
+          frente (175,175);   //move forward in max speed        
           break;
         case 's'://Tra Tras
-          atras (255,255);   //move back in max speed
+          atras (175,175);   //move back in max speed
           break;
         case 'a'://Pra Esquerda
-          girar_esquerda (255,255);
+          girar_esquerda (175,175);
           break;      
         case 'd'://Pra Direita
-          girar_direita (255,255);
+          girar_direita (175,175);
           break;
         case 'x': // Para
           stop();
@@ -131,11 +131,11 @@ void loop(void){
         //Recebe Potencia Motores
         // +99-30  ou  -99-99
 
-        int sentido1 = inputString.charAt(0)=='+'?HIGH:LOW;
+        int sentido1 = inputString.charAt(0)=='+'?LOW:HIGH;
         Serial.println(inputString.substring(1,3));
         int potencia1 = int(StringToInt(inputString.substring(1,3))*2.55);
 
-        int sentido2 = inputString.charAt(3)=='+'?HIGH:LOW;
+        int sentido2 = inputString.charAt(3)=='+'?LOW:HIGH;
         int potencia2 = int(StringToInt(inputString.substring(4,6))*2.55);
 
         //Manda Potencia Manual
