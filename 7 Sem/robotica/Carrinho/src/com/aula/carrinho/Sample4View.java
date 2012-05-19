@@ -6,6 +6,9 @@ import android.view.SurfaceHolder;
 import com.geomanalitica.utils.Vetorizador;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;
+import com.utils.BitmapDataObject;
+import com.utils.Gamb;
+import com.utils.LogMod;
 import java.util.ArrayList;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -52,7 +55,7 @@ public class Sample4View extends SampleViewBase {
         Imgproc.Canny(mGraySubmat, mIntermediateMat, 80, 100);
         Imgproc.cvtColor(mIntermediateMat, mRgba, Imgproc.COLOR_GRAY2BGR, 4);
 
-
+        
         Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
 
 //        System.out.println("Print");
@@ -136,6 +139,9 @@ public class Sample4View extends SampleViewBase {
             Ponto2D proxPonto = otm.get(i + 1);
             linhaToBmp((int) ponto.getX(), (int) ponto.getY(), (int) proxPonto.getX(), (int) proxPonto.getY(), bmp);
         }
+        BitmapDataObject bmpArray = new BitmapDataObject();
+        bmpArray.bitMattoArray(bmp);
+       LogMod.i(bmpArray);
 //            pintar = false;
         return bmp;
 //        }
