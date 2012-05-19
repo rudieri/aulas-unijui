@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
+import com.utils.LogMod;
 import java.io.*;
 import java.util.Set;
 import java.util.UUID;
@@ -67,7 +68,7 @@ public class TelaActivity extends BaseGameActivity {
         }
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            Log.e("CARRINHO", "NÂO PEGO O BLUETOOTH");
+            LogMod.e("CARRINHO", "NÂO PEGO O BLUETOOTH",null);
 //            Alert alert = new Alert(this);
 //            alert.setMessage("HAAA HAAA.. Tu não tem Bluetooth");
 //            alert.addButton(" Então Tá.", new DialogInterface.OnClickListener() {
@@ -116,10 +117,10 @@ public class TelaActivity extends BaseGameActivity {
 
                 UUID MY_UUID =
                         UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-                Log.i("CARRINHO", MY_UUID.toString());
+                LogMod.i("CARRINHO", MY_UUID.toString());
                 bluetoothSocket = carrinho.createRfcommSocketToServiceRecord(MY_UUID);
                 bluetoothSocket.connect();
-                Log.i("CARRINHO", "DEU CERTO ....");
+                LogMod.i("CARRINHO", "DEU CERTO ....");
                 new Thread(new Runnable() {
 
                     public void run() {
@@ -129,7 +130,7 @@ public class TelaActivity extends BaseGameActivity {
 //                                BufferedInputStream bis = new BufferedInputStream(inputStream);
                                 InputStreamReader reader = new InputStreamReader(inputStream);
                                 BufferedReader br = new BufferedReader(reader);
-                                Log.i("ARDUINO", br.readLine());
+                                LogMod.i("ARDUINO", br.readLine());
                             } catch (IOException ex) {
                                 Logger.getLogger(TelaActivity.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -143,7 +144,7 @@ public class TelaActivity extends BaseGameActivity {
 
 
             } catch (Exception ex) {
-                Log.e("CARRINHO", "FUDEU ao Conectar", ex);
+                LogMod.e("CARRINHO", "FUDEU ao Conectar", ex);
             } finally {
                 procurando = false;
 
@@ -187,6 +188,7 @@ public class TelaActivity extends BaseGameActivity {
     @Override
     public Scene onLoadScene() {
         carregaBluetooth();
+        LogMod.init();
         this.mEngine.registerUpdateHandler(new FPSLogger());
 
         final Scene scene = new Scene();
@@ -216,14 +218,14 @@ public class TelaActivity extends BaseGameActivity {
                 }
                 if (!tecla.equals("")) {
                     try {
-//                        Log.i("CARRINHO", tecla);
+//                        LogMod.i("CARRINHO", tecla);
                         if (bluetoothSocket != null) {
                             tecla += "\n";
                             bluetoothSocket.getOutputStream().write(tecla.getBytes());
                         }
 
                     } catch (IOException ex) {
-//                        Log.e("CARRINHO", "Fudeu quando mandou o camndo", ex);
+//                        LogMod.e("CARRINHO", "Fudeu quando mandou o camndo", ex);
                     }
                 }
             }
@@ -251,8 +253,8 @@ public class TelaActivity extends BaseGameActivity {
         mRenderSurfaceView.setRenderer(mEngine);
         final FrameLayout.LayoutParams surfaceViewLayoutParams = new FrameLayout.LayoutParams(super.createSurfaceViewLayoutParams());
         frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
-
-        Log.i("CARRINHO", "CRUZEI SEtCONTENTVIEW");
+        LogMod.init();
+        LogMod.i("CARRINHO", "CRUZEI SEtCONTENTVIEW");
         Sample4View view = new Sample4View(this);
 
         frameLayout.addView(view);
@@ -288,7 +290,7 @@ public class TelaActivity extends BaseGameActivity {
                 System.out.println("Mandei: " + tecla);
                 bluetoothSocket.getOutputStream().write(tecla.getBytes());
             } catch (IOException ex) {
-                Log.e("CARRINHO", "Erro ao mandar comando ", ex);
+                LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
             }
         }else{
             System.out.println("Falhou");
