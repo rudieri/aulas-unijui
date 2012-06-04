@@ -5,11 +5,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
 import com.utils.LogMod;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -59,7 +61,21 @@ public class TelaActivity extends BaseGameActivity {
     private BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
-    private boolean modoAutonomo = true; 
+    private boolean modoAutonomo = true;
+    private  boolean modoCaseiro;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.modoCaseiro = this.getIntent().getBooleanExtra("modoCaseiro", true);
+    }
+
+    
+    
+    
+    
+   
+    
     private void carregaBluetooth() {
         if (procurando) {
             return;
@@ -255,7 +271,7 @@ public class TelaActivity extends BaseGameActivity {
         frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
         LogMod.init();
         LogMod.i("CARRINHO", "CRUZEI SEtCONTENTVIEW");
-        Sample4View view = new Sample4View(this);
+        Sample4View view = new Sample4View(this, modoCaseiro);
 
         frameLayout.addView(view);
 

@@ -16,7 +16,7 @@ import org.opencv.core.Mat;
  */
 public class Vetorizador {
 
-    public static final int MAX_ERROS = 5;
+    public static final int MAX_ERROS = 10;
 
     public static ArrayList<Ponto2D> vetorizar(boolean[][] vetor) {
         int i = 0;
@@ -164,8 +164,8 @@ public class Vetorizador {
         byte contaErro = 0;
         while (temPontos) {
             temPontos = false;
-            if (x < vetor.cols()) {
-                int erro = contaErro >> 1;// A operação x >> n equivale a divisão de x por 2^n, só que mais rápido
+            if (x < Sample4View.X_FINAL) {
+                int erro = contaErro >> 2;// A operação x >> n equivale a divisão de x por 2^n, só que mais rápido
                 for (int y = yInicial - 1 - erro; y < yInicial + 2 + erro; y++) {
                     if (y >= 0 && y < vetor.rows()) {
                         if (vetor.get(y, x)[0] > 0) {

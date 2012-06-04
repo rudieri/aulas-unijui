@@ -6,5 +6,11 @@
     >
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content" 
     android:id="@+dados/btTela" android:text="Fritar Tela"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/btHoug" android:text="Com Hough"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/btCaseiro" android:text="Algoritmo caseiro"/>
+    <ToggleButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/comFlash"  android:text="Flash Ligado" />
 </LinearLayout>
 

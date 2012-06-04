@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 /**
  *
  * @author manchini
  */
 public class ParametrosActivity extends Activity {
+    static boolean comFlash = true;
 
     /**
      * Called when the activity is first created.
@@ -30,6 +33,30 @@ public class ParametrosActivity extends Activity {
             public void onClick(View arg0) {
                Intent it = new Intent(ParametrosActivity.this,TelaActivity.class);
                startActivity(it);
+            }
+        });
+        Button btCaseiro = (Button)findViewById(R.dados.btCaseiro);
+        btCaseiro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+               Intent it = new Intent(ParametrosActivity.this,TelaActivity.class);
+               it.putExtra("modoCaseiro", true);
+               startActivity(it);
+            }
+        });
+        Button btHough = (Button)findViewById(R.dados.btHoug);
+        btHough.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+               Intent it = new Intent(ParametrosActivity.this,TelaActivity.class);
+               it.putExtra("modoCaseiro", false);
+               startActivity(it);
+            }
+        });
+        ToggleButton btFlash = (ToggleButton)findViewById(R.dados.comFlash);
+        btFlash.setChecked(comFlash);
+        btFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+                comFlash = arg1;
             }
         });
     }

@@ -2,32 +2,44 @@ package com.aula.carrinho;
 
 import android.content.Context;
 import android.graphics.*;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import com.geomanalitica.utils.Vetorizador;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;
 import com.utils.BitmapDataObject;
-import com.utils.Gamb;
 import com.utils.LogMod;
 import java.util.ArrayList;
+import java.util.Date;
 import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
+import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
 public class Sample4View extends SampleViewBase {
 
-    public static final int X_INICIAL = 160;
+    public static final int X_INICIAL = 120;
+    public static final int X_FINAL = 280;
     public static final int Y_INICIAL = 1;
     private Mat mYuv;
     private Mat mRgba;
     private Mat mGraySubmat;
     private Mat mIntermediateMat;
     private final TelaActivity tela;
+    private final boolean modoCaseiro;
+    private int[] arrayInicializacaoBitmap;
 
     public Sample4View(Context context) {
         super(context);
         this.tela = (TelaActivity) context;
+        Analizador.setTela(tela);
+        this.modoCaseiro = false;
+    }
+
+    Sample4View(Context context, boolean modoCaseiro) {
+        super(context);
+        this.modoCaseiro = modoCaseiro;
+        this.tela = (TelaActivity) context;
+        Analizador.setTela(tela);
     }
 
     @Override
@@ -42,28 +54,85 @@ public class Sample4View extends SampleViewBase {
             mRgba = new Mat();
             mIntermediateMat = new Mat();
         }
+        arrayInicializacaoBitmap = new int[getFrameHeight()*getFrameWidth()];
+        for (int i = 0; i < arrayInicializacaoBitmap.length; i++) {
+            arrayInicializacaoBitmap[i] = Color.BLACK;
+            
+        }
     }
     byte contaPrint = 0;
     byte contagemParaParada = 3;
+    boolean ignorar = false;
 
     @Override
     protected Bitmap processFrame(byte[] data) {
+        System.out.println("print");
+        if (ignorar) {
+            System.out.println("Ignorei");
+            ignorar = false;
+            return null;
+        }
+        ignorar = true;
         mYuv.put(0, 0, data);
 
 
         //Modo Canny
+        Date inicial = new Date();
         Imgproc.Canny(mGraySubmat, mIntermediateMat, 80, 100);
-        Imgproc.cvtColor(mIntermediateMat, mRgba, Imgproc.COLOR_GRAY2BGR, 4);
+        Log.d("DELAY", "Canny: " + (new Date().getTime() - inicial.getTime()) + " ms");
+        if (!modoCaseiro) {
+            inicial = new Date();
+            Imgproc.cvtColor(mIntermediateMat, mRgba, Imgproc.COLOR_GRAY2BGR, 4);
+            Log.d("DELAY", "cvtColor: " + (new Date().getTime() - inicial.getTime()) + " ms");
+        }
 
-        
-        Bitmap bmp = Bitmap.createBitmap(getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_8888);
+////        Imgproc.cvtColor(mGraySubmat, mIntermediateMat, Imgproc.COLOR_YUV420sp2BGR, 4);
+//        ArrayList<Mat> contornos = new ArrayList<Mat>();
+////        Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(3, 3));
+//        Imgproc.Canny(mGraySubmat, mIntermediateMat, 100, 200, 3);
+//        Imgproc.findContours(mIntermediateMat, contornos, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+//        for (int i = 0; i < contornos.size(); i++) {
+//            Mat mat = contornos.get(i);
+//            System.out.println("r: " + mat.rows());
+//            System.out.println("c: " + mat.cols());
+//            mat.get(0, 0)
+//        }
 
+        inicial = new Date();
+        Bitmap bmp = Bitmap.createBitmap( getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_4444);
+        Log.d("DELAY", "createBitmap: " + (new Date().getTime() - inicial.getTime()) + " ms");
+      
 //        System.out.println("Print");
-        contaPrint = 0;
-        for (int i = 0; i < bmp.getWidth(); i++) {
-            for (int j = 0; j < bmp.getHeight(); j++) {
-                bmp.setPixel(i, j, Color.BLACK);
-            }
+//        contaPrint = 0;
+        inicial = new Date();
+        bmp.setPixels(arrayInicializacaoBitmap, 0, getFrameWidth(), 0, 0, getFrameWidth(), getFrameHeight());
+//        for (int i = 0; i < bmp.getWidth(); i++) {
+//            for (int j = 0; j < bmp.getHeight(); j++) {
+//                bmp.setPixel(i, j, Color.BLACK);
+//            }
+//        }
+        Log.d("DELAY", "bmp.setPixel: " + (new Date().getTime() - inicial.getTime()) + " ms");
+//        if (true) {
+//            Mat mat = Mat.zeros(mIntermediateMat.size(), CvType.CV_8UC1);
+////            Range range = new Range(0, 255);
+//            
+//            Scalar color = new Scalar(127);
+//            for (int i = 0; i < contornos.size()-1; i++) {
+//                Imgproc.drawContours(mat, contornos, i, color);
+////                Mat mat = contornos.get(i);
+////                Mat proxMat = contornos.get(i);
+//                
+////                linhaToBmp(mat.get(0, 0)[0], mat.get(0, 0)[1], proxMat.get(0, 0)[0], proxMat.get(0, 0)[0], bmp);
+////                Utils.matToBitmap(mat, bmp);
+//                System.out.println("Mapping");
+//            }
+//            Utils.matToBitmap(mat, bmp);
+//            return bmp;
+//        }
+        if (!modoCaseiro) {
+            Mat pontos = Analizador.analizarCanny(mIntermediateMat, bmp);
+            Analizador.facaAlgoComCarrinho(pontos, bmp);
+            return bmp;
         }
         ArrayList<Ponto2D> pontos;
 //            boolean[][] pretoBranco = converterParaPretoBranco(mRgba);
@@ -107,24 +176,12 @@ public class Sample4View extends SampleViewBase {
 
         int potenciaEsquerda = 70;
         int potenciaDireita = 70;
-//        int distanciaCentro = (int) (mRgba.rows() / 2 - otm.get(0).getX());
-//        if (Math.abs(distanciaCentro) > 10) {
-//            float difAngulo = anguloInterno - 90;
-//            if (Math.abs(difAngulo) > 5) {
-//            System.out.println("Dist Centro: " + distanciaCentro + " @ " +  difAngulo);
-//                if (distanciaCentro > 0) {
-//                    potenciaDireita -= distanciaCentro;
-//                } else {
-//                    potenciaEsquerda += distanciaCentro;
-//                }
-//            }
-//        } else {
         System.out.println("Angulo: " + anguloInterno);
         float dif = anguloInterno - 90;
         if (dif > 0) {
-            potenciaDireita -= dif * 2;
+            potenciaDireita -= dif * 1.5;
         } else {
-            potenciaEsquerda += dif * 2;
+            potenciaEsquerda += dif * 1.5;
         }
 //        }
         potenciaEsquerda = Math.max(0, potenciaEsquerda);
@@ -141,22 +198,30 @@ public class Sample4View extends SampleViewBase {
         }
         BitmapDataObject bmpArray = new BitmapDataObject();
         bmpArray.bitMattoArray(bmp);
-       LogMod.i(bmpArray);
+        LogMod.i(bmpArray);
 //            pintar = false;
         return bmp;
-//        }
-//        }
-//
-//        pintar = true;
-//        bmp.recycle();
-//        return null;
+
     }
 
-    private byte sinal(int x) {
+    private static byte sinal(int x) {
         return (byte) ((x < 0) ? -1 : ((x > 0) ? 1 : 0));
     }
 
-    private void linhaToBmp(int x1, int y1, int x2, int y2, Bitmap bmp) {
+    public static void linhaToBmp(int x1, int y1, int x2, int y2, Bitmap bmp) {
+        linhaToBmp(x1, y1, x2, y2, bmp, Color.RED);
+    }
+
+    public static void linhaToBmp(int x1, int y1, int x2, int y2, Bitmap bmp, int color) {
+        System.out.println("[" + x1 + "," + y1 + "] -> [" + x2 + "," + y2 + "]");
+        if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0) {
+            Log.w("TOBMP", "Tentativa de pintar bmp falhou, valores [" + x1 + "," + y1 + "] -> [" + x2 + "," + y2
+                    + "] num bmp " + bmp.getWidth() + " x " + bmp.getHeight());
+            return;
+        }
+        if (x1 >= bmp.getWidth() || x2 >= bmp.getWidth() || y1 >= bmp.getHeight() || y2 >= bmp.getHeight()) {
+            return;
+        }
         int dx, dy, sdx, sdy, px, py, dxabs, dyabs, i;
         float inclinacao;
 
@@ -178,7 +243,7 @@ public class Sample4View extends SampleViewBase {
             for (i = 0; i != dx; i += sdx) {
                 px = i + x1;
                 py = (int) (inclinacao * i + y1);    // dy=slope*delta_x
-                bmp.setPixel(px, py, Color.RED);
+                bmp.setPixel(px, py, color);
             }
         } else /*
          * a linha é mais vertical que horizontal
@@ -187,12 +252,16 @@ public class Sample4View extends SampleViewBase {
             for (i = 0; i != dy; i += sdy) {
                 px = (int) (inclinacao * i + x1);
                 py = i + y1;
-                bmp.setPixel(px, py, Color.RED);
+                bmp.setPixel(px, py, color);
             }
         }
     }
 
-    private void linhaToBmp(double x1, double y1, double x2, double y2, Bitmap bmp) {
+    public static void linhaToBmp(double x1, double y1, double x2, double y2, Bitmap bmp, int color) {
+        linhaToBmp((int) x1, (int) y1, (int) x2, (int) y2, bmp, color);
+    }
+
+    public static void linhaToBmp(double x1, double y1, double x2, double y2, Bitmap bmp) {
         linhaToBmp((int) x1, (int) y1, (int) x2, (int) y2, bmp);
     }
 
