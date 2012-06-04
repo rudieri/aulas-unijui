@@ -45,7 +45,9 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
         Log.i(TAG, "surfaceCreated");
         if (mCamera != null) {
             Camera.Parameters params = mCamera.getParameters();
-            params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            if (ParametrosActivity.comFlash) {
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            }
             List<Camera.Size> sizes = params.getSupportedPreviewSizes();
             mFrameWidth = width;
             mFrameHeight = height;
@@ -76,7 +78,9 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
     public void surfaceCreated(SurfaceHolder holder) {
         Log.i(TAG, "surfaceCreated");
         mCamera = Camera.open();
-        mCamera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        if (ParametrosActivity.comFlash) {
+            mCamera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        }
         mCamera.getParameters().setPreviewFormat(ImageFormat.RGB_565);
         mCamera.setParameters(mCamera.getParameters());
         SensorManager mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
