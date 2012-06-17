@@ -5,6 +5,7 @@
 		<ItemGroup>
 			<None Include="ModelSupport_SF\default.txaPackage"/>
 			<None Include="ModelSupport_SF\default.txvClassDiagram20"/>
+			<None Include="ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20"/>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Design.Personality.12</Borland.Personality>

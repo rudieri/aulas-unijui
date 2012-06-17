@@ -1,2 +1,606 @@
 <?xml version="1.0" encoding="utf-8"?>
-<nodeSet version="1.0" />
+<nodeSet version="1.0">
+  <node uin="w4ztwl7i0ke7u245o_n">
+    <property name="$metaclass" value="Actor20" />
+    <property name="$name" value="Funcionario" />
+    <link uin="7apsttjf8as2hznjg_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+    <link uin="qx5pp2hn7c2knv3vq_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association2" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::ak8g1gg00tl_n" role="Supplier" />
+    </link>
+    <link uin="le1p7ls0bhcz9u5xr_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association3" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Supplier" />
+    </link>
+    <link uin="6o0m842rzl_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association5" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::lg65v1x6ryk_n" role="Supplier" />
+    </link>
+    <link uin="w6tyqht6o1dg6b98g_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association4" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::md4h0f3l0at_n" role="Supplier" />
+    </link>
+    <link uin="j8d557e9lci_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association6" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::h0kohfjxwxk_n" role="Supplier" />
+    </link>
+    <link uin="kcutvs90k0g_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association7" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Client" />
+      <participant referencedUin="design:node:::lnv5ueyfxajhz3u1s_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="gu9um2plzuk6dz7nr_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Pessoa" />
+    <node uin="o7cn42plzukkyorzl_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="fp8cinuk1vkcbudij_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Client" />
+      <participant referencedUin="design:node:::o7cn42plzukkyorzl_n:gu9um2plzuk6dz7nr_n" role="Supplier" />
+    </link>
+    <link uin="dgxep3pho0j_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="zjkjpptwgbm_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Client" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="swn44nngdpoljv10i_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Evento" />
+    <link uin="xrnya9tffpoi0ujrg_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Client" />
+      <participant referencedUin="design:node:::o7cn42plzukkyorzl_n:gu9um2plzuk6dz7nr_n" role="Supplier" />
+    </link>
+    <node uin="ahud7uyehpolstyfi_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="2f2m5uyehpots5dan_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Client" />
+      <participant referencedUin="design:node:::ahud7uyehpolstyfi_n:swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+    <link uin="i5ca19a1hsh_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="ebc00m936h335u1tj_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes3" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Client" />
+      <participant referencedUin="design:node:::672dss95v1j_n" role="Supplier" />
+    </link>
+    <link uin="8nfux6lw5ulhs1d7h_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends3" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Client" />
+      <participant referencedUin="design:node:::9uyr4aka1beo1hqho_n" role="Supplier" />
+    </link>
+    <link uin="hjghsuxwb6qw97aqk_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes2" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Client" />
+      <participant referencedUin="design:node:::jlj6jf0in2s_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="ak8g1gg00tl_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Empresa" />
+    <link uin="gl5aaw978xe_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::ak8g1gg00tl_n" role="Client" />
+      <participant referencedUin="design:node:::o7cn42plzukkyorzl_n:gu9um2plzuk6dz7nr_n" role="Supplier" />
+    </link>
+    <node uin="jr710w637yh_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="axwi0rlrden_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::ak8g1gg00tl_n" role="Client" />
+      <participant referencedUin="design:node:::jr710w637yh_n:ak8g1gg00tl_n" role="Supplier" />
+    </link>
+    <link uin="kspjxhdz8bn_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::ak8g1gg00tl_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="rjshtk683l7qmcf5p_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::ak8g1gg00tl_n" role="Client" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="2zhz3ae6xwt_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Consultar BD" />
+    <property name="mod__extends" value="Acessar BD" />
+    <node uin="m6d7hwlflxi_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="2k0aox3i39o_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Client" />
+      <participant referencedUin="design:node:::m6d7hwlflxi_n:2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="5k06wnc4zk3qh535p_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="Acessar BD" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Client" />
+      <participant referencedUin="design:node:::n6lalcsktys_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="n6lalcsktys_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Acessar BD" />
+    <node uin="8td5hng65eg_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="diuru5nfjvm_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::n6lalcsktys_n" role="Client" />
+      <participant referencedUin="design:node:::8td5hng65eg_n:n6lalcsktys_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="e5bids6u0hfdbupgj_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Fornecedor" />
+    <property name="mod__extends" value="Cadastrar Pessoa" />
+    <node uin="arxmws6u0hfwy0beo_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="wkub5s6u0hf6qu0tf_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::e5bids6u0hfdbupgj_n" role="Client" />
+      <participant referencedUin="design:node:::arxmws6u0hfwy0beo_n:e5bids6u0hfdbupgj_n" role="Supplier" />
+    </link>
+    <link uin="a1y1oyc92t9so7prk_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="Cadastrar Pessoa" />
+      <participant referencedUin="design:node:::e5bids6u0hfdbupgj_n" role="Client" />
+      <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Supplier" />
+    </link>
+    <link uin="g8aei0mrvul_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::e5bids6u0hfdbupgj_n" role="Client" />
+      <participant referencedUin="design:node:::26k9crlz10q_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="tjcvpkpb1mo_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Bens" />
+    <link uin="0c8ersl979l_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::tjcvpkpb1mo_n" role="Client" />
+      <participant referencedUin="design:node:::arxmws6u0hfwy0beo_n:e5bids6u0hfdbupgj_n" role="Supplier" />
+    </link>
+    <node uin="wgh9k0dp0zf_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="x0peuqc9gyg_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::tjcvpkpb1mo_n" role="Client" />
+      <participant referencedUin="design:node:::wgh9k0dp0zf_n:tjcvpkpb1mo_n" role="Supplier" />
+    </link>
+    <link uin="yqv0v0lrqkm_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::tjcvpkpb1mo_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="60omneho7f_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::tjcvpkpb1mo_n" role="Client" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Supplier" />
+    </link>
+    <link uin="5w67q2fx1odu5lhxh_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::tjcvpkpb1mo_n" role="Client" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="demylxv4002v5z0bk_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Funcionario" />
+    <property name="mod__extends" value="Cadastrar Pessoa" />
+    <node uin="bqhrhxv4002du4fki_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="c2q6axv4002stwumo_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::demylxv4002v5z0bk_n" role="Client" />
+      <participant referencedUin="design:node:::bqhrhxv4002du4fki_n:demylxv4002v5z0bk_n" role="Supplier" />
+    </link>
+    <link uin="59iddcoxrpl8cl4kn_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="Cadastrar Pessoa" />
+      <participant referencedUin="design:node:::demylxv4002v5z0bk_n" role="Client" />
+      <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Supplier" />
+    </link>
+    <link uin="i9nb166z0xe_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::demylxv4002v5z0bk_n" role="Client" />
+      <participant referencedUin="design:node:::lg65v1x6ryk_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="lg65v1x6ryk_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Usuario" />
+    <property name="mod__extends" value="" />
+    <link uin="t387osvxf5m_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::lg65v1x6ryk_n" role="Client" />
+      <participant referencedUin="design:node:::bqhrhxv4002du4fki_n:demylxv4002v5z0bk_n" role="Supplier" />
+    </link>
+    <node uin="1n8huw4kago_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="95dheoh97uj_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::lg65v1x6ryk_n" role="Client" />
+      <participant referencedUin="design:node:::1n8huw4kago_n:lg65v1x6ryk_n" role="Supplier" />
+    </link>
+    <link uin="ujtd9x0naet_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::lg65v1x6ryk_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="26k9crlz10q_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Contas Pagar" />
+    <node uin="utv4dvqjzck_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="05a9es6h8rl_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::26k9crlz10q_n" role="Client" />
+      <participant referencedUin="design:node:::utv4dvqjzck_n:26k9crlz10q_n" role="Supplier" />
+    </link>
+    <link uin="fiudnbcse59zlcje_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::26k9crlz10q_n" role="Client" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Supplier" />
+    </link>
+    <link uin="toia0z6wcq5ga5t3l_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::26k9crlz10q_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="jlj6jf0in2s_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Contas Receber" />
+    <link uin="cgr0mswwisj_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::jlj6jf0in2s_n" role="Client" />
+      <participant referencedUin="design:node:::utv4dvqjzck_n:26k9crlz10q_n" role="Supplier" />
+    </link>
+    <node uin="id9wgbjuffq_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="w807kgv6kzq_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::jlj6jf0in2s_n" role="Client" />
+      <participant referencedUin="design:node:::id9wgbjuffq_n:jlj6jf0in2s_n" role="Supplier" />
+    </link>
+    <link uin="p7xqwyjx73k_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::jlj6jf0in2s_n" role="Client" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Supplier" />
+    </link>
+    <link uin="d7dh70yk15k_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::jlj6jf0in2s_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="2n9xxgou319wlql2t_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Reunioes" />
+    <node uin="r3wlggou319v3ff0k_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="236f0gou319d4fbso_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::2n9xxgou319wlql2t_n" role="Client" />
+      <participant referencedUin="design:node:::r3wlggou319v3ff0k_n:2n9xxgou319wlql2t_n" role="Supplier" />
+    </link>
+    <link uin="msm20pulb4iqf70tn_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::2n9xxgou319wlql2t_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="0m7ajcxwnvh_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes2" />
+      <participant referencedUin="design:node:::2n9xxgou319wlql2t_n" role="Client" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="672dss95v1j_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Gerar Contratos" />
+    <node uin="ug3q026qfzn_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="3ad2gqfl9gh_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::672dss95v1j_n" role="Client" />
+      <participant referencedUin="design:node:::ug3q026qfzn_n:672dss95v1j_n" role="Supplier" />
+    </link>
+    <link uin="3gmmcvjc9hjmpt6lr_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::672dss95v1j_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="a6wb75wirit_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Verif. Disp. Equipamentos" />
+    <node uin="qfy2gcwm00f_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="34h5j0agnoj_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::a6wb75wirit_n" role="Client" />
+      <participant referencedUin="design:node:::qfy2gcwm00f_n:a6wb75wirit_n" role="Supplier" />
+    </link>
+    <link uin="ko7h50vrvm6n7cdet_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::a6wb75wirit_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="t97qxo3j90hvxiclg_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::a6wb75wirit_n" role="Client" />
+      <participant referencedUin="design:node:::2n9xxgou319wlql2t_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="9uyr4aka1beo1hqho_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Cursos" />
+    <node uin="6r7kcaka1bevx02fm_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="njkyaka1beg5ejnl_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::9uyr4aka1beo1hqho_n" role="Client" />
+      <participant referencedUin="design:node:::6r7kcaka1bevx02fm_n:9uyr4aka1beo1hqho_n" role="Supplier" />
+    </link>
+    <link uin="x2qyethyn6h4qv4tn_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::9uyr4aka1beo1hqho_n" role="Client" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Supplier" />
+    </link>
+    <link uin="k90mgnh7oli3j1vmq_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::9uyr4aka1beo1hqho_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="61tbpi0ceid4pj6nl_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Pacote" />
+    <node uin="a2heei0ceid1gpz9s_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="nmng5i0ceidxris6k_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::61tbpi0ceid4pj6nl_n" role="Client" />
+      <participant referencedUin="design:node:::a2heei0ceid1gpz9s_n:61tbpi0ceid4pj6nl_n" role="Supplier" />
+    </link>
+    <link uin="wgh9kn1nrcg0pjchi_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::61tbpi0ceid4pj6nl_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="xzxiaraknqhjxy0ri_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::61tbpi0ceid4pj6nl_n" role="Client" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Supplier" />
+    </link>
+    <link uin="nv1150v0qvlk9bndt_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::61tbpi0ceid4pj6nl_n" role="Client" />
+      <participant referencedUin="design:node:::swn44nngdpoljv10i_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="h0kohfjxwxk_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Itens Pacote" />
+    <node uin="n068q65og8g_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="0odulvw50aq_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::h0kohfjxwxk_n" role="Client" />
+      <participant referencedUin="design:node:::n068q65og8g_n:h0kohfjxwxk_n" role="Supplier" />
+    </link>
+    <link uin="p82poy920pj_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::h0kohfjxwxk_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="3051jva2tzk_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes2" />
+      <participant referencedUin="design:node:::h0kohfjxwxk_n" role="Client" />
+      <participant referencedUin="design:node:::61tbpi0ceid4pj6nl_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="lnv5ueyfxajhz3u1s_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Verificar Sit. Pessoa" />
+    <node uin="zc7m9eyfxajjtsuil_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="vgobxeyfxajjzab2p_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::lnv5ueyfxajhz3u1s_n" role="Client" />
+      <participant referencedUin="design:node:::zc7m9eyfxajjtsuil_n:lnv5ueyfxajhz3u1s_n" role="Supplier" />
+    </link>
+    <link uin="bcsaakvo11q_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::lnv5ueyfxajhz3u1s_n" role="Client" />
+      <participant referencedUin="design:node:::jlj6jf0in2s_n" role="Supplier" />
+    </link>
+    <link uin="mieepuk7qas_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::lnv5ueyfxajhz3u1s_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="hs0wn4ou64av0fpzg_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Cadastrar Funcoes" />
+    <node uin="ro3w14ou64ae9uinm_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="3n1954ou64aiyn2zh_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::hs0wn4ou64av0fpzg_n" role="Client" />
+      <participant referencedUin="design:node:::ro3w14ou64ae9uinm_n:hs0wn4ou64av0fpzg_n" role="Supplier" />
+    </link>
+    <link uin="dw2onx2e40hkbakit_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::hs0wn4ou64av0fpzg_n" role="Client" />
+      <participant referencedUin="design:node:::demylxv4002v5z0bk_n" role="Supplier" />
+    </link>
+    <link uin="cu4tqganpajscp54g_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::hs0wn4ou64av0fpzg_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="ocivoiwfs7k775yjk_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::hs0wn4ou64av0fpzg_n" role="Client" />
+      <participant referencedUin="design:node:::w4ztwl7i0ke7u245o_n" role="Supplier" />
+    </link>
+  </node>
+  <node uin="md4h0f3l0at_n">
+    <property name="$metaclass" value="UseCase20" />
+    <property name="$name" value="Verif. Eventos Agendados" />
+    <node uin="wnh9vp2q4gr_n">
+      <property name="$metaclass" value="Behavior" />
+      <property name="$name" value="Behavior1" />
+    </node>
+    <link uin="04bke46yp1o_l">
+      <property name="$metaclass" value="classifierBehavior" />
+      <property name="$name" value="Behaviored classifier link1" />
+      <participant referencedUin="design:node:::md4h0f3l0at_n" role="Client" />
+      <participant referencedUin="design:node:::wnh9vp2q4gr_n:md4h0f3l0at_n" role="Supplier" />
+    </link>
+    <link uin="6skg23ue30p_l">
+      <property name="$metaclass" value="Include20" />
+      <property name="$name" value="Includes1" />
+      <participant referencedUin="design:node:::md4h0f3l0at_n" role="Client" />
+      <participant referencedUin="design:node:::2zhz3ae6xwt_n" role="Supplier" />
+    </link>
+    <link uin="cgr0mts6enk_l">
+      <property name="$metaclass" value="Extend20" />
+      <property name="$name" value="Extends1" />
+      <participant referencedUin="design:node:::md4h0f3l0at_n" role="Client" />
+      <participant referencedUin="design:node:::2n9xxgou319wlql2t_n" role="Supplier" />
+    </link>
+  </node>
+</nodeSet>
