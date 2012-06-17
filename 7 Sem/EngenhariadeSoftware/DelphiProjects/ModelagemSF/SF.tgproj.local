@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2012/06/16 18:34:00.602,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
-    <Transaction>2012/06/16 18:34:02.911,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+	<Transactions>
+    <Transaction>2012/06/16 18:34:00.000.602,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/16 18:34:02.000.911,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/16 18:47:23.000.930,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/16 18:47:23.000.930,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/16 19:26:41.000.609,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\Use Case Diagram1.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/16 19:27:26.000.874,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/16 19:27:26.000.844,e:\aulas\7 sem\engenhariadesoftware\delphiprojects\modelagemsf\modelsupport_sf\use case diagram1.txvusecasediagram20=</Transaction>
+    <Transaction>2012/06/16 21:28:24.647,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/16 21:28:24.647,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/16 21:28:24.647,=E:\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
   </Transactions>
 </BorlandProject>
