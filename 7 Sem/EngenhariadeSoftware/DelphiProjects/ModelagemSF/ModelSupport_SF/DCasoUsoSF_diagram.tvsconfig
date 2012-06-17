@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<TgConfig Version="3" SubLevelDisabled="False">
+  <Option Name="DiagramView.ZoomFactor" Type="System.Single" Value="0.826446235" Category="Diagram" IsBrowsable="False" />
+  <Option Name="ViewManag.ShowAssociationLinks" Type="System.Boolean" Value="True" Category="View Management" SubCategory="LinksFilters" />
+  <Option Name="ViewManag.ShowDependencyLinks" Type="System.Boolean" Value="True" Category="View Management" SubCategory="LinksFilters" />
+  <Option Name="ViewManag.ShowMembers" Type="System.Boolean" Value="True" Category="View Management" SubCategory="MemberFilters" />
+  <Option Name="ViewManag.ShowNonPublicMembers" Type="System.Boolean" Value="True" Category="View Management" SubCategory="MemberFilters" />
+  <Option Name="ViewManag.ShowAttributes" Type="System.Boolean" Value="True" Category="View Management" SubCategory="MemberFilters" />
+  <Option Name="ViewManag.ShowOperations" Type="System.Boolean" Value="True" Category="View Management" SubCategory="MemberFilters" />
+  <Option Name="ViewManag.ShowClasses" Type="System.Boolean" Value="True" Category="View Management" SubCategory="NodeFilters" />
+</TgConfig>
