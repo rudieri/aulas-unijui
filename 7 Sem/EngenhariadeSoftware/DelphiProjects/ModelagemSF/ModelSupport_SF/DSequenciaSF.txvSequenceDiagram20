@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nodeSet version="1.0">
+  <view uin="uhioagfc6af78a1dq_v">
+    <property name="$metaclass" value="SequenceDiagram20" />
+    <property name="$name" value="DSequenciaSF" />
+    <reference referencedUin="design:node:::ml2whd84dafiasm4l_n">
+      <property name="$shortcutReference" value="" />
+      <reference referencedUin="design:node:::4zq6o1x3d0no9kgif_n:ml2whd84dafiasm4l_n">
+        <property name="bounds" value="180,10,178,452" />
+        <property name="bounds_setted_by_user" value="True" />
+        <reference referencedUin="design:node:::rgcrmqsqa4lwsebrr_n:4zq6o1x3d0no9kgif_n:ml2whd84dafiasm4l_n">
+          <property name="bounds" value="79,76,20,24" />
+          <property name="bounds_setted_by_user" value="True" />
+        </reference>
+      </reference>
+      <reference referencedUin="design:node:::nwr5xt41n5dbabivr_n:ml2whd84dafiasm4l_n">
+        <property name="bounds" value="540,10,178,452" />
+        <property name="location_set_by_user" value="True" />
+        <property name="bounds_setted_by_user" value="True" />
+        <reference referencedUin="design:node:::u5i3gyixd9l_n:nwr5xt41n5dbabivr_n:ml2whd84dafiasm4l_n">
+          <property name="bounds" value="79,218,20,100" />
+          <property name="location_set_by_user" value="True" />
+          <property name="bounds_setted_by_user" value="True" />
+        </reference>
+        <reference referencedUin="design:node:::59yt65nr94l6dpn0q_n:nwr5xt41n5dbabivr_n:ml2whd84dafiasm4l_n">
+          <property name="bounds" value="81,76,16,24" />
+          <property name="bounds_setted_by_user" value="True" />
+          <reference referencedUin="sd20_message|1|call|75(design:node:::59yt65nr94l6dpn0q_n:nwr5xt41n5dbabivr_n:ml2whd84dafiasm4l_n)">
+            <property name="sourceAnchor" value="621,86" />
+            <property name="targetAnchor" value="279,86" />
+            <property name="bendpoints" value="" />
+          </reference>
+        </reference>
+        <reference referencedUin="design:link:::tb18jqsqa4lf0ej0r_l:nwr5xt41n5dbabivr_n:ml2whd84dafiasm4l_n" />
+      </reference>
+      <reference referencedUin="design:node:::4aiya79m3fp_n:ml2whd84dafiasm4l_n">
+        <property name="bounds" value="555,224,8,8" />
+        <property name="bounds_setted_by_user" value="True" />
+        <reference referencedUin="sd20_message|1|call|49(design:node:::4aiya79m3fp_n:ml2whd84dafiasm4l_n)">
+          <property name="sourceAnchor" value="559,228" />
+          <property name="targetAnchor" value="619,228" />
+          <property name="bendpoints" value="" />
+        </reference>
+      </reference>
+    </reference>
+  </view>
+  <link uin="0qzgpd84dafza328o_l">
+    <property name="$metaclass" value="SequenceDiagram20_LinkToInteraction" />
+    <property name="$name" value="1" />
+    <participant referencedUin="design:view:::uhioagfc6af78a1dq_v" role="Client" />
+    <participant referencedUin="design:node:::ml2whd84dafiasm4l_n" role="Supplier" />
+  </link>
+</nodeSet>
