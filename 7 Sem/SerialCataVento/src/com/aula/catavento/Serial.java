@@ -1,112 +1,82 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aula.catavento;
 
+import com.aula.catavento.EscolhaPorta;
+import com.aula.catavento.EventoListener;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author rudieri
- */
 public class Serial {
 
-    public Serial() {
-        super();
-    }
 
-    void connect(String portName) throws Exception {
-        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
-        if (portIdentifier.isCurrentlyOwned()) {
-            System.out.println("Error: Port is currently in use");
-        } else {
-            CommPort commPort = portIdentifier.open(this.getClass().getName(), 2000);
+    public void start(final EventoListener evento) {
+        try {
+            EscolhaPorta escolhaPorta = new EscolhaPorta(null, true);
+            escolhaPorta.setVisible(true);
+            CommPortIdentifier porta = escolhaPorta.portId;
+            CommPort commPort = porta.open("", 2000);
 
             if (commPort instanceof SerialPort) {
                 SerialPort serialPort = (SerialPort) commPort;
                 serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
                 InputStream in = serialPort.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+                final BufferedReader br = new BufferedReader(reader);
+                //
                 OutputStream out = serialPort.getOutputStream();
+                OutputStreamWriter write = new OutputStreamWriter(out);
+                final BufferedWriter bw = new BufferedWriter(write);
 
-                (new Thread(new SerialReader(in))).start();
-                (new Thread(new SerialWriter(out))).start();
+                new Thread(new Runnable() {
 
-            } else {
-                System.out.println("Error: Only serial ports are handled by this example.");
+                    @Override
+                    public void run() {
+                        while (true) {
+                            try {
+                                if (evento.tenhoQueEscrever()) {
+                                    bw.write(evento.comando());
+                                }
+
+
+                            } catch (Exception ex) {
+                                Logger.getLogger(Serial.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }).start();
+
+
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        StringBuilder aux = new StringBuilder(10);
+                        while (true) {
+                            try {
+                                if (br.ready()) {
+                                    aux.append((char) br.read());
+                                } else {
+                                    System.out.println(aux);
+                                    evento.leuRetorno(aux.toString());
+                                }
+
+
+                            } catch (Exception ex) {
+                                Logger.getLogger(Serial.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }).start();
+
+
+
             }
-        }
-    }
-
-    /**
-     *      */
-    public static class SerialReader implements Runnable {
-
-        InputStream in;
-
-        public SerialReader(InputStream in) {
-            this.in = in;
-        }
-
-        public void run() {
-            byte[] buffer = new byte[1024];
-            int len = -1;
-            try {
-                while ((len = this.in.read(buffer)) > -1) {
-                    System.out.print(new String(buffer, 0, len));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     *      */
-    public static class SerialWriter implements Runnable {
-
-        OutputStream out;
-
-        public SerialWriter(OutputStream out) {
-            this.out = out;
-        }
-
-        public void run() {
-            try {
-                int c = 0;
-                while (true) {
-                    Thread.sleep(50);
-                    this.out.write("{0666}".getBytes());
-                }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Serial.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-             System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyUSB0");
-            Enumeration portList = CommPortIdentifier.getPortIdentifiers();
-            while (portList.hasMoreElements()) {
-                System.out.println(portList.nextElement());
-            }
-            System.out.println(portList);
-                        new Serial().connect("/dev/ttyUSB0");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(Serial.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
