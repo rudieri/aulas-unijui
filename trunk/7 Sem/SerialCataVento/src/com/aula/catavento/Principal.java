@@ -4,8 +4,7 @@
  */
 package com.aula.catavento;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.aula.pid.ExemploPID3;
 
 /**
  *
@@ -13,10 +12,11 @@ import java.util.logging.Logger;
  */
 public class Principal implements EventoListener{
     
-    int ideal = 600;
+    int ideal = 512;
     boolean temComando = false;
     String comando = "";
-    int valor = 50;
+    int valor = 1500;
+    ExemploPID3 pid3 = new ExemploPID3(1.0, 0.05, 1.0);
     
 
     @Override
@@ -26,11 +26,14 @@ public class Principal implements EventoListener{
         //[1000]<1002>
         String[] valores = ret.split("<");
         int posicap = new Integer(valores[0].substring(1,valores[0].length()-1));
-        if(posicap>ideal){
-            valor=-10;
-        }else if(posicap<ideal){
-            valor=+10;
-        }
+        System.out.println("Leu? "+posicap);
+//        if(posicap>ideal){
+//            valor-=2;
+//        }else if(posicap<ideal){
+//            valor+=2;
+//        }
+        valor = (int)pid3.controller(ideal, posicap);
+        
     }
 
     @Override
@@ -40,7 +43,7 @@ public class Principal implements EventoListener{
 
     @Override
     public String comando() {
-        System.out.println("Foir: {"+valor+"}");
+        
         temComando = false;
         return comando;
     }

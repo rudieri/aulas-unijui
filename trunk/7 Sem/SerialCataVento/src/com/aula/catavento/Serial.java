@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 public class Serial {
 
-
     public void start(final EventoListener evento) {
         try {
             EscolhaPorta escolhaPorta = new EscolhaPorta(null, true);
@@ -38,7 +37,10 @@ public class Serial {
                         while (true) {
                             try {
                                 if (evento.tenhoQueEscrever()) {
-                                    bw.write(evento.comando());
+                                    String comando = evento.comando();
+                                    System.out.println("Foi: " + comando);
+                                    bw.write(comando);
+                                    bw.flush();
                                 }
 
 
@@ -55,13 +57,23 @@ public class Serial {
                     @Override
                     public void run() {
                         StringBuilder aux = new StringBuilder(10);
+                        boolean gravar = false;
                         while (true) {
                             try {
-                                if (br.ready()) {
-                                    aux.append((char) br.read());
-                                } else {
+                                char c = (char) br.read();
+
+                                if (c == '[') {
+                                    gravar = true;
+                                } else if (!gravar) {
+                                    System.out.println(c);
+                                }
+                                if (c != '>' && gravar) {
+                                    aux.append(c);
+                                } else if(gravar){
                                     System.out.println(aux);
                                     evento.leuRetorno(aux.toString());
+                                    aux.delete(0, aux.length());
+                                    gravar = false;
                                 }
 
 
