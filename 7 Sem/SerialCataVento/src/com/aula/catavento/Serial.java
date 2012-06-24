@@ -15,6 +15,9 @@ public class Serial {
         try {
             EscolhaPorta escolhaPorta = new EscolhaPorta(null, true);
             escolhaPorta.setVisible(true);
+            if (escolhaPorta.getBotaoClicado()!=EscolhaPorta.BOTAO_OK) {
+                throw new IllegalStateException("Cancelado!!!");
+            }
             CommPortIdentifier porta = escolhaPorta.portId;
             CommPort commPort = porta.open("", 2000);
 

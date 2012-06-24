@@ -4,17 +4,36 @@
  */
 package com.aula.catavento;
 
+import com.aula.pid.ExemploPID3;
+import javax.swing.SpinnerNumberModel;
+
 /**
  *
  * @author root
  */
 public class JPID extends javax.swing.JFrame {
+    private final ExemploPID3 exemploPID3;
+    private final Serial serial;
 
     /**
      * Creates new form JPID
      */
-    public JPID() {
+
+    JPID(ExemploPID3 pid3, Serial serial) {
+        this.serial = serial;
+        if (pid3==null) {
+            pid3 = new ExemploPID3(0, 0.1, 0);
+        }
+        this.exemploPID3 = pid3;
+        
         initComponents();
+        
+        SpinnerNumberModel spinnerNumberModelP = new SpinnerNumberModel(exemploPID3.getP(), 0d, 2d, 0.01);
+        SpinnerNumberModel spinnerNumberModelI = new SpinnerNumberModel(exemploPID3.getI(), 0d, 2d, 0.01);
+        SpinnerNumberModel spinnerNumberModelD = new SpinnerNumberModel(exemploPID3.getD(), 0d, 2d, 0.01);
+        jSpinnerP.setModel(spinnerNumberModelP);
+        jSpinnerI.setModel(spinnerNumberModelI);
+        jSpinnerD.setModel(spinnerNumberModelD);
     }
 
     /**
@@ -26,48 +45,83 @@ public class JPID extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
+        jSpinnerP = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        jSpinnerI = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jSpinnerD = new javax.swing.JSpinner();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout(0, 1));
+        getContentPane().setLayout(new java.awt.GridLayout(0, 2));
 
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+        jLabel1.setText("P");
+        getContentPane().add(jLabel1);
+
+        jSpinnerP.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner1StateChanged(evt);
+                jSpinnerPStateChanged(evt);
             }
         });
-        getContentPane().add(jSpinner1);
+        getContentPane().add(jSpinnerP);
 
-        jSpinner2.addChangeListener(new javax.swing.event.ChangeListener() {
+        jLabel3.setText("I");
+        getContentPane().add(jLabel3);
+
+        jSpinnerI.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner2StateChanged(evt);
+                jSpinnerIStateChanged(evt);
             }
         });
-        getContentPane().add(jSpinner2);
+        getContentPane().add(jSpinnerI);
 
-        jSpinner3.addChangeListener(new javax.swing.event.ChangeListener() {
+        jLabel2.setText("D");
+        getContentPane().add(jLabel2);
+
+        jSpinnerD.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner3StateChanged(evt);
+                jSpinnerDStateChanged(evt);
             }
         });
-        getContentPane().add(jSpinner3);
+        getContentPane().add(jSpinnerD);
 
-        pack();
+        jMenu1.setText("Ações");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("Sair");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-205)/2, (screenSize.height-116)/2, 205, 116);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner1StateChanged
+    private void jSpinnerPStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerPStateChanged
+        exemploPID3.setP((Double)jSpinnerP.getValue());
+    }//GEN-LAST:event_jSpinnerPStateChanged
 
-    private void jSpinner2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner2StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner2StateChanged
+    private void jSpinnerIStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerIStateChanged
+        exemploPID3.setI((Double)jSpinnerI.getValue());
+    }//GEN-LAST:event_jSpinnerIStateChanged
 
-    private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner3StateChanged
+    private void jSpinnerDStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerDStateChanged
+        exemploPID3.setD((Double)jSpinnerD.getValue());
+    }//GEN-LAST:event_jSpinnerDStateChanged
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -106,13 +160,19 @@ public class JPID extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new JPID().setVisible(true);
+                new JPID(new ExemploPID3(0d, 0.5, 0d), null).setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JSpinner jSpinnerD;
+    private javax.swing.JSpinner jSpinnerI;
+    private javax.swing.JSpinner jSpinnerP;
     // End of variables declaration//GEN-END:variables
 }
