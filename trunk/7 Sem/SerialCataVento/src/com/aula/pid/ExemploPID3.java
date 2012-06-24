@@ -38,4 +38,28 @@ public class ExemploPID3 {
     private volatile double d;
     private volatile double previousValue;
     private volatile double sumErrors;
+
+    public void setP(double p) {
+        this.p = p;
+    }
+
+    public void setD(double d) {
+        this.d = d;
+    }
+
+    public void setI(double i) {
+        this.i = i;
+    }
+
+    public double getP() {
+        return p;
+    }
+
+    public double getI() {
+        return i;
+    }
+
+    public double getD() {
+        return d;
+    }
 }

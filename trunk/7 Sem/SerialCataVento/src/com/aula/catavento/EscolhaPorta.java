@@ -23,6 +23,10 @@ public class EscolhaPorta extends javax.swing.JDialog {
     /**
      * Creates new form EscolhaPorta
      */
+    private byte botaoClicado;
+    public static final byte BOTAO_OK = 0;
+    public static final byte BOTAO_CANCELAR = 1;
+    public static final byte BOTAO_ERRO = 2;
     public EscolhaPorta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -41,6 +45,12 @@ public class EscolhaPorta extends javax.swing.JDialog {
         }
         jComboBox1.setModel(model);
     }
+
+    public byte getBotaoClicado() {
+        return botaoClicado;
+    }
+    
+    
 
     public static void main(String[] args) {
         new EscolhaPorta(null, true).setVisible(true);
@@ -113,10 +123,12 @@ public class EscolhaPorta extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-214)/2, (screenSize.height-126)/2, 214, 126);
     }// </editor-fold>//GEN-END:initComponents
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            botaoClicado = BOTAO_CANCELAR;
             dispose();
 	}//GEN-LAST:event_jButton1ActionPerformed
 
@@ -126,6 +138,7 @@ public class EscolhaPorta extends javax.swing.JDialog {
                 CommPortIdentifier pid = (CommPortIdentifier) portIdentifiers.nextElement();
                 if (pid.getName().equals(jComboBox1.getModel().getSelectedItem().toString())) {
                     portId = pid;
+                    botaoClicado = BOTAO_OK;
                     dispose();
                     return;
                 }
