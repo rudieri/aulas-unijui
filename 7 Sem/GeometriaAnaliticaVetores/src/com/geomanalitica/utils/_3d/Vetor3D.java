@@ -94,4 +94,7 @@ public class Vetor3D {
     public static double anguloInterno(Vetor3D a, Vetor3D b) {
         return (Math.acos(produtoInternoOuEscalar(a, b) / (a.getModulo() * b.getModulo())) / Math.PI) * 180;
     }
+    public static double anguloInternoPlanoReta(Vetor3D a, Vetor3D b) {
+        return (Math.asin(produtoInternoOuEscalar(a, b) / (a.getModulo() * b.getModulo())) / Math.PI) * 180;
+    }
 }

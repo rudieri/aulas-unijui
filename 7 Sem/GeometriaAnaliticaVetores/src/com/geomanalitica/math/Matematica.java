@@ -45,11 +45,11 @@ public class Matematica {
 //        Ponto3D c = new Ponto3D(-1, 2, 1);
 //        Vetor3D va = new Vetor3D(Math.pow(3, 0.5)/4d, -1d/2d, 3d/4d);
 //        Vetor3D vb = new Vetor3D(b);
-        Vetor3D va = new Vetor3D(3, -1, -2);
-        Vetor3D vb = new Vetor3D(2, 4, -1);
+        Vetor3D va = new Vetor3D(1, 4, -1);
+        Vetor3D vb = new Vetor3D(3, 2, -1);
         Vetor3D vc = new Vetor3D(-1, 2, 1);
 //        Vetor3D bc = new Vetor3D(b, c);
-        System.out.println("ab: " + Vetor3D.produtoMisto(va, vb, vc));
+        System.out.println("ab: " + Vetor3D.anguloInternoPlanoReta(va, vb));
 //        System.out.println("ac: " + vb);
 //        System.out.println("bc: " + bc);
 //        final double anguloInternoA = Vetor3D.anguloInterno(va, vb);
