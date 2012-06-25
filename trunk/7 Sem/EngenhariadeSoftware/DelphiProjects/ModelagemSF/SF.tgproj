@@ -7,7 +7,10 @@
 			<None Include="ModelSupport_SF\default.txvClassDiagram20"/>
 			<None Include="ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20"/>
 			<None Include="ModelSupport_SF\DClasseSF.txvClassDiagram20"/>
-			<None Include="ModelSupport_SF\Sequence Diagram.txvSequenceDiagram20"/>
+			<None Include="ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20"/>
+			<None Include="ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20"/>
+			<None Include="ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20"/>
+			<None Include="ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20"/>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Design.Personality.12</Borland.Personality>
