@@ -2,15 +2,15 @@
 <nodeSet version="1.0">
   <view uin="05syjz9ab0153natm_v">
     <property name="$metaclass" value="SequenceDiagram20" />
-    <property name="$name" value="Sequence Diagram" />
+    <property name="$name" value="DSequenciaCadEventoSF" />
     <reference referencedUin="design:node:::h8z0srp8h010p9jyl_n">
       <property name="$shortcutReference" value="" />
       <reference referencedUin="design:node:::ng2not0r5v2lfmz8o_n:h8z0srp8h010p9jyl_n">
-        <property name="bounds" value="60,10,134,540" />
+        <property name="bounds" value="60,10,134,590" />
         <property name="location_set_by_user" value="True" />
         <property name="bounds_setted_by_user" value="True" />
         <reference referencedUin="design:node:::7cygvgoblap63l64l_n:ng2not0r5v2lfmz8o_n:h8z0srp8h010p9jyl_n">
-          <property name="bounds" value="59,110,16,404" />
+          <property name="bounds" value="59,110,16,440" />
           <property name="bounds_setted_by_user" value="True" />
           <reference referencedUin="sd20_message|1|call|75(design:node:::7cygvgoblap63l64l_n:ng2not0r5v2lfmz8o_n:h8z0srp8h010p9jyl_n)">
             <property name="sourceAnchor" value="139,120" />
@@ -22,11 +22,11 @@
         <reference referencedUin="design:link:::snu8u2uanapblwlpi_l:ng2not0r5v2lfmz8o_n:h8z0srp8h010p9jyl_n" />
       </reference>
       <reference referencedUin="design:node:::63d06o5479ehtwg0q_n:h8z0srp8h010p9jyl_n">
-        <property name="bounds" value="220,10,178,540" />
+        <property name="bounds" value="220,10,178,590" />
         <property name="location_set_by_user" value="True" />
         <property name="bounds_setted_by_user" value="True" />
         <reference referencedUin="design:node:::5p380goblapj1qbnk_n:63d06o5479ehtwg0q_n:h8z0srp8h010p9jyl_n">
-          <property name="bounds" value="79,110,20,404" />
+          <property name="bounds" value="79,110,20,440" />
           <property name="location_set_by_user" value="True" />
           <property name="bounds_setted_by_user" value="True" />
           <reference referencedUin="design:node:::tqo0gsg0gct_n:5p380goblapj1qbnk_n:63d06o5479ehtwg0q_n:h8z0srp8h010p9jyl_n">
@@ -121,7 +121,7 @@
         <reference referencedUin="design:link:::uthk3cc2xol_l:63d06o5479ehtwg0q_n:h8z0srp8h010p9jyl_n" />
       </reference>
       <reference referencedUin="design:node:::tb5rh1b7v4gj9oeip_n:h8z0srp8h010p9jyl_n">
-        <property name="bounds" value="452,10,138,540" />
+        <property name="bounds" value="452,10,138,590" />
         <property name="location_set_by_user" value="True" />
         <property name="bounds_setted_by_user" value="True" />
         <reference referencedUin="design:node:::na2wb0frc2h_n:tb5rh1b7v4gj9oeip_n:h8z0srp8h010p9jyl_n">
@@ -134,7 +134,7 @@
         </reference>
       </reference>
       <reference referencedUin="design:node:::gsfvp12fph4o4rki_n:h8z0srp8h010p9jyl_n">
-        <property name="bounds" value="650,10,148,540" />
+        <property name="bounds" value="650,10,148,590" />
         <property name="location_set_by_user" value="True" />
         <property name="bounds_setted_by_user" value="True" />
         <reference referencedUin="design:node:::6m9hpod2qcbyai4yi_n:gsfvp12fph4o4rki_n:h8z0srp8h010p9jyl_n">
@@ -147,7 +147,7 @@
         </reference>
       </reference>
       <reference referencedUin="design:node:::8q64762saxih1zzvp_n:h8z0srp8h010p9jyl_n">
-        <property name="bounds" value="858,10,132,540" />
+        <property name="bounds" value="858,10,132,590" />
         <property name="location_set_by_user" value="True" />
         <property name="bounds_setted_by_user" value="True" />
         <reference referencedUin="design:node:::wa0egtouowk_n:8q64762saxih1zzvp_n:h8z0srp8h010p9jyl_n">
@@ -160,7 +160,7 @@
         </reference>
       </reference>
       <reference referencedUin="design:node:::8ul3fq8038k9xlhzr_n:h8z0srp8h010p9jyl_n">
-        <property name="bounds" value="1050,10,126,540" />
+        <property name="bounds" value="1050,10,126,590" />
         <property name="location_set_by_user" value="True" />
         <property name="bounds_setted_by_user" value="True" />
         <reference referencedUin="design:node:::vylhw6djgxj_n:8ul3fq8038k9xlhzr_n:h8z0srp8h010p9jyl_n">
