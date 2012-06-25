@@ -12,7 +12,7 @@ import com.aula.pid.ExemploPID3;
  */
 public class Principal implements EventoListener {
 
-    int ideal = 512;
+//    int ideal = 512; Agora Controlado Pela Tela
     boolean temComando = false;
     String comando = "";
     int valor = 1500;
@@ -33,7 +33,7 @@ public class Principal implements EventoListener {
 //        }else if(posicap<ideal){
 //            valor+=2;
 //        }
-        valor = (int) pid3.controller(ideal, posicap);
+        valor = (int) pid3.controller(posicap);
 
     }
 
