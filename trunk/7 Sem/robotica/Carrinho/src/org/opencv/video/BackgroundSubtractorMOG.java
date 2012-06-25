@@ -4,23 +4,22 @@
 //
 package org.opencv.video;
 
-import org.opencv.core.Mat;
+
 
 // C++: class BackgroundSubtractorMOG
 /**
- * Gaussian Mixture-based Backbround/Foreground Segmentation Algorithm.
+ * <p>Gaussian Mixture-based Background/Foreground Segmentation Algorithm.</p>
  *
- * The class implements the algorithm described in P. KadewTraKuPong and R.
+ * <p>The class implements the algorithm described in P. KadewTraKuPong and R.
  * Bowden, *An improved adaptive background mixture model for real-time tracking
- * with shadow detection*, Proc. 2nd European Workshp on Advanced Video-Based
- * Surveillance Systems, 2001: http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf
+ * with shadow detection*, Proc. 2nd European Workshop on Advanced Video-Based
+ * Surveillance Systems, 2001: http://personal.ee.surrey.ac.uk/Personal/R.Bowden/publications/avbs01/avbs01.pdf</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG : public BackgroundSubtractor</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG : public BackgroundSubtractor</a>
  */
-public class BackgroundSubtractorMOG {
+public class BackgroundSubtractorMOG extends BackgroundSubtractor {
 
-    protected final long nativeObj;
-    protected BackgroundSubtractorMOG(long addr) { nativeObj = addr; }
+    protected BackgroundSubtractorMOG(long addr) { super(addr); }
 
 
     //
@@ -28,16 +27,16 @@ public class BackgroundSubtractorMOG {
     //
 
 /**
- * The contructors
+ * <p>The constructors.</p>
  *
- * Default constructor sets all parameters to default values.
+ * <p>Default constructor sets all parameters to default values.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG.BackgroundSubtractorMOG</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG.BackgroundSubtractorMOG</a>
  */
     public   BackgroundSubtractorMOG()
     {
 
-        nativeObj = BackgroundSubtractorMOG_0();
+        super( BackgroundSubtractorMOG_0() );
 
         return;
     }
@@ -48,82 +47,40 @@ public class BackgroundSubtractorMOG {
     //
 
 /**
- * The contructors
+ * <p>The constructors.</p>
  *
- * Default constructor sets all parameters to default values.
+ * <p>Default constructor sets all parameters to default values.</p>
  *
  * @param history Length of the history.
  * @param nmixtures Number of Gaussian mixtures.
  * @param backgroundRatio Background ratio.
  * @param noiseSigma Noise strength.
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG.BackgroundSubtractorMOG</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG.BackgroundSubtractorMOG</a>
  */
     public   BackgroundSubtractorMOG(int history, int nmixtures, double backgroundRatio, double noiseSigma)
     {
 
-        nativeObj = BackgroundSubtractorMOG_1(history, nmixtures, backgroundRatio, noiseSigma);
+        super( BackgroundSubtractorMOG_1(history, nmixtures, backgroundRatio, noiseSigma) );
 
         return;
     }
 
 /**
- * The contructors
+ * <p>The constructors.</p>
  *
- * Default constructor sets all parameters to default values.
+ * <p>Default constructor sets all parameters to default values.</p>
  *
  * @param history Length of the history.
  * @param nmixtures Number of Gaussian mixtures.
  * @param backgroundRatio Background ratio.
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG.BackgroundSubtractorMOG</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-backgroundsubtractormog">org.opencv.video.BackgroundSubtractorMOG.BackgroundSubtractorMOG</a>
  */
     public   BackgroundSubtractorMOG(int history, int nmixtures, double backgroundRatio)
     {
 
-        nativeObj = BackgroundSubtractorMOG_2(history, nmixtures, backgroundRatio);
-
-        return;
-    }
-
-
-    //
-    // C++:  void BackgroundSubtractor::operator()(Mat image, Mat& fgmask, double learningRate = 0)
-    //
-
-/**
- * Updates the background model and returns the foreground mask
- *
- * Parameters are the same as in "BackgroundSubtractor.operator()"
- *
- * @param image a image
- * @param fgmask a fgmask
- * @param learningRate a learningRate
- *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-operator">org.opencv.video.BackgroundSubtractorMOG.operator()</a>
- */
-    public  void apply(Mat image, Mat fgmask, double learningRate)
-    {
-
-        apply_0(nativeObj, image.nativeObj, fgmask.nativeObj, learningRate);
-
-        return;
-    }
-
-/**
- * Updates the background model and returns the foreground mask
- *
- * Parameters are the same as in "BackgroundSubtractor.operator()"
- *
- * @param image a image
- * @param fgmask a fgmask
- *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#backgroundsubtractormog-operator">org.opencv.video.BackgroundSubtractorMOG.operator()</a>
- */
-    public  void apply(Mat image, Mat fgmask)
-    {
-
-        apply_1(nativeObj, image.nativeObj, fgmask.nativeObj);
+        super( BackgroundSubtractorMOG_2(history, nmixtures, backgroundRatio) );
 
         return;
     }
@@ -132,7 +89,6 @@ public class BackgroundSubtractorMOG {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -148,10 +104,6 @@ public class BackgroundSubtractorMOG {
     // C++:   BackgroundSubtractorMOG::BackgroundSubtractorMOG(int history, int nmixtures, double backgroundRatio, double noiseSigma = 0)
     private static native long BackgroundSubtractorMOG_1(int history, int nmixtures, double backgroundRatio, double noiseSigma);
     private static native long BackgroundSubtractorMOG_2(int history, int nmixtures, double backgroundRatio);
-
-    // C++:  void BackgroundSubtractor::operator()(Mat image, Mat& fgmask, double learningRate = 0)
-    private static native void apply_0(long nativeObj, long image_nativeObj, long fgmask_nativeObj, double learningRate);
-    private static native void apply_1(long nativeObj, long image_nativeObj, long fgmask_nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);

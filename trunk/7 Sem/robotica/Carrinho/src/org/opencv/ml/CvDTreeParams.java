@@ -8,17 +8,38 @@ package org.opencv.ml;
 
 // C++: class CvDTreeParams
 /**
- * The structure contains all the decision tree training parameters. You can
+ * <p>The structure contains all the decision tree training parameters. You can
  * initialize it by default constructor and then override any parameters
  * directly before training, or the structure may be fully initialized using the
- * advanced variant of the constructor.
+ * advanced variant of the constructor.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtreeparams">org.opencv.ml.CvDTreeParams</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/decision_trees.html#cvdtreeparams">org.opencv.ml.CvDTreeParams</a>
  */
 public class CvDTreeParams {
 
     protected final long nativeObj;
     protected CvDTreeParams(long addr) { nativeObj = addr; }
+
+
+    //
+    // C++:   CvDTreeParams::CvDTreeParams()
+    //
+
+/**
+ * <p>The constructors.</p>
+ *
+ * <p>The default constructor initializes all the parameters with the default
+ * values tuned for the standalone classification tree:</p>
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/decision_trees.html#cvdtreeparams-cvdtreeparams">org.opencv.ml.CvDTreeParams.CvDTreeParams</a>
+ */
+    public   CvDTreeParams()
+    {
+
+        nativeObj = CvDTreeParams_0();
+
+        return;
+    }
 
 
     //
@@ -229,22 +250,9 @@ public class CvDTreeParams {
     }
 
 
-/**
- * The constructors.
- *
- * The default constructor initializes all the parameters with the default
- * values tuned for the standalone classification tree:
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtreeparams-cvdtreeparams">org.opencv.ml.CvDTreeParams.CvDTreeParams</a>
- */
-public CvDTreeParams() {
-    nativeObj = n_newObj();
-}
-
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -253,6 +261,9 @@ public CvDTreeParams() {
     // native stuff
     //
     static { System.loadLibrary("opencv_java"); }
+
+    // C++:   CvDTreeParams::CvDTreeParams()
+    private static native long CvDTreeParams_0();
 
     // C++: int CvDTreeParams::max_categories
     private static native int get_max_categories_0(long nativeObj);
@@ -301,7 +312,7 @@ public CvDTreeParams() {
 
     // C++: void CvDTreeParams::regression_accuracy
     private static native void set_regression_accuracy_0(long nativeObj, float regression_accuracy);
-private static native long n_newObj();
+
     // native support for java finalize()
     private static native void delete(long nativeObj);
 

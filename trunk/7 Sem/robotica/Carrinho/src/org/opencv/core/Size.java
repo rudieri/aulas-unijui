@@ -1,15 +1,15 @@
 package org.opencv.core;
 
 /**
- * Template class for specfying the size of an image or rectangle. The class
- * includes two members called "width" and "height". The structure can be
- * converted to and from the old OpenCV structures "CvSize" and "CvSize2D32f".
- * The same set of arithmetic and comparison operations as for "Point_" is
- * available.
+ * <p>Template class for specifying the size of an image or rectangle. The class
+ * includes two members called <code>width</code> and <code>height</code>. The
+ * structure can be converted to and from the old OpenCV structures
+ * <code>CvSize</code> and <code>CvSize2D32f</code>. The same set of arithmetic
+ * and comparison operations as for <code>Point_</code> is available.</p>
  *
- * OpenCV defines the following "Size_<>" aliases:
+ * <p>OpenCV defines the following <code>Size_<></code> aliases:</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#size">org.opencv.core.Size_</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#size">org.opencv.core.Size_</a>
  */
 public class Size {
 

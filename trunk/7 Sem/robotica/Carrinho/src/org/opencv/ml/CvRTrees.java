@@ -8,15 +8,14 @@ import org.opencv.core.Mat;
 
 // C++: class CvRTrees
 /**
- * The class implements the random forest predictor as described in the
- * beginning of this section.
+ * <p>The class implements the random forest predictor as described in the
+ * beginning of this section.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees">org.opencv.ml.CvRTrees</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees">org.opencv.ml.CvRTrees : public CvStatModel</a>
  */
-public class CvRTrees {
+public class CvRTrees extends CvStatModel {
 
-    protected final long nativeObj;
-    protected CvRTrees(long addr) { nativeObj = addr; }
+    protected CvRTrees(long addr) { super(addr); }
 
 
     //
@@ -26,7 +25,7 @@ public class CvRTrees {
     public   CvRTrees()
     {
 
-        nativeObj = CvRTrees_0();
+        super( CvRTrees_0() );
 
         return;
     }
@@ -50,14 +49,15 @@ public class CvRTrees {
     //
 
 /**
- * Returns the variable importance array.
+ * <p>Returns the variable importance array.</p>
  *
- * The method returns the variable importance vector, computed at the training
- * stage when "CvRTParams.calc_var_importance" is set to true. If this flag was
- * set to false, the "NULL" pointer is returned. This differs from the decision
- * trees where variable importance can be computed anytime after the training.
+ * <p>The method returns the variable importance vector, computed at the training
+ * stage when <code>CvRTParams.calc_var_importance</code> is set to true. If
+ * this flag was set to false, the <code>NULL</code> pointer is returned. This
+ * differs from the decision trees where variable importance can be computed
+ * anytime after the training.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-getvarimportance">org.opencv.ml.CvRTrees.getVarImportance</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-getvarimportance">org.opencv.ml.CvRTrees.getVarImportance</a>
  */
     public  Mat getVarImportance()
     {
@@ -73,18 +73,18 @@ public class CvRTrees {
     //
 
 /**
- * Predicts the output for an input sample.
+ * <p>Predicts the output for an input sample.</p>
  *
- * The input parameters of the prediction method are the same as in
+ * <p>The input parameters of the prediction method are the same as in
  * "CvDTree.predict" but the return value type is different. This method
  * returns the cumulative result from all the trees in the forest (the class
  * that receives the majority of voices, or the mean of the regression function
- * estimates).
+ * estimates).</p>
  *
  * @param sample Sample for classification.
  * @param missing Optional missing measurement mask of the sample.
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-predict">org.opencv.ml.CvRTrees.predict</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-predict">org.opencv.ml.CvRTrees.predict</a>
  */
     public  float predict(Mat sample, Mat missing)
     {
@@ -95,17 +95,17 @@ public class CvRTrees {
     }
 
 /**
- * Predicts the output for an input sample.
+ * <p>Predicts the output for an input sample.</p>
  *
- * The input parameters of the prediction method are the same as in
+ * <p>The input parameters of the prediction method are the same as in
  * "CvDTree.predict" but the return value type is different. This method
  * returns the cumulative result from all the trees in the forest (the class
  * that receives the majority of voices, or the mean of the regression function
- * estimates).
+ * estimates).</p>
  *
  * @param sample Sample for classification.
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-predict">org.opencv.ml.CvRTrees.predict</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-predict">org.opencv.ml.CvRTrees.predict</a>
  */
     public  float predict(Mat sample)
     {
@@ -121,17 +121,17 @@ public class CvRTrees {
     //
 
 /**
- * Returns a fuzzy-predicted class label.
+ * <p>Returns a fuzzy-predicted class label.</p>
  *
- * The function works for binary classification problems only. It returns the
+ * <p>The function works for binary classification problems only. It returns the
  * number between 0 and 1. This number represents probability or confidence of
  * the sample belonging to the second class. It is calculated as the proportion
- * of decision trees that classified the sample to the second class.
+ * of decision trees that classified the sample to the second class.</p>
  *
  * @param sample Sample for classification.
  * @param missing Optional missing measurement mask of the sample.
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-predict-prob">org.opencv.ml.CvRTrees.predict_prob</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-predict-prob">org.opencv.ml.CvRTrees.predict_prob</a>
  */
     public  float predict_prob(Mat sample, Mat missing)
     {
@@ -142,16 +142,16 @@ public class CvRTrees {
     }
 
 /**
- * Returns a fuzzy-predicted class label.
+ * <p>Returns a fuzzy-predicted class label.</p>
  *
- * The function works for binary classification problems only. It returns the
+ * <p>The function works for binary classification problems only. It returns the
  * number between 0 and 1. This number represents probability or confidence of
  * the sample belonging to the second class. It is calculated as the proportion
- * of decision trees that classified the sample to the second class.
+ * of decision trees that classified the sample to the second class.</p>
  *
  * @param sample Sample for classification.
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-predict-prob">org.opencv.ml.CvRTrees.predict_prob</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-predict-prob">org.opencv.ml.CvRTrees.predict_prob</a>
  */
     public  float predict_prob(Mat sample)
     {
@@ -167,13 +167,15 @@ public class CvRTrees {
     //
 
 /**
- * Trains the Random Trees model.
+ * <p>Trains the Random Trees model.</p>
  *
- * The method "CvRTrees.train" is very similar to the method "CvDTree.train"
+ * <p>The method "CvRTrees.train" is very similar to the method "CvDTree.train"
  * and follows the generic method "CvStatModel.train" conventions. All the
  * parameters specific to the algorithm training are passed as a "CvRTParams"
- * instance. The estimate of the training error ("oob-error") is stored in the
- * protected class member "oob_error".
+ * instance. The estimate of the training error (<code>oob-error</code>) is
+ * stored in the protected class member <code>oob_error</code>.</p>
+ *
+ * <p>The function is parallelized with the TBB library.</p>
  *
  * @param trainData a trainData
  * @param tflag a tflag
@@ -184,7 +186,7 @@ public class CvRTrees {
  * @param missingDataMask a missingDataMask
  * @param params a params
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
  */
     public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType, Mat missingDataMask, CvRTParams params)
     {
@@ -195,126 +197,26 @@ public class CvRTrees {
     }
 
 /**
- * Trains the Random Trees model.
+ * <p>Trains the Random Trees model.</p>
  *
- * The method "CvRTrees.train" is very similar to the method "CvDTree.train"
+ * <p>The method "CvRTrees.train" is very similar to the method "CvDTree.train"
  * and follows the generic method "CvStatModel.train" conventions. All the
  * parameters specific to the algorithm training are passed as a "CvRTParams"
- * instance. The estimate of the training error ("oob-error") is stored in the
- * protected class member "oob_error".
+ * instance. The estimate of the training error (<code>oob-error</code>) is
+ * stored in the protected class member <code>oob_error</code>.</p>
  *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param varType a varType
- * @param missingDataMask a missingDataMask
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType, Mat missingDataMask)
-    {
-
-        boolean retVal = train_1(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, varType.nativeObj, missingDataMask.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains the Random Trees model.
- *
- * The method "CvRTrees.train" is very similar to the method "CvDTree.train"
- * and follows the generic method "CvStatModel.train" conventions. All the
- * parameters specific to the algorithm training are passed as a "CvRTParams"
- * instance. The estimate of the training error ("oob-error") is stored in the
- * protected class member "oob_error".
- *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param varType a varType
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType)
-    {
-
-        boolean retVal = train_2(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, varType.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains the Random Trees model.
- *
- * The method "CvRTrees.train" is very similar to the method "CvDTree.train"
- * and follows the generic method "CvStatModel.train" conventions. All the
- * parameters specific to the algorithm training are passed as a "CvRTParams"
- * instance. The estimate of the training error ("oob-error") is stored in the
- * protected class member "oob_error".
- *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx)
-    {
-
-        boolean retVal = train_3(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains the Random Trees model.
- *
- * The method "CvRTrees.train" is very similar to the method "CvDTree.train"
- * and follows the generic method "CvStatModel.train" conventions. All the
- * parameters specific to the algorithm training are passed as a "CvRTParams"
- * instance. The estimate of the training error ("oob-error") is stored in the
- * protected class member "oob_error".
- *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx)
-    {
-
-        boolean retVal = train_4(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains the Random Trees model.
- *
- * The method "CvRTrees.train" is very similar to the method "CvDTree.train"
- * and follows the generic method "CvStatModel.train" conventions. All the
- * parameters specific to the algorithm training are passed as a "CvRTParams"
- * instance. The estimate of the training error ("oob-error") is stored in the
- * protected class member "oob_error".
+ * <p>The function is parallelized with the TBB library.</p>
  *
  * @param trainData a trainData
  * @param tflag a tflag
  * @param responses a responses
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/random_trees.html#cvrtrees-train">org.opencv.ml.CvRTrees.train</a>
  */
     public  boolean train(Mat trainData, int tflag, Mat responses)
     {
 
-        boolean retVal = train_5(nativeObj, trainData.nativeObj, tflag, responses.nativeObj);
+        boolean retVal = train_1(nativeObj, trainData.nativeObj, tflag, responses.nativeObj);
 
         return retVal;
     }
@@ -323,7 +225,6 @@ public class CvRTrees {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -352,11 +253,7 @@ public class CvRTrees {
 
     // C++:  bool CvRTrees::train(Mat trainData, int tflag, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), Mat varType = cv::Mat(), Mat missingDataMask = cv::Mat(), CvRTParams params = CvRTParams())
     private static native boolean train_0(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj, long missingDataMask_nativeObj, long params_nativeObj);
-    private static native boolean train_1(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj, long missingDataMask_nativeObj);
-    private static native boolean train_2(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj);
-    private static native boolean train_3(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj);
-    private static native boolean train_4(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj);
-    private static native boolean train_5(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj);
+    private static native boolean train_1(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);

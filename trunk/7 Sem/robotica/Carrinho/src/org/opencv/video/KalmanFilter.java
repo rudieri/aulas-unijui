@@ -8,14 +8,14 @@ import org.opencv.core.Mat;
 
 // C++: class KalmanFilter
 /**
- * Kalman filter class.
+ * <p>Kalman filter class.</p>
  *
- * The class implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter,
- * [Welch95]. However, you can modify "transitionMatrix", "controlMatrix", and
- * "measurementMatrix" to get an extended Kalman filter functionality. See the
- * OpenCV sample "kalman.cpp".
+ * <p>The class implements a standard Kalman filter http://en.wikipedia.org/wiki/Kalman_filter,
+ * [Welch95]. However, you can modify <code>transitionMatrix</code>,
+ * <code>controlMatrix</code>, and <code>measurementMatrix</code> to get an
+ * extended Kalman filter functionality. See the OpenCV sample <code>kalman.cpp</code>.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter">org.opencv.video.KalmanFilter</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter">org.opencv.video.KalmanFilter</a>
  */
 public class KalmanFilter {
 
@@ -28,14 +28,14 @@ public class KalmanFilter {
     //
 
 /**
- * The constructors.
+ * <p>The constructors.</p>
  *
- * The full constructor.
+ * <p>The full constructor.</p>
  *
- * Note: In C API when "CvKalman* kalmanFilter" structure is not needed anymore,
- * it should be released with "cvReleaseKalman(&kalmanFilter)"
+ * <p>Note: In C API when <code>CvKalman* kalmanFilter</code> structure is not
+ * needed anymore, it should be released with <code>cvReleaseKalman(&kalmanFilter)</code></p>
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
  */
     public   KalmanFilter()
     {
@@ -51,19 +51,20 @@ public class KalmanFilter {
     //
 
 /**
- * The constructors.
+ * <p>The constructors.</p>
  *
- * The full constructor.
+ * <p>The full constructor.</p>
  *
- * Note: In C API when "CvKalman* kalmanFilter" structure is not needed anymore,
- * it should be released with "cvReleaseKalman(&kalmanFilter)"
+ * <p>Note: In C API when <code>CvKalman* kalmanFilter</code> structure is not
+ * needed anymore, it should be released with <code>cvReleaseKalman(&kalmanFilter)</code></p>
  *
  * @param dynamParams Dimensionality of the state.
  * @param measureParams Dimensionality of the measurement.
  * @param controlParams Dimensionality of the control vector.
- * @param type Type of the created matrices that should be "CV_32F" or "CV_64F".
+ * @param type Type of the created matrices that should be <code>CV_32F</code>
+ * or <code>CV_64F</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
  */
     public   KalmanFilter(int dynamParams, int measureParams, int controlParams, int type)
     {
@@ -74,44 +75,22 @@ public class KalmanFilter {
     }
 
 /**
- * The constructors.
+ * <p>The constructors.</p>
  *
- * The full constructor.
+ * <p>The full constructor.</p>
  *
- * Note: In C API when "CvKalman* kalmanFilter" structure is not needed anymore,
- * it should be released with "cvReleaseKalman(&kalmanFilter)"
- *
- * @param dynamParams Dimensionality of the state.
- * @param measureParams Dimensionality of the measurement.
- * @param controlParams Dimensionality of the control vector.
- *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
- */
-    public   KalmanFilter(int dynamParams, int measureParams, int controlParams)
-    {
-
-        nativeObj = KalmanFilter_2(dynamParams, measureParams, controlParams);
-
-        return;
-    }
-
-/**
- * The constructors.
- *
- * The full constructor.
- *
- * Note: In C API when "CvKalman* kalmanFilter" structure is not needed anymore,
- * it should be released with "cvReleaseKalman(&kalmanFilter)"
+ * <p>Note: In C API when <code>CvKalman* kalmanFilter</code> structure is not
+ * needed anymore, it should be released with <code>cvReleaseKalman(&kalmanFilter)</code></p>
  *
  * @param dynamParams Dimensionality of the state.
  * @param measureParams Dimensionality of the measurement.
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-kalmanfilter">org.opencv.video.KalmanFilter.KalmanFilter</a>
  */
     public   KalmanFilter(int dynamParams, int measureParams)
     {
 
-        nativeObj = KalmanFilter_3(dynamParams, measureParams);
+        nativeObj = KalmanFilter_2(dynamParams, measureParams);
 
         return;
     }
@@ -122,11 +101,11 @@ public class KalmanFilter {
     //
 
 /**
- * Updates the predicted state from the measurement.
+ * <p>Updates the predicted state from the measurement.</p>
  *
- * @param measurement a measurement
+ * @param measurement The measured system parameters
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-correct">org.opencv.video.KalmanFilter.correct</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-correct">org.opencv.video.KalmanFilter.correct</a>
  */
     public  Mat correct(Mat measurement)
     {
@@ -142,11 +121,11 @@ public class KalmanFilter {
     //
 
 /**
- * Computes a predicted state.
+ * <p>Computes a predicted state.</p>
  *
  * @param control The optional input control
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-predict">org.opencv.video.KalmanFilter.predict</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-predict">org.opencv.video.KalmanFilter.predict</a>
  */
     public  Mat predict(Mat control)
     {
@@ -157,9 +136,9 @@ public class KalmanFilter {
     }
 
 /**
- * Computes a predicted state.
+ * <p>Computes a predicted state.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-predict">org.opencv.video.KalmanFilter.predict</a>
+ * @see <a href="http://docs.opencv.org/modules/video/doc/motion_analysis_and_object_tracking.html#kalmanfilter-predict">org.opencv.video.KalmanFilter.predict</a>
  */
     public  Mat predict()
     {
@@ -173,7 +152,6 @@ public class KalmanFilter {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -188,8 +166,7 @@ public class KalmanFilter {
 
     // C++:   KalmanFilter::KalmanFilter(int dynamParams, int measureParams, int controlParams = 0, int type = CV_32F)
     private static native long KalmanFilter_1(int dynamParams, int measureParams, int controlParams, int type);
-    private static native long KalmanFilter_2(int dynamParams, int measureParams, int controlParams);
-    private static native long KalmanFilter_3(int dynamParams, int measureParams);
+    private static native long KalmanFilter_2(int dynamParams, int measureParams);
 
     // C++:  Mat KalmanFilter::correct(Mat measurement)
     private static native long correct_0(long nativeObj, long measurement_nativeObj);

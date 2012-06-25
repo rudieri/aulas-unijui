@@ -8,17 +8,17 @@ import org.opencv.core.Mat;
 
 // C++: class CvERTrees
 /**
- * The class implements the Extremely randomized trees algorithm. "CvERTrees" is
- * inherited from "CvRTrees" and has the same interface, so see description of
- * "CvRTrees" class to get detailes. To set the training parameters of Extremely
- * randomized trees the same class "CvRTParams" is used.
+ * <p>The class implements the Extremely randomized trees algorithm.
+ * <code>CvERTrees</code> is inherited from "CvRTrees" and has the same
+ * interface, so see description of "CvRTrees" class to get details. To set the
+ * training parameters of Extremely randomized trees the same class "CvRTParams"
+ * is used.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/ertrees.html#cvertrees">org.opencv.ml.CvERTrees</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/ertrees.html#cvertrees">org.opencv.ml.CvERTrees : public CvRTrees</a>
  */
-public class CvERTrees {
+public class CvERTrees extends CvRTrees {
 
-    protected final long nativeObj;
-    protected CvERTrees(long addr) { nativeObj = addr; }
+    protected CvERTrees(long addr) { super(addr); }
 
 
     //
@@ -28,7 +28,7 @@ public class CvERTrees {
     public   CvERTrees()
     {
 
-        nativeObj = CvERTrees_0();
+        super( CvERTrees_0() );
 
         return;
     }
@@ -46,42 +46,10 @@ public class CvERTrees {
         return retVal;
     }
 
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType, Mat missingDataMask)
-    {
-
-        boolean retVal = train_1(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, varType.nativeObj, missingDataMask.nativeObj);
-
-        return retVal;
-    }
-
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType)
-    {
-
-        boolean retVal = train_2(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, varType.nativeObj);
-
-        return retVal;
-    }
-
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx)
-    {
-
-        boolean retVal = train_3(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj);
-
-        return retVal;
-    }
-
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx)
-    {
-
-        boolean retVal = train_4(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj);
-
-        return retVal;
-    }
-
     public  boolean train(Mat trainData, int tflag, Mat responses)
     {
 
-        boolean retVal = train_5(nativeObj, trainData.nativeObj, tflag, responses.nativeObj);
+        boolean retVal = train_1(nativeObj, trainData.nativeObj, tflag, responses.nativeObj);
 
         return retVal;
     }
@@ -90,7 +58,6 @@ public class CvERTrees {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -105,11 +72,7 @@ public class CvERTrees {
 
     // C++:  bool CvERTrees::train(Mat trainData, int tflag, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), Mat varType = cv::Mat(), Mat missingDataMask = cv::Mat(), CvRTParams params = CvRTParams())
     private static native boolean train_0(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj, long missingDataMask_nativeObj, long params_nativeObj);
-    private static native boolean train_1(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj, long missingDataMask_nativeObj);
-    private static native boolean train_2(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj);
-    private static native boolean train_3(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj);
-    private static native boolean train_4(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj);
-    private static native boolean train_5(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj);
+    private static native boolean train_1(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);

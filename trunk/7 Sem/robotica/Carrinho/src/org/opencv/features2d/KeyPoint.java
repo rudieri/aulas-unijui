@@ -3,9 +3,9 @@ package org.opencv.features2d;
 import org.opencv.core.Point;
 
 /**
- * Data structure for salient point detectors.
+ * <p>Data structure for salient point detectors.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint">org.opencv.features2d.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint">org.opencv.features2d.KeyPoint</a>
  */
 public class KeyPoint {
 
@@ -37,7 +37,7 @@ public class KeyPoint {
     public int class_id;
 
 /**
- * The keypoint constructors
+ * <p>The keypoint constructors</p>
  *
  * @param x x-coordinate of the keypoint
  * @param y y-coordinate of the keypoint
@@ -48,7 +48,7 @@ public class KeyPoint {
  * @param _octave pyramid octave in which the keypoint has been detected
  * @param _class_id object id
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
  */
     public KeyPoint(float x, float y, float _size, float _angle, float _response, int _octave, int _class_id)
     {
@@ -61,9 +61,9 @@ public class KeyPoint {
     }
 
 /**
- * The keypoint constructors
+ * <p>The keypoint constructors</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
  */
     public KeyPoint()
     {
@@ -71,7 +71,7 @@ public class KeyPoint {
     }
 
 /**
- * The keypoint constructors
+ * <p>The keypoint constructors</p>
  *
  * @param x x-coordinate of the keypoint
  * @param y y-coordinate of the keypoint
@@ -81,7 +81,7 @@ public class KeyPoint {
  * strength of the keypoint)
  * @param _octave pyramid octave in which the keypoint has been detected
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
  */
     public KeyPoint(float x, float y, float _size, float _angle, float _response, int _octave)
     {
@@ -89,7 +89,7 @@ public class KeyPoint {
     }
 
 /**
- * The keypoint constructors
+ * <p>The keypoint constructors</p>
  *
  * @param x x-coordinate of the keypoint
  * @param y y-coordinate of the keypoint
@@ -98,7 +98,7 @@ public class KeyPoint {
  * @param _response keypoint detector response on the keypoint (that is,
  * strength of the keypoint)
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
  */
     public KeyPoint(float x, float y, float _size, float _angle, float _response)
     {
@@ -106,14 +106,14 @@ public class KeyPoint {
     }
 
 /**
- * The keypoint constructors
+ * <p>The keypoint constructors</p>
  *
  * @param x x-coordinate of the keypoint
  * @param y y-coordinate of the keypoint
  * @param _size keypoint diameter
  * @param _angle keypoint orientation
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
  */
     public KeyPoint(float x, float y, float _size, float _angle)
     {
@@ -121,13 +121,13 @@ public class KeyPoint {
     }
 
 /**
- * The keypoint constructors
+ * <p>The keypoint constructors</p>
  *
  * @param x x-coordinate of the keypoint
  * @param y y-coordinate of the keypoint
  * @param _size keypoint diameter
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#keypoint-keypoint">org.opencv.features2d.KeyPoint.KeyPoint</a>
  */
     public KeyPoint(float x, float y, float _size)
     {

@@ -1,19 +1,21 @@
 package org.opencv.core;
 
 /**
- * Template class for 2D points specified by its coordinates x and y.
- * An instance of the class is interchangeable with C structures, "CvPoint" and
- * "CvPoint2D32f". There is also a cast operator to convert point coordinates to
- * the specified type. The conversion from floating-point coordinates to integer
- * coordinates is done by rounding. Commonly, the conversion uses this operation
- * for each of the coordinates. Besides the class members listed in the
- * declaration above, the following operations on points are implemented:
+ * <p>Template class for 2D points specified by its coordinates <em>x</em> and
+ * <em>y</em>.
+ * An instance of the class is interchangeable with C structures,
+ * <code>CvPoint</code> and <code>CvPoint2D32f</code>. There is also a cast
+ * operator to convert point coordinates to the specified type. The conversion
+ * from floating-point coordinates to integer coordinates is done by rounding.
+ * Commonly, the conversion uses this operation for each of the coordinates.
+ * Besides the class members listed in the declaration above, the following
+ * operations on points are implemented:</p>
  *
- * For your convenience, the following type aliases are defined:
+ * <p>For your convenience, the following type aliases are defined:</p>
  *
- * Example:
+ * <p>Example:</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#point">org.opencv.core.Point_</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#point">org.opencv.core.Point_</a>
  */
 public class Point {
 

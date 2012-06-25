@@ -1,15 +1,16 @@
 package org.opencv.core;
 
 /**
- * Template class for 3D points specified by its coordinates x, y and z.
+ * <p>Template class for 3D points specified by its coordinates <em>x</em>,
+ * <em>y</em> and <em>z</em>.
  * An instance of the class is interchangeable with the C structure
- * "CvPoint2D32f". Similarly to "Point_", the coordinates of 3D points can be
- * converted to another type. The vector arithmetic and comparison operations
- * are also supported.
+ * <code>CvPoint2D32f</code>. Similarly to <code>Point_</code>, the coordinates
+ * of 3D points can be converted to another type. The vector arithmetic and
+ * comparison operations are also supported.</p>
  *
- * The following "Point3_<>" aliases are available:
+ * <p>The following <code>Point3_<></code> aliases are available:</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#point3">org.opencv.core.Point3_</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#point3">org.opencv.core.Point3_</a>
  */
 public class Point3 {
 

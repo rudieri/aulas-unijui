@@ -8,15 +8,15 @@ import java.lang.String;
 
 // C++: class CvStatModel
 /**
- * Base class for statistical models in ML.
+ * <p>Base class for statistical models in ML.</p>
  *
- * In this declaration, some methods are commented off. These are methods for
+ * <p>In this declaration, some methods are commented off. These are methods for
  * which there is no unified API (with the exception of the default
  * constructor). However, there are many similarities in the syntax and
  * semantics that are briefly described below in this section, as if they are
- * part of the base class.
+ * part of the base class.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/statistical_models.html#cvstatmodel">org.opencv.ml.CvStatModel</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/statistical_models.html#cvstatmodel">org.opencv.ml.CvStatModel</a>
  */
 public class CvStatModel {
 
@@ -29,16 +29,16 @@ public class CvStatModel {
     //
 
 /**
- * Loads the model from a file.
+ * <p>Loads the model from a file.</p>
  *
- * The method "load" loads the complete model state with the specified name (or
- * default model-dependent name) from the specified XML or YAML file. The
- * previous model state is cleared by "CvStatModel.clear".
+ * <p>The method <code>load</code> loads the complete model state with the
+ * specified name (or default model-dependent name) from the specified XML or
+ * YAML file. The previous model state is cleared by "CvStatModel.clear".</p>
  *
  * @param filename a filename
  * @param name a name
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/statistical_models.html#cvstatmodel-load">org.opencv.ml.CvStatModel.load</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/statistical_models.html#cvstatmodel-load">org.opencv.ml.CvStatModel.load</a>
  */
     public  void load(String filename, String name)
     {
@@ -49,15 +49,15 @@ public class CvStatModel {
     }
 
 /**
- * Loads the model from a file.
+ * <p>Loads the model from a file.</p>
  *
- * The method "load" loads the complete model state with the specified name (or
- * default model-dependent name) from the specified XML or YAML file. The
- * previous model state is cleared by "CvStatModel.clear".
+ * <p>The method <code>load</code> loads the complete model state with the
+ * specified name (or default model-dependent name) from the specified XML or
+ * YAML file. The previous model state is cleared by "CvStatModel.clear".</p>
  *
  * @param filename a filename
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/statistical_models.html#cvstatmodel-load">org.opencv.ml.CvStatModel.load</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/statistical_models.html#cvstatmodel-load">org.opencv.ml.CvStatModel.load</a>
  */
     public  void load(String filename)
     {
@@ -73,16 +73,17 @@ public class CvStatModel {
     //
 
 /**
- * Saves the model to a file.
+ * <p>Saves the model to a file.</p>
  *
- * The method "save" saves the complete model state to the specified XML or YAML
- * file with the specified name or default name (which depends on a particular
- * class). *Data persistence* functionality from "CxCore" is used.
+ * <p>The method <code>save</code> saves the complete model state to the specified
+ * XML or YAML file with the specified name or default name (which depends on a
+ * particular class). *Data persistence* functionality from <code>CxCore</code>
+ * is used.</p>
  *
  * @param filename a filename
  * @param name a name
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/statistical_models.html#cvstatmodel-save">org.opencv.ml.CvStatModel.save</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/statistical_models.html#cvstatmodel-save">org.opencv.ml.CvStatModel.save</a>
  */
     public  void save(String filename, String name)
     {
@@ -93,15 +94,16 @@ public class CvStatModel {
     }
 
 /**
- * Saves the model to a file.
+ * <p>Saves the model to a file.</p>
  *
- * The method "save" saves the complete model state to the specified XML or YAML
- * file with the specified name or default name (which depends on a particular
- * class). *Data persistence* functionality from "CxCore" is used.
+ * <p>The method <code>save</code> saves the complete model state to the specified
+ * XML or YAML file with the specified name or default name (which depends on a
+ * particular class). *Data persistence* functionality from <code>CxCore</code>
+ * is used.</p>
  *
  * @param filename a filename
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/statistical_models.html#cvstatmodel-save">org.opencv.ml.CvStatModel.save</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/statistical_models.html#cvstatmodel-save">org.opencv.ml.CvStatModel.save</a>
  */
     public  void save(String filename)
     {
@@ -112,24 +114,9 @@ public class CvStatModel {
     }
 
 
-/**
- * The default constuctor.
- *
- * Each statistical model class in ML has a default constructor without
- * parameters. This constructor is useful for a two-stage model construction,
- * when the default constructor is followed by "CvStatModel.train" or
- * "CvStatModel.load".
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/statistical_models.html#cvstatmodel-cvstatmodel">org.opencv.ml.CvStatModel.CvStatModel</a>
- */
-public CvStatModel() {
-    nativeObj = n_newObj();
-}
-
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -146,7 +133,7 @@ public CvStatModel() {
     // C++:  void CvStatModel::save(c_string filename, c_string name = 0)
     private static native void save_0(long nativeObj, String filename, String name);
     private static native void save_1(long nativeObj, String filename);
-private static native long n_newObj();
+
     // native support for java finalize()
     private static native void delete(long nativeObj);
 

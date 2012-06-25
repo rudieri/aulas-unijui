@@ -4,19 +4,17 @@
 //
 package org.opencv.ml;
 
-
+import org.opencv.core.TermCriteria;
 
 // C++: class CvANN_MLP_TrainParams
 /**
- * Parameters of the MLP training algorithm. You can initialize the structure by
+ * <p>Parameters of the MLP training algorithm. You can initialize the structure by
  * a constructor or the individual parameters can be adjusted after the
- * structure is created.
+ * structure is created.</p>
  *
- * The back-propagation algorithm parameters:
+ * <p>The back-propagation algorithm parameters:</p>
  *
- * The RPROP algorithm parameters (see [RPROP93] for details):
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/neural_networks.html#cvann-mlp-trainparams">org.opencv.ml.CvANN_MLP_TrainParams</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/neural_networks.html#cvann-mlp-trainparams">org.opencv.ml.CvANN_MLP_TrainParams</a>
  */
 public class CvANN_MLP_TrainParams {
 
@@ -30,17 +28,49 @@ public class CvANN_MLP_TrainParams {
 
 
     //
-    // C++: CvTermCriteria CvANN_MLP_TrainParams::term_crit
+    // C++:   CvANN_MLP_TrainParams::CvANN_MLP_TrainParams()
     //
 
-    // Return type 'CvTermCriteria' is not supported, skipping the function
+/**
+ * <p>The constructors.</p>
+ *
+ * <p>By default the RPROP algorithm is used:</p>
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/neural_networks.html#cvann-mlp-trainparams-cvann-mlp-trainparams">org.opencv.ml.CvANN_MLP_TrainParams.CvANN_MLP_TrainParams</a>
+ */
+    public   CvANN_MLP_TrainParams()
+    {
+
+        nativeObj = CvANN_MLP_TrainParams_0();
+
+        return;
+    }
+
+
+    //
+    // C++: TermCriteria CvANN_MLP_TrainParams::term_crit
+    //
+
+    public  TermCriteria get_term_crit()
+    {
+
+        TermCriteria retVal = new TermCriteria(get_term_crit_0(nativeObj));
+
+        return retVal;
+    }
 
 
     //
     // C++: void CvANN_MLP_TrainParams::term_crit
     //
 
-    // Unknown type 'CvTermCriteria' (I), skipping the function
+    public  void set_term_crit(TermCriteria term_crit)
+    {
+
+        set_term_crit_0(nativeObj, term_crit.type, term_crit.maxCount, term_crit.epsilon);
+
+        return;
+    }
 
 
     //
@@ -251,21 +281,9 @@ public class CvANN_MLP_TrainParams {
     }
 
 
-/**
- * The constructors.
- *
- * By default the RPROP algorithm is used:
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/neural_networks.html#cvann-mlp-trainparams-cvann-mlp-trainparams">org.opencv.ml.CvANN_MLP_TrainParams.CvANN_MLP_TrainParams</a>
- */
-public CvANN_MLP_TrainParams() {
-    nativeObj = n_newObj();
-}
-
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -274,6 +292,15 @@ public CvANN_MLP_TrainParams() {
     // native stuff
     //
     static { System.loadLibrary("opencv_java"); }
+
+    // C++:   CvANN_MLP_TrainParams::CvANN_MLP_TrainParams()
+    private static native long CvANN_MLP_TrainParams_0();
+
+    // C++: TermCriteria CvANN_MLP_TrainParams::term_crit
+    private static native double[] get_term_crit_0(long nativeObj);
+
+    // C++: void CvANN_MLP_TrainParams::term_crit
+    private static native void set_term_crit_0(long nativeObj, int term_crit_type, int term_crit_maxCount, double term_crit_epsilon);
 
     // C++: int CvANN_MLP_TrainParams::train_method
     private static native int get_train_method_0(long nativeObj);
@@ -322,7 +349,7 @@ public CvANN_MLP_TrainParams() {
 
     // C++: void CvANN_MLP_TrainParams::rp_dw_max
     private static native void set_rp_dw_max_0(long nativeObj, double rp_dw_max);
-private static native long n_newObj();
+
     // native support for java finalize()
     private static native void delete(long nativeObj);
 
