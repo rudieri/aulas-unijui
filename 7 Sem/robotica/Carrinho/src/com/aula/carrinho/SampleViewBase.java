@@ -33,11 +33,19 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
         Log.i(TAG, "Instantiated new " + this.getClass());
     }
 
-    public int getFrameWidth() {
+    public int getCameraFrameWidth() {
         return mFrameWidth;
     }
 
-    public int getFrameHeight() {
+    public int getCameraFrameHeight() {
+        return mFrameHeight;
+    }
+    
+    public int getRedFrameWidth() {
+        return mFrameWidth;
+    }
+
+    public int getRedFrameHeight() {
         return mFrameHeight;
     }
 
@@ -64,7 +72,7 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
                 }
             }
 
-            params.setPreviewSize(getFrameWidth(), getFrameHeight());
+            params.setPreviewSize(getCameraFrameWidth(), getCameraFrameHeight());
             mCamera.setParameters(params);
             try {
                 mCamera.setPreviewDisplay(null);
@@ -84,25 +92,25 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
         mCamera.getParameters().setPreviewFormat(ImageFormat.RGB_565);
         mCamera.setParameters(mCamera.getParameters());
         SensorManager mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
-        Sensor gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        mSensorManager.registerListener(new SensorEventListener() {
-
-            public void onSensorChanged(SensorEvent event) {
-                System.out.println("Accuracy: " + event.accuracy);
-                System.out.println("Sensor: " + event.sensor);
-                System.out.println("Timestamp: " + event.timestamp);
-                StringBuilder values = new StringBuilder(event.values.length);
-                for (int i = 0; i < event.values.length; i++) {
-                    float f = event.values[i];
-                    values.append(f);
-                }
-                System.out.println("Values: " + values);
-            }
-
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                System.out.println("Sensor: " + sensor + " - Accuracy: " + accuracy);
-            }
-        }, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+//        Sensor gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+//        mSensorManager.registerListener(new SensorEventListener() {
+//
+//            public void onSensorChanged(SensorEvent event) {
+//                System.out.println("Accuracy: " + event.accuracy);
+//                System.out.println("Sensor: " + event.sensor);
+//                System.out.println("Timestamp: " + event.timestamp);
+//                StringBuilder values = new StringBuilder(event.values.length);
+//                for (int i = 0; i < event.values.length; i++) {
+//                    float f = event.values[i];
+//                    values.append(f);
+//                }
+//                System.out.println("Values: " + values);
+//            }
+//
+//            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//                System.out.println("Sensor: " + sensor + " - Accuracy: " + accuracy);
+//            }
+//        }, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         mCamera.setPreviewCallback(new PreviewCallback() {
 
             public void onPreviewFrame(byte[] data, Camera camera) {
@@ -148,7 +156,7 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
             if (bmp != null) {
                 Canvas canvas = mHolder.lockCanvas();
                 if (canvas != null) {
-                    canvas.drawBitmap(bmp, (canvas.getWidth() - getFrameWidth()) / 2, (canvas.getHeight() - getFrameHeight()) / 2, null);
+                    canvas.drawBitmap(bmp, (canvas.getWidth() - getCameraFrameWidth()) / 2, (canvas.getHeight() - getCameraFrameHeight()) / 2, null);
                     mHolder.unlockCanvasAndPost(canvas);
                 }
                 bmp.recycle();

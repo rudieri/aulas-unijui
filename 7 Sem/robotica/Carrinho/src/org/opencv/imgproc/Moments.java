@@ -14,6 +14,19 @@ public class Moments {
 
 
     //
+    // C++:   Moments::Moments()
+    //
+
+    public   Moments()
+    {
+
+        nativeObj = Moments_0();
+
+        return;
+    }
+
+
+    //
     // C++: double Moments::m00
     //
 
@@ -640,7 +653,6 @@ public class Moments {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -649,6 +661,9 @@ public class Moments {
     // native stuff
     //
     static { System.loadLibrary("opencv_java"); }
+
+    // C++:   Moments::Moments()
+    private static native long Moments_0();
 
     // C++: double Moments::m00
     private static native double get_m00_0(long nativeObj);

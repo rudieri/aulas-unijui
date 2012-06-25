@@ -5,9 +5,9 @@
 package org.opencv.highgui;
 
 import java.lang.String;
-import java.util.List;
 import org.opencv.core.Mat;
-import org.opencv.utils.Converters;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfInt;
 
 public class Highgui {
 
@@ -27,13 +27,30 @@ public class Highgui {
             CV_LOAD_IMAGE_ANYCOLOR = 4,
             CV_IMWRITE_JPEG_QUALITY = 1,
             CV_IMWRITE_PNG_COMPRESSION = 16,
+            CV_IMWRITE_PNG_STRATEGY = 17,
+            CV_IMWRITE_PNG_STRATEGY_DEFAULT = 0,
+            CV_IMWRITE_PNG_STRATEGY_FILTERED = 1,
+            CV_IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY = 2,
+            CV_IMWRITE_PNG_STRATEGY_RLE = 3,
+            CV_IMWRITE_PNG_STRATEGY_FIXED = 4,
             CV_IMWRITE_PXM_BINARY = 32,
             CV_CVTIMG_FLIP = 1,
             CV_CVTIMG_SWAP_RB = 2,
             CV_CAP_ANDROID = 1000,
             CV_CAP_XIAPI = 1100,
+            CV_CAP_AVFOUNDATION = 1200,
             CV_CAP_PROP_FRAME_WIDTH = 3,
             CV_CAP_PROP_FRAME_HEIGHT = 4,
+            CV_CAP_PROP_ZOOM = 27,
+            CV_CAP_PROP_FOCUS = 28,
+            CV_CAP_PROP_GUID = 29,
+            CV_CAP_PROP_ISO_SPEED = 30,
+            CV_CAP_PROP_BACKLIGHT = 32,
+            CV_CAP_PROP_PAN = 33,
+            CV_CAP_PROP_TILT = 34,
+            CV_CAP_PROP_ROLL = 35,
+            CV_CAP_PROP_IRIS = 36,
+            CV_CAP_PROP_SETTINGS = 37,
             CV_CAP_PROP_AUTOGRAB = 1024,
             CV_CAP_PROP_PREVIEW_FORMAT = 1026,
             CV_CAP_PROP_XI_DOWNSAMPLING = 400,
@@ -57,12 +74,62 @@ public class Highgui {
             CV_CAP_PROP_XI_AG_MAX_LIMIT = 418,
             CV_CAP_PROP_XI_AEAG_LEVEL = 419,
             CV_CAP_PROP_XI_TIMEOUT = 420,
+            CV_CAP_PROP_ANDROID_FLASH_MODE = 8001,
+            CV_CAP_PROP_ANDROID_FOCUS_MODE = 8002,
+            CV_CAP_PROP_ANDROID_WHITE_BALANCE = 8003,
+            CV_CAP_PROP_ANDROID_ANTIBANDING = 8004,
+            CV_CAP_PROP_ANDROID_FOCAL_LENGTH = 8005,
+            CV_CAP_PROP_ANDROID_FOCUS_DISTANCE_NEAR = 8006,
+            CV_CAP_PROP_ANDROID_FOCUS_DISTANCE_OPTIMAL = 8007,
+            CV_CAP_PROP_ANDROID_FOCUS_DISTANCE_FAR = 8008,
+            CV_CAP_PROP_IOS_DEVICE_FOCUS = 9001,
+            CV_CAP_PROP_IOS_DEVICE_EXPOSURE = 9002,
+            CV_CAP_PROP_IOS_DEVICE_FLASH = 9003,
+            CV_CAP_PROP_IOS_DEVICE_WHITEBALANCE = 9004,
+            CV_CAP_PROP_IOS_DEVICE_TORCH = 9005,
             CV_CAP_ANDROID_COLOR_FRAME_BGR = 0,
             CV_CAP_ANDROID_COLOR_FRAME = CV_CAP_ANDROID_COLOR_FRAME_BGR,
             CV_CAP_ANDROID_GREY_FRAME = 1,
             CV_CAP_ANDROID_COLOR_FRAME_RGB = 2,
             CV_CAP_ANDROID_COLOR_FRAME_BGRA = 3,
-            CV_CAP_ANDROID_COLOR_FRAME_RGBA = 4;
+            CV_CAP_ANDROID_COLOR_FRAME_RGBA = 4,
+            CV_CAP_ANDROID_FLASH_MODE_AUTO = 0,
+            CV_CAP_ANDROID_FLASH_MODE_OFF = 0+1,
+            CV_CAP_ANDROID_FLASH_MODE_ON = 0+2,
+            CV_CAP_ANDROID_FLASH_MODE_RED_EYE = 0+3,
+            CV_CAP_ANDROID_FLASH_MODE_TORCH = 0+4,
+            CV_CAP_ANDROID_FOCUS_MODE_AUTO = 0,
+            CV_CAP_ANDROID_FOCUS_MODE_CONTINUOUS_VIDEO = 0+1,
+            CV_CAP_ANDROID_FOCUS_MODE_EDOF = 0+2,
+            CV_CAP_ANDROID_FOCUS_MODE_FIXED = 0+3,
+            CV_CAP_ANDROID_FOCUS_MODE_INFINITY = 0+4,
+            CV_CAP_ANDROID_FOCUS_MODE_MACRO = 0+5,
+            CV_CAP_ANDROID_WHITE_BALANCE_AUTO = 0,
+            CV_CAP_ANDROID_WHITE_BALANCE_CLOUDY_DAYLIGHT = 0+1,
+            CV_CAP_ANDROID_WHITE_BALANCE_DAYLIGHT = 0+2,
+            CV_CAP_ANDROID_WHITE_BALANCE_FLUORESCENT = 0+3,
+            CV_CAP_ANDROID_WHITE_BALANCE_INCANDESCENT = 0+4,
+            CV_CAP_ANDROID_WHITE_BALANCE_SHADE = 0+5,
+            CV_CAP_ANDROID_WHITE_BALANCE_TWILIGHT = 0+6,
+            CV_CAP_ANDROID_WHITE_BALANCE_WARM_FLUORESCENT = 0+7,
+            CV_CAP_ANDROID_ANTIBANDING_50HZ = 0,
+            CV_CAP_ANDROID_ANTIBANDING_60HZ = 0+1,
+            CV_CAP_ANDROID_ANTIBANDING_AUTO = 0+2,
+            CV_CAP_ANDROID_ANTIBANDING_OFF = 0+3,
+            IMREAD_UNCHANGED = -1,
+            IMREAD_GRAYSCALE = 0,
+            IMREAD_COLOR = 1,
+            IMREAD_ANYDEPTH = 2,
+            IMREAD_ANYCOLOR = 4,
+            IMWRITE_JPEG_QUALITY = 1,
+            IMWRITE_PNG_COMPRESSION = 16,
+            IMWRITE_PNG_STRATEGY = 17,
+            IMWRITE_PNG_STRATEGY_DEFAULT = 0,
+            IMWRITE_PNG_STRATEGY_FILTERED = 1,
+            IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY = 2,
+            IMWRITE_PNG_STRATEGY_RLE = 3,
+            IMWRITE_PNG_STRATEGY_FIXED = 4,
+            IMWRITE_PXM_BINARY = 32;
 
 
     //
@@ -70,18 +137,18 @@ public class Highgui {
     //
 
 /**
- * Reads an image from a buffer in memory.
+ * <p>Reads an image from a buffer in memory.</p>
  *
- * The function reads an image from the specified buffer in the memory.
+ * <p>The function reads an image from the specified buffer in the memory.
  * If the buffer is too short or contains invalid data, the empty matrix/image
- * is returned.
+ * is returned.</p>
  *
- * See "imread" for the list of supported formats and flags description.
+ * <p>See "imread" for the list of supported formats and flags description.</p>
  *
  * @param buf Input array or vector of bytes.
  * @param flags The same flags as in "imread".
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imdecode">org.opencv.highgui.Highgui.imdecode</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imdecode">org.opencv.highgui.Highgui.imdecode</a>
  */
     public static Mat imdecode(Mat buf, int flags)
     {
@@ -93,54 +160,54 @@ public class Highgui {
 
 
     //
-    // C++:  bool imencode(string ext, Mat img, vector_uchar buf, vector_int params = vector<int>())
+    // C++:  bool imencode(string ext, Mat img, vector_uchar& buf, vector_int params = vector<int>())
     //
 
 /**
- * Encodes an image into a memory buffer.
+ * <p>Encodes an image into a memory buffer.</p>
  *
- * The function compresses the image and stores it in the memory buffer that is
+ * <p>The function compresses the image and stores it in the memory buffer that is
  * resized to fit the result.
- * See "imwrite" for the list of supported formats and flags description.
+ * See "imwrite" for the list of supported formats and flags description.</p>
  *
- * Note: "cvEncodeImage" returns single-row matrix of type "CV_8UC1" that
- * contains encoded image as array of bytes.
+ * <p>Note: <code>cvEncodeImage</code> returns single-row matrix of type
+ * <code>CV_8UC1</code> that contains encoded image as array of bytes.</p>
  *
  * @param ext File extension that defines the output format.
  * @param img Image to be written.
  * @param buf Output buffer resized to fit the compressed image.
  * @param params Format-specific parameters. See "imwrite".
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imencode">org.opencv.highgui.Highgui.imencode</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imencode">org.opencv.highgui.Highgui.imencode</a>
  */
-    public static boolean imencode(String ext, Mat img, List<Byte> buf, List<Integer> params)
+    public static boolean imencode(String ext, Mat img, MatOfByte buf, MatOfInt params)
     {
-        Mat buf_mat = Converters.vector_uchar_to_Mat(buf);
-        Mat params_mat = Converters.vector_int_to_Mat(params);
+        Mat buf_mat = buf;
+        Mat params_mat = params;
         boolean retVal = imencode_0(ext, img.nativeObj, buf_mat.nativeObj, params_mat.nativeObj);
 
         return retVal;
     }
 
 /**
- * Encodes an image into a memory buffer.
+ * <p>Encodes an image into a memory buffer.</p>
  *
- * The function compresses the image and stores it in the memory buffer that is
+ * <p>The function compresses the image and stores it in the memory buffer that is
  * resized to fit the result.
- * See "imwrite" for the list of supported formats and flags description.
+ * See "imwrite" for the list of supported formats and flags description.</p>
  *
- * Note: "cvEncodeImage" returns single-row matrix of type "CV_8UC1" that
- * contains encoded image as array of bytes.
+ * <p>Note: <code>cvEncodeImage</code> returns single-row matrix of type
+ * <code>CV_8UC1</code> that contains encoded image as array of bytes.</p>
  *
  * @param ext File extension that defines the output format.
  * @param img Image to be written.
  * @param buf Output buffer resized to fit the compressed image.
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imencode">org.opencv.highgui.Highgui.imencode</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imencode">org.opencv.highgui.Highgui.imencode</a>
  */
-    public static boolean imencode(String ext, Mat img, List<Byte> buf)
+    public static boolean imencode(String ext, Mat img, MatOfByte buf)
     {
-        Mat buf_mat = Converters.vector_uchar_to_Mat(buf);
+        Mat buf_mat = buf;
         boolean retVal = imencode_1(ext, img.nativeObj, buf_mat.nativeObj);
 
         return retVal;
@@ -152,44 +219,54 @@ public class Highgui {
     //
 
 /**
- * Loads an image from a file.
+ * <p>Loads an image from a file.</p>
  *
- * The function "imread" loads an image from the specified file and returns it.
- * If the image cannot be read (because of missing file, improper permissions,
- * unsupported or invalid format), the function returns an empty matrix
- * ("Mat.data==NULL"). Currently, the following file formats are supported:
- *   * Windows bitmaps - "*.bmp, *.dib" (always supported)
- *   * JPEG files - "*.jpeg, *.jpg, *.jpe" (see the *Notes* section)
- *   * JPEG 2000 files - "*.jp2" (see the *Notes* section)
- *   * Portable Network Graphics - "*.png" (see the *Notes* section)
- *   * Portable image format - "*.pbm, *.pgm, *.ppm" (always supported)
- *   * Sun rasters - "*.sr, *.ras" (always supported)
- *   * TIFF files - "*.tiff, *.tif" (see the *Notes* section)
+ * <p>The function <code>imread</code> loads an image from the specified file and
+ * returns it. If the image cannot be read (because of missing file, improper
+ * permissions, unsupported or invalid format), the function returns an empty
+ * matrix (<code>Mat.data==NULL</code>). Currently, the following file formats
+ * are supported:</p>
+ * <ul>
+ *   <li> Windows bitmaps - <code>*.bmp, *.dib</code> (always supported)
+ *   <li> JPEG files - <code>*.jpeg, *.jpg, *.jpe</code> (see the *Notes*
+ * section)
+ *   <li> JPEG 2000 files - <code>*.jp2</code> (see the *Notes* section)
+ *   <li> Portable Network Graphics - <code>*.png</code> (see the *Notes*
+ * section)
+ *   <li> Portable image format - <code>*.pbm, *.pgm, *.ppm</code> (always
+ * supported)
+ *   <li> Sun rasters - <code>*.sr, *.ras</code> (always supported)
+ *   <li> TIFF files - <code>*.tiff, *.tif</code> (see the *Notes* section)
+ * </ul>
  *
- * Note:
- *   * The function determines the type of an image by the content, not by the
- * file extension.
- *   * On Microsoft Windows* OS and MacOSX*, the codecs shipped with an OpenCV
- * image (libjpeg, libpng, libtiff, and libjasper) are used by default. So,
- * OpenCV can always read JPEGs, PNGs, and TIFFs. On MacOSX, there is also an
- * option to use native MacOSX image readers. But beware that currently these
+ * <p>Note:</p>
+ * <ul>
+ *   <li> The function determines the type of an image by the content, not by
+ * the file extension.
+ *   <li> On Microsoft Windows* OS and MacOSX*, the codecs shipped with an
+ * OpenCV image (libjpeg, libpng, libtiff, and libjasper) are used by default.
+ * So, OpenCV can always read JPEGs, PNGs, and TIFFs. On MacOSX, there is also
+ * an option to use native MacOSX image readers. But beware that currently these
  * native image loaders give images with different pixel values because of the
  * color management embedded into MacOSX.
- *   * On Linux*, BSD flavors and other Unix-like open-source operating systems,
- * OpenCV looks for codecs supplied with an OS image. Install the relevant
- * packages (do not forget the development files, for example, "libjpeg-dev", in
- * Debian* and Ubuntu*) to get the codec support or turn on the
- * "OPENCV_BUILD_3RDPARTY_LIBS" flag in CMake.
+ *   <li> On Linux*, BSD flavors and other Unix-like open-source operating
+ * systems, OpenCV looks for codecs supplied with an OS image. Install the
+ * relevant packages (do not forget the development files, for example,
+ * "libjpeg-dev", in Debian* and Ubuntu*) to get the codec support or turn on
+ * the <code>OPENCV_BUILD_3RDPARTY_LIBS</code> flag in CMake.
+ * </ul>
  *
  * @param filename Name of file to be loaded.
  * @param flags Flags specifying the color type of a loaded image:
- *   * >0 Return a 3-channel color image
- *   * =0 Return a grayscale image
- *   * <0 Return the loaded image as is. Note that in the current implementation
- * the alpha channel, if any, is stripped from the output image. For example, a
- * 4-channel RGBA image is loaded as RGB if flags >= 0.
+ * <ul>
+ *   <li> >0 Return a 3-channel color image
+ *   <li> =0 Return a grayscale image
+ *   <li> <0 Return the loaded image as is. Note that in the current
+ * implementation the alpha channel, if any, is stripped from the output image.
+ * For example, a 4-channel RGBA image is loaded as RGB if <em>flags >= 0</em>.
+ * </ul>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imread">org.opencv.highgui.Highgui.imread</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imread">org.opencv.highgui.Highgui.imread</a>
  */
     public static Mat imread(String filename, int flags)
     {
@@ -200,38 +277,46 @@ public class Highgui {
     }
 
 /**
- * Loads an image from a file.
+ * <p>Loads an image from a file.</p>
  *
- * The function "imread" loads an image from the specified file and returns it.
- * If the image cannot be read (because of missing file, improper permissions,
- * unsupported or invalid format), the function returns an empty matrix
- * ("Mat.data==NULL"). Currently, the following file formats are supported:
- *   * Windows bitmaps - "*.bmp, *.dib" (always supported)
- *   * JPEG files - "*.jpeg, *.jpg, *.jpe" (see the *Notes* section)
- *   * JPEG 2000 files - "*.jp2" (see the *Notes* section)
- *   * Portable Network Graphics - "*.png" (see the *Notes* section)
- *   * Portable image format - "*.pbm, *.pgm, *.ppm" (always supported)
- *   * Sun rasters - "*.sr, *.ras" (always supported)
- *   * TIFF files - "*.tiff, *.tif" (see the *Notes* section)
+ * <p>The function <code>imread</code> loads an image from the specified file and
+ * returns it. If the image cannot be read (because of missing file, improper
+ * permissions, unsupported or invalid format), the function returns an empty
+ * matrix (<code>Mat.data==NULL</code>). Currently, the following file formats
+ * are supported:</p>
+ * <ul>
+ *   <li> Windows bitmaps - <code>*.bmp, *.dib</code> (always supported)
+ *   <li> JPEG files - <code>*.jpeg, *.jpg, *.jpe</code> (see the *Notes*
+ * section)
+ *   <li> JPEG 2000 files - <code>*.jp2</code> (see the *Notes* section)
+ *   <li> Portable Network Graphics - <code>*.png</code> (see the *Notes*
+ * section)
+ *   <li> Portable image format - <code>*.pbm, *.pgm, *.ppm</code> (always
+ * supported)
+ *   <li> Sun rasters - <code>*.sr, *.ras</code> (always supported)
+ *   <li> TIFF files - <code>*.tiff, *.tif</code> (see the *Notes* section)
+ * </ul>
  *
- * Note:
- *   * The function determines the type of an image by the content, not by the
- * file extension.
- *   * On Microsoft Windows* OS and MacOSX*, the codecs shipped with an OpenCV
- * image (libjpeg, libpng, libtiff, and libjasper) are used by default. So,
- * OpenCV can always read JPEGs, PNGs, and TIFFs. On MacOSX, there is also an
- * option to use native MacOSX image readers. But beware that currently these
+ * <p>Note:</p>
+ * <ul>
+ *   <li> The function determines the type of an image by the content, not by
+ * the file extension.
+ *   <li> On Microsoft Windows* OS and MacOSX*, the codecs shipped with an
+ * OpenCV image (libjpeg, libpng, libtiff, and libjasper) are used by default.
+ * So, OpenCV can always read JPEGs, PNGs, and TIFFs. On MacOSX, there is also
+ * an option to use native MacOSX image readers. But beware that currently these
  * native image loaders give images with different pixel values because of the
  * color management embedded into MacOSX.
- *   * On Linux*, BSD flavors and other Unix-like open-source operating systems,
- * OpenCV looks for codecs supplied with an OS image. Install the relevant
- * packages (do not forget the development files, for example, "libjpeg-dev", in
- * Debian* and Ubuntu*) to get the codec support or turn on the
- * "OPENCV_BUILD_3RDPARTY_LIBS" flag in CMake.
+ *   <li> On Linux*, BSD flavors and other Unix-like open-source operating
+ * systems, OpenCV looks for codecs supplied with an OS image. Install the
+ * relevant packages (do not forget the development files, for example,
+ * "libjpeg-dev", in Debian* and Ubuntu*) to get the codec support or turn on
+ * the <code>OPENCV_BUILD_3RDPARTY_LIBS</code> flag in CMake.
+ * </ul>
  *
  * @param filename Name of file to be loaded.
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imread">org.opencv.highgui.Highgui.imread</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imread">org.opencv.highgui.Highgui.imread</a>
  */
     public static Mat imread(String filename)
     {
@@ -247,54 +332,72 @@ public class Highgui {
     //
 
 /**
- * Saves an image to a specified file.
+ * <p>Saves an image to a specified file.</p>
  *
- * The function "imwrite" saves the image to the specified file. The image
- * format is chosen based on the "filename" extension (see "imread" for the list
- * of extensions). Only 8-bit (or 16-bit in case of PNG, JPEG 2000, and TIFF)
- * single-channel or 3-channel (with 'BGR' channel order) images can be saved
- * using this function. If the format, depth or channel order is different, use
- * "Mat.convertTo", and "cvtColor" to convert it before saving. Or, use the
- * universal XML I/O functions to save the image to XML or YAML format.
+ * <p>The function <code>imwrite</code> saves the image to the specified file. The
+ * image format is chosen based on the <code>filename</code> extension (see
+ * "imread" for the list of extensions). Only 8-bit (or 16-bit in case of PNG,
+ * JPEG 2000, and TIFF) single-channel or 3-channel (with 'BGR' channel order)
+ * images can be saved using this function. If the format, depth or channel
+ * order is different, use "Mat.convertTo", and "cvtColor" to convert it before
+ * saving. Or, use the universal XML I/O functions to save the image to XML or
+ * YAML format.</p>
+ *
+ * <p>It is possible to store PNG images with an alpha channel using this function.
+ * To do this, create 8-bit (or 16-bit) 4-channel image BGRA, where the alpha
+ * channel goes last. Fully transparent pixels should have alpha set to 0, fully
+ * opaque pixels should have alpha set to 255/65535. The sample below shows how
+ * to create such a BGRA image and store to PNG file. It also demonstrates how
+ * to set custom compression parameters</p>
  *
  * @param filename Name of the file.
  * @param img a img
- * @param params Format-specific save parameters encoded as pairs "paramId_1,
- * paramValue_1, paramId_2, paramValue_2,...". The following parameters are
- * currently supported:
- *   * For JPEG, it can be a quality ("CV_IMWRITE_JPEG_QUALITY") from 0 to 100
- * (the higher is the better). Default value is 95.
- *   * For PNG, it can be the compression level ("CV_IMWRITE_PNG_COMPRESSION")
+ * @param params Format-specific save parameters encoded as pairs
+ * <code>paramId_1, paramValue_1, paramId_2, paramValue_2,...</code>. The
+ * following parameters are currently supported:
+ * <ul>
+ *   <li> For JPEG, it can be a quality (<code>CV_IMWRITE_JPEG_QUALITY</code>)
+ * from 0 to 100 (the higher is the better). Default value is 95.
+ *   <li> For PNG, it can be the compression level (<code>CV_IMWRITE_PNG_COMPRESSION</code>)
  * from 0 to 9. A higher value means a smaller size and longer compression time.
  * Default value is 3.
- *   * For PPM, PGM, or PBM, it can be a binary format flag ("CV_IMWRITE_PXM_BINARY"),
+ *   <li> For PPM, PGM, or PBM, it can be a binary format flag (<code>CV_IMWRITE_PXM_BINARY</code>),
  * 0 or 1. Default value is 1.
+ * </ul>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imwrite">org.opencv.highgui.Highgui.imwrite</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imwrite">org.opencv.highgui.Highgui.imwrite</a>
  */
-    public static boolean imwrite(String filename, Mat img, List<Integer> params)
+    public static boolean imwrite(String filename, Mat img, MatOfInt params)
     {
-        Mat params_mat = Converters.vector_int_to_Mat(params);
+        Mat params_mat = params;
         boolean retVal = imwrite_0(filename, img.nativeObj, params_mat.nativeObj);
 
         return retVal;
     }
 
 /**
- * Saves an image to a specified file.
+ * <p>Saves an image to a specified file.</p>
  *
- * The function "imwrite" saves the image to the specified file. The image
- * format is chosen based on the "filename" extension (see "imread" for the list
- * of extensions). Only 8-bit (or 16-bit in case of PNG, JPEG 2000, and TIFF)
- * single-channel or 3-channel (with 'BGR' channel order) images can be saved
- * using this function. If the format, depth or channel order is different, use
- * "Mat.convertTo", and "cvtColor" to convert it before saving. Or, use the
- * universal XML I/O functions to save the image to XML or YAML format.
+ * <p>The function <code>imwrite</code> saves the image to the specified file. The
+ * image format is chosen based on the <code>filename</code> extension (see
+ * "imread" for the list of extensions). Only 8-bit (or 16-bit in case of PNG,
+ * JPEG 2000, and TIFF) single-channel or 3-channel (with 'BGR' channel order)
+ * images can be saved using this function. If the format, depth or channel
+ * order is different, use "Mat.convertTo", and "cvtColor" to convert it before
+ * saving. Or, use the universal XML I/O functions to save the image to XML or
+ * YAML format.</p>
+ *
+ * <p>It is possible to store PNG images with an alpha channel using this function.
+ * To do this, create 8-bit (or 16-bit) 4-channel image BGRA, where the alpha
+ * channel goes last. Fully transparent pixels should have alpha set to 0, fully
+ * opaque pixels should have alpha set to 255/65535. The sample below shows how
+ * to create such a BGRA image and store to PNG file. It also demonstrates how
+ * to set custom compression parameters</p>
  *
  * @param filename Name of the file.
  * @param img a img
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#imwrite">org.opencv.highgui.Highgui.imwrite</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#imwrite">org.opencv.highgui.Highgui.imwrite</a>
  */
     public static boolean imwrite(String filename, Mat img)
     {
@@ -315,7 +418,7 @@ public class Highgui {
     // C++:  Mat imdecode(Mat buf, int flags)
     private static native long imdecode_0(long buf_nativeObj, int flags);
 
-    // C++:  bool imencode(string ext, Mat img, vector_uchar buf, vector_int params = vector<int>())
+    // C++:  bool imencode(string ext, Mat img, vector_uchar& buf, vector_int params = vector<int>())
     private static native boolean imencode_0(String ext, long img_nativeObj, long buf_mat_nativeObj, long params_mat_nativeObj);
     private static native boolean imencode_1(String ext, long img_nativeObj, long buf_mat_nativeObj);
 

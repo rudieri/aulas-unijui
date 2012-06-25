@@ -6,6 +6,10 @@ package org.opencv.imgproc;
 
 import java.util.List;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat4;
+import org.opencv.core.MatOfFloat6;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.utils.Converters;
@@ -139,9 +143,9 @@ public class Subdiv2D {
     // C++:  void Subdiv2D::getEdgeList(vector_Vec4f& edgeList)
     //
 
-    public  void getEdgeList(Mat edgeList)
+    public  void getEdgeList(MatOfFloat4 edgeList)
     {
-        Mat edgeList_mat = new Mat();
+        Mat edgeList_mat = edgeList;
         getEdgeList_0(nativeObj, edgeList_mat.nativeObj);
 
         return;
@@ -152,9 +156,9 @@ public class Subdiv2D {
     // C++:  void Subdiv2D::getTriangleList(vector_Vec6f& triangleList)
     //
 
-    public  void getTriangleList(Mat triangleList)
+    public  void getTriangleList(MatOfFloat6 triangleList)
     {
-        Mat triangleList_mat = new Mat();
+        Mat triangleList_mat = triangleList;
         getTriangleList_0(nativeObj, triangleList_mat.nativeObj);
 
         return;
@@ -186,14 +190,13 @@ public class Subdiv2D {
     // C++:  void Subdiv2D::getVoronoiFacetList(vector_int idx, vector_vector_Point2f& facetList, vector_Point2f& facetCenters)
     //
 
-    public  void getVoronoiFacetList(List<Integer> idx, List<List<Point>> facetList, List<Point> facetCenters)
+    public  void getVoronoiFacetList(MatOfInt idx, List<MatOfPoint2f> facetList, MatOfPoint2f facetCenters)
     {
-        Mat idx_mat = Converters.vector_int_to_Mat(idx);
+        Mat idx_mat = idx;
         Mat facetList_mat = new Mat();
-        Mat facetCenters_mat = new Mat();
+        Mat facetCenters_mat = facetCenters;
         getVoronoiFacetList_0(nativeObj, idx_mat.nativeObj, facetList_mat.nativeObj, facetCenters_mat.nativeObj);
         Converters.Mat_to_vector_vector_Point2f(facetList_mat, facetList);
-        Converters.Mat_to_vector_Point2f(facetCenters_mat, facetCenters);
         return;
     }
 
@@ -228,9 +231,9 @@ public class Subdiv2D {
     // C++:  void Subdiv2D::insert(vector_Point2f ptvec)
     //
 
-    public  void insert(List<Point> ptvec)
+    public  void insert(MatOfPoint2f ptvec)
     {
-        Mat ptvec_mat = Converters.vector_Point2f_to_Mat(ptvec);
+        Mat ptvec_mat = ptvec;
         insert_1(nativeObj, ptvec_mat.nativeObj);
 
         return;
@@ -294,7 +297,6 @@ public class Subdiv2D {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 

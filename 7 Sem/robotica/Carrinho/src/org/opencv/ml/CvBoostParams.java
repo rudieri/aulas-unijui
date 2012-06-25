@@ -8,21 +8,44 @@ package org.opencv.ml;
 
 // C++: class CvBoostParams
 /**
- * Boosting training parameters.
+ * <p>Boosting training parameters.</p>
  *
- * The structure is derived from "CvDTreeParams" but not all of the decision
+ * <p>There is one structure member that you can set directly:</p>
+ *
+ * <p>The structure is derived from "CvDTreeParams" but not all of the decision
  * tree parameters are supported. In particular, cross-validation is not
- * supported.
+ * supported.</p>
  *
- * All parameters are public. You can initialize them by a constructor and then
- * override some of them directly if you want.
+ * <p>All parameters are public. You can initialize them by a constructor and then
+ * override some of them directly if you want.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/boosting.html#cvboostparams">org.opencv.ml.CvBoostParams</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/boosting.html#cvboostparams">org.opencv.ml.CvBoostParams : public CvDTreeParams</a>
  */
-public class CvBoostParams {
+public class CvBoostParams extends CvDTreeParams {
 
-    protected final long nativeObj;
-    protected CvBoostParams(long addr) { nativeObj = addr; }
+    protected CvBoostParams(long addr) { super(addr); }
+
+
+    //
+    // C++:   CvBoostParams::CvBoostParams()
+    //
+
+/**
+ * <p>The constructors.</p>
+ *
+ * <p>See "CvDTreeParams.CvDTreeParams" for description of other parameters.</p>
+ *
+ * <p>Default parameters are:</p>
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/boosting.html#cvboostparams-cvboostparams">org.opencv.ml.CvBoostParams.CvBoostParams</a>
+ */
+    public   CvBoostParams()
+    {
+
+        super( CvBoostParams_0() );
+
+        return;
+    }
 
 
     //
@@ -129,25 +152,9 @@ public class CvBoostParams {
     }
 
 
-/**
- * The constructors.
- *
- * See "CvDTreeParams.CvDTreeParams" for description of other parameters.
- *
- * Also there is one structure member that you can set directly:
- *
- * Default parameters are:
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/boosting.html#cvboostparams-cvboostparams">org.opencv.ml.CvBoostParams.CvBoostParams</a>
- */
-public CvBoostParams() {
-    nativeObj = n_newObj();
-}
-
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -156,6 +163,9 @@ public CvBoostParams() {
     // native stuff
     //
     static { System.loadLibrary("opencv_java"); }
+
+    // C++:   CvBoostParams::CvBoostParams()
+    private static native long CvBoostParams_0();
 
     // C++: int CvBoostParams::boost_type
     private static native int get_boost_type_0(long nativeObj);
@@ -180,7 +190,7 @@ public CvBoostParams() {
 
     // C++: void CvBoostParams::weight_trim_rate
     private static native void set_weight_trim_rate_0(long nativeObj, double weight_trim_rate);
-private static native long n_newObj();
+
     // native support for java finalize()
     private static native void delete(long nativeObj);
 

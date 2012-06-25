@@ -8,14 +8,14 @@ import org.opencv.core.Size;
 
 // C++: class VideoCapture
 /**
- * Class for video capturing from video files or cameras.
+ * <p>Class for video capturing from video files or cameras.
  * The class provides C++ API for capturing video from cameras or for reading
- * video files. Here is how the class can be used:
+ * video files. Here is how the class can be used:</p>
  *
- * Note: In C API the black-box structure "CvCapture" is used instead of
- * "VideoCapture".
+ * <p>Note: In C API the black-box structure <code>CvCapture</code> is used instead
+ * of <code>VideoCapture</code>.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture">org.opencv.highgui.VideoCapture</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture">org.opencv.highgui.VideoCapture</a>
  */
 public class VideoCapture {
 
@@ -30,13 +30,14 @@ public class VideoCapture {
     //
 
 /**
- * VideoCapture constructors.
+ * <p>VideoCapture constructors.</p>
  *
- * Note: In C API, when you finished working with video, release "CvCapture"
- * structure with "cvReleaseCapture()", or use "Ptr<CvCapture>" that calls
- * "cvReleaseCapture()" automatically in the destructor.
+ * <p>Note: In C API, when you finished working with video, release
+ * <code>CvCapture</code> structure with <code>cvReleaseCapture()</code>, or use
+ * <code>Ptr<CvCapture></code> that calls <code>cvReleaseCapture()</code>
+ * automatically in the destructor.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-videocapture">org.opencv.highgui.VideoCapture.VideoCapture</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-videocapture">org.opencv.highgui.VideoCapture.VideoCapture</a>
  */
     public VideoCapture()
     {
@@ -51,16 +52,17 @@ public class VideoCapture {
     //
 
 /**
- * VideoCapture constructors.
+ * <p>VideoCapture constructors.</p>
  *
- * Note: In C API, when you finished working with video, release "CvCapture"
- * structure with "cvReleaseCapture()", or use "Ptr<CvCapture>" that calls
- * "cvReleaseCapture()" automatically in the destructor.
+ * <p>Note: In C API, when you finished working with video, release
+ * <code>CvCapture</code> structure with <code>cvReleaseCapture()</code>, or use
+ * <code>Ptr<CvCapture></code> that calls <code>cvReleaseCapture()</code>
+ * automatically in the destructor.</p>
  *
  * @param device id of the opened video capturing device (i.e. a camera index).
  * If there is a single camera connected, just pass 0.
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-videocapture">org.opencv.highgui.VideoCapture.VideoCapture</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-videocapture">org.opencv.highgui.VideoCapture.VideoCapture</a>
  */
     public VideoCapture(int device)
     {
@@ -112,24 +114,26 @@ public class VideoCapture {
     //
 
 /**
- * Grabs the next frame from video file or capturing device.
+ * <p>Grabs the next frame from video file or capturing device.</p>
  *
- * The methods/functions grab the next frame from video file or camera and
- * return true (non-zero) in the case of success.
+ * <p>The methods/functions grab the next frame from video file or camera and
+ * return true (non-zero) in the case of success.</p>
  *
- * The primary use of the function is in multi-camera environments, especially
+ * <p>The primary use of the function is in multi-camera environments, especially
  * when the cameras do not have hardware synchronization. That is, you call
- * "VideoCapture.grab()" for each camera and after that call the slower method
- * "VideoCapture.retrieve()" to decode and get frame from each camera. This way
- * the overhead on demosaicing or motion jpeg decompression etc. is eliminated
- * and the retrieved frames from different cameras will be closer in time.
+ * <code>VideoCapture.grab()</code> for each camera and after that call the
+ * slower method <code>VideoCapture.retrieve()</code> to decode and get frame
+ * from each camera. This way the overhead on demosaicing or motion jpeg
+ * decompression etc. is eliminated and the retrieved frames from different
+ * cameras will be closer in time.</p>
  *
- * Also, when a connected camera is multi-head (for example, a stereo camera or
+ * <p>Also, when a connected camera is multi-head (for example, a stereo camera or
  * a Kinect device), the correct way of retrieving data from it is to call
  * "VideoCapture.grab" first and then call "VideoCapture.retrieve" one or more
- * times with different values of the "channel" parameter. See https://code.ros.org/svn/opencv/trunk/opencv/samples/cpp/kinect_maps.cpp
+ * times with different values of the <code>channel</code> parameter. See
+ * http://code.opencv.org/svn/opencv/trunk/opencv/samples/cpp/kinect_maps.cpp</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-grab">org.opencv.highgui.VideoCapture.grab</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-grab">org.opencv.highgui.VideoCapture.grab</a>
  */
     public boolean grab()
     {
@@ -144,12 +148,12 @@ public class VideoCapture {
     //
 
 /**
- * Returns true if video capturing has been initialized already.
+ * <p>Returns true if video capturing has been initialized already.</p>
  *
- * If the previous call to "VideoCapture" constructor or "VideoCapture.open"
- * succeeded, the method returns true.
+ * <p>If the previous call to <code>VideoCapture</code> constructor or
+ * <code>VideoCapture.open</code> succeeded, the method returns true.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-isopened">org.opencv.highgui.VideoCapture.isOpened</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-isopened">org.opencv.highgui.VideoCapture.isOpened</a>
  */
     public boolean isOpened()
     {
@@ -164,14 +168,14 @@ public class VideoCapture {
     //
 
 /**
- * Open video file or a capturing device for video capturing
+ * <p>Open video file or a capturing device for video capturing</p>
  *
- * The methods first call "VideoCapture.release" to close the already opened
- * file or camera.
+ * <p>The methods first call "VideoCapture.release" to close the already opened
+ * file or camera.</p>
  *
  * @param device id of the opened video capturing device (i.e. a camera index).
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-open">org.opencv.highgui.VideoCapture.open</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-open">org.opencv.highgui.VideoCapture.open</a>
  */
     public boolean open(int device)
     {
@@ -186,23 +190,23 @@ public class VideoCapture {
     //
 
 /**
- * Grabs, decodes and returns the next video frame.
+ * <p>Grabs, decodes and returns the next video frame.</p>
  *
- * The methods/functions combine "VideoCapture.grab" and "VideoCapture.retrieve"
+ * <p>The methods/functions combine "VideoCapture.grab" and "VideoCapture.retrieve"
  * in one call. This is the most convenient method for reading video files or
- * capturing data from decode and retruen the just grabbed frame. If no frames
+ * capturing data from decode and return the just grabbed frame. If no frames
  * has been grabbed (camera has been disconnected, or there are no more frames
  * in video file), the methods return false and the functions return NULL
- * pointer.
+ * pointer.</p>
  *
- * Note: OpenCV 1.x functions "cvRetrieveFrame" and "cv.RetrieveFrame" return
- * image stored inside the video capturing structure. It is not allowed to
- * modify or release the image! You can copy the frame using "cvCloneImage" and
- * then do whatever you want with the copy.
+ * <p>Note: OpenCV 1.x functions <code>cvRetrieveFrame</code> and <code>cv.RetrieveFrame</code>
+ * return image stored inside the video capturing structure. It is not allowed
+ * to modify or release the image! You can copy the frame using "cvCloneImage"
+ * and then do whatever you want with the copy.</p>
  *
  * @param image a image
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-read">org.opencv.highgui.VideoCapture.read</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-read">org.opencv.highgui.VideoCapture.read</a>
  */
     public boolean read(Mat image)
     {
@@ -217,14 +221,15 @@ public class VideoCapture {
     //
 
 /**
- * Closes video file or capturing device.
+ * <p>Closes video file or capturing device.</p>
  *
- * The methods are automatically called by subsequent "VideoCapture.open" and
- * by "VideoCapture" destructor.
+ * <p>The methods are automatically called by subsequent "VideoCapture.open" and
+ * by <code>VideoCapture</code> destructor.</p>
  *
- * The C function also deallocates memory and clears "*capture" pointer.
+ * <p>The C function also deallocates memory and clears <code>*capture</code>
+ * pointer.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-release">org.opencv.highgui.VideoCapture.release</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-release">org.opencv.highgui.VideoCapture.release</a>
  */
     public void release()
     {
@@ -239,22 +244,22 @@ public class VideoCapture {
     //
 
 /**
- * Decodes and returns the grabbed video frame.
+ * <p>Decodes and returns the grabbed video frame.</p>
  *
- * The methods/functions decode and retruen the just grabbed frame. If no frames
+ * <p>The methods/functions decode and return the just grabbed frame. If no frames
  * has been grabbed (camera has been disconnected, or there are no more frames
  * in video file), the methods return false and the functions return NULL
- * pointer.
+ * pointer.</p>
  *
- * Note: OpenCV 1.x functions "cvRetrieveFrame" and "cv.RetrieveFrame" return
- * image stored inside the video capturing structure. It is not allowed to
- * modify or release the image! You can copy the frame using "cvCloneImage" and
- * then do whatever you want with the copy.
+ * <p>Note: OpenCV 1.x functions <code>cvRetrieveFrame</code> and <code>cv.RetrieveFrame</code>
+ * return image stored inside the video capturing structure. It is not allowed
+ * to modify or release the image! You can copy the frame using "cvCloneImage"
+ * and then do whatever you want with the copy.</p>
  *
  * @param image a image
  * @param channel a channel
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-retrieve">org.opencv.highgui.VideoCapture.retrieve</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-retrieve">org.opencv.highgui.VideoCapture.retrieve</a>
  */
     public boolean retrieve(Mat image, int channel)
     {
@@ -265,21 +270,21 @@ public class VideoCapture {
     }
 
 /**
- * Decodes and returns the grabbed video frame.
+ * <p>Decodes and returns the grabbed video frame.</p>
  *
- * The methods/functions decode and retruen the just grabbed frame. If no frames
+ * <p>The methods/functions decode and return the just grabbed frame. If no frames
  * has been grabbed (camera has been disconnected, or there are no more frames
  * in video file), the methods return false and the functions return NULL
- * pointer.
+ * pointer.</p>
  *
- * Note: OpenCV 1.x functions "cvRetrieveFrame" and "cv.RetrieveFrame" return
- * image stored inside the video capturing structure. It is not allowed to
- * modify or release the image! You can copy the frame using "cvCloneImage" and
- * then do whatever you want with the copy.
+ * <p>Note: OpenCV 1.x functions <code>cvRetrieveFrame</code> and <code>cv.RetrieveFrame</code>
+ * return image stored inside the video capturing structure. It is not allowed
+ * to modify or release the image! You can copy the frame using "cvCloneImage"
+ * and then do whatever you want with the copy.</p>
  *
  * @param image a image
  *
- * @see <a href="http://opencv.itseez.com/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-retrieve">org.opencv.highgui.VideoCapture.retrieve</a>
+ * @see <a href="http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-retrieve">org.opencv.highgui.VideoCapture.retrieve</a>
  */
     public boolean retrieve(Mat image)
     {

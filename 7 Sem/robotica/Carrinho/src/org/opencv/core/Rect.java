@@ -1,43 +1,48 @@
 package org.opencv.core;
 
 /**
- * Template class for 2D rectangles, described by the following parameters:
- *   * Coordinates of the top-left corner. This is a default interpretation of
- * "Rect_.x" and "Rect_.y" in OpenCV. Though, in your algorithms you may count
- * "x" and "y" from the bottom-left corner.
- *   * Rectangle width and height.
+ * <p>Template class for 2D rectangles, described by the following parameters:</p>
+ * <ul>
+ *   <li> Coordinates of the top-left corner. This is a default interpretation
+ * of <code>Rect_.x</code> and <code>Rect_.y</code> in OpenCV. Though, in your
+ * algorithms you may count <code>x</code> and <code>y</code> from the
+ * bottom-left corner.
+ *   <li> Rectangle width and height.
+ * </ul>
  *
- * OpenCV typically assumes that the top and left boundary of the rectangle are
+ * <p>OpenCV typically assumes that the top and left boundary of the rectangle are
  * inclusive, while the right and bottom boundaries are not. For example, the
- * method "Rect_.contains" returns "true" if
+ * method <code>Rect_.contains</code> returns <code>true</code> if</p>
  *
- * .. math
+ * <p><em>x <= pt.x < x+width,
+ * y <= pt.y < y+height</em></p>
  *
- * x leq pt.x < x+width, y leq pt.y < y+height
+ * <p>Virtually every loop over an image ROI in OpenCV (where ROI is specified by
+ * <code>Rect_<int></code>) is implemented as:</p>
  *
- * Virtually every loop over an image ROI in OpenCV (where ROI is specified by
- * "Rect_<int>") is implemented as:
+ * <p>In addition to the class members, the following operations on rectangles are
+ * implemented:</p>
+ * <ul>
+ *   <li> <em>rect = rect +- point</em> (shifting a rectangle by a certain
+ * offset)
+ *   <li> <em>rect = rect +- size</em> (expanding or shrinking a rectangle by a
+ * certain amount)
+ *   <li> <code>rect += point, rect -= point, rect += size, rect -= size</code>
+ * (augmenting operations)
+ *   <li> <code>rect = rect1 & rect2</code> (rectangle intersection)
+ *   <li> <code>rect = rect1 | rect2</code> (minimum area rectangle containing
+ * <code>rect2</code> and <code>rect3</code>)
+ *   <li> <code>rect &= rect1, rect |= rect1</code> (and the corresponding
+ * augmenting operations)
+ *   <li> <code>rect == rect1, rect != rect1</code> (rectangle comparison)
+ * </ul>
  *
- * In addition to the class members, the following operations on rectangles are
- * implemented:
- *   * rect = rect +- point (shifting a rectangle by a certain offset)
- *   * rect = rect +- size (expanding or shrinking a rectangle by a certain
- * amount)
- *   * "rect += point, rect -= point, rect += size, rect -= size" (augmenting
- * operations)
- *   * "rect = rect1 & rect2" (rectangle intersection)
- *   * "rect = rect1 | rect2" (minimum area rectangle containing "rect2" and
- * "rect3")
- *   * "rect &= rect1, rect |= rect1" (and the corresponding augmenting
- * operations)
- *   * "rect == rect1, rect != rect1" (rectangle comparison)
+ * <p>This is an example how the partial ordering on rectangles can be established
+ * (rect1 <em>subseteq</em> rect2):</p>
  *
- * This is an example how the partial ordering on rectangles can be established
- * (rect1 subseteq rect2):
+ * <p>For your convenience, the <code>Rect_<></code> alias is available:</p>
  *
- * For your convenience, the "Rect_<>" alias is available:
- *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#rect">org.opencv.core.Rect_</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#rect">org.opencv.core.Rect_</a>
  */
 public class Rect {
 

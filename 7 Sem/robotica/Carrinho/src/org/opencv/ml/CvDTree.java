@@ -8,15 +8,14 @@ import org.opencv.core.Mat;
 
 // C++: class CvDTree
 /**
- * The class implements a decision tree as described in the beginning of this
- * section.
+ * <p>The class implements a decision tree as described in the beginning of this
+ * section.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree">org.opencv.ml.CvDTree</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/decision_trees.html#cvdtree">org.opencv.ml.CvDTree : public CvStatModel</a>
  */
-public class CvDTree {
+public class CvDTree extends CvStatModel {
 
-    protected final long nativeObj;
-    protected CvDTree(long addr) { nativeObj = addr; }
+    protected CvDTree(long addr) { super(addr); }
 
 
     //
@@ -26,7 +25,7 @@ public class CvDTree {
     public   CvDTree()
     {
 
-        nativeObj = CvDTree_0();
+        super( CvDTree_0() );
 
         return;
     }
@@ -50,9 +49,9 @@ public class CvDTree {
     //
 
 /**
- * Returns the variable importance array.
+ * <p>Returns the variable importance array.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-getvarimportance">org.opencv.ml.CvDTree.getVarImportance</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/decision_trees.html#cvdtree-getvarimportance">org.opencv.ml.CvDTree.getVarImportance</a>
  */
     public  Mat getVarImportance()
     {
@@ -75,23 +74,29 @@ public class CvDTree {
     //
 
 /**
- * Trains a decision tree.
+ * <p>Trains a decision tree.</p>
  *
- * There are four "train" methods in "CvDTree":
- *   * The first two methods follow the generic "CvStatModel.train"
+ * <p>There are four <code>train</code> methods in "CvDTree":</p>
+ * <ul>
+ *   <li> The first two methods follow the generic "CvStatModel.train"
  * conventions. It is the most complete form. Both data layouts
- * ("tflag=CV_ROW_SAMPLE" and "tflag=CV_COL_SAMPLE") are supported, as well as
- * sample and variable subsets, missing measurements, arbitrary combinations of
- * input and output variable types, and so on. The last parameter contains all
- * of the necessary training parameters (see the "CvDTreeParams" description).
- *   * The third method uses "CvMLData" to pass training data to a decision
+ * (<code>tflag=CV_ROW_SAMPLE</code> and <code>tflag=CV_COL_SAMPLE</code>) are
+ * supported, as well as sample and variable subsets, missing measurements,
+ * arbitrary combinations of input and output variable types, and so on. The
+ * last parameter contains all of the necessary training parameters (see the
+ * "CvDTreeParams" description).
+ *   <li> The third method uses "CvMLData" to pass training data to a decision
  * tree.
- *   * The last method "train" is mostly used for building tree ensembles. It
- * takes the pre-constructed "CvDTreeTrainData" instance and an optional subset
- * of the training set. The indices in "subsampleIdx" are counted relatively to
- * the "_sample_idx", passed to the "CvDTreeTrainData" constructor. For example,
- * if "_sample_idx=[1, 5, 7, 100]", then "subsampleIdx=[0,3]" means that the
- * samples "[1, 100]" of the original training set are used.
+ *   <li> The last method <code>train</code> is mostly used for building tree
+ * ensembles. It takes the pre-constructed "CvDTreeTrainData" instance and an
+ * optional subset of the training set. The indices in <code>subsampleIdx</code>
+ * are counted relatively to the <code>_sample_idx</code>, passed to the
+ * <code>CvDTreeTrainData</code> constructor. For example, if <code>_sample_idx=[1,
+ * 5, 7, 100]</code>, then <code>subsampleIdx=[0,3]</code> means that the
+ * samples <code>[1, 100]</code> of the original training set are used.
+ * </ul>
+ *
+ * <p>The function is parallelized with the TBB library.</p>
  *
  * @param trainData a trainData
  * @param tflag a tflag
@@ -102,7 +107,7 @@ public class CvDTree {
  * @param missingDataMask a missingDataMask
  * @param params a params
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
  */
     public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType, Mat missingDataMask, CvDTreeParams params)
     {
@@ -113,176 +118,40 @@ public class CvDTree {
     }
 
 /**
- * Trains a decision tree.
+ * <p>Trains a decision tree.</p>
  *
- * There are four "train" methods in "CvDTree":
- *   * The first two methods follow the generic "CvStatModel.train"
+ * <p>There are four <code>train</code> methods in "CvDTree":</p>
+ * <ul>
+ *   <li> The first two methods follow the generic "CvStatModel.train"
  * conventions. It is the most complete form. Both data layouts
- * ("tflag=CV_ROW_SAMPLE" and "tflag=CV_COL_SAMPLE") are supported, as well as
- * sample and variable subsets, missing measurements, arbitrary combinations of
- * input and output variable types, and so on. The last parameter contains all
- * of the necessary training parameters (see the "CvDTreeParams" description).
- *   * The third method uses "CvMLData" to pass training data to a decision
+ * (<code>tflag=CV_ROW_SAMPLE</code> and <code>tflag=CV_COL_SAMPLE</code>) are
+ * supported, as well as sample and variable subsets, missing measurements,
+ * arbitrary combinations of input and output variable types, and so on. The
+ * last parameter contains all of the necessary training parameters (see the
+ * "CvDTreeParams" description).
+ *   <li> The third method uses "CvMLData" to pass training data to a decision
  * tree.
- *   * The last method "train" is mostly used for building tree ensembles. It
- * takes the pre-constructed "CvDTreeTrainData" instance and an optional subset
- * of the training set. The indices in "subsampleIdx" are counted relatively to
- * the "_sample_idx", passed to the "CvDTreeTrainData" constructor. For example,
- * if "_sample_idx=[1, 5, 7, 100]", then "subsampleIdx=[0,3]" means that the
- * samples "[1, 100]" of the original training set are used.
+ *   <li> The last method <code>train</code> is mostly used for building tree
+ * ensembles. It takes the pre-constructed "CvDTreeTrainData" instance and an
+ * optional subset of the training set. The indices in <code>subsampleIdx</code>
+ * are counted relatively to the <code>_sample_idx</code>, passed to the
+ * <code>CvDTreeTrainData</code> constructor. For example, if <code>_sample_idx=[1,
+ * 5, 7, 100]</code>, then <code>subsampleIdx=[0,3]</code> means that the
+ * samples <code>[1, 100]</code> of the original training set are used.
+ * </ul>
  *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param varType a varType
- * @param missingDataMask a missingDataMask
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType, Mat missingDataMask)
-    {
-
-        boolean retVal = train_1(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, varType.nativeObj, missingDataMask.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains a decision tree.
- *
- * There are four "train" methods in "CvDTree":
- *   * The first two methods follow the generic "CvStatModel.train"
- * conventions. It is the most complete form. Both data layouts
- * ("tflag=CV_ROW_SAMPLE" and "tflag=CV_COL_SAMPLE") are supported, as well as
- * sample and variable subsets, missing measurements, arbitrary combinations of
- * input and output variable types, and so on. The last parameter contains all
- * of the necessary training parameters (see the "CvDTreeParams" description).
- *   * The third method uses "CvMLData" to pass training data to a decision
- * tree.
- *   * The last method "train" is mostly used for building tree ensembles. It
- * takes the pre-constructed "CvDTreeTrainData" instance and an optional subset
- * of the training set. The indices in "subsampleIdx" are counted relatively to
- * the "_sample_idx", passed to the "CvDTreeTrainData" constructor. For example,
- * if "_sample_idx=[1, 5, 7, 100]", then "subsampleIdx=[0,3]" means that the
- * samples "[1, 100]" of the original training set are used.
- *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param varType a varType
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx, Mat varType)
-    {
-
-        boolean retVal = train_2(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, varType.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains a decision tree.
- *
- * There are four "train" methods in "CvDTree":
- *   * The first two methods follow the generic "CvStatModel.train"
- * conventions. It is the most complete form. Both data layouts
- * ("tflag=CV_ROW_SAMPLE" and "tflag=CV_COL_SAMPLE") are supported, as well as
- * sample and variable subsets, missing measurements, arbitrary combinations of
- * input and output variable types, and so on. The last parameter contains all
- * of the necessary training parameters (see the "CvDTreeParams" description).
- *   * The third method uses "CvMLData" to pass training data to a decision
- * tree.
- *   * The last method "train" is mostly used for building tree ensembles. It
- * takes the pre-constructed "CvDTreeTrainData" instance and an optional subset
- * of the training set. The indices in "subsampleIdx" are counted relatively to
- * the "_sample_idx", passed to the "CvDTreeTrainData" constructor. For example,
- * if "_sample_idx=[1, 5, 7, 100]", then "subsampleIdx=[0,3]" means that the
- * samples "[1, 100]" of the original training set are used.
- *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx, Mat sampleIdx)
-    {
-
-        boolean retVal = train_3(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains a decision tree.
- *
- * There are four "train" methods in "CvDTree":
- *   * The first two methods follow the generic "CvStatModel.train"
- * conventions. It is the most complete form. Both data layouts
- * ("tflag=CV_ROW_SAMPLE" and "tflag=CV_COL_SAMPLE") are supported, as well as
- * sample and variable subsets, missing measurements, arbitrary combinations of
- * input and output variable types, and so on. The last parameter contains all
- * of the necessary training parameters (see the "CvDTreeParams" description).
- *   * The third method uses "CvMLData" to pass training data to a decision
- * tree.
- *   * The last method "train" is mostly used for building tree ensembles. It
- * takes the pre-constructed "CvDTreeTrainData" instance and an optional subset
- * of the training set. The indices in "subsampleIdx" are counted relatively to
- * the "_sample_idx", passed to the "CvDTreeTrainData" constructor. For example,
- * if "_sample_idx=[1, 5, 7, 100]", then "subsampleIdx=[0,3]" means that the
- * samples "[1, 100]" of the original training set are used.
- *
- * @param trainData a trainData
- * @param tflag a tflag
- * @param responses a responses
- * @param varIdx a varIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
- */
-    public  boolean train(Mat trainData, int tflag, Mat responses, Mat varIdx)
-    {
-
-        boolean retVal = train_4(nativeObj, trainData.nativeObj, tflag, responses.nativeObj, varIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains a decision tree.
- *
- * There are four "train" methods in "CvDTree":
- *   * The first two methods follow the generic "CvStatModel.train"
- * conventions. It is the most complete form. Both data layouts
- * ("tflag=CV_ROW_SAMPLE" and "tflag=CV_COL_SAMPLE") are supported, as well as
- * sample and variable subsets, missing measurements, arbitrary combinations of
- * input and output variable types, and so on. The last parameter contains all
- * of the necessary training parameters (see the "CvDTreeParams" description).
- *   * The third method uses "CvMLData" to pass training data to a decision
- * tree.
- *   * The last method "train" is mostly used for building tree ensembles. It
- * takes the pre-constructed "CvDTreeTrainData" instance and an optional subset
- * of the training set. The indices in "subsampleIdx" are counted relatively to
- * the "_sample_idx", passed to the "CvDTreeTrainData" constructor. For example,
- * if "_sample_idx=[1, 5, 7, 100]", then "subsampleIdx=[0,3]" means that the
- * samples "[1, 100]" of the original training set are used.
+ * <p>The function is parallelized with the TBB library.</p>
  *
  * @param trainData a trainData
  * @param tflag a tflag
  * @param responses a responses
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/decision_trees.html#cvdtree-train">org.opencv.ml.CvDTree.train</a>
  */
     public  boolean train(Mat trainData, int tflag, Mat responses)
     {
 
-        boolean retVal = train_5(nativeObj, trainData.nativeObj, tflag, responses.nativeObj);
+        boolean retVal = train_1(nativeObj, trainData.nativeObj, tflag, responses.nativeObj);
 
         return retVal;
     }
@@ -291,7 +160,6 @@ public class CvDTree {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -312,11 +180,7 @@ public class CvDTree {
 
     // C++:  bool CvDTree::train(Mat trainData, int tflag, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), Mat varType = cv::Mat(), Mat missingDataMask = cv::Mat(), CvDTreeParams params = CvDTreeParams())
     private static native boolean train_0(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj, long missingDataMask_nativeObj, long params_nativeObj);
-    private static native boolean train_1(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj, long missingDataMask_nativeObj);
-    private static native boolean train_2(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long varType_nativeObj);
-    private static native boolean train_3(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj);
-    private static native boolean train_4(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj, long varIdx_nativeObj);
-    private static native boolean train_5(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj);
+    private static native boolean train_1(long nativeObj, long trainData_nativeObj, int tflag, long responses_nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);

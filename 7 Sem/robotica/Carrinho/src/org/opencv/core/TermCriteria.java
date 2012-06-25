@@ -1,9 +1,9 @@
 package org.opencv.core;
 
 /**
- * Template class defining termination criteria for iterative algorithms.
+ * <p>Template class defining termination criteria for iterative algorithms.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#termcriteria">org.opencv.core.TermCriteria</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#termcriteria">org.opencv.core.TermCriteria</a>
  */
 public class TermCriteria {
 

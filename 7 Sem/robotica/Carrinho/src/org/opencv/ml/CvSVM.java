@@ -8,14 +8,13 @@ import org.opencv.core.Mat;
 
 // C++: class CvSVM
 /**
- * Support Vector Machines.
+ * <p>Support Vector Machines.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm">org.opencv.ml.CvSVM</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm">org.opencv.ml.CvSVM : public CvStatModel</a>
  */
-public class CvSVM {
+public class CvSVM extends CvStatModel {
 
-    protected final long nativeObj;
-    protected CvSVM(long addr) { nativeObj = addr; }
+    protected CvSVM(long addr) { super(addr); }
 
 
     public static final int
@@ -41,17 +40,17 @@ public class CvSVM {
     //
 
 /**
- * Default and training constructors.
+ * <p>Default and training constructors.</p>
  *
- * The constructors follow conventions of "CvStatModel.CvStatModel". See
- * "CvStatModel.train" for parameters descriptions.
+ * <p>The constructors follow conventions of "CvStatModel.CvStatModel". See
+ * "CvStatModel.train" for parameters descriptions.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
  */
     public   CvSVM()
     {
 
-        nativeObj = CvSVM_0();
+        super( CvSVM_0() );
 
         return;
     }
@@ -62,10 +61,10 @@ public class CvSVM {
     //
 
 /**
- * Default and training constructors.
+ * <p>Default and training constructors.</p>
  *
- * The constructors follow conventions of "CvStatModel.CvStatModel". See
- * "CvStatModel.train" for parameters descriptions.
+ * <p>The constructors follow conventions of "CvStatModel.CvStatModel". See
+ * "CvStatModel.train" for parameters descriptions.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
@@ -73,72 +72,31 @@ public class CvSVM {
  * @param sampleIdx a sampleIdx
  * @param params a params
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
  */
     public   CvSVM(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params)
     {
 
-        nativeObj = CvSVM_1(trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj);
+        super( CvSVM_1(trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj) );
 
         return;
     }
 
 /**
- * Default and training constructors.
+ * <p>Default and training constructors.</p>
  *
- * The constructors follow conventions of "CvStatModel.CvStatModel". See
- * "CvStatModel.train" for parameters descriptions.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
- */
-    public   CvSVM(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx)
-    {
-
-        nativeObj = CvSVM_2(trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj);
-
-        return;
-    }
-
-/**
- * Default and training constructors.
- *
- * The constructors follow conventions of "CvStatModel.CvStatModel". See
- * "CvStatModel.train" for parameters descriptions.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
- */
-    public   CvSVM(Mat trainData, Mat responses, Mat varIdx)
-    {
-
-        nativeObj = CvSVM_3(trainData.nativeObj, responses.nativeObj, varIdx.nativeObj);
-
-        return;
-    }
-
-/**
- * Default and training constructors.
- *
- * The constructors follow conventions of "CvStatModel.CvStatModel". See
- * "CvStatModel.train" for parameters descriptions.
+ * <p>The constructors follow conventions of "CvStatModel.CvStatModel". See
+ * "CvStatModel.train" for parameters descriptions.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-cvsvm">org.opencv.ml.CvSVM.CvSVM</a>
  */
     public   CvSVM(Mat trainData, Mat responses)
     {
 
-        nativeObj = CvSVM_4(trainData.nativeObj, responses.nativeObj);
+        super( CvSVM_2(trainData.nativeObj, responses.nativeObj) );
 
         return;
     }
@@ -175,9 +133,9 @@ public class CvSVM {
     //
 
 /**
- * Returns the number of used features (variables count).
+ * <p>Returns the number of used features (variables count).</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-get-var-count">org.opencv.ml.CvSVM.get_var_count</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-get-var-count">org.opencv.ml.CvSVM.get_var_count</a>
  */
     public  int get_var_count()
     {
@@ -193,20 +151,22 @@ public class CvSVM {
     //
 
 /**
- * Predicts the response for input sample(s).
+ * <p>Predicts the response for input sample(s).</p>
  *
- * If you pass one sample then prediction result is returned. If you want to get
- * responses for several samples then you should pass the "results" matrix where
- * prediction results will be stored.
+ * <p>If you pass one sample then prediction result is returned. If you want to get
+ * responses for several samples then you should pass the <code>results</code>
+ * matrix where prediction results will be stored.</p>
  *
- * @param sample a sample
- * @param returnDFVal Specifies a type of the return value. If "true" and the
- * problem is 2-class classification then the method returns the decision
- * function value that is signed distance to the margin, else the function
- * returns a class label (classification) or estimated function value
+ * <p>The function is parallelized with the TBB library.</p>
+ *
+ * @param sample Input sample for prediction.
+ * @param returnDFVal Specifies a type of the return value. If <code>true</code>
+ * and the problem is 2-class classification then the method returns the
+ * decision function value that is signed distance to the margin, else the
+ * function returns a class label (classification) or estimated function value
  * (regression).
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-predict">org.opencv.ml.CvSVM.predict</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-predict">org.opencv.ml.CvSVM.predict</a>
  */
     public  float predict(Mat sample, boolean returnDFVal)
     {
@@ -217,15 +177,17 @@ public class CvSVM {
     }
 
 /**
- * Predicts the response for input sample(s).
+ * <p>Predicts the response for input sample(s).</p>
  *
- * If you pass one sample then prediction result is returned. If you want to get
- * responses for several samples then you should pass the "results" matrix where
- * prediction results will be stored.
+ * <p>If you pass one sample then prediction result is returned. If you want to get
+ * responses for several samples then you should pass the <code>results</code>
+ * matrix where prediction results will be stored.</p>
  *
- * @param sample a sample
+ * <p>The function is parallelized with the TBB library.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-predict">org.opencv.ml.CvSVM.predict</a>
+ * @param sample Input sample for prediction.
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-predict">org.opencv.ml.CvSVM.predict</a>
  */
     public  float predict(Mat sample)
     {
@@ -241,18 +203,21 @@ public class CvSVM {
     //
 
 /**
- * Trains an SVM.
+ * <p>Trains an SVM.</p>
  *
- * The method trains the SVM model. It follows the conventions of the generic
- * "CvStatModel.train" approach with the following limitations:
- *   * Only the "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("params.svm_type=CvSVM.C_SVC"
- * or "params.svm_type=CvSVM.NU_SVC"), or ordered ("params.svm_type=CvSVM.EPS_SVR"
- * or "params.svm_type=CvSVM.NU_SVR"), or not required at all ("params.svm_type=CvSVM.ONE_CLASS").
- *   * Missing measurements are not supported.
+ * <p>The method trains the SVM model. It follows the conventions of the generic
+ * "CvStatModel.train" approach with the following limitations:</p>
+ * <ul>
+ *   <li> Only the <code>CV_ROW_SAMPLE</code> data layout is supported.
+ *   <li> Input variables are all ordered.
+ *   <li> Output variables can be either categorical (<code>params.svm_type=CvSVM.C_SVC</code>
+ * or <code>params.svm_type=CvSVM.NU_SVC</code>), or ordered (<code>params.svm_type=CvSVM.EPS_SVR</code>
+ * or <code>params.svm_type=CvSVM.NU_SVR</code>), or not required at all
+ * (<code>params.svm_type=CvSVM.ONE_CLASS</code>).
+ *   <li> Missing measurements are not supported.
+ * </ul>
  *
- * All the other parameters are gathered in the "CvSVMParams" structure.
+ * <p>All the other parameters are gathered in the "CvSVMParams" structure.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
@@ -260,7 +225,7 @@ public class CvSVM {
  * @param sampleIdx a sampleIdx
  * @param params a params
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train">org.opencv.ml.CvSVM.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-train">org.opencv.ml.CvSVM.train</a>
  */
     public  boolean train(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params)
     {
@@ -271,85 +236,31 @@ public class CvSVM {
     }
 
 /**
- * Trains an SVM.
+ * <p>Trains an SVM.</p>
  *
- * The method trains the SVM model. It follows the conventions of the generic
- * "CvStatModel.train" approach with the following limitations:
- *   * Only the "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("params.svm_type=CvSVM.C_SVC"
- * or "params.svm_type=CvSVM.NU_SVC"), or ordered ("params.svm_type=CvSVM.EPS_SVR"
- * or "params.svm_type=CvSVM.NU_SVR"), or not required at all ("params.svm_type=CvSVM.ONE_CLASS").
- *   * Missing measurements are not supported.
+ * <p>The method trains the SVM model. It follows the conventions of the generic
+ * "CvStatModel.train" approach with the following limitations:</p>
+ * <ul>
+ *   <li> Only the <code>CV_ROW_SAMPLE</code> data layout is supported.
+ *   <li> Input variables are all ordered.
+ *   <li> Output variables can be either categorical (<code>params.svm_type=CvSVM.C_SVC</code>
+ * or <code>params.svm_type=CvSVM.NU_SVC</code>), or ordered (<code>params.svm_type=CvSVM.EPS_SVR</code>
+ * or <code>params.svm_type=CvSVM.NU_SVR</code>), or not required at all
+ * (<code>params.svm_type=CvSVM.ONE_CLASS</code>).
+ *   <li> Missing measurements are not supported.
+ * </ul>
  *
- * All the other parameters are gathered in the "CvSVMParams" structure.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train">org.opencv.ml.CvSVM.train</a>
- */
-    public  boolean train(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx)
-    {
-
-        boolean retVal = train_1(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM.
- *
- * The method trains the SVM model. It follows the conventions of the generic
- * "CvStatModel.train" approach with the following limitations:
- *   * Only the "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("params.svm_type=CvSVM.C_SVC"
- * or "params.svm_type=CvSVM.NU_SVC"), or ordered ("params.svm_type=CvSVM.EPS_SVR"
- * or "params.svm_type=CvSVM.NU_SVR"), or not required at all ("params.svm_type=CvSVM.ONE_CLASS").
- *   * Missing measurements are not supported.
- *
- * All the other parameters are gathered in the "CvSVMParams" structure.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train">org.opencv.ml.CvSVM.train</a>
- */
-    public  boolean train(Mat trainData, Mat responses, Mat varIdx)
-    {
-
-        boolean retVal = train_2(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM.
- *
- * The method trains the SVM model. It follows the conventions of the generic
- * "CvStatModel.train" approach with the following limitations:
- *   * Only the "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("params.svm_type=CvSVM.C_SVC"
- * or "params.svm_type=CvSVM.NU_SVC"), or ordered ("params.svm_type=CvSVM.EPS_SVR"
- * or "params.svm_type=CvSVM.NU_SVR"), or not required at all ("params.svm_type=CvSVM.ONE_CLASS").
- *   * Missing measurements are not supported.
- *
- * All the other parameters are gathered in the "CvSVMParams" structure.
+ * <p>All the other parameters are gathered in the "CvSVMParams" structure.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train">org.opencv.ml.CvSVM.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-train">org.opencv.ml.CvSVM.train</a>
  */
     public  boolean train(Mat trainData, Mat responses)
     {
 
-        boolean retVal = train_3(nativeObj, trainData.nativeObj, responses.nativeObj);
+        boolean retVal = train_1(nativeObj, trainData.nativeObj, responses.nativeObj);
 
         return retVal;
     }
@@ -360,28 +271,31 @@ public class CvSVM {
     //
 
 /**
- * Trains an SVM with optimal parameters.
+ * <p>Trains an SVM with optimal parameters.</p>
  *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
+ * <p>The method trains the SVM model automatically by choosing the optimal
+ * parameters <code>C</code>, <code>gamma</code>, <code>p</code>,
+ * <code>nu</code>, <code>coef0</code>, <code>degree</code> from "CvSVMParams".
  * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
+ * test set error is minimal.</p>
  *
- * If there is no need to optimize a parameter, the corresponding grid step
+ * <p>If there is no need to optimize a parameter, the corresponding grid step
  * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
+ * optimization in <code>gamma</code>, set <code>gamma_grid.step = 0</code>,
+ * <code>gamma_grid.min_val</code>, <code>gamma_grid.max_val</code> as arbitrary
+ * numbers. In this case, the value <code>params.gamma</code> is taken for
+ * <code>gamma</code>.</p>
  *
- * And, finally, if the optimization in a parameter is required but the
+ * <p>And, finally, if the optimization in a parameter is required but the
  * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
+ * To generate a grid, for example, for <code>gamma</code>, call
+ * <code>CvSVM.get_default_grid(CvSVM.GAMMA)</code>.</p>
  *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
+ * <p>This function works for the classification (<code>params.svm_type=CvSVM.C_SVC</code>
+ * or <code>params.svm_type=CvSVM.NU_SVC</code>) as well as for the regression
+ * (<code>params.svm_type=CvSVM.EPS_SVR</code> or <code>params.svm_type=CvSVM.NU_SVR</code>).
+ * If <code>params.svm_type=CvSVM.ONE_CLASS</code>, no optimization is made and
+ * the usual SVM with parameters specified in <code>params</code> is executed.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
@@ -389,20 +303,21 @@ public class CvSVM {
  * @param sampleIdx a sampleIdx
  * @param params a params
  * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
+ * <code>k_fold</code> subsets. One subset is used to train the model, the
+ * others form the test set. So, the SVM algorithm is executed <code>k_fold</code>
+ * times.
  * @param Cgrid a Cgrid
- * @param gammaGrid a gammaGrid
- * @param pGrid a pGrid
- * @param nuGrid a nuGrid
- * @param coeffGrid a coeffGrid
- * @param degreeGrid a degreeGrid
- * @param balanced If "true" and the problem is 2-class classification then the
- * method creates more balanced cross-validation subsets that is proportions
- * between classes in subsets are close to such proportion in the whole train
- * dataset.
+ * @param gammaGrid Iteration grid for the corresponding SVM parameter.
+ * @param pGrid Iteration grid for the corresponding SVM parameter.
+ * @param nuGrid Iteration grid for the corresponding SVM parameter.
+ * @param coeffGrid Iteration grid for the corresponding SVM parameter.
+ * @param degreeGrid Iteration grid for the corresponding SVM parameter.
+ * @param balanced If <code>true</code> and the problem is 2-class
+ * classification then the method creates more balanced cross-validation subsets
+ * that is proportions between classes in subsets are close to such proportion
+ * in the whole train dataset.
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
  */
     public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid, CvParamGrid gammaGrid, CvParamGrid pGrid, CvParamGrid nuGrid, CvParamGrid coeffGrid, CvParamGrid degreeGrid, boolean balanced)
     {
@@ -413,350 +328,31 @@ public class CvSVM {
     }
 
 /**
- * Trains an SVM with optimal parameters.
+ * <p>Trains an SVM with optimal parameters.</p>
  *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
+ * <p>The method trains the SVM model automatically by choosing the optimal
+ * parameters <code>C</code>, <code>gamma</code>, <code>p</code>,
+ * <code>nu</code>, <code>coef0</code>, <code>degree</code> from "CvSVMParams".
  * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
+ * test set error is minimal.</p>
  *
- * If there is no need to optimize a parameter, the corresponding grid step
+ * <p>If there is no need to optimize a parameter, the corresponding grid step
  * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
+ * optimization in <code>gamma</code>, set <code>gamma_grid.step = 0</code>,
+ * <code>gamma_grid.min_val</code>, <code>gamma_grid.max_val</code> as arbitrary
+ * numbers. In this case, the value <code>params.gamma</code> is taken for
+ * <code>gamma</code>.</p>
  *
- * And, finally, if the optimization in a parameter is required but the
+ * <p>And, finally, if the optimization in a parameter is required but the
  * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
+ * To generate a grid, for example, for <code>gamma</code>, call
+ * <code>CvSVM.get_default_grid(CvSVM.GAMMA)</code>.</p>
  *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- * @param Cgrid a Cgrid
- * @param gammaGrid a gammaGrid
- * @param pGrid a pGrid
- * @param nuGrid a nuGrid
- * @param coeffGrid a coeffGrid
- * @param degreeGrid a degreeGrid
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid, CvParamGrid gammaGrid, CvParamGrid pGrid, CvParamGrid nuGrid, CvParamGrid coeffGrid, CvParamGrid degreeGrid)
-    {
-
-        boolean retVal = train_auto_1(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold, Cgrid.nativeObj, gammaGrid.nativeObj, pGrid.nativeObj, nuGrid.nativeObj, coeffGrid.nativeObj, degreeGrid.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- * @param Cgrid a Cgrid
- * @param gammaGrid a gammaGrid
- * @param pGrid a pGrid
- * @param nuGrid a nuGrid
- * @param coeffGrid a coeffGrid
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid, CvParamGrid gammaGrid, CvParamGrid pGrid, CvParamGrid nuGrid, CvParamGrid coeffGrid)
-    {
-
-        boolean retVal = train_auto_2(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold, Cgrid.nativeObj, gammaGrid.nativeObj, pGrid.nativeObj, nuGrid.nativeObj, coeffGrid.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- * @param Cgrid a Cgrid
- * @param gammaGrid a gammaGrid
- * @param pGrid a pGrid
- * @param nuGrid a nuGrid
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid, CvParamGrid gammaGrid, CvParamGrid pGrid, CvParamGrid nuGrid)
-    {
-
-        boolean retVal = train_auto_3(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold, Cgrid.nativeObj, gammaGrid.nativeObj, pGrid.nativeObj, nuGrid.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- * @param Cgrid a Cgrid
- * @param gammaGrid a gammaGrid
- * @param pGrid a pGrid
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid, CvParamGrid gammaGrid, CvParamGrid pGrid)
-    {
-
-        boolean retVal = train_auto_4(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold, Cgrid.nativeObj, gammaGrid.nativeObj, pGrid.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- * @param Cgrid a Cgrid
- * @param gammaGrid a gammaGrid
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid, CvParamGrid gammaGrid)
-    {
-
-        boolean retVal = train_auto_5(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold, Cgrid.nativeObj, gammaGrid.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- * @param Cgrid a Cgrid
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold, CvParamGrid Cgrid)
-    {
-
-        boolean retVal = train_auto_6(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold, Cgrid.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param varIdx a varIdx
- * @param sampleIdx a sampleIdx
- * @param params a params
- * @param k_fold Cross-validation parameter. The training set is divided into
- * "k_fold" subsets. One subset is used to train the model, the others form the
- * test set. So, the SVM algorithm is executed "k_fold" times.
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
- */
-    public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold)
-    {
-
-        boolean retVal = train_auto_7(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj, k_fold);
-
-        return retVal;
-    }
-
-/**
- * Trains an SVM with optimal parameters.
- *
- * The method trains the SVM model automatically by choosing the optimal
- * parameters "C", "gamma", "p", "nu", "coef0", "degree" from "CvSVMParams".
- * Parameters are considered optimal when the cross-validation estimate of the
- * test set error is minimal.
- *
- * If there is no need to optimize a parameter, the corresponding grid step
- * should be set to any value less than or equal to 1. For example, to avoid
- * optimization in "gamma", set "gamma_grid.step = 0", "gamma_grid.min_val",
- * "gamma_grid.max_val" as arbitrary numbers. In this case, the value
- * "params.gamma" is taken for "gamma".
- *
- * And, finally, if the optimization in a parameter is required but the
- * corresponding grid is unknown, you may call the function "CvSVM.get_default_grid".
- * To generate a grid, for example, for "gamma", call "CvSVM.get_default_grid(CvSVM.GAMMA)".
- *
- * This function works for the classification ("params.svm_type=CvSVM.C_SVC" or
- * "params.svm_type=CvSVM.NU_SVC") as well as for the regression
- * ("params.svm_type=CvSVM.EPS_SVR" or "params.svm_type=CvSVM.NU_SVR"). If
- * "params.svm_type=CvSVM.ONE_CLASS", no optimization is made and the usual SVM
- * with parameters specified in "params" is executed.
+ * <p>This function works for the classification (<code>params.svm_type=CvSVM.C_SVC</code>
+ * or <code>params.svm_type=CvSVM.NU_SVC</code>) as well as for the regression
+ * (<code>params.svm_type=CvSVM.EPS_SVR</code> or <code>params.svm_type=CvSVM.NU_SVR</code>).
+ * If <code>params.svm_type=CvSVM.ONE_CLASS</code>, no optimization is made and
+ * the usual SVM with parameters specified in <code>params</code> is executed.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
@@ -764,12 +360,12 @@ public class CvSVM {
  * @param sampleIdx a sampleIdx
  * @param params a params
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-train-auto">org.opencv.ml.CvSVM.train_auto</a>
  */
     public  boolean train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params)
     {
 
-        boolean retVal = train_auto_8(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj);
+        boolean retVal = train_auto_1(nativeObj, trainData.nativeObj, responses.nativeObj, varIdx.nativeObj, sampleIdx.nativeObj, params.nativeObj);
 
         return retVal;
     }
@@ -778,7 +374,6 @@ public class CvSVM {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -793,9 +388,7 @@ public class CvSVM {
 
     // C++:   CvSVM::CvSVM(Mat trainData, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), CvSVMParams params = CvSVMParams())
     private static native long CvSVM_1(long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj);
-    private static native long CvSVM_2(long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj);
-    private static native long CvSVM_3(long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj);
-    private static native long CvSVM_4(long trainData_nativeObj, long responses_nativeObj);
+    private static native long CvSVM_2(long trainData_nativeObj, long responses_nativeObj);
 
     // C++:  void CvSVM::clear()
     private static native void clear_0(long nativeObj);
@@ -812,20 +405,11 @@ public class CvSVM {
 
     // C++:  bool CvSVM::train(Mat trainData, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), CvSVMParams params = CvSVMParams())
     private static native boolean train_0(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj);
-    private static native boolean train_1(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj);
-    private static native boolean train_2(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj);
-    private static native boolean train_3(long nativeObj, long trainData_nativeObj, long responses_nativeObj);
+    private static native boolean train_1(long nativeObj, long trainData_nativeObj, long responses_nativeObj);
 
     // C++:  bool CvSVM::train_auto(Mat trainData, Mat responses, Mat varIdx, Mat sampleIdx, CvSVMParams params, int k_fold = 10, CvParamGrid Cgrid = CvSVM::get_default_grid(CvSVM::C), CvParamGrid gammaGrid = CvSVM::get_default_grid(CvSVM::GAMMA), CvParamGrid pGrid = CvSVM::get_default_grid(CvSVM::P), CvParamGrid nuGrid = CvSVM::get_default_grid(CvSVM::NU), CvParamGrid coeffGrid = CvSVM::get_default_grid(CvSVM::COEF), CvParamGrid degreeGrid = CvSVM::get_default_grid(CvSVM::DEGREE), bool balanced = false)
     private static native boolean train_auto_0(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj, long gammaGrid_nativeObj, long pGrid_nativeObj, long nuGrid_nativeObj, long coeffGrid_nativeObj, long degreeGrid_nativeObj, boolean balanced);
-    private static native boolean train_auto_1(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj, long gammaGrid_nativeObj, long pGrid_nativeObj, long nuGrid_nativeObj, long coeffGrid_nativeObj, long degreeGrid_nativeObj);
-    private static native boolean train_auto_2(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj, long gammaGrid_nativeObj, long pGrid_nativeObj, long nuGrid_nativeObj, long coeffGrid_nativeObj);
-    private static native boolean train_auto_3(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj, long gammaGrid_nativeObj, long pGrid_nativeObj, long nuGrid_nativeObj);
-    private static native boolean train_auto_4(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj, long gammaGrid_nativeObj, long pGrid_nativeObj);
-    private static native boolean train_auto_5(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj, long gammaGrid_nativeObj);
-    private static native boolean train_auto_6(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold, long Cgrid_nativeObj);
-    private static native boolean train_auto_7(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj, int k_fold);
-    private static native boolean train_auto_8(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj);
+    private static native boolean train_auto_1(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);

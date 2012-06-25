@@ -1,141 +1,154 @@
 package org.opencv.core;
 
 // C++: class Mat
-
-import java.io.Serializable;
-
 /**
- * OpenCV C++ n-dimensional dense array class
+ * <p>OpenCV C++ n-dimensional dense array class</p>
  *
- * The class "Mat" represents an n-dimensional dense numerical single-channel or
- * multi-channel array. It can be used to store real or complex-valued vectors
- * and matrices, grayscale or color images, voxel volumes, vector fields, point
- * clouds, tensors, histograms (though, very high-dimensional histograms may be
- * better stored in a "SparseMat"). The data layout of the array M is defined by
- * the array "M.step[]", so that the address of element (i_0,...,i_(M.dims-1)),
- * where 0 <= i_k<M.size[k], is computed as:
+ * <p>The class <code>Mat</code> represents an n-dimensional dense numerical
+ * single-channel or multi-channel array. It can be used to store real or
+ * complex-valued vectors and matrices, grayscale or color images, voxel
+ * volumes, vector fields, point clouds, tensors, histograms (though, very
+ * high-dimensional histograms may be better stored in a <code>SparseMat</code>).
+ * The data layout of the array <em>M</em> is defined by the array
+ * <code>M.step[]</code>, so that the address of element <em>(i_0,...,i_(M.dims-1))</em>,
+ * where <em>0 <= i_k<M.size[k]</em>, is computed as:</p>
  *
- * addr(M_(i_0,...,i_(M.dims-1))) = M.data + M.step[0]*i_0 + M.step[1]*i_1 +...
- * + M.step[M.dims-1]*i_(M.dims-1)
+ * <p><em>addr(M_(i_0,...,i_(M.dims-1))) = M.data + M.step[0]*i_0 + M.step[1]*i_1
+ * +... + M.step[M.dims-1]*i_(M.dims-1)</em></p>
  *
- * In case of a 2-dimensional array, the above formula is reduced to:
+ * <p>In case of a 2-dimensional array, the above formula is reduced to:</p>
  *
- * addr(M_(i,j)) = M.data + M.step[0]*i + M.step[1]*j
+ * <p><em>addr(M_(i,j)) = M.data + M.step[0]*i + M.step[1]*j</em></p>
  *
- * Note that "M.step[i] >= M.step[i+1]" (in fact, "M.step[i] >=
- * M.step[i+1]*M.size[i+1]"). This means that 2-dimensional matrices are stored
- * row-by-row, 3-dimensional matrices are stored plane-by-plane, and so on.
- * "M.step[M.dims-1]" is minimal and always equal to the element size
- * "M.elemSize()".
+ * <p>Note that <code>M.step[i] >= M.step[i+1]</code> (in fact, <code>M.step[i] >=
+ * M.step[i+1]*M.size[i+1]</code>). This means that 2-dimensional matrices are
+ * stored row-by-row, 3-dimensional matrices are stored plane-by-plane, and so
+ * on. <code>M.step[M.dims-1]</code> is minimal and always equal to the element
+ * size <code>M.elemSize()</code>.</p>
  *
- * So, the data layout in "Mat" is fully compatible with "CvMat", "IplImage",
- * and "CvMatND" types from OpenCV 1.x. It is also compatible with the majority
- * of dense array types from the standard toolkits and SDKs, such as Numpy
- * (ndarray), Win32 (independent device bitmaps), and others, that is, with any
- * array that uses *steps* (or *strides*) to compute the position of a pixel.
- * Due to this compatibility, it is possible to make a "Mat" header for
- * user-allocated data and process it in-place using OpenCV functions.
+ * <p>So, the data layout in <code>Mat</code> is fully compatible with
+ * <code>CvMat</code>, <code>IplImage</code>, and <code>CvMatND</code> types
+ * from OpenCV 1.x. It is also compatible with the majority of dense array types
+ * from the standard toolkits and SDKs, such as Numpy (ndarray), Win32
+ * (independent device bitmaps), and others, that is, with any array that uses
+ * *steps* (or *strides*) to compute the position of a pixel. Due to this
+ * compatibility, it is possible to make a <code>Mat</code> header for
+ * user-allocated data and process it in-place using OpenCV functions.</p>
  *
- * There are many different ways to create a "Mat" object. The most popular
- * options are listed below:
- *   * Use the "create(nrows, ncols, type)" method or the similar "Mat(nrows,
- * ncols, type[, fillValue])" constructor. A new array of the specified size and
- * type is allocated. "type" has the same meaning as in the "cvCreateMat"
- * method.
- * For example, "CV_8UC1" means a 8-bit single-channel array, "CV_32FC2" means a
- * 2-channel (complex) floating-point array, and so on.
+ * <p>There are many different ways to create a <code>Mat</code> object. The most
+ * popular options are listed below:</p>
+ * <ul>
+ *   <li> Use the <code>create(nrows, ncols, type)</code> method or the similar
+ * <code>Mat(nrows, ncols, type[, fillValue])</code> constructor. A new array of
+ * the specified size and type is allocated. <code>type</code> has the same
+ * meaning as in the <code>cvCreateMat</code> method.
+ * </ul>
+ * <p>For example, <code>CV_8UC1</code> means a 8-bit single-channel array,
+ * <code>CV_32FC2</code> means a 2-channel (complex) floating-point array, and
+ * so on.</p>
  *
- * As noted in the introduction to this chapter, "create()" allocates only a new
- * array when the shape or type of the current array are different from the
- * specified ones.
- *   * Create a multi-dimensional array:
+ * <p>As noted in the introduction to this chapter, <code>create()</code> allocates
+ * only a new array when the shape or type of the current array are different
+ * from the specified ones.</p>
+ * <ul>
+ *   <li> Create a multi-dimensional array:
+ * </ul>
  *
- * It passes the number of dimensions =1 to the "Mat" constructor but the
- * created array will be 2-dimensional with the number of columns set to 1. So,
- * "Mat.dims" is always >= 2 (can also be 0 when the array is empty).
- *   * Use a copy constructor or assignment operator where there can be an array
- * or expression on the right side (see below). As noted in the introduction,
- * the array assignment is an O(1) operation because it only copies the header
- * and increases the reference counter. The "Mat.clone()" method can be used to
- * get a full (deep) copy of the array when you need it.
- *   * Construct a header for a part of another array. It can be a single row,
- * single column, several rows, several columns, rectangular region in the array
- * (called a *minor* in algebra) or a diagonal. Such operations are also O(1)
- * because the new header references the same data. You can actually modify a
- * part of the array using this feature, for example:
+ * <p>It passes the number of dimensions =1 to the <code>Mat</code> constructor but
+ * the created array will be 2-dimensional with the number of columns set to 1.
+ * So, <code>Mat.dims</code> is always >= 2 (can also be 0 when the array is
+ * empty).</p>
+ * <ul>
+ *   <li> Use a copy constructor or assignment operator where there can be an
+ * array or expression on the right side (see below). As noted in the
+ * introduction, the array assignment is an O(1) operation because it only
+ * copies the header and increases the reference counter. The <code>Mat.clone()</code>
+ * method can be used to get a full (deep) copy of the array when you need it.
+ *   <li> Construct a header for a part of another array. It can be a single
+ * row, single column, several rows, several columns, rectangular region in the
+ * array (called a *minor* in algebra) or a diagonal. Such operations are also
+ * O(1) because the new header references the same data. You can actually modify
+ * a part of the array using this feature, for example:
+ * </ul>
  *
- * Due to the additional "datastart" and "dataend" members, it is possible to
- * compute a relative sub-array position in the main *container* array using
- * "locateROI()":
+ * <p>Due to the additional <code>datastart</code> and <code>dataend</code>
+ * members, it is possible to compute a relative sub-array position in the main
+ * *container* array using <code>locateROI()</code>:</p>
  *
- * As in case of whole matrices, if you need a deep copy, use the "clone()"
- * method of the extracted sub-matrices.
- *   * Make a header for user-allocated data. It can be useful to do the
+ * <p>As in case of whole matrices, if you need a deep copy, use the
+ * <code>clone()</code> method of the extracted sub-matrices.</p>
+ * <ul>
+ *   <li> Make a header for user-allocated data. It can be useful to do the
  * following:
- *   #. Process "foreign" data using OpenCV (for example, when you implement a
- * DirectShow* filter or a processing module for "gstreamer", and so on). For
- * example:
- *   #. Quickly initialize small matrices and/or get a super-fast element
+ *   <li> Process "foreign" data using OpenCV (for example, when you implement a
+ * DirectShow* filter or a processing module for <code>gstreamer</code>, and so
+ * on). For example:
+ *   <li> Quickly initialize small matrices and/or get a super-fast element
  * access.
+ * </ul>
  *
- * Partial yet very common cases of this *user-allocated data* case are
- * conversions from "CvMat" and "IplImage" to "Mat". For this purpose, there are
- * special constructors taking pointers to "CvMat" or "IplImage" and the
- * optional flag indicating whether to copy the data or not.
+ * <p>Partial yet very common cases of this *user-allocated data* case are
+ * conversions from <code>CvMat</code> and <code>IplImage</code> to
+ * <code>Mat</code>. For this purpose, there are special constructors taking
+ * pointers to <code>CvMat</code> or <code>IplImage</code> and the optional flag
+ * indicating whether to copy the data or not.</p>
  *
- * Backward conversion from "Mat" to "CvMat" or "IplImage" is provided via cast
- * operators "Mat.operator CvMat() const" and "Mat.operator IplImage()". The
- * operators do NOT copy the data.
- *   * Use MATLAB-style array initializers, "zeros(), ones(), eye()", for
- * example:
- *   * Use a comma-separated initializer:
+ * <p>Backward conversion from <code>Mat</code> to <code>CvMat</code> or
+ * <code>IplImage</code> is provided via cast operators <code>Mat.operator
+ * CvMat() const</code> and <code>Mat.operator IplImage()</code>. The operators
+ * do NOT copy the data.</p>
+ * <ul>
+ *   <li> Use MATLAB-style array initializers, <code>zeros(), ones(),
+ * eye()</code>, for example:
+ *   <li> Use a comma-separated initializer:
+ * </ul>
  *
- * With this approach, you first call a constructor of the "Mat_" class with the
- * proper parameters, and then you just put "<<" operator followed by
+ * <p>With this approach, you first call a constructor of the "Mat_" class with the
+ * proper parameters, and then you just put <code><<</code> operator followed by
  * comma-separated values that can be constants, variables, expressions, and so
- * on. Also, note the extra parentheses required to avoid compilation errors.
+ * on. Also, note the extra parentheses required to avoid compilation errors.</p>
  *
- * Once the array is created, it is automatically managed via a
+ * <p>Once the array is created, it is automatically managed via a
  * reference-counting mechanism. If the array header is built on top of
  * user-allocated data, you should handle the data by yourself.
  * The array data is deallocated when no one points to it. If you want to
  * release the data pointed by a array header before the array destructor is
- * called, use "Mat.release()".
+ * called, use <code>Mat.release()</code>.</p>
  *
- * The next important thing to learn about the array class is element access.
+ * <p>The next important thing to learn about the array class is element access.
  * This manual already described how to compute an address of each array
  * element. Normally, you are not required to use the formula directly in the
  * code. If you know the array element type (which can be retrieved using the
- * method "Mat.type()"), you can access the element M_(ij) of a 2-dimensional
- * array as:
+ * method <code>Mat.type()</code>), you can access the element <em>M_(ij)</em>
+ * of a 2-dimensional array as:</p>
  *
- * assuming that M is a double-precision floating-point array. There are several
- * variants of the method "at" for a different number of dimensions.
+ * <p>assuming that M is a double-precision floating-point array. There are several
+ * variants of the method <code>at</code> for a different number of dimensions.</p>
  *
- * If you need to process a whole row of a 2D array, the most efficient way is
+ * <p>If you need to process a whole row of a 2D array, the most efficient way is
  * to get the pointer to the row first, and then just use the plain C operator
- * "[]" :
+ * <code>[]</code> :</p>
  *
- * Some operations, like the one above, do not actually depend on the array
+ * <p>Some operations, like the one above, do not actually depend on the array
  * shape. They just process elements of an array one by one (or elements from
  * multiple arrays that have the same coordinates, for example, array addition).
  * Such operations are called *element-wise*. It makes sense to check whether
  * all the input/output arrays are continuous, namely, have no gaps at the end
- * of each row. If yes, process them as a long single row:
+ * of each row. If yes, process them as a long single row:</p>
  *
- * In case of the continuous matrix, the outer loop body is executed just once.
+ * <p>In case of the continuous matrix, the outer loop body is executed just once.
  * So, the overhead is smaller, which is especially noticeable in case of small
- * matrices.
+ * matrices.</p>
  *
- * Finally, there are STL-style iterators that are smart enough to skip gaps
- * between successive rows:
+ * <p>Finally, there are STL-style iterators that are smart enough to skip gaps
+ * between successive rows:</p>
  *
- * The matrix iterators are random-access iterators, so they can be passed to
- * any STL algorithm, including "std.sort()".
+ * <p>The matrix iterators are random-access iterators, so they can be passed to
+ * any STL algorithm, including <code>std.sort()</code>.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat">org.opencv.core.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat">org.opencv.core.Mat</a>
  */
-public class Mat implements Serializable{
+public class Mat {
 
     public final long nativeObj;
 
@@ -151,16 +164,16 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat()
     {
@@ -175,22 +188,22 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
  * @param rows Number of rows in a 2D array.
  * @param cols Number of columns in a 2D array.
- * @param type Array type. Use "CV_8UC1,..., CV_64FC4" to create 1-4 channel
- * matrices, or "CV_8UC(n),..., CV_64FC(n)" to create multi-channel (up to
- * "CV_MAX_CN" channels) matrices.
+ * @param type Array type. Use <code>CV_8UC1,..., CV_64FC4</code> to create 1-4
+ * channel matrices, or <code>CV_8UC(n),..., CV_64FC(n)</code> to create
+ * multi-channel (up to <code>CV_MAX_CN</code> channels) matrices.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(int rows, int cols, int type)
     {
@@ -205,22 +218,23 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
- * @param size 2D array size: "Size(cols, rows)". In the "Size()" constructor,
- * the number of rows and the number of columns go in the reverse order.
- * @param type Array type. Use "CV_8UC1,..., CV_64FC4" to create 1-4 channel
- * matrices, or "CV_8UC(n),..., CV_64FC(n)" to create multi-channel (up to
- * "CV_MAX_CN" channels) matrices.
+ * @param size 2D array size: <code>Size(cols, rows)</code>. In the
+ * <code>Size()</code> constructor, the number of rows and the number of columns
+ * go in the reverse order.
+ * @param type Array type. Use <code>CV_8UC1,..., CV_64FC4</code> to create 1-4
+ * channel matrices, or <code>CV_8UC(n),..., CV_64FC(n)</code> to create
+ * multi-channel (up to <code>CV_MAX_CN</code> channels) matrices.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(Size size, int type)
     {
@@ -235,25 +249,25 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
  * @param rows Number of rows in a 2D array.
  * @param cols Number of columns in a 2D array.
- * @param type Array type. Use "CV_8UC1,..., CV_64FC4" to create 1-4 channel
- * matrices, or "CV_8UC(n),..., CV_64FC(n)" to create multi-channel (up to
- * "CV_MAX_CN" channels) matrices.
+ * @param type Array type. Use <code>CV_8UC1,..., CV_64FC4</code> to create 1-4
+ * channel matrices, or <code>CV_8UC(n),..., CV_64FC(n)</code> to create
+ * multi-channel (up to <code>CV_MAX_CN</code> channels) matrices.
  * @param s An optional value to initialize each matrix element with. To set all
  * the matrix elements to the particular value after the construction, use the
- * assignment operator "Mat.operator=(const Scalar& value)".
+ * assignment operator <code>Mat.operator=(const Scalar& value)</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(int rows, int cols, int type, Scalar s)
     {
@@ -268,25 +282,26 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
- * @param size 2D array size: "Size(cols, rows)". In the "Size()" constructor,
- * the number of rows and the number of columns go in the reverse order.
- * @param type Array type. Use "CV_8UC1,..., CV_64FC4" to create 1-4 channel
- * matrices, or "CV_8UC(n),..., CV_64FC(n)" to create multi-channel (up to
- * "CV_MAX_CN" channels) matrices.
+ * @param size 2D array size: <code>Size(cols, rows)</code>. In the
+ * <code>Size()</code> constructor, the number of rows and the number of columns
+ * go in the reverse order.
+ * @param type Array type. Use <code>CV_8UC1,..., CV_64FC4</code> to create 1-4
+ * channel matrices, or <code>CV_8UC(n),..., CV_64FC(n)</code> to create
+ * multi-channel (up to <code>CV_MAX_CN</code> channels) matrices.
  * @param s An optional value to initialize each matrix element with. To set all
  * the matrix elements to the particular value after the construction, use the
- * assignment operator "Mat.operator=(const Scalar& value)".
+ * assignment operator <code>Mat.operator=(const Scalar& value)</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(Size size, int type, Scalar s)
     {
@@ -301,29 +316,29 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
  * @param m Array that (as a whole or partly) is assigned to the constructed
  * matrix. No data is copied by these constructors. Instead, the header pointing
- * to "m" data or its sub-array is constructed and associated with it. The
- * reference counter, if any, is incremented. So, when you modify the matrix
- * formed using such a constructor, you also modify the corresponding elements
- * of "m". If you want to have an independent copy of the sub-array, use
- * "Mat.clone()".
- * @param rowRange Range of the "m" rows to take. As usual, the range start is
- * inclusive and the range end is exclusive. Use "Range.all()" to take all the
- * rows.
- * @param colRange Range of the "m" columns to take. Use "Range.all()" to take
- * all the columns.
+ * to <code>m</code> data or its sub-array is constructed and associated with
+ * it. The reference counter, if any, is incremented. So, when you modify the
+ * matrix formed using such a constructor, you also modify the corresponding
+ * elements of <code>m</code>. If you want to have an independent copy of the
+ * sub-array, use <code>Mat.clone()</code>.
+ * @param rowRange Range of the <code>m</code> rows to take. As usual, the range
+ * start is inclusive and the range end is exclusive. Use <code>Range.all()</code>
+ * to take all the rows.
+ * @param colRange Range of the <code>m</code> columns to take. Use
+ * <code>Range.all()</code> to take all the columns.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(Mat m, Range rowRange, Range colRange)
     {
@@ -334,27 +349,27 @@ public class Mat implements Serializable{
     }
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
  * @param m Array that (as a whole or partly) is assigned to the constructed
  * matrix. No data is copied by these constructors. Instead, the header pointing
- * to "m" data or its sub-array is constructed and associated with it. The
- * reference counter, if any, is incremented. So, when you modify the matrix
- * formed using such a constructor, you also modify the corresponding elements
- * of "m". If you want to have an independent copy of the sub-array, use
- * "Mat.clone()".
- * @param rowRange Range of the "m" rows to take. As usual, the range start is
- * inclusive and the range end is exclusive. Use "Range.all()" to take all the
- * rows.
+ * to <code>m</code> data or its sub-array is constructed and associated with
+ * it. The reference counter, if any, is incremented. So, when you modify the
+ * matrix formed using such a constructor, you also modify the corresponding
+ * elements of <code>m</code>. If you want to have an independent copy of the
+ * sub-array, use <code>Mat.clone()</code>.
+ * @param rowRange Range of the <code>m</code> rows to take. As usual, the range
+ * start is inclusive and the range end is exclusive. Use <code>Range.all()</code>
+ * to take all the rows.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(Mat m, Range rowRange)
     {
@@ -369,25 +384,25 @@ public class Mat implements Serializable{
     //
 
 /**
- * Various Mat constructors
+ * <p>Various Mat constructors</p>
  *
- * These are various constructors that form a matrix. As noted in the
+ * <p>These are various constructors that form a matrix. As noted in the
  * "AutomaticAllocation", often the default constructor is enough, and the
  * proper matrix will be allocated by an OpenCV function. The constructed matrix
  * can further be assigned to another matrix or matrix expression or can be
  * allocated with "Mat.create". In the former case, the old content is
- * de-referenced.
+ * de-referenced.</p>
  *
  * @param m Array that (as a whole or partly) is assigned to the constructed
  * matrix. No data is copied by these constructors. Instead, the header pointing
- * to "m" data or its sub-array is constructed and associated with it. The
- * reference counter, if any, is incremented. So, when you modify the matrix
- * formed using such a constructor, you also modify the corresponding elements
- * of "m". If you want to have an independent copy of the sub-array, use
- * "Mat.clone()".
- * @param roi a roi
+ * to <code>m</code> data or its sub-array is constructed and associated with
+ * it. The reference counter, if any, is incremented. So, when you modify the
+ * matrix formed using such a constructor, you also modify the corresponding
+ * elements of <code>m</code>. If you want to have an independent copy of the
+ * sub-array, use <code>Mat.clone()</code>.
+ * @param roi Region of interest.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mat">org.opencv.core.Mat.Mat</a>
  */
     public Mat(Mat m, Rect roi)
     {
@@ -402,33 +417,36 @@ public class Mat implements Serializable{
     //
 
 /**
- * Adjusts a submatrix size and position within the parent matrix.
+ * <p>Adjusts a submatrix size and position within the parent matrix.</p>
  *
- * The method is complimentary to "Mat.locateROI". The typical use of these
+ * <p>The method is complimentary to "Mat.locateROI". The typical use of these
  * functions is to determine the submatrix position within the parent matrix and
  * then shift the position somehow. Typically, it can be required for filtering
  * operations when pixels outside of the ROI should be taken into account. When
  * all the method parameters are positive, the ROI needs to grow in all
- * directions by the specified amount, for example:
+ * directions by the specified amount, for example:</p>
  *
- * In this example, the matrix size is increased by 4 elements in each
+ * <p>In this example, the matrix size is increased by 4 elements in each
  * direction. The matrix is shifted by 2 elements to the left and 2 elements up,
  * which brings in all the necessary pixels for the filtering with the 5x5
- * kernel.
+ * kernel.</p>
  *
- * It is your responsibility to make sure "adjustROI" does not cross the parent
- * matrix boundary. If it does, the function signals an error.
+ * <p><code>adjustROI</code> forces the adjusted ROI to be inside of the parent
+ * matrix that is boundaries of the adjusted ROI are constrained by boundaries
+ * of the parent matrix. For example, if the submatrix <code>A</code> is located
+ * in the first row of a parent matrix and you called <code>A.adjustROI(2, 2, 2,
+ * 2)</code> then <code>A</code> will not be increased in the upward direction.</p>
  *
- * The function is used internally by the OpenCV filtering functions, like
- * "filter2D", morphological operations, and so on.
+ * <p>The function is used internally by the OpenCV filtering functions, like
+ * "filter2D", morphological operations, and so on.</p>
  *
  * @param dtop Shift of the top submatrix boundary upwards.
  * @param dbottom Shift of the bottom submatrix boundary downwards.
  * @param dleft Shift of the left submatrix boundary to the left.
  * @param dright Shift of the right submatrix boundary to the right.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-adjustroi">org.opencv.core.Mat.adjustROI</a>
- * @see org.opencv.imgproc.Imgproc.copyMakeBorder
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-adjustroi">org.opencv.core.Mat.adjustROI</a>
+ * @see org.opencv.imgproc.Imgproc#copyMakeBorder
  */
     public Mat adjustROI(int dtop, int dbottom, int dleft, int dright)
     {
@@ -443,15 +461,15 @@ public class Mat implements Serializable{
     //
 
 /**
- * Provides a functional form of "convertTo".
+ * <p>Provides a functional form of <code>convertTo</code>.</p>
  *
- * This is an internally used method called by the "MatrixExpressions" engine.
+ * <p>This is an internally used method called by the "MatrixExpressions" engine.</p>
  *
  * @param m Destination array.
  * @param type Desired destination array depth (or -1 if it should be the same
  * as the source type).
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-assignto">org.opencv.core.Mat.assignTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-assignto">org.opencv.core.Mat.assignTo</a>
  */
     public void assignTo(Mat m, int type)
     {
@@ -462,13 +480,13 @@ public class Mat implements Serializable{
     }
 
 /**
- * Provides a functional form of "convertTo".
+ * <p>Provides a functional form of <code>convertTo</code>.</p>
  *
- * This is an internally used method called by the "MatrixExpressions" engine.
+ * <p>This is an internally used method called by the "MatrixExpressions" engine.</p>
  *
  * @param m Destination array.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-assignto">org.opencv.core.Mat.assignTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-assignto">org.opencv.core.Mat.assignTo</a>
  */
     public void assignTo(Mat m)
     {
@@ -483,11 +501,11 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns the number of matrix channels.
+ * <p>Returns the number of matrix channels.</p>
  *
- * The method returns the number of matrix channels.
+ * <p>The method returns the number of matrix channels.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-channels">org.opencv.core.Mat.channels</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-channels">org.opencv.core.Mat.channels</a>
  */
     public int channels()
     {
@@ -531,13 +549,13 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a full copy of the array and the underlying data.
+ * <p>Creates a full copy of the array and the underlying data.</p>
  *
- * The method creates a full copy of the array. The original "step[]" is not
- * taken into account. So, the array copy is a continuous array occupying
- * "total()*elemSize()" bytes.
+ * <p>The method creates a full copy of the array. The original <code>step[]</code>
+ * is not taken into account. So, the array copy is a continuous array occupying
+ * <code>total()*elemSize()</code> bytes.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-clone">org.opencv.core.Mat.clone</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-clone">org.opencv.core.Mat.clone</a>
  */
     public Mat clone()
     {
@@ -552,16 +570,16 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a matrix header for the specified matrix column.
+ * <p>Creates a matrix header for the specified matrix column.</p>
  *
- * The method makes a new header for the specified matrix column and returns it.
+ * <p>The method makes a new header for the specified matrix column and returns it.
  * This is an O(1) operation, regardless of the matrix size. The underlying data
  * of the new matrix is shared with the original matrix. See also the "Mat.row"
- * description.
+ * description.</p>
  *
- * @param x a x
+ * @param x A 0-based column index.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-col">org.opencv.core.Mat.col</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-col">org.opencv.core.Mat.col</a>
  */
     public Mat col(int x)
     {
@@ -576,15 +594,15 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a matrix header for the specified row span.
+ * <p>Creates a matrix header for the specified row span.</p>
  *
- * The method makes a new header for the specified column span of the matrix.
- * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.
+ * <p>The method makes a new header for the specified column span of the matrix.
+ * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.</p>
  *
  * @param startcol An inclusive 0-based start index of the column span.
  * @param endcol An exclusive 0-based ending index of the column span.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-colrange">org.opencv.core.Mat.colRange</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-colrange">org.opencv.core.Mat.colRange</a>
  */
     public Mat colRange(int startcol, int endcol)
     {
@@ -599,14 +617,14 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a matrix header for the specified row span.
+ * <p>Creates a matrix header for the specified row span.</p>
  *
- * The method makes a new header for the specified column span of the matrix.
- * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.
+ * <p>The method makes a new header for the specified column span of the matrix.
+ * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.</p>
  *
  * @param r "Range" structure containing both the start and the end indices.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-colrange">org.opencv.core.Mat.colRange</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-colrange">org.opencv.core.Mat.colRange</a>
  */
     public Mat colRange(Range r)
     {
@@ -634,22 +652,23 @@ public class Mat implements Serializable{
     //
 
 /**
- * Converts an array to another datatype with optional scaling.
+ * <p>Converts an array to another data type with optional scaling.</p>
  *
- * The method converts source pixel values to the target datatype.
- * "saturate_cast<>" is applied at the end to avoid possible overflows:
+ * <p>The method converts source pixel values to the target data type.
+ * <code>saturate_cast<></code> is applied at the end to avoid possible
+ * overflows:</p>
  *
- * m(x,y) = saturate _ cast<rType>(alpha(*this)(x,y) + beta)
+ * <p><em>m(x,y) = saturate _ cast<rType>(alpha(*this)(x,y) + beta)</em></p>
  *
  * @param m Destination matrix. If it does not have a proper size or type before
  * the operation, it is reallocated.
  * @param rtype Desired destination matrix type or, rather, the depth since the
- * number of channels are the same as the source has. If "rtype" is negative,
- * the destination matrix will have the same type as the source.
+ * number of channels are the same as the source has. If <code>rtype</code> is
+ * negative, the destination matrix will have the same type as the source.
  * @param alpha Optional scale factor.
  * @param beta Optional delta added to the scaled values.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-convertto">org.opencv.core.Mat.convertTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-convertto">org.opencv.core.Mat.convertTo</a>
  */
     public void convertTo(Mat m, int rtype, double alpha, double beta)
     {
@@ -660,21 +679,22 @@ public class Mat implements Serializable{
     }
 
 /**
- * Converts an array to another datatype with optional scaling.
+ * <p>Converts an array to another data type with optional scaling.</p>
  *
- * The method converts source pixel values to the target datatype.
- * "saturate_cast<>" is applied at the end to avoid possible overflows:
+ * <p>The method converts source pixel values to the target data type.
+ * <code>saturate_cast<></code> is applied at the end to avoid possible
+ * overflows:</p>
  *
- * m(x,y) = saturate _ cast<rType>(alpha(*this)(x,y) + beta)
+ * <p><em>m(x,y) = saturate _ cast<rType>(alpha(*this)(x,y) + beta)</em></p>
  *
  * @param m Destination matrix. If it does not have a proper size or type before
  * the operation, it is reallocated.
  * @param rtype Desired destination matrix type or, rather, the depth since the
- * number of channels are the same as the source has. If "rtype" is negative,
- * the destination matrix will have the same type as the source.
+ * number of channels are the same as the source has. If <code>rtype</code> is
+ * negative, the destination matrix will have the same type as the source.
  * @param alpha Optional scale factor.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-convertto">org.opencv.core.Mat.convertTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-convertto">org.opencv.core.Mat.convertTo</a>
  */
     public void convertTo(Mat m, int rtype, double alpha)
     {
@@ -685,20 +705,21 @@ public class Mat implements Serializable{
     }
 
 /**
- * Converts an array to another datatype with optional scaling.
+ * <p>Converts an array to another data type with optional scaling.</p>
  *
- * The method converts source pixel values to the target datatype.
- * "saturate_cast<>" is applied at the end to avoid possible overflows:
+ * <p>The method converts source pixel values to the target data type.
+ * <code>saturate_cast<></code> is applied at the end to avoid possible
+ * overflows:</p>
  *
- * m(x,y) = saturate _ cast<rType>(alpha(*this)(x,y) + beta)
+ * <p><em>m(x,y) = saturate _ cast<rType>(alpha(*this)(x,y) + beta)</em></p>
  *
  * @param m Destination matrix. If it does not have a proper size or type before
  * the operation, it is reallocated.
  * @param rtype Desired destination matrix type or, rather, the depth since the
- * number of channels are the same as the source has. If "rtype" is negative,
- * the destination matrix will have the same type as the source.
+ * number of channels are the same as the source has. If <code>rtype</code> is
+ * negative, the destination matrix will have the same type as the source.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-convertto">org.opencv.core.Mat.convertTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-convertto">org.opencv.core.Mat.convertTo</a>
  */
     public void convertTo(Mat m, int rtype)
     {
@@ -713,23 +734,23 @@ public class Mat implements Serializable{
     //
 
 /**
- * Copies the matrix to another one.
+ * <p>Copies the matrix to another one.</p>
  *
- * The method copies the matrix data to another matrix. Before copying the data,
- * the method invokes
+ * <p>The method copies the matrix data to another matrix. Before copying the data,
+ * the method invokes</p>
  *
- * so that the destination matrix is reallocated if needed. While "m.copyTo(m);"
- * works flawlessly, the function does not handle the case of a partial overlap
- * between the source and the destination matrices.
+ * <p>so that the destination matrix is reallocated if needed. While
+ * <code>m.copyTo(m);</code> works flawlessly, the function does not handle the
+ * case of a partial overlap between the source and the destination matrices.</p>
  *
- * When the operation mask is specified, and the "Mat.create" call shown above
- * reallocated the matrix, the newly allocated matrix is initialized with all
- * zeros before copying the data.
+ * <p>When the operation mask is specified, and the <code>Mat.create</code> call
+ * shown above reallocated the matrix, the newly allocated matrix is initialized
+ * with all zeros before copying the data.</p>
  *
  * @param m Destination matrix. If it does not have a proper size or type before
  * the operation, it is reallocated.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-copyto">org.opencv.core.Mat.copyTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-copyto">org.opencv.core.Mat.copyTo</a>
  */
     public void copyTo(Mat m)
     {
@@ -744,25 +765,25 @@ public class Mat implements Serializable{
     //
 
 /**
- * Copies the matrix to another one.
+ * <p>Copies the matrix to another one.</p>
  *
- * The method copies the matrix data to another matrix. Before copying the data,
- * the method invokes
+ * <p>The method copies the matrix data to another matrix. Before copying the data,
+ * the method invokes</p>
  *
- * so that the destination matrix is reallocated if needed. While "m.copyTo(m);"
- * works flawlessly, the function does not handle the case of a partial overlap
- * between the source and the destination matrices.
+ * <p>so that the destination matrix is reallocated if needed. While
+ * <code>m.copyTo(m);</code> works flawlessly, the function does not handle the
+ * case of a partial overlap between the source and the destination matrices.</p>
  *
- * When the operation mask is specified, and the "Mat.create" call shown above
- * reallocated the matrix, the newly allocated matrix is initialized with all
- * zeros before copying the data.
+ * <p>When the operation mask is specified, and the <code>Mat.create</code> call
+ * shown above reallocated the matrix, the newly allocated matrix is initialized
+ * with all zeros before copying the data.</p>
  *
  * @param m Destination matrix. If it does not have a proper size or type before
  * the operation, it is reallocated.
  * @param mask Operation mask. Its non-zero elements indicate which matrix
  * elements need to be copied.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-copyto">org.opencv.core.Mat.copyTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-copyto">org.opencv.core.Mat.copyTo</a>
  */
     public void copyTo(Mat m, Mat mask)
     {
@@ -777,33 +798,35 @@ public class Mat implements Serializable{
     //
 
 /**
- * Allocates new array data if needed.
+ * <p>Allocates new array data if needed.</p>
  *
- * This is one of the key "Mat" methods. Most new-style OpenCV functions and
- * methods that produce arrays call this method for each output array. The
- * method uses the following algorithm:
- *   #. If the current array shape and the type match the new ones, return
+ * <p>This is one of the key <code>Mat</code> methods. Most new-style OpenCV
+ * functions and methods that produce arrays call this method for each output
+ * array. The method uses the following algorithm:</p>
+ * <ul>
+ *   <li> If the current array shape and the type match the new ones, return
  * immediately. Otherwise, de-reference the previous data by calling
  * "Mat.release".
- *   #. Initialize the new header.
- *   #. Allocate the new data of "total()*elemSize()" bytes.
- *   #. Allocate the new, associated with the data, reference counter and set it
- * to 1.
+ *   <li> Initialize the new header.
+ *   <li> Allocate the new data of <code>total()*elemSize()</code> bytes.
+ *   <li> Allocate the new, associated with the data, reference counter and set
+ * it to 1.
+ * </ul>
  *
- * Such a scheme makes the memory management robust and efficient at the same
+ * <p>Such a scheme makes the memory management robust and efficient at the same
  * time and helps avoid extra typing for you. This means that usually there is
- * no need to explicitly allocate output arrays. That is, instead of writing:
+ * no need to explicitly allocate output arrays. That is, instead of writing:</p>
  *
- * you can simply write:
+ * <p>you can simply write:</p>
  *
- * because "cvtColor", as well as the most of OpenCV functions, calls
- * "Mat.create()" for the output array internally.
+ * <p>because <code>cvtColor</code>, as well as the most of OpenCV functions, calls
+ * <code>Mat.create()</code> for the output array internally.</p>
  *
  * @param rows New number of rows.
  * @param cols New number of columns.
  * @param type New matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-create">org.opencv.core.Mat.create</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-create">org.opencv.core.Mat.create</a>
  */
     public void create(int rows, int cols, int type)
     {
@@ -818,32 +841,35 @@ public class Mat implements Serializable{
     //
 
 /**
- * Allocates new array data if needed.
+ * <p>Allocates new array data if needed.</p>
  *
- * This is one of the key "Mat" methods. Most new-style OpenCV functions and
- * methods that produce arrays call this method for each output array. The
- * method uses the following algorithm:
- *   #. If the current array shape and the type match the new ones, return
+ * <p>This is one of the key <code>Mat</code> methods. Most new-style OpenCV
+ * functions and methods that produce arrays call this method for each output
+ * array. The method uses the following algorithm:</p>
+ * <ul>
+ *   <li> If the current array shape and the type match the new ones, return
  * immediately. Otherwise, de-reference the previous data by calling
  * "Mat.release".
- *   #. Initialize the new header.
- *   #. Allocate the new data of "total()*elemSize()" bytes.
- *   #. Allocate the new, associated with the data, reference counter and set it
- * to 1.
+ *   <li> Initialize the new header.
+ *   <li> Allocate the new data of <code>total()*elemSize()</code> bytes.
+ *   <li> Allocate the new, associated with the data, reference counter and set
+ * it to 1.
+ * </ul>
  *
- * Such a scheme makes the memory management robust and efficient at the same
+ * <p>Such a scheme makes the memory management robust and efficient at the same
  * time and helps avoid extra typing for you. This means that usually there is
- * no need to explicitly allocate output arrays. That is, instead of writing:
+ * no need to explicitly allocate output arrays. That is, instead of writing:</p>
  *
- * you can simply write:
+ * <p>you can simply write:</p>
  *
- * because "cvtColor", as well as the most of OpenCV functions, calls
- * "Mat.create()" for the output array internally.
+ * <p>because <code>cvtColor</code>, as well as the most of OpenCV functions, calls
+ * <code>Mat.create()</code> for the output array internally.</p>
  *
- * @param size Alternative new matrix size specification: "Size(cols, rows)"
+ * @param size Alternative new matrix size specification: <code>Size(cols,
+ * rows)</code>
  * @param type New matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-create">org.opencv.core.Mat.create</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-create">org.opencv.core.Mat.create</a>
  */
     public void create(Size size, int type)
     {
@@ -858,15 +884,15 @@ public class Mat implements Serializable{
     //
 
 /**
- * Computes a cross-product of two 3-element vectors.
+ * <p>Computes a cross-product of two 3-element vectors.</p>
  *
- * The method computes a cross-product of two 3-element vectors. The vectors
+ * <p>The method computes a cross-product of two 3-element vectors. The vectors
  * must be 3-element floating-point vectors of the same shape and size. The
- * result is another 3-element vector of the same shape and type as operands.
+ * result is another 3-element vector of the same shape and type as operands.</p>
  *
  * @param m Another cross-product operand.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-cross">org.opencv.core.Mat.cross</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-cross">org.opencv.core.Mat.cross</a>
  */
     public Mat cross(Mat m)
     {
@@ -893,21 +919,25 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns the depth of a matrix element.
+ * <p>Returns the depth of a matrix element.</p>
  *
- * The method returns the identifier of the matrix element depth (the type of
+ * <p>The method returns the identifier of the matrix element depth (the type of
  * each individual channel). For example, for a 16-bit signed 3-channel array,
- * the method returns "CV_16S". A complete list of matrix types contains the
- * following values:
- *   * "CV_8U" - 8-bit unsigned integers ("0..255")
- *   * "CV_8S" - 8-bit signed integers ("-128..127")
- *   * "CV_16U" - 16-bit unsigned integers ("0..65535")
- *   * "CV_16S" - 16-bit signed integers ("-32768..32767")
- *   * "CV_32S" - 32-bit signed integers ("-2147483648..2147483647")
- *   * "CV_32F" - 32-bit floating-point numbers ("-FLT_MAX..FLT_MAX, INF, NAN")
- *   * "CV_64F" - 64-bit floating-point numbers ("-DBL_MAX..DBL_MAX, INF, NAN")
+ * the method returns <code>CV_16S</code>. A complete list of matrix types
+ * contains the following values:</p>
+ * <ul>
+ *   <li> <code>CV_8U</code> - 8-bit unsigned integers (<code>0..255</code>)
+ *   <li> <code>CV_8S</code> - 8-bit signed integers (<code>-128..127</code>)
+ *   <li> <code>CV_16U</code> - 16-bit unsigned integers (<code>0..65535</code>)
+ *   <li> <code>CV_16S</code> - 16-bit signed integers (<code>-32768..32767</code>)
+ *   <li> <code>CV_32S</code> - 32-bit signed integers (<code>-2147483648..2147483647</code>)
+ *   <li> <code>CV_32F</code> - 32-bit floating-point numbers (<code>-FLT_MAX..FLT_MAX,
+ * INF, NAN</code>)
+ *   <li> <code>CV_64F</code> - 64-bit floating-point numbers (<code>-DBL_MAX..DBL_MAX,
+ * INF, NAN</code>)
+ * </ul>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-depth">org.opencv.core.Mat.depth</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-depth">org.opencv.core.Mat.depth</a>
  */
     public int depth()
     {
@@ -922,20 +952,23 @@ public class Mat implements Serializable{
     //
 
 /**
- * Extracts a diagonal from a matrix, or creates a diagonal matrix.
+ * <p>Extracts a diagonal from a matrix, or creates a diagonal matrix.</p>
  *
- * The method makes a new header for the specified matrix diagonal. The new
+ * <p>The method makes a new header for the specified matrix diagonal. The new
  * matrix is represented as a single-column matrix. Similarly to "Mat.row" and
- * "Mat.col", this is an O(1) operation.
+ * "Mat.col", this is an O(1) operation.</p>
  *
- * @param d Index of the diagonal, with the following values:
- *   * d=0 is the main diagonal.
- *   * d>0 is a diagonal from the lower half. For example, "d=1" means the
- * diagonal is set immediately below the main one.
- *   * d<0 is a diagonal from the upper half. For example, "d=1" means the
- * diagonal is set immediately above the main one.
+ * @param d Single-column matrix that forms a diagonal matrix or index of the
+ * diagonal, with the following values:
+ * <ul>
+ *   <li> d=0 is the main diagonal.
+ *   <li> d>0 is a diagonal from the lower half. For example, <code>d=1</code>
+ * means the diagonal is set immediately below the main one.
+ *   <li> d<0 is a diagonal from the upper half. For example, <code>d=1</code>
+ * means the diagonal is set immediately above the main one.
+ * </ul>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-diag">org.opencv.core.Mat.diag</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-diag">org.opencv.core.Mat.diag</a>
  */
     public Mat diag(int d)
     {
@@ -946,13 +979,13 @@ public class Mat implements Serializable{
     }
 
 /**
- * Extracts a diagonal from a matrix, or creates a diagonal matrix.
+ * <p>Extracts a diagonal from a matrix, or creates a diagonal matrix.</p>
  *
- * The method makes a new header for the specified matrix diagonal. The new
+ * <p>The method makes a new header for the specified matrix diagonal. The new
  * matrix is represented as a single-column matrix. Similarly to "Mat.row" and
- * "Mat.col", this is an O(1) operation.
+ * "Mat.col", this is an O(1) operation.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-diag">org.opencv.core.Mat.diag</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-diag">org.opencv.core.Mat.diag</a>
  */
     public Mat diag()
     {
@@ -967,20 +1000,23 @@ public class Mat implements Serializable{
     //
 
 /**
- * Extracts a diagonal from a matrix, or creates a diagonal matrix.
+ * <p>Extracts a diagonal from a matrix, or creates a diagonal matrix.</p>
  *
- * The method makes a new header for the specified matrix diagonal. The new
+ * <p>The method makes a new header for the specified matrix diagonal. The new
  * matrix is represented as a single-column matrix. Similarly to "Mat.row" and
- * "Mat.col", this is an O(1) operation.
+ * "Mat.col", this is an O(1) operation.</p>
  *
- * @param d Index of the diagonal, with the following values:
- *   * d=0 is the main diagonal.
- *   * d>0 is a diagonal from the lower half. For example, "d=1" means the
- * diagonal is set immediately below the main one.
- *   * d<0 is a diagonal from the upper half. For example, "d=1" means the
- * diagonal is set immediately above the main one.
+ * @param d Single-column matrix that forms a diagonal matrix or index of the
+ * diagonal, with the following values:
+ * <ul>
+ *   <li> d=0 is the main diagonal.
+ *   <li> d>0 is a diagonal from the lower half. For example, <code>d=1</code>
+ * means the diagonal is set immediately below the main one.
+ *   <li> d<0 is a diagonal from the upper half. For example, <code>d=1</code>
+ * means the diagonal is set immediately above the main one.
+ * </ul>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-diag">org.opencv.core.Mat.diag</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-diag">org.opencv.core.Mat.diag</a>
  */
     public static Mat diag(Mat d)
     {
@@ -995,17 +1031,17 @@ public class Mat implements Serializable{
     //
 
 /**
- * Computes a dot-product of two vectors.
+ * <p>Computes a dot-product of two vectors.</p>
  *
- * The method computes a dot-product of two matrices. If the matrices are not
+ * <p>The method computes a dot-product of two matrices. If the matrices are not
  * single-column or single-row vectors, the top-to-bottom left-to-right scan
  * ordering is used to treat them as 1D vectors. The vectors must have the same
  * size and type. If the matrices have more than one channel, the dot products
- * from all the channels are summed together.
+ * from all the channels are summed together.</p>
  *
  * @param m Another dot-product operand.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-dot">org.opencv.core.Mat.dot</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-dot">org.opencv.core.Mat.dot</a>
  */
     public double dot(Mat m)
     {
@@ -1020,12 +1056,13 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns the matrix element size in bytes.
+ * <p>Returns the matrix element size in bytes.</p>
  *
- * The method returns the matrix element size in bytes. For example, if the
- * matrix type is "CV_16SC3", the method returns "3*sizeof(short)" or 6.
+ * <p>The method returns the matrix element size in bytes. For example, if the
+ * matrix type is <code>CV_16SC3</code>, the method returns <code>3*sizeof(short)</code>
+ * or 6.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-elemsize">org.opencv.core.Mat.elemSize</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-elemsize">org.opencv.core.Mat.elemSize</a>
  */
     public long elemSize()
     {
@@ -1040,13 +1077,13 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns the size of each matrix element channel in bytes.
+ * <p>Returns the size of each matrix element channel in bytes.</p>
  *
- * The method returns the matrix element channel size in bytes, that is, it
+ * <p>The method returns the matrix element channel size in bytes, that is, it
  * ignores the number of channels. For example, if the matrix type is
- * "CV_16SC3", the method returns "sizeof(short)" or 2.
+ * <code>CV_16SC3</code>, the method returns <code>sizeof(short)</code> or 2.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-elemsize1">org.opencv.core.Mat.elemSize1</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-elemsize1">org.opencv.core.Mat.elemSize1</a>
  */
     public long elemSize1()
     {
@@ -1061,13 +1098,14 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns "true" if the array has no elemens.
+ * <p>Returns <code>true</code> if the array has no elements.</p>
  *
- * The method returns "true" if "Mat.total()" is 0 or if "Mat.data" is NULL.
- * Because of "pop_back()" and "resize()" methods "M.total() == 0" does not
- * imply that "M.data == NULL".
+ * <p>The method returns <code>true</code> if <code>Mat.total()</code> is 0 or if
+ * <code>Mat.data</code> is NULL. Because of <code>pop_back()</code> and
+ * <code>resize()</code> methods <code>M.total() == 0</code> does not imply that
+ * <code>M.data == NULL</code>.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-empty">org.opencv.core.Mat.empty</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-empty">org.opencv.core.Mat.empty</a>
  */
     public boolean empty()
     {
@@ -1082,17 +1120,17 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns an identity matrix of the specified size and type.
+ * <p>Returns an identity matrix of the specified size and type.</p>
  *
- * The method returns a Matlab-style identity matrix initializer, similarly to
+ * <p>The method returns a Matlab-style identity matrix initializer, similarly to
  * "Mat.zeros". Similarly to "Mat.ones", you can use a scale operation to
- * create a scaled identity matrix efficiently:
+ * create a scaled identity matrix efficiently:</p>
  *
  * @param rows Number of rows.
  * @param cols Number of columns.
  * @param type Created matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-eye">org.opencv.core.Mat.eye</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-eye">org.opencv.core.Mat.eye</a>
  */
     public static Mat eye(int rows, int cols, int type)
     {
@@ -1107,16 +1145,17 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns an identity matrix of the specified size and type.
+ * <p>Returns an identity matrix of the specified size and type.</p>
  *
- * The method returns a Matlab-style identity matrix initializer, similarly to
+ * <p>The method returns a Matlab-style identity matrix initializer, similarly to
  * "Mat.zeros". Similarly to "Mat.ones", you can use a scale operation to
- * create a scaled identity matrix efficiently:
+ * create a scaled identity matrix efficiently:</p>
  *
- * @param size Alternative matrix size specification as "Size(cols, rows)".
+ * @param size Alternative matrix size specification as <code>Size(cols,
+ * rows)</code>.
  * @param type Created matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-eye">org.opencv.core.Mat.eye</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-eye">org.opencv.core.Mat.eye</a>
  */
     public static Mat eye(Size size, int type)
     {
@@ -1131,22 +1170,24 @@ public class Mat implements Serializable{
     //
 
 /**
- * Inverses a matrix.
+ * <p>Inverses a matrix.</p>
  *
- * The method performs a matrix inversion by means of matrix expressions. This
+ * <p>The method performs a matrix inversion by means of matrix expressions. This
  * means that a temporary matrix inversion object is returned by the method and
  * can be used further as a part of more complex matrix expressions or can be
- * assigned to a matrix.
+ * assigned to a matrix.</p>
  *
  * @param method Matrix inversion method. Possible values are the following:
- *   * DECOMP_LU is the LU decomposition. The matrix must be non-singular.
- *   * DECOMP_CHOLESKY is the Cholesky LL^T decomposition for symmetrical
- * positively defined matrices only. This type is about twice faster than LU on
- * big matrices.
- *   * DECOMP_SVD is the SVD decomposition. If the matrix is singular or even
+ * <ul>
+ *   <li> DECOMP_LU is the LU decomposition. The matrix must be non-singular.
+ *   <li> DECOMP_CHOLESKY is the Cholesky <em>LL^T</em> decomposition for
+ * symmetrical positively defined matrices only. This type is about twice faster
+ * than LU on big matrices.
+ *   <li> DECOMP_SVD is the SVD decomposition. If the matrix is singular or even
  * non-square, the pseudo inversion is computed.
+ * </ul>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-inv">org.opencv.core.Mat.inv</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-inv">org.opencv.core.Mat.inv</a>
  */
     public Mat inv(int method)
     {
@@ -1157,14 +1198,14 @@ public class Mat implements Serializable{
     }
 
 /**
- * Inverses a matrix.
+ * <p>Inverses a matrix.</p>
  *
- * The method performs a matrix inversion by means of matrix expressions. This
+ * <p>The method performs a matrix inversion by means of matrix expressions. This
  * means that a temporary matrix inversion object is returned by the method and
  * can be used further as a part of more complex matrix expressions or can be
- * assigned to a matrix.
+ * assigned to a matrix.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-inv">org.opencv.core.Mat.inv</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-inv">org.opencv.core.Mat.inv</a>
  */
     public Mat inv()
     {
@@ -1179,40 +1220,40 @@ public class Mat implements Serializable{
     //
 
 /**
- * Reports whether the matrix is continuous or not.
+ * <p>Reports whether the matrix is continuous or not.</p>
  *
- * The method returns "true" if the matrix elements are stored continuously
- * without gaps at the end of each row. Otherwise, it returns "false".
- * Obviously, "1x1" or "1xN" matrices are always continuous. Matrices created
- * with "Mat.create" are always continuous. But if you extract a part of the
- * matrix using "Mat.col", "Mat.diag", and so on, or constructed a matrix
- * header for externally allocated data, such matrices may no longer have this
- * property.
+ * <p>The method returns <code>true</code> if the matrix elements are stored
+ * continuously without gaps at the end of each row. Otherwise, it returns
+ * <code>false</code>. Obviously, <code>1x1</code> or <code>1xN</code> matrices
+ * are always continuous. Matrices created with "Mat.create" are always
+ * continuous. But if you extract a part of the matrix using "Mat.col",
+ * "Mat.diag", and so on, or constructed a matrix header for externally
+ * allocated data, such matrices may no longer have this property.</p>
  *
- * The continuity flag is stored as a bit in the "Mat.flags" field and is
- * computed automatically when you construct a matrix header. Thus, the
+ * <p>The continuity flag is stored as a bit in the <code>Mat.flags</code> field
+ * and is computed automatically when you construct a matrix header. Thus, the
  * continuity check is a very fast operation, though theoretically it could be
- * done as follows:
+ * done as follows:</p>
  *
- * The method is used in quite a few of OpenCV functions. The point is that
+ * <p>The method is used in quite a few of OpenCV functions. The point is that
  * element-wise operations (such as arithmetic and logical operations, math
  * functions, alpha blending, color space transformations, and others) do not
  * depend on the image geometry. Thus, if all the input and output arrays are
  * continuous, the functions can process them as very long single-row vectors.
  * The example below illustrates how an alpha-blending function can be
- * implemented.
+ * implemented.</p>
  *
- * This approach, while being very simple, can boost the performance of a simple
+ * <p>This approach, while being very simple, can boost the performance of a simple
  * element-operation by 10-20 percents, especially if the image is rather small
- * and the operation is quite simple.
+ * and the operation is quite simple.</p>
  *
- * Another OpenCV idiom in this function, a call of "Mat.create" for the
+ * <p>Another OpenCV idiom in this function, a call of "Mat.create" for the
  * destination array, that allocates the destination array unless it already has
  * the proper size and type. And while the newly allocated arrays are always
- * continuous, you still need to check the destination array because "create"
- * does not always allocate a new matrix.
+ * continuous, you still need to check the destination array because
+ * "Mat.create" does not always allocate a new matrix.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-iscontinuous">org.opencv.core.Mat.isContinuous</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-iscontinuous">org.opencv.core.Mat.isContinuous</a>
  */
     public boolean isContinuous()
     {
@@ -1239,22 +1280,22 @@ public class Mat implements Serializable{
     //
 
 /**
- * Locates the matrix header within a parent matrix.
+ * <p>Locates the matrix header within a parent matrix.</p>
  *
- * After you extracted a submatrix from a matrix using "Mat.row", "Mat.col",
+ * <p>After you extracted a submatrix from a matrix using "Mat.row", "Mat.col",
  * "Mat.rowRange", "Mat.colRange", and others, the resultant submatrix points
  * just to the part of the original big matrix. However, each submatrix contains
- * information (represented by "datastart" and "dataend" fields) that helps
- * reconstruct the original matrix size and the position of the extracted
- * submatrix within the original matrix. The method "locateROI" does exactly
- * that.
+ * information (represented by <code>datastart</code> and <code>dataend</code>
+ * fields) that helps reconstruct the original matrix size and the position of
+ * the extracted submatrix within the original matrix. The method
+ * <code>locateROI</code> does exactly that.</p>
  *
  * @param wholeSize Output parameter that contains the size of the whole matrix
- * containing "*this" is a part.
- * @param ofs Output parameter that contains an offset of "*this" inside the
- * whole matrix.
+ * containing <code>*this</code> as a part.
+ * @param ofs Output parameter that contains an offset of <code>*this</code>
+ * inside the whole matrix.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-locateroi">org.opencv.core.Mat.locateROI</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-locateroi">org.opencv.core.Mat.locateROI</a>
  */
     public void locateROI(Size wholeSize, Point ofs)
     {
@@ -1271,19 +1312,19 @@ public class Mat implements Serializable{
     //
 
 /**
- * Performs an element-wise multiplication or division of the two matrices.
+ * <p>Performs an element-wise multiplication or division of the two matrices.</p>
  *
- * The method returns a temporary object encoding per-element array
+ * <p>The method returns a temporary object encoding per-element array
  * multiplication, with optional scale. Note that this is not a matrix
- * multiplication that corresponds to a simpler "*" operator.
+ * multiplication that corresponds to a simpler "*" operator.</p>
  *
- * Example:
+ * <p>Example:</p>
  *
- * @param m Another array of the same type and the same size as "*this", or a
- * matrix expression.
+ * @param m Another array of the same type and the same size as
+ * <code>*this</code>, or a matrix expression.
  * @param scale Optional scale factor.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mul">org.opencv.core.Mat.mul</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mul">org.opencv.core.Mat.mul</a>
  */
     public Mat mul(Mat m, double scale)
     {
@@ -1294,18 +1335,18 @@ public class Mat implements Serializable{
     }
 
 /**
- * Performs an element-wise multiplication or division of the two matrices.
+ * <p>Performs an element-wise multiplication or division of the two matrices.</p>
  *
- * The method returns a temporary object encoding per-element array
+ * <p>The method returns a temporary object encoding per-element array
  * multiplication, with optional scale. Note that this is not a matrix
- * multiplication that corresponds to a simpler "*" operator.
+ * multiplication that corresponds to a simpler "*" operator.</p>
  *
- * Example:
+ * <p>Example:</p>
  *
- * @param m Another array of the same type and the same size as "*this", or a
- * matrix expression.
+ * @param m Another array of the same type and the same size as
+ * <code>*this</code>, or a matrix expression.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-mul">org.opencv.core.Mat.mul</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-mul">org.opencv.core.Mat.mul</a>
  */
     public Mat mul(Mat m)
     {
@@ -1320,21 +1361,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns an array of all 1's of the specified size and type.
+ * <p>Returns an array of all 1's of the specified size and type.</p>
  *
- * The method returns a Matlab-style 1's array initializer, similarly to
+ * <p>The method returns a Matlab-style 1's array initializer, similarly to
  * "Mat.zeros". Note that using this method you can initialize an array with an
- * arbitrary value, using the following Matlab idiom:
+ * arbitrary value, using the following Matlab idiom:</p>
  *
- * The above operation does not form a 100x100 matrix of 1's and then multiply
+ * <p>The above operation does not form a 100x100 matrix of 1's and then multiply
  * it by 3. Instead, it just remembers the scale factor (3 in this case) and use
- * it when actually invoking the matrix initializer.
+ * it when actually invoking the matrix initializer.</p>
  *
  * @param rows Number of rows.
  * @param cols Number of columns.
  * @param type Created matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-ones">org.opencv.core.Mat.ones</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-ones">org.opencv.core.Mat.ones</a>
  */
     public static Mat ones(int rows, int cols, int type)
     {
@@ -1349,20 +1390,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns an array of all 1's of the specified size and type.
+ * <p>Returns an array of all 1's of the specified size and type.</p>
  *
- * The method returns a Matlab-style 1's array initializer, similarly to
+ * <p>The method returns a Matlab-style 1's array initializer, similarly to
  * "Mat.zeros". Note that using this method you can initialize an array with an
- * arbitrary value, using the following Matlab idiom:
+ * arbitrary value, using the following Matlab idiom:</p>
  *
- * The above operation does not form a 100x100 matrix of 1's and then multiply
+ * <p>The above operation does not form a 100x100 matrix of 1's and then multiply
  * it by 3. Instead, it just remembers the scale factor (3 in this case) and use
- * it when actually invoking the matrix initializer.
+ * it when actually invoking the matrix initializer.</p>
  *
- * @param size Alternative to the matrix size specification "Size(cols, rows)".
+ * @param size Alternative to the matrix size specification <code>Size(cols,
+ * rows)</code>.
  * @param type Created matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-ones">org.opencv.core.Mat.ones</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-ones">org.opencv.core.Mat.ones</a>
  */
     public static Mat ones(Size size, int type)
     {
@@ -1377,16 +1419,16 @@ public class Mat implements Serializable{
     //
 
 /**
- * Adds elements to the bottom of the matrix.
+ * <p>Adds elements to the bottom of the matrix.</p>
  *
- * The methods add one or more elements to the bottom of the matrix. They
- * emulate the corresponding method of the STL vector class. When "elem" is
- * "Mat", its type and the number of columns must be the same as in the
- * container matrix.
+ * <p>The methods add one or more elements to the bottom of the matrix. They
+ * emulate the corresponding method of the STL vector class. When
+ * <code>elem</code> is <code>Mat</code>, its type and the number of columns
+ * must be the same as in the container matrix.</p>
  *
  * @param m a m
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-push-back">org.opencv.core.Mat.push_back</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-push-back">org.opencv.core.Mat.push_back</a>
  */
     public void push_back(Mat m)
     {
@@ -1401,22 +1443,22 @@ public class Mat implements Serializable{
     //
 
 /**
- * Decrements the reference counter and deallocates the matrix if needed.
+ * <p>Decrements the reference counter and deallocates the matrix if needed.</p>
  *
- * The method decrements the reference counter associated with the matrix data.
+ * <p>The method decrements the reference counter associated with the matrix data.
  * When the reference counter reaches 0, the matrix data is deallocated and the
  * data and the reference counter pointers are set to NULL's. If the matrix
  * header points to an external data set (see "Mat.Mat"), the reference counter
- * is NULL, and the method has no effect in this case.
+ * is NULL, and the method has no effect in this case.</p>
  *
- * This method can be called manually to force the matrix data deallocation. But
+ * <p>This method can be called manually to force the matrix data deallocation. But
  * since this method is automatically called in the destructor, or by any other
  * method that changes the data pointer, it is usually not needed. The reference
  * counter decrement and check for 0 is an atomic operation on the platforms
  * that support it. Thus, it is safe to operate on the same matrices
- * asynchronously in different threads.
+ * asynchronously in different threads.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-release">org.opencv.core.Mat.release</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-release">org.opencv.core.Mat.release</a>
  */
     public void release()
     {
@@ -1431,29 +1473,31 @@ public class Mat implements Serializable{
     //
 
 /**
- * Changes the shape and/or the number of channels of a 2D matrix without
- * copying the data.
+ * <p>Changes the shape and/or the number of channels of a 2D matrix without
+ * copying the data.</p>
  *
- * The method makes a new matrix header for "*this" elements. The new matrix may
- * have a different size and/or different number of channels. Any combination is
- * possible if:
- *   * No extra elements are included into the new matrix and no elements are
- * excluded. Consequently, the product "rows*cols*channels()" must stay the same
- * after the transformation.
- *   * No data is copied. That is, this is an O(1) operation. Consequently, if
- * you change the number of rows, or the operation changes the indices of
+ * <p>The method makes a new matrix header for <code>*this</code> elements. The new
+ * matrix may have a different size and/or different number of channels. Any
+ * combination is possible if:</p>
+ * <ul>
+ *   <li> No extra elements are included into the new matrix and no elements are
+ * excluded. Consequently, the product <code>rows*cols*channels()</code> must
+ * stay the same after the transformation.
+ *   <li> No data is copied. That is, this is an O(1) operation. Consequently,
+ * if you change the number of rows, or the operation changes the indices of
  * elements row in some other way, the matrix must be continuous. See
  * "Mat.isContinuous".
+ * </ul>
  *
- * For example, if there is a set of 3D points stored as an STL vector, and you
- * want to represent the points as a "3xN" matrix, do the following:
+ * <p>For example, if there is a set of 3D points stored as an STL vector, and you
+ * want to represent the points as a <code>3xN</code> matrix, do the following:</p>
  *
  * @param cn New number of channels. If the parameter is 0, the number of
  * channels remains the same.
  * @param rows New number of rows. If the parameter is 0, the number of rows
  * remains the same.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-reshape">org.opencv.core.Mat.reshape</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-reshape">org.opencv.core.Mat.reshape</a>
  */
     public Mat reshape(int cn, int rows)
     {
@@ -1464,27 +1508,29 @@ public class Mat implements Serializable{
     }
 
 /**
- * Changes the shape and/or the number of channels of a 2D matrix without
- * copying the data.
+ * <p>Changes the shape and/or the number of channels of a 2D matrix without
+ * copying the data.</p>
  *
- * The method makes a new matrix header for "*this" elements. The new matrix may
- * have a different size and/or different number of channels. Any combination is
- * possible if:
- *   * No extra elements are included into the new matrix and no elements are
- * excluded. Consequently, the product "rows*cols*channels()" must stay the same
- * after the transformation.
- *   * No data is copied. That is, this is an O(1) operation. Consequently, if
- * you change the number of rows, or the operation changes the indices of
+ * <p>The method makes a new matrix header for <code>*this</code> elements. The new
+ * matrix may have a different size and/or different number of channels. Any
+ * combination is possible if:</p>
+ * <ul>
+ *   <li> No extra elements are included into the new matrix and no elements are
+ * excluded. Consequently, the product <code>rows*cols*channels()</code> must
+ * stay the same after the transformation.
+ *   <li> No data is copied. That is, this is an O(1) operation. Consequently,
+ * if you change the number of rows, or the operation changes the indices of
  * elements row in some other way, the matrix must be continuous. See
  * "Mat.isContinuous".
+ * </ul>
  *
- * For example, if there is a set of 3D points stored as an STL vector, and you
- * want to represent the points as a "3xN" matrix, do the following:
+ * <p>For example, if there is a set of 3D points stored as an STL vector, and you
+ * want to represent the points as a <code>3xN</code> matrix, do the following:</p>
  *
  * @param cn New number of channels. If the parameter is 0, the number of
  * channels remains the same.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-reshape">org.opencv.core.Mat.reshape</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-reshape">org.opencv.core.Mat.reshape</a>
  */
     public Mat reshape(int cn)
     {
@@ -1499,21 +1545,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a matrix header for the specified matrix row.
+ * <p>Creates a matrix header for the specified matrix row.</p>
  *
- * The method makes a new header for the specified matrix row and returns it.
+ * <p>The method makes a new header for the specified matrix row and returns it.
  * This is an O(1) operation, regardless of the matrix size. The underlying data
  * of the new matrix is shared with the original matrix. Here is the example of
- * one of the classical basic matrix processing operations, "axpy", used by LU
- * and many other algorithms:
+ * one of the classical basic matrix processing operations, <code>axpy</code>,
+ * used by LU and many other algorithms:</p>
  *
- * Note:
+ * <p>Note:</p>
  *
- * In the current implementation, the following code does not work as expected:
+ * <p>In the current implementation, the following code does not work as expected:</p>
  *
- * @param y a y
+ * @param y A 0-based row index.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-row">org.opencv.core.Mat.row</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-row">org.opencv.core.Mat.row</a>
  */
     public Mat row(int y)
     {
@@ -1528,15 +1574,15 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a matrix header for the specified row span.
+ * <p>Creates a matrix header for the specified row span.</p>
  *
- * The method makes a new header for the specified row span of the matrix.
- * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.
+ * <p>The method makes a new header for the specified row span of the matrix.
+ * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.</p>
  *
  * @param startrow An inclusive 0-based start index of the row span.
  * @param endrow An exclusive 0-based ending index of the row span.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-rowrange">org.opencv.core.Mat.rowRange</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-rowrange">org.opencv.core.Mat.rowRange</a>
  */
     public Mat rowRange(int startrow, int endrow)
     {
@@ -1551,14 +1597,14 @@ public class Mat implements Serializable{
     //
 
 /**
- * Creates a matrix header for the specified row span.
+ * <p>Creates a matrix header for the specified row span.</p>
  *
- * The method makes a new header for the specified row span of the matrix.
- * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.
+ * <p>The method makes a new header for the specified row span of the matrix.
+ * Similarly to "Mat.row" and "Mat.col", this is an O(1) operation.</p>
  *
  * @param r "Range" structure containing both the start and the end indices.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-rowrange">org.opencv.core.Mat.rowRange</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-rowrange">org.opencv.core.Mat.rowRange</a>
  */
     public Mat rowRange(Range r)
     {
@@ -1593,17 +1639,40 @@ public class Mat implements Serializable{
     }
 
     //
+    // C++: Mat Mat::setTo(Scalar value, Mat mask = Mat())
+    //
+
+/**
+ * <p>Sets all or some of the array elements to the specified value.</p>
+ *
+ * @param value Assigned scalar converted to the actual array type.
+ * @param mask Operation mask of the same size as <code>*this</code>. This is an
+ * advanced variant of the <code>Mat.operator=(const Scalar& s)</code>
+ * operator.
+ *
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-setto">org.opencv.core.Mat.setTo</a>
+ */
+    public Mat setTo(Scalar value, Mat mask)
+    {
+
+        Mat retVal = new Mat(n_setTo(nativeObj, value.val[0], value.val[1], value.val[2], value.val[3], mask.nativeObj));
+
+        return retVal;
+    }
+
+    //
     // C++: Mat Mat::setTo(Mat value, Mat mask = Mat())
     //
 
 /**
- * Sets all or some of the array elements to the specified value.
+ * <p>Sets all or some of the array elements to the specified value.</p>
  *
- * @param value a value
- * @param mask Operation mask of the same size as "*this". This is an advanced
- * variant of the "Mat.operator=(const Scalar& s)" operator.
+ * @param value Assigned scalar converted to the actual array type.
+ * @param mask Operation mask of the same size as <code>*this</code>. This is an
+ * advanced variant of the <code>Mat.operator=(const Scalar& s)</code>
+ * operator.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-setto">org.opencv.core.Mat.setTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-setto">org.opencv.core.Mat.setTo</a>
  */
     public Mat setTo(Mat value, Mat mask)
     {
@@ -1614,11 +1683,11 @@ public class Mat implements Serializable{
     }
 
 /**
- * Sets all or some of the array elements to the specified value.
+ * <p>Sets all or some of the array elements to the specified value.</p>
  *
- * @param value a value
+ * @param value Assigned scalar converted to the actual array type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-setto">org.opencv.core.Mat.setTo</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-setto">org.opencv.core.Mat.setTo</a>
  */
     public Mat setTo(Mat value)
     {
@@ -1633,12 +1702,12 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns a matrix size.
+ * <p>Returns a matrix size.</p>
  *
- * The method returns a matrix size: "Size(cols, rows)". When the matrix is more
- * than 2-dimensional, the returned size is (-1, -1).
+ * <p>The method returns a matrix size: <code>Size(cols, rows)</code>. When the
+ * matrix is more than 2-dimensional, the returned size is (-1, -1).</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-size">org.opencv.core.Mat.size</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-size">org.opencv.core.Mat.size</a>
  */
     public Size size()
     {
@@ -1653,14 +1722,14 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns a normalized step.
+ * <p>Returns a normalized step.</p>
  *
- * The method returns a matrix step divided by "Mat.elemSize1()". It can be
- * useful to quickly access an arbitrary matrix element.
+ * <p>The method returns a matrix step divided by "Mat.elemSize1()". It can be
+ * useful to quickly access an arbitrary matrix element.</p>
  *
  * @param i a i
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-step1">org.opencv.core.Mat.step1</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-step1">org.opencv.core.Mat.step1</a>
  */
     public long step1(int i)
     {
@@ -1671,12 +1740,12 @@ public class Mat implements Serializable{
     }
 
 /**
- * Returns a normalized step.
+ * <p>Returns a normalized step.</p>
  *
- * The method returns a matrix step divided by "Mat.elemSize1()". It can be
- * useful to quickly access an arbitrary matrix element.
+ * <p>The method returns a matrix step divided by "Mat.elemSize1()". It can be
+ * useful to quickly access an arbitrary matrix element.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-step1">org.opencv.core.Mat.step1</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-step1">org.opencv.core.Mat.step1</a>
  */
     public long step1()
     {
@@ -1692,20 +1761,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Extracts a rectangular submatrix.
+ * <p>Extracts a rectangular submatrix.</p>
  *
- * The operators make a new header for the specified sub-array of "*this". They
- * are the most generalized forms of "Mat.row", "Mat.col", "Mat.rowRange",
- * and "Mat.colRange". For example, "A(Range(0, 10), Range.all())" is
- * equivalent to "A.rowRange(0, 10)". Similarly to all of the above, the
- * operators are O(1) operations, that is, no matrix data is copied.
+ * <p>The operators make a new header for the specified sub-array of
+ * <code>*this</code>. They are the most generalized forms of "Mat.row",
+ * "Mat.col", "Mat.rowRange", and "Mat.colRange". For example,
+ * <code>A(Range(0, 10), Range.all())</code> is equivalent to <code>A.rowRange(0,
+ * 10)</code>. Similarly to all of the above, the operators are O(1) operations,
+ * that is, no matrix data is copied.</p>
  *
  * @param rowStart a rowStart
  * @param rowEnd a rowEnd
  * @param colStart a colStart
  * @param colEnd a colEnd
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-operator">org.opencv.core.Mat.operator()</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-operator">org.opencv.core.Mat.operator()</a>
  */
     public Mat submat(int rowStart, int rowEnd, int colStart, int colEnd)
     {
@@ -1720,20 +1790,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Extracts a rectangular submatrix.
+ * <p>Extracts a rectangular submatrix.</p>
  *
- * The operators make a new header for the specified sub-array of "*this". They
- * are the most generalized forms of "Mat.row", "Mat.col", "Mat.rowRange",
- * and "Mat.colRange". For example, "A(Range(0, 10), Range.all())" is
- * equivalent to "A.rowRange(0, 10)". Similarly to all of the above, the
- * operators are O(1) operations, that is, no matrix data is copied.
+ * <p>The operators make a new header for the specified sub-array of
+ * <code>*this</code>. They are the most generalized forms of "Mat.row",
+ * "Mat.col", "Mat.rowRange", and "Mat.colRange". For example,
+ * <code>A(Range(0, 10), Range.all())</code> is equivalent to <code>A.rowRange(0,
+ * 10)</code>. Similarly to all of the above, the operators are O(1) operations,
+ * that is, no matrix data is copied.</p>
  *
  * @param rowRange Start and end row of the extracted submatrix. The upper
- * boundary is not included. To select all the rows, use "Range.all()".
+ * boundary is not included. To select all the rows, use <code>Range.all()</code>.
  * @param colRange Start and end column of the extracted submatrix. The upper
- * boundary is not included. To select all the columns, use "Range.all()".
+ * boundary is not included. To select all the columns, use <code>Range.all()</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-operator">org.opencv.core.Mat.operator()</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-operator">org.opencv.core.Mat.operator()</a>
  */
     public Mat submat(Range rowRange, Range colRange)
     {
@@ -1748,17 +1819,18 @@ public class Mat implements Serializable{
     //
 
 /**
- * Extracts a rectangular submatrix.
+ * <p>Extracts a rectangular submatrix.</p>
  *
- * The operators make a new header for the specified sub-array of "*this". They
- * are the most generalized forms of "Mat.row", "Mat.col", "Mat.rowRange",
- * and "Mat.colRange". For example, "A(Range(0, 10), Range.all())" is
- * equivalent to "A.rowRange(0, 10)". Similarly to all of the above, the
- * operators are O(1) operations, that is, no matrix data is copied.
+ * <p>The operators make a new header for the specified sub-array of
+ * <code>*this</code>. They are the most generalized forms of "Mat.row",
+ * "Mat.col", "Mat.rowRange", and "Mat.colRange". For example,
+ * <code>A(Range(0, 10), Range.all())</code> is equivalent to <code>A.rowRange(0,
+ * 10)</code>. Similarly to all of the above, the operators are O(1) operations,
+ * that is, no matrix data is copied.</p>
  *
  * @param roi Extracted submatrix specified as a rectangle.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-operator">org.opencv.core.Mat.operator()</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-operator">org.opencv.core.Mat.operator()</a>
  */
     public Mat submat(Rect roi)
     {
@@ -1773,14 +1845,14 @@ public class Mat implements Serializable{
     //
 
 /**
- * Transposes a matrix.
+ * <p>Transposes a matrix.</p>
  *
- * The method performs matrix transposition by means of matrix expressions. It
+ * <p>The method performs matrix transposition by means of matrix expressions. It
  * does not perform the actual transposition but returns a temporary matrix
  * transposition object that can be further used as a part of more complex
- * matrix expressions or can be assigned to a matrix:
+ * matrix expressions or can be assigned to a matrix:</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-t">org.opencv.core.Mat.t</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-t">org.opencv.core.Mat.t</a>
  */
     public Mat t()
     {
@@ -1795,12 +1867,12 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns the total number of array elements.
+ * <p>Returns the total number of array elements.</p>
  *
- * The method returns the number of array elements (a number of pixels if the
- * array represents an image).
+ * <p>The method returns the number of array elements (a number of pixels if the
+ * array represents an image).</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-total">org.opencv.core.Mat.total</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-total">org.opencv.core.Mat.total</a>
  */
     public long total()
     {
@@ -1815,13 +1887,13 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns the type of a matrix element.
+ * <p>Returns the type of a matrix element.</p>
  *
- * The method returns a matrix element type. This is an identifier compatible
- * with the "CvMat" type system, like "CV_16SC3" or 16-bit signed 3-channel
- * array, and so on.
+ * <p>The method returns a matrix element type. This is an identifier compatible
+ * with the <code>CvMat</code> type system, like <code>CV_16SC3</code> or 16-bit
+ * signed 3-channel array, and so on.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-type">org.opencv.core.Mat.type</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-type">org.opencv.core.Mat.type</a>
  */
     public int type()
     {
@@ -1836,21 +1908,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns a zero array of the specified size and type.
+ * <p>Returns a zero array of the specified size and type.</p>
  *
- * The method returns a Matlab-style zero array initializer. It can be used to
+ * <p>The method returns a Matlab-style zero array initializer. It can be used to
  * quickly form a constant array as a function parameter, part of a matrix
- * expression, or as a matrix initializer.
+ * expression, or as a matrix initializer.</p>
  *
- * In the example above, a new matrix is allocated only if "A" is not a 3x3
- * floating-point matrix. Otherwise, the existing matrix "A" is filled with
- * zeros.
+ * <p>In the example above, a new matrix is allocated only if <code>A</code> is not
+ * a 3x3 floating-point matrix. Otherwise, the existing matrix <code>A</code> is
+ * filled with zeros.</p>
  *
  * @param rows Number of rows.
  * @param cols Number of columns.
  * @param type Created matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-zeros">org.opencv.core.Mat.zeros</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-zeros">org.opencv.core.Mat.zeros</a>
  */
     public static Mat zeros(int rows, int cols, int type)
     {
@@ -1865,20 +1937,21 @@ public class Mat implements Serializable{
     //
 
 /**
- * Returns a zero array of the specified size and type.
+ * <p>Returns a zero array of the specified size and type.</p>
  *
- * The method returns a Matlab-style zero array initializer. It can be used to
+ * <p>The method returns a Matlab-style zero array initializer. It can be used to
  * quickly form a constant array as a function parameter, part of a matrix
- * expression, or as a matrix initializer.
+ * expression, or as a matrix initializer.</p>
  *
- * In the example above, a new matrix is allocated only if "A" is not a 3x3
- * floating-point matrix. Otherwise, the existing matrix "A" is filled with
- * zeros.
+ * <p>In the example above, a new matrix is allocated only if <code>A</code> is not
+ * a 3x3 floating-point matrix. Otherwise, the existing matrix <code>A</code> is
+ * filled with zeros.</p>
  *
- * @param size Alternative to the matrix size specification "Size(cols, rows)".
+ * @param size Alternative to the matrix size specification <code>Size(cols,
+ * rows)</code>.
  * @param type Created matrix type.
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#mat-zeros">org.opencv.core.Mat.zeros</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-zeros">org.opencv.core.Mat.zeros</a>
  */
     public static Mat zeros(Size size, int type)
     {
@@ -2219,6 +2292,9 @@ public class Mat implements Serializable{
 
     // C++: Mat Mat::operator =(Scalar s)
     private static native long n_setTo(long nativeObj, double s_val0, double s_val1, double s_val2, double s_val3);
+
+    // C++: Mat Mat::setTo(Scalar value, Mat mask = Mat())
+    private static native long n_setTo(long nativeObj, double s_val0, double s_val1, double s_val2, double s_val3, long mask_nativeObj);
 
     // C++: Mat Mat::setTo(Mat value, Mat mask = Mat())
     private static native long n_setTo(long nativeObj, long value_nativeObj, long mask_nativeObj);

@@ -1,13 +1,14 @@
 package org.opencv.core;
 
 /**
- * Template class for a 4-element vector derived from Vec.
+ * <p>Template class for a 4-element vector derived from Vec.</p>
  *
- * Being derived from "Vec<_Tp, 4>", "Scalar_" and "Scalar" can be used just as
- * typical 4-element vectors. In addition, they can be converted to/from
- * "CvScalar". The type "Scalar" is widely used in OpenCV to pass pixel values.
+ * <p>Being derived from <code>Vec<_Tp, 4></code>, <code>Scalar_</code> and
+ * <code>Scalar</code> can be used just as typical 4-element vectors. In
+ * addition, they can be converted to/from <code>CvScalar</code>. The type
+ * <code>Scalar</code> is widely used in OpenCV to pass pixel values.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#scalar">org.opencv.core.Scalar_</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#scalar">org.opencv.core.Scalar_</a>
  */
 public class Scalar {
 

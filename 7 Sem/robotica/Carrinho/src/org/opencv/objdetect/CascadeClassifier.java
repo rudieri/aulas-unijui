@@ -5,17 +5,17 @@
 package org.opencv.objdetect;
 
 import java.lang.String;
-import java.util.List;
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
+import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfRect;
 import org.opencv.core.Size;
-import org.opencv.utils.Converters;
 
 // C++: class CascadeClassifier
 /**
- * Cascade classifier class for object detection.
+ * <p>Cascade classifier class for object detection.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier">org.opencv.objdetect.CascadeClassifier</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier">org.opencv.objdetect.CascadeClassifier</a>
  */
 public class CascadeClassifier {
 
@@ -28,9 +28,9 @@ public class CascadeClassifier {
     //
 
 /**
- * Loads a classifier from a file.
+ * <p>Loads a classifier from a file.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-cascadeclassifier">org.opencv.objdetect.CascadeClassifier.CascadeClassifier</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-cascadeclassifier">org.opencv.objdetect.CascadeClassifier.CascadeClassifier</a>
  */
     public   CascadeClassifier()
     {
@@ -46,11 +46,11 @@ public class CascadeClassifier {
     //
 
 /**
- * Loads a classifier from a file.
+ * <p>Loads a classifier from a file.</p>
  *
  * @param filename Name of the file from which the classifier is loaded.
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-cascadeclassifier">org.opencv.objdetect.CascadeClassifier.CascadeClassifier</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-cascadeclassifier">org.opencv.objdetect.CascadeClassifier.CascadeClassifier</a>
  */
     public   CascadeClassifier(String filename)
     {
@@ -66,146 +66,54 @@ public class CascadeClassifier {
     //
 
 /**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
+ * <p>Detects objects of different sizes in the input image. The detected objects
+ * are returned as a list of rectangles.</p>
  *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
+ * <p>The function is parallelized with the TBB library.</p>
+ *
+ * @param image Matrix of the type <code>CV_8U</code> containing an image where
+ * objects are detected.
  * @param objects Vector of rectangles where each rectangle contains the
  * detected object.
  * @param scaleFactor Parameter specifying how much the image size is reduced at
  * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
+ * @param minNeighbors Parameter specifying how many neighbors each candidate
  * rectangle should have to retain it.
  * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
+ * function <code>cvHaarDetectObjects</code>. It is not used for a new cascade.
  * @param minSize Minimum possible object size. Objects smaller than that are
  * ignored.
  * @param maxSize Maximum possible object size. Objects larger than that are
  * ignored.
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
  */
-    public  void detectMultiScale(Mat image, List<Rect> objects, double scaleFactor, int minNeighbors, int flags, Size minSize, Size maxSize)
+    public  void detectMultiScale(Mat image, MatOfRect objects, double scaleFactor, int minNeighbors, int flags, Size minSize, Size maxSize)
     {
-        Mat objects_mat = new Mat();
+        Mat objects_mat = objects;
         detectMultiScale_0(nativeObj, image.nativeObj, objects_mat.nativeObj, scaleFactor, minNeighbors, flags, minSize.width, minSize.height, maxSize.width, maxSize.height);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
+
         return;
     }
 
 /**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
+ * <p>Detects objects of different sizes in the input image. The detected objects
+ * are returned as a list of rectangles.</p>
  *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
+ * <p>The function is parallelized with the TBB library.</p>
+ *
+ * @param image Matrix of the type <code>CV_8U</code> containing an image where
+ * objects are detected.
  * @param objects Vector of rectangles where each rectangle contains the
  * detected object.
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
- * @param minSize Minimum possible object size. Objects smaller than that are
- * ignored.
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
  */
-    public  void detectMultiScale(Mat image, List<Rect> objects, double scaleFactor, int minNeighbors, int flags, Size minSize)
+    public  void detectMultiScale(Mat image, MatOfRect objects)
     {
-        Mat objects_mat = new Mat();
-        detectMultiScale_1(nativeObj, image.nativeObj, objects_mat.nativeObj, scaleFactor, minNeighbors, flags, minSize.width, minSize.height);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
+        Mat objects_mat = objects;
+        detectMultiScale_1(nativeObj, image.nativeObj, objects_mat.nativeObj);
 
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, double scaleFactor, int minNeighbors, int flags)
-    {
-        Mat objects_mat = new Mat();
-        detectMultiScale_2(nativeObj, image.nativeObj, objects_mat.nativeObj, scaleFactor, minNeighbors, flags);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, double scaleFactor, int minNeighbors)
-    {
-        Mat objects_mat = new Mat();
-        detectMultiScale_3(nativeObj, image.nativeObj, objects_mat.nativeObj, scaleFactor, minNeighbors);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, double scaleFactor)
-    {
-        Mat objects_mat = new Mat();
-        detectMultiScale_4(nativeObj, image.nativeObj, objects_mat.nativeObj, scaleFactor);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects)
-    {
-        Mat objects_mat = new Mat();
-        detectMultiScale_5(nativeObj, image.nativeObj, objects_mat.nativeObj);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
         return;
     }
 
@@ -215,204 +123,63 @@ public class CascadeClassifier {
     //
 
 /**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
+ * <p>Detects objects of different sizes in the input image. The detected objects
+ * are returned as a list of rectangles.</p>
  *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
+ * <p>The function is parallelized with the TBB library.</p>
+ *
+ * @param image Matrix of the type <code>CV_8U</code> containing an image where
+ * objects are detected.
  * @param objects Vector of rectangles where each rectangle contains the
  * detected object.
  * @param rejectLevels a rejectLevels
  * @param levelWeights a levelWeights
  * @param scaleFactor Parameter specifying how much the image size is reduced at
  * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
+ * @param minNeighbors Parameter specifying how many neighbors each candidate
  * rectangle should have to retain it.
  * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
+ * function <code>cvHaarDetectObjects</code>. It is not used for a new cascade.
  * @param minSize Minimum possible object size. Objects smaller than that are
  * ignored.
  * @param maxSize Maximum possible object size. Objects larger than that are
  * ignored.
  * @param outputRejectLevels a outputRejectLevels
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
  */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights, double scaleFactor, int minNeighbors, int flags, Size minSize, Size maxSize, boolean outputRejectLevels)
+    public  void detectMultiScale(Mat image, MatOfRect objects, MatOfInt rejectLevels, MatOfDouble levelWeights, double scaleFactor, int minNeighbors, int flags, Size minSize, Size maxSize, boolean outputRejectLevels)
     {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_6(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor, minNeighbors, flags, minSize.width, minSize.height, maxSize.width, maxSize.height, outputRejectLevels);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
+        Mat objects_mat = objects;
+        Mat rejectLevels_mat = rejectLevels;
+        Mat levelWeights_mat = levelWeights;
+        detectMultiScale_2(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor, minNeighbors, flags, minSize.width, minSize.height, maxSize.width, maxSize.height, outputRejectLevels);
+
         return;
     }
 
 /**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
+ * <p>Detects objects of different sizes in the input image. The detected objects
+ * are returned as a list of rectangles.</p>
  *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param rejectLevels a rejectLevels
- * @param levelWeights a levelWeights
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
- * @param minSize Minimum possible object size. Objects smaller than that are
- * ignored.
- * @param maxSize Maximum possible object size. Objects larger than that are
- * ignored.
+ * <p>The function is parallelized with the TBB library.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights, double scaleFactor, int minNeighbors, int flags, Size minSize, Size maxSize)
-    {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_7(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor, minNeighbors, flags, minSize.width, minSize.height, maxSize.width, maxSize.height);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param rejectLevels a rejectLevels
- * @param levelWeights a levelWeights
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
- * @param minSize Minimum possible object size. Objects smaller than that are
- * ignored.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights, double scaleFactor, int minNeighbors, int flags, Size minSize)
-    {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_8(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor, minNeighbors, flags, minSize.width, minSize.height);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param rejectLevels a rejectLevels
- * @param levelWeights a levelWeights
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- * @param flags Parameter with the same meaning for an old cascade as in the
- * function "cvHaarDetectObjects". It is not used for a new cascade.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights, double scaleFactor, int minNeighbors, int flags)
-    {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_9(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor, minNeighbors, flags);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param rejectLevels a rejectLevels
- * @param levelWeights a levelWeights
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- * @param minNeighbors Parameter specifying how many neighbors each candiate
- * rectangle should have to retain it.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights, double scaleFactor, int minNeighbors)
-    {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_10(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor, minNeighbors);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
- * @param objects Vector of rectangles where each rectangle contains the
- * detected object.
- * @param rejectLevels a rejectLevels
- * @param levelWeights a levelWeights
- * @param scaleFactor Parameter specifying how much the image size is reduced at
- * each image scale.
- *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
- */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights, double scaleFactor)
-    {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_11(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj, scaleFactor);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
-        return;
-    }
-
-/**
- * Detects objects of different sizes in the input image. The detected objects
- * are returned as a list of rectangles.
- *
- * @param image Matrix of the type "CV_8U" containing an image where objects are
- * detected.
+ * @param image Matrix of the type <code>CV_8U</code> containing an image where
+ * objects are detected.
  * @param objects Vector of rectangles where each rectangle contains the
  * detected object.
  * @param rejectLevels a rejectLevels
  * @param levelWeights a levelWeights
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-detectmultiscale">org.opencv.objdetect.CascadeClassifier.detectMultiScale</a>
  */
-    public  void detectMultiScale(Mat image, List<Rect> objects, List<Integer> rejectLevels, List<Double> levelWeights)
+    public  void detectMultiScale(Mat image, MatOfRect objects, MatOfInt rejectLevels, MatOfDouble levelWeights)
     {
-        Mat objects_mat = new Mat();
-        Mat rejectLevels_mat = Converters.vector_int_to_Mat(rejectLevels);
-        Mat levelWeights_mat = Converters.vector_double_to_Mat(levelWeights);
-        detectMultiScale_12(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj);
-        Converters.Mat_to_vector_Rect(objects_mat, objects);
+        Mat objects_mat = objects;
+        Mat rejectLevels_mat = rejectLevels;
+        Mat levelWeights_mat = levelWeights;
+        detectMultiScale_3(nativeObj, image.nativeObj, objects_mat.nativeObj, rejectLevels_mat.nativeObj, levelWeights_mat.nativeObj);
+
         return;
     }
 
@@ -422,9 +189,9 @@ public class CascadeClassifier {
     //
 
 /**
- * Checks whether the classifier has been loaded.
+ * <p>Checks whether the classifier has been loaded.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-empty">org.opencv.objdetect.CascadeClassifier.empty</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-empty">org.opencv.objdetect.CascadeClassifier.empty</a>
  */
     public  boolean empty()
     {
@@ -440,14 +207,14 @@ public class CascadeClassifier {
     //
 
 /**
- * Loads a classifier from a file.
+ * <p>Loads a classifier from a file.</p>
  *
  * @param filename Name of the file from which the classifier is loaded. The
  * file may contain an old HAAR classifier trained by the haartraining
  * application or a new cascade classifier trained by the traincascade
  * application.
  *
- * @see <a href="http://opencv.itseez.com/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-load">org.opencv.objdetect.CascadeClassifier.load</a>
+ * @see <a href="http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html#cascadeclassifier-load">org.opencv.objdetect.CascadeClassifier.load</a>
  */
     public  boolean load(String filename)
     {
@@ -461,7 +228,6 @@ public class CascadeClassifier {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -479,20 +245,11 @@ public class CascadeClassifier {
 
     // C++:  void CascadeClassifier::detectMultiScale(Mat image, vector_Rect& objects, double scaleFactor = 1.1, int minNeighbors = 3, int flags = 0, Size minSize = Size(), Size maxSize = Size())
     private static native void detectMultiScale_0(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, double scaleFactor, int minNeighbors, int flags, double minSize_width, double minSize_height, double maxSize_width, double maxSize_height);
-    private static native void detectMultiScale_1(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, double scaleFactor, int minNeighbors, int flags, double minSize_width, double minSize_height);
-    private static native void detectMultiScale_2(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, double scaleFactor, int minNeighbors, int flags);
-    private static native void detectMultiScale_3(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, double scaleFactor, int minNeighbors);
-    private static native void detectMultiScale_4(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, double scaleFactor);
-    private static native void detectMultiScale_5(long nativeObj, long image_nativeObj, long objects_mat_nativeObj);
+    private static native void detectMultiScale_1(long nativeObj, long image_nativeObj, long objects_mat_nativeObj);
 
     // C++:  void CascadeClassifier::detectMultiScale(Mat image, vector_Rect& objects, vector_int rejectLevels, vector_double levelWeights, double scaleFactor = 1.1, int minNeighbors = 3, int flags = 0, Size minSize = Size(), Size maxSize = Size(), bool outputRejectLevels = false)
-    private static native void detectMultiScale_6(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor, int minNeighbors, int flags, double minSize_width, double minSize_height, double maxSize_width, double maxSize_height, boolean outputRejectLevels);
-    private static native void detectMultiScale_7(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor, int minNeighbors, int flags, double minSize_width, double minSize_height, double maxSize_width, double maxSize_height);
-    private static native void detectMultiScale_8(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor, int minNeighbors, int flags, double minSize_width, double minSize_height);
-    private static native void detectMultiScale_9(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor, int minNeighbors, int flags);
-    private static native void detectMultiScale_10(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor, int minNeighbors);
-    private static native void detectMultiScale_11(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor);
-    private static native void detectMultiScale_12(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj);
+    private static native void detectMultiScale_2(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj, double scaleFactor, int minNeighbors, int flags, double minSize_width, double minSize_height, double maxSize_width, double maxSize_height, boolean outputRejectLevels);
+    private static native void detectMultiScale_3(long nativeObj, long image_nativeObj, long objects_mat_nativeObj, long rejectLevels_mat_nativeObj, long levelWeights_mat_nativeObj);
 
     // C++:  bool CascadeClassifier::empty()
     private static native boolean empty_0(long nativeObj);

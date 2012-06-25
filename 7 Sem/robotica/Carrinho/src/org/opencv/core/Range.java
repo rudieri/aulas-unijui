@@ -1,22 +1,23 @@
 package org.opencv.core;
 
 /**
- * Template class specifying a continuous subsequence (slice) of a sequence.
+ * <p>Template class specifying a continuous subsequence (slice) of a sequence.</p>
  *
- * The class is used to specify a row or a column span in a matrix ("Mat") and
- * for many other purposes. "Range(a,b)" is basically the same as "a:b" in
- * Matlab or "a..b" in Python. As in Python, "start" is an inclusive left
- * boundary of the range and "end" is an exclusive right boundary of the range.
- * Such a half-opened interval is usually denoted as [start,end).
+ * <p>The class is used to specify a row or a column span in a matrix ("Mat") and
+ * for many other purposes. <code>Range(a,b)</code> is basically the same as
+ * <code>a:b</code> in Matlab or <code>a..b</code> in Python. As in Python,
+ * <code>start</code> is an inclusive left boundary of the range and
+ * <code>end</code> is an exclusive right boundary of the range. Such a
+ * half-opened interval is usually denoted as <em>[start,end)</em>.</p>
  *
- * The static method "Range.all()" returns a special variable that means "the
- * whole sequence" or "the whole range", just like " ":" " in Matlab or " "..."
- * " in Python. All the methods and functions in OpenCV that take "Range"
- * support this special "Range.all()" value. But, of course, in case of your
- * own custom processing, you will probably have to check and handle it
- * explicitly:
+ * <p>The static method <code>Range.all()</code> returns a special variable that
+ * means "the whole sequence" or "the whole range", just like " <code>:</code> "
+ * in Matlab or " <code>...</code> " in Python. All the methods and functions in
+ * OpenCV that take <code>Range</code> support this special <code>Range.all()</code>
+ * value. But, of course, in case of your own custom processing, you will
+ * probably have to check and handle it explicitly:</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/core/doc/basic_structures.html#range">org.opencv.core.Range</a>
+ * @see <a href="http://docs.opencv.org/modules/core/doc/basic_structures.html#range">org.opencv.core.Range</a>
  */
 public class Range {
 

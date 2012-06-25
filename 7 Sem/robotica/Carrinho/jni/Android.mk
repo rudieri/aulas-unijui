@@ -2,6 +2,8 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+OPENCV_CAMERA_MODULES:=off
+
 include ../includeOpenCV.mk
 ifeq ("$(wildcard $(OPENCV_MK_PATH))","")
 	#try to load OpenCV.mk from default install location
@@ -10,7 +12,7 @@ else
 	include $(OPENCV_MK_PATH)
 endif
 
-LOCAL_MODULE    := native_sample
+LOCAL_MODULE    := mixed_sample
 LOCAL_SRC_FILES := jni_part.cpp
 LOCAL_LDLIBS +=  -llog -ldl
 

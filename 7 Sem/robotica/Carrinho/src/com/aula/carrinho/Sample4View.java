@@ -48,23 +48,22 @@ public class Sample4View extends SampleViewBase {
 
         synchronized (this) {
             // initialize Mats before usage
-            mYuv = new Mat(getFrameHeight() + getFrameHeight() / 2, getFrameWidth(), CvType.CV_8UC1);
-            mGraySubmat = mYuv.submat(0, getFrameHeight(), 0, getFrameWidth());
+            mYuv = new Mat(getCameraFrameHeight() + getCameraFrameHeight() / 2, getCameraFrameWidth(), CvType.CV_8UC1);
+
 
             mRgba = new Mat();
             mIntermediateMat = new Mat();
         }
-        arrayInicializacaoBitmap = new int[getFrameHeight()*getFrameWidth()];
+        arrayInicializacaoBitmap = new int[getRedFrameHeight() * getRedFrameWidth()];
         for (int i = 0; i < arrayInicializacaoBitmap.length; i++) {
             arrayInicializacaoBitmap[i] = Color.BLACK;
-            
+
         }
     }
     byte contaPrint = 0;
     byte contagemParaParada = 3;
     boolean ignorar = false;
 
-    @Override
     protected Bitmap processFrame(byte[] data) {
         System.out.println("print");
         if (ignorar) {
@@ -74,6 +73,10 @@ public class Sample4View extends SampleViewBase {
         }
         ignorar = true;
         mYuv.put(0, 0, data);
+
+        Imgproc.resize(mYuv, mYuv, new Size(getRedFrameWidth(), getRedFrameHeight()));
+
+        mGraySubmat = mYuv.submat(0, getRedFrameHeight(), 0, getRedFrameWidth());
 
 
         //Modo Canny
@@ -99,13 +102,13 @@ public class Sample4View extends SampleViewBase {
 //        }
 
         inicial = new Date();
-        Bitmap bmp = Bitmap.createBitmap( getFrameWidth(), getFrameHeight(), Bitmap.Config.ARGB_4444);
+        Bitmap bmp = Bitmap.createBitmap(getRedFrameWidth(), getRedFrameHeight(), Bitmap.Config.ARGB_8888);
         Log.d("DELAY", "createBitmap: " + (new Date().getTime() - inicial.getTime()) + " ms");
-      
+
 //        System.out.println("Print");
 //        contaPrint = 0;
         inicial = new Date();
-        bmp.setPixels(arrayInicializacaoBitmap, 0, getFrameWidth(), 0, 0, getFrameWidth(), getFrameHeight());
+        bmp.setPixels(arrayInicializacaoBitmap, 0, getRedFrameWidth(), 0, 0, getRedFrameWidth(), getRedFrameHeight());
 //        for (int i = 0; i < bmp.getWidth(); i++) {
 //            for (int j = 0; j < bmp.getHeight(); j++) {
 //                bmp.setPixel(i, j, Color.BLACK);
@@ -132,6 +135,14 @@ public class Sample4View extends SampleViewBase {
         if (!modoCaseiro) {
             Mat pontos = Analizador.analizarCanny(mIntermediateMat, bmp);
             Analizador.facaAlgoComCarrinho(pontos, bmp);
+
+            Mat aux = new Mat(getRedFrameWidth(), getRedFrameWidth(), CvType.CV_8UC1);
+            Utils.bitmapToMat(bmp, aux);
+//            if (aux.rows() > 0 && aux.cols() > 0) {
+//                Log.i("IMAGEM", aux.rows() + " + " + aux.cols());
+//                Imgproc.resize(aux, aux, new Size(getCameraFrameWidth(), getCameraFrameHeight()));
+//                Utils.matToBitmap(aux, bmp);
+//            }
             return bmp;
         }
         ArrayList<Ponto2D> pontos;

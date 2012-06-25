@@ -8,22 +8,22 @@ package org.opencv.ml;
 
 // C++: class CvParamGrid
 /**
- * The structure represents the logarithmic grid range of statmodel parameters.
+ * <p>The structure represents the logarithmic grid range of statmodel parameters.
  * It is used for optimizing statmodel accuracy by varying model parameters, the
- * accuracy estimate being computed by cross-validation.
+ * accuracy estimate being computed by cross-validation.</p>
  *
- * The grid determines the following iteration sequence of the statmodel
- * parameter values:
+ * <p>The grid determines the following iteration sequence of the statmodel
+ * parameter values:</p>
  *
- * (min_val, min_val*step, min_val*(step)^2, dots, min_val*(step)^n),
+ * <p><em>(min_val, min_val*step, min_val*(step)^2, dots, min_val*(step)^n),</em></p>
  *
- * where n is the maximal index satisfying
+ * <p>where <em>n</em> is the maximal index satisfying</p>
  *
- * min_val * step ^n < max_val
+ * <p><em>min_val * step ^n < max_val</em></p>
  *
- * The grid is logarithmic, so "step" must always be greater then 1.
+ * <p>The grid is logarithmic, so <code>step</code> must always be greater then 1.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvparamgrid">org.opencv.ml.CvParamGrid</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvparamgrid">org.opencv.ml.CvParamGrid</a>
  */
 public class CvParamGrid {
 
@@ -38,6 +38,27 @@ public class CvParamGrid {
             SVM_NU = 3,
             SVM_COEF = 4,
             SVM_DEGREE = 5;
+
+
+    //
+    // C++:   CvParamGrid::CvParamGrid()
+    //
+
+/**
+ * <p>The constructors.</p>
+ *
+ * <p>The full constructor initializes corresponding members. The default
+ * constructor creates a dummy grid:</p>
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvparamgrid-cvparamgrid">org.opencv.ml.CvParamGrid.CvParamGrid</a>
+ */
+    public   CvParamGrid()
+    {
+
+        nativeObj = CvParamGrid_0();
+
+        return;
+    }
 
 
     //
@@ -118,22 +139,9 @@ public class CvParamGrid {
     }
 
 
-/**
- * The constructors.
- *
- * The full constructor initializes corresponding members. The default
- * constructor creates a dummy grid:
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/support_vector_machines.html#cvparamgrid-cvparamgrid">org.opencv.ml.CvParamGrid.CvParamGrid</a>
- */
-public CvParamGrid() {
-    nativeObj = n_newObj();
-}
-
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -142,6 +150,9 @@ public CvParamGrid() {
     // native stuff
     //
     static { System.loadLibrary("opencv_java"); }
+
+    // C++:   CvParamGrid::CvParamGrid()
+    private static native long CvParamGrid_0();
 
     // C++: double CvParamGrid::min_val
     private static native double get_min_val_0(long nativeObj);
@@ -160,7 +171,7 @@ public CvParamGrid() {
 
     // C++: void CvParamGrid::step
     private static native void set_step_0(long nativeObj, double step);
-private static native long n_newObj();
+
     // native support for java finalize()
     private static native void delete(long nativeObj);
 

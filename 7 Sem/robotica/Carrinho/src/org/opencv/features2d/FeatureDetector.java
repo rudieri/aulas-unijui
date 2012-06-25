@@ -7,13 +7,14 @@ package org.opencv.features2d;
 import java.lang.String;
 import java.util.List;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfKeyPoint;
 import org.opencv.utils.Converters;
 
 // C++: class javaFeatureDetector
 /**
- * Abstract base class for 2D image feature detectors.
+ * <p>Abstract base class for 2D image feature detectors.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector">org.opencv.features2d.FeatureDetector</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector">org.opencv.features2d.FeatureDetector : public Algorithm</a>
  */
 public class FeatureDetector {
 
@@ -75,25 +76,31 @@ public class FeatureDetector {
     //
 
 /**
- * Creates a feature detector by its name.
+ * <p>Creates a feature detector by its name.</p>
  *
- * The following detector types are supported:
- *   * "FAST" -- "FastFeatureDetector"
- *   * "STAR" -- "StarFeatureDetector"
- *   * "SIFT" -- "SiftFeatureDetector"
- *   * "SURF" -- "SurfFeatureDetector"
- *   * "ORB" -- "OrbFeatureDetector"
- *   * "MSER" -- "MserFeatureDetector"
- *   * "GFTT" -- "GfttFeatureDetector"
- *   * "HARRIS" -- "HarrisFeatureDetector"
+ * <p>The following detector types are supported:</p>
+ * <ul>
+ *   <li> <code>"FAST"</code> -- "FastFeatureDetector"
+ *   <li> <code>"STAR"</code> -- "StarFeatureDetector"
+ *   <li> <code>"SIFT"</code> -- "SIFT" (nonfree module)
+ *   <li> <code>"SURF"</code> -- "SURF" (nonfree module)
+ *   <li> <code>"ORB"</code> -- "ORB"
+ *   <li> <code>"MSER"</code> -- "MSER"
+ *   <li> <code>"GFTT"</code> -- "GoodFeaturesToTrackDetector"
+ *   <li> <code>"HARRIS"</code> -- "GoodFeaturesToTrackDetector" with Harris
+ * detector enabled
+ *   <li> <code>"Dense"</code> -- "DenseFeatureDetector"
+ *   <li> <code>"SimpleBlob"</code> -- "SimpleBlobDetector"
+ * </ul>
  *
- * Also a combined format is supported: feature detector adapter name ("Grid" --
- * "GridAdaptedFeatureDetector", "Pyramid" -- "PyramidAdaptedFeatureDetector") +
- * feature detector name (see above), for example: "GridFAST", "PyramidSTAR".
+ * <p>Also a combined format is supported: feature detector adapter name
+ * (<code>"Grid"</code> -- "GridAdaptedFeatureDetector", <code>"Pyramid"</code>
+ * -- "PyramidAdaptedFeatureDetector") + feature detector name (see above), for
+ * example: <code>"GridFAST"</code>, <code>"PyramidSTAR"</code>.</p>
  *
  * @param detectorType Feature detector type.
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-create">org.opencv.features2d.FeatureDetector.create</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-create">org.opencv.features2d.FeatureDetector.create</a>
  */
     public static FeatureDetector create(int detectorType)
     {
@@ -109,38 +116,38 @@ public class FeatureDetector {
     //
 
 /**
- * Detects keypoints in an image (first variant) or image set (second variant).
+ * <p>Detects keypoints in an image (first variant) or image set (second variant).</p>
  *
  * @param image Image.
  * @param keypoints The detected keypoints. In the second variant of the method
- * "keypoints[i]" is a set of keypoints detected in "images[i]".
+ * <code>keypoints[i]</code> is a set of keypoints detected in <code>images[i]</code>.
  * @param mask Mask specifying where to look for keypoints (optional). It must
  * be a 8-bit integer matrix with non-zero values in the region of interest.
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
  */
-    public  void detect(Mat image, List<KeyPoint> keypoints, Mat mask)
+    public  void detect(Mat image, MatOfKeyPoint keypoints, Mat mask)
     {
-        Mat keypoints_mat = new Mat();
+        Mat keypoints_mat = keypoints;
         detect_0(nativeObj, image.nativeObj, keypoints_mat.nativeObj, mask.nativeObj);
-        Converters.Mat_to_vector_KeyPoint(keypoints_mat, keypoints);
+
         return;
     }
 
 /**
- * Detects keypoints in an image (first variant) or image set (second variant).
+ * <p>Detects keypoints in an image (first variant) or image set (second variant).</p>
  *
  * @param image Image.
  * @param keypoints The detected keypoints. In the second variant of the method
- * "keypoints[i]" is a set of keypoints detected in "images[i]".
+ * <code>keypoints[i]</code> is a set of keypoints detected in <code>images[i]</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
  */
-    public  void detect(Mat image, List<KeyPoint> keypoints)
+    public  void detect(Mat image, MatOfKeyPoint keypoints)
     {
-        Mat keypoints_mat = new Mat();
+        Mat keypoints_mat = keypoints;
         detect_1(nativeObj, image.nativeObj, keypoints_mat.nativeObj);
-        Converters.Mat_to_vector_KeyPoint(keypoints_mat, keypoints);
+
         return;
     }
 
@@ -150,17 +157,17 @@ public class FeatureDetector {
     //
 
 /**
- * Detects keypoints in an image (first variant) or image set (second variant).
+ * <p>Detects keypoints in an image (first variant) or image set (second variant).</p>
  *
  * @param images Image set.
  * @param keypoints The detected keypoints. In the second variant of the method
- * "keypoints[i]" is a set of keypoints detected in "images[i]".
+ * <code>keypoints[i]</code> is a set of keypoints detected in <code>images[i]</code>.
  * @param masks Masks for each input image specifying where to look for
- * keypoints (optional). "masks[i]" is a mask for "images[i]".
+ * keypoints (optional). <code>masks[i]</code> is a mask for <code>images[i]</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
  */
-    public  void detect(List<Mat> images, List<List<KeyPoint>> keypoints, List<Mat> masks)
+    public  void detect(List<Mat> images, List<MatOfKeyPoint> keypoints, List<Mat> masks)
     {
         Mat images_mat = Converters.vector_Mat_to_Mat(images);
         Mat keypoints_mat = new Mat();
@@ -171,15 +178,15 @@ public class FeatureDetector {
     }
 
 /**
- * Detects keypoints in an image (first variant) or image set (second variant).
+ * <p>Detects keypoints in an image (first variant) or image set (second variant).</p>
  *
  * @param images Image set.
  * @param keypoints The detected keypoints. In the second variant of the method
- * "keypoints[i]" is a set of keypoints detected in "images[i]".
+ * <code>keypoints[i]</code> is a set of keypoints detected in <code>images[i]</code>.
  *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
+ * @see <a href="http://docs.opencv.org/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-detect">org.opencv.features2d.FeatureDetector.detect</a>
  */
-    public  void detect(List<Mat> images, List<List<KeyPoint>> keypoints)
+    public  void detect(List<Mat> images, List<MatOfKeyPoint> keypoints)
     {
         Mat images_mat = Converters.vector_Mat_to_Mat(images);
         Mat keypoints_mat = new Mat();
@@ -206,13 +213,6 @@ public class FeatureDetector {
     // C++:  void javaFeatureDetector::read(string fileName)
     //
 
-/**
- * Reads a feature detector object from a file node.
- *
- * @param fileName a fileName
- *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-read">org.opencv.features2d.FeatureDetector.read</a>
- */
     public  void read(String fileName)
     {
 
@@ -226,13 +226,6 @@ public class FeatureDetector {
     // C++:  void javaFeatureDetector::write(string fileName)
     //
 
-/**
- * Writes a feature detector object to a file storage.
- *
- * @param fileName a fileName
- *
- * @see <a href="http://opencv.itseez.com/modules/features2d/doc/common_interfaces_of_feature_detectors.html#featuredetector-write">org.opencv.features2d.FeatureDetector.write</a>
- */
     public  void write(String fileName)
     {
 
@@ -245,7 +238,6 @@ public class FeatureDetector {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 

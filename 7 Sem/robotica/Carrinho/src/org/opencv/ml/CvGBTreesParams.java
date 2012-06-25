@@ -8,19 +8,36 @@ package org.opencv.ml;
 
 // C++: class CvGBTreesParams
 /**
- * GBT training parameters.
+ * <p>GBT training parameters.</p>
  *
- * The structure contains parameters for each sigle decision tree in the
+ * <p>The structure contains parameters for each single decision tree in the
  * ensemble, as well as the whole model characteristics. The structure is
  * derived from "CvDTreeParams" but not all of the decision tree parameters are
- * supported: cross-validation, pruning, and class priorities are not used.
+ * supported: cross-validation, pruning, and class priorities are not used.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/gradient_boosted_trees.html#cvgbtreesparams">org.opencv.ml.CvGBTreesParams</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/gradient_boosted_trees.html#cvgbtreesparams">org.opencv.ml.CvGBTreesParams : public CvDTreeParams</a>
  */
-public class CvGBTreesParams {
+public class CvGBTreesParams extends CvDTreeParams {
 
-    protected final long nativeObj;
-    protected CvGBTreesParams(long addr) { nativeObj = addr; }
+    protected CvGBTreesParams(long addr) { super(addr); }
+
+
+    //
+    // C++:   CvGBTreesParams::CvGBTreesParams()
+    //
+
+/**
+ * <p>By default the following constructor is used:</p>
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/gradient_boosted_trees.html#cvgbtreesparams-cvgbtreesparams">org.opencv.ml.CvGBTreesParams.CvGBTreesParams</a>
+ */
+    public   CvGBTreesParams()
+    {
+
+        super( CvGBTreesParams_0() );
+
+        return;
+    }
 
 
     //
@@ -127,19 +144,9 @@ public class CvGBTreesParams {
     }
 
 
-/**
- * By default the following constructor is used:
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/gradient_boosted_trees.html#cvgbtreesparams-cvgbtreesparams">org.opencv.ml.CvGBTreesParams.CvGBTreesParams</a>
- */
-public CvGBTreesParams() {
-    nativeObj = n_newObj();
-}
-
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -148,6 +155,9 @@ public CvGBTreesParams() {
     // native stuff
     //
     static { System.loadLibrary("opencv_java"); }
+
+    // C++:   CvGBTreesParams::CvGBTreesParams()
+    private static native long CvGBTreesParams_0();
 
     // C++: int CvGBTreesParams::weak_count
     private static native int get_weak_count_0(long nativeObj);
@@ -172,7 +182,7 @@ public CvGBTreesParams() {
 
     // C++: void CvGBTreesParams::shrinkage
     private static native void set_shrinkage_0(long nativeObj, float shrinkage);
-private static native long n_newObj();
+
     // native support for java finalize()
     private static native void delete(long nativeObj);
 

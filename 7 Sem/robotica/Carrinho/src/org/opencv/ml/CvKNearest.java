@@ -8,15 +8,14 @@ import org.opencv.core.Mat;
 
 // C++: class CvKNearest
 /**
- * The class implements K-Nearest Neighbors model as described in the beginning
- * of this section.
+ * <p>The class implements K-Nearest Neighbors model as described in the beginning
+ * of this section.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest">org.opencv.ml.CvKNearest</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest">org.opencv.ml.CvKNearest : public CvStatModel</a>
  */
-public class CvKNearest {
+public class CvKNearest extends CvStatModel {
 
-    protected final long nativeObj;
-    protected CvKNearest(long addr) { nativeObj = addr; }
+    protected CvKNearest(long addr) { super(addr); }
 
 
     //
@@ -24,16 +23,16 @@ public class CvKNearest {
     //
 
 /**
- * Default and training constructors.
+ * <p>Default and training constructors.</p>
  *
- * See "CvKNearest.train" for additional parameters descriptions.
+ * <p>See "CvKNearest.train" for additional parameters descriptions.</p>
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
  */
     public   CvKNearest()
     {
 
-        nativeObj = CvKNearest_0();
+        super( CvKNearest_0() );
 
         return;
     }
@@ -44,9 +43,9 @@ public class CvKNearest {
     //
 
 /**
- * Default and training constructors.
+ * <p>Default and training constructors.</p>
  *
- * See "CvKNearest.train" for additional parameters descriptions.
+ * <p>See "CvKNearest.train" for additional parameters descriptions.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
@@ -54,69 +53,30 @@ public class CvKNearest {
  * @param isRegression a isRegression
  * @param max_k a max_k
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
  */
     public   CvKNearest(Mat trainData, Mat responses, Mat sampleIdx, boolean isRegression, int max_k)
     {
 
-        nativeObj = CvKNearest_1(trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj, isRegression, max_k);
+        super( CvKNearest_1(trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj, isRegression, max_k) );
 
         return;
     }
 
 /**
- * Default and training constructors.
+ * <p>Default and training constructors.</p>
  *
- * See "CvKNearest.train" for additional parameters descriptions.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param sampleIdx a sampleIdx
- * @param isRegression a isRegression
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
- */
-    public   CvKNearest(Mat trainData, Mat responses, Mat sampleIdx, boolean isRegression)
-    {
-
-        nativeObj = CvKNearest_2(trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj, isRegression);
-
-        return;
-    }
-
-/**
- * Default and training constructors.
- *
- * See "CvKNearest.train" for additional parameters descriptions.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param sampleIdx a sampleIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
- */
-    public   CvKNearest(Mat trainData, Mat responses, Mat sampleIdx)
-    {
-
-        nativeObj = CvKNearest_3(trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj);
-
-        return;
-    }
-
-/**
- * Default and training constructors.
- *
- * See "CvKNearest.train" for additional parameters descriptions.
+ * <p>See "CvKNearest.train" for additional parameters descriptions.</p>
  *
  * @param trainData a trainData
  * @param responses a responses
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-cvknearest">org.opencv.ml.CvKNearest.CvKNearest</a>
  */
     public   CvKNearest(Mat trainData, Mat responses)
     {
 
-        nativeObj = CvKNearest_4(trainData.nativeObj, responses.nativeObj);
+        super( CvKNearest_2(trainData.nativeObj, responses.nativeObj) );
 
         return;
     }
@@ -127,35 +87,38 @@ public class CvKNearest {
     //
 
 /**
- * Finds the neighbors and predicts responses for input vectors.
+ * <p>Finds the neighbors and predicts responses for input vectors.</p>
  *
- * For each input vector (a row of the matrix "samples"), the method finds the
- * "k" nearest neighbors. In case of regression, the predicted result is a mean
- * value of the particular vector's neighbor responses. In case of
- * classification, the class is determined by voting.
+ * <p>For each input vector (a row of the matrix <code>samples</code>), the method
+ * finds the <code>k</code> nearest neighbors. In case of regression, the
+ * predicted result is a mean value of the particular vector's neighbor
+ * responses. In case of classification, the class is determined by voting.</p>
  *
- * For each input vector, the neighbors are sorted by their distances to the
- * vector.
+ * <p>For each input vector, the neighbors are sorted by their distances to the
+ * vector.</p>
  *
- * In case of C++ interface you can use output pointers to empty matrices and
- * the function will allocate memory itself.
+ * <p>In case of C++ interface you can use output pointers to empty matrices and
+ * the function will allocate memory itself.</p>
  *
- * If only a single input vector is passed, all output matrices are optional and
- * the predicted value is returned by the method.
+ * <p>If only a single input vector is passed, all output matrices are optional and
+ * the predicted value is returned by the method.</p>
+ *
+ * <p>The function is parallelized with the TBB library.</p>
  *
  * @param samples Input samples stored by rows. It is a single-precision
- * floating-point matrix of number_of_samples x number_of_features size.
- * @param k Number of used nearest neighbors. It must satisfy constraint: k <=
- * "CvKNearest.get_max_k".
+ * floating-point matrix of <em>number_of_samples x number_of_features</em>
+ * size.
+ * @param k Number of used nearest neighbors. It must satisfy constraint: <em>k
+ * <= </em> "CvKNearest.get_max_k".
  * @param results Vector with results of prediction (regression or
  * classification) for each input sample. It is a single-precision
- * floating-point vector with "number_of_samples" elements.
+ * floating-point vector with <code>number_of_samples</code> elements.
  * @param neighborResponses Optional output values for corresponding
- * "neighbors". It is a single-precision floating-point matrix of
- * number_of_samples x k size.
+ * <code>neighbors</code>. It is a single-precision floating-point matrix of
+ * <em>number_of_samples x k</em> size.
  * @param dists a dists
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-find-nearest">org.opencv.ml.CvKNearest.find_nearest</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-find-nearest">org.opencv.ml.CvKNearest.find_nearest</a>
  */
     public  float find_nearest(Mat samples, int k, Mat results, Mat neighborResponses, Mat dists)
     {
@@ -171,29 +134,32 @@ public class CvKNearest {
     //
 
 /**
- * Trains the model.
+ * <p>Trains the model.</p>
  *
- * The method trains the K-Nearest model. It follows the conventions of the
- * generic "CvStataModel.train" approach with the following limitations:
- *   * Only "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("is_regression=false") or
- * ordered ("is_regression=true").
- *   * Variable subsets ("var_idx") and missing measurements are not supported.
+ * <p>The method trains the K-Nearest model. It follows the conventions of the
+ * generic "CvStatModel.train" approach with the following limitations:</p>
+ * <ul>
+ *   <li> Only <code>CV_ROW_SAMPLE</code> data layout is supported.
+ *   <li> Input variables are all ordered.
+ *   <li> Output variables can be either categorical (<code>is_regression=false</code>)
+ * or ordered (<code>is_regression=true</code>).
+ *   <li> Variable subsets (<code>var_idx</code>) and missing measurements are
+ * not supported.
+ * </ul>
  *
  * @param trainData a trainData
  * @param responses a responses
  * @param sampleIdx a sampleIdx
- * @param isRegression Type of the problem: "true" for regression and "false"
- * for classification.
+ * @param isRegression Type of the problem: <code>true</code> for regression and
+ * <code>false</code> for classification.
  * @param maxK Number of maximum neighbors that may be passed to the method
  * "CvKNearest.find_nearest".
  * @param updateBase Specifies whether the model is trained from scratch
- * ("update_base=false"), or it is updated using the new training data
- * ("update_base=true"). In the latter case, the parameter "maxK" must not be
- * larger than the original value.
+ * (<code>update_base=false</code>), or it is updated using the new training
+ * data (<code>update_base=true</code>). In the latter case, the parameter
+ * <code>maxK</code> must not be larger than the original value.
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
  */
     public  boolean train(Mat trainData, Mat responses, Mat sampleIdx, boolean isRegression, int maxK, boolean updateBase)
     {
@@ -204,106 +170,28 @@ public class CvKNearest {
     }
 
 /**
- * Trains the model.
+ * <p>Trains the model.</p>
  *
- * The method trains the K-Nearest model. It follows the conventions of the
- * generic "CvStataModel.train" approach with the following limitations:
- *   * Only "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("is_regression=false") or
- * ordered ("is_regression=true").
- *   * Variable subsets ("var_idx") and missing measurements are not supported.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param sampleIdx a sampleIdx
- * @param isRegression Type of the problem: "true" for regression and "false"
- * for classification.
- * @param maxK Number of maximum neighbors that may be passed to the method
- * "CvKNearest.find_nearest".
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
- */
-    public  boolean train(Mat trainData, Mat responses, Mat sampleIdx, boolean isRegression, int maxK)
-    {
-
-        boolean retVal = train_1(nativeObj, trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj, isRegression, maxK);
-
-        return retVal;
-    }
-
-/**
- * Trains the model.
- *
- * The method trains the K-Nearest model. It follows the conventions of the
- * generic "CvStataModel.train" approach with the following limitations:
- *   * Only "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("is_regression=false") or
- * ordered ("is_regression=true").
- *   * Variable subsets ("var_idx") and missing measurements are not supported.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param sampleIdx a sampleIdx
- * @param isRegression Type of the problem: "true" for regression and "false"
- * for classification.
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
- */
-    public  boolean train(Mat trainData, Mat responses, Mat sampleIdx, boolean isRegression)
-    {
-
-        boolean retVal = train_2(nativeObj, trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj, isRegression);
-
-        return retVal;
-    }
-
-/**
- * Trains the model.
- *
- * The method trains the K-Nearest model. It follows the conventions of the
- * generic "CvStataModel.train" approach with the following limitations:
- *   * Only "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("is_regression=false") or
- * ordered ("is_regression=true").
- *   * Variable subsets ("var_idx") and missing measurements are not supported.
- *
- * @param trainData a trainData
- * @param responses a responses
- * @param sampleIdx a sampleIdx
- *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
- */
-    public  boolean train(Mat trainData, Mat responses, Mat sampleIdx)
-    {
-
-        boolean retVal = train_3(nativeObj, trainData.nativeObj, responses.nativeObj, sampleIdx.nativeObj);
-
-        return retVal;
-    }
-
-/**
- * Trains the model.
- *
- * The method trains the K-Nearest model. It follows the conventions of the
- * generic "CvStataModel.train" approach with the following limitations:
- *   * Only "CV_ROW_SAMPLE" data layout is supported.
- *   * Input variables are all ordered.
- *   * Output variables can be either categorical ("is_regression=false") or
- * ordered ("is_regression=true").
- *   * Variable subsets ("var_idx") and missing measurements are not supported.
+ * <p>The method trains the K-Nearest model. It follows the conventions of the
+ * generic "CvStatModel.train" approach with the following limitations:</p>
+ * <ul>
+ *   <li> Only <code>CV_ROW_SAMPLE</code> data layout is supported.
+ *   <li> Input variables are all ordered.
+ *   <li> Output variables can be either categorical (<code>is_regression=false</code>)
+ * or ordered (<code>is_regression=true</code>).
+ *   <li> Variable subsets (<code>var_idx</code>) and missing measurements are
+ * not supported.
+ * </ul>
  *
  * @param trainData a trainData
  * @param responses a responses
  *
- * @see <a href="http://opencv.itseez.com/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/k_nearest_neighbors.html#cvknearest-train">org.opencv.ml.CvKNearest.train</a>
  */
     public  boolean train(Mat trainData, Mat responses)
     {
 
-        boolean retVal = train_4(nativeObj, trainData.nativeObj, responses.nativeObj);
+        boolean retVal = train_1(nativeObj, trainData.nativeObj, responses.nativeObj);
 
         return retVal;
     }
@@ -312,7 +200,6 @@ public class CvKNearest {
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
-        super.finalize();
     }
 
 
@@ -327,19 +214,14 @@ public class CvKNearest {
 
     // C++:   CvKNearest::CvKNearest(Mat trainData, Mat responses, Mat sampleIdx = cv::Mat(), bool isRegression = false, int max_k = 32)
     private static native long CvKNearest_1(long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj, boolean isRegression, int max_k);
-    private static native long CvKNearest_2(long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj, boolean isRegression);
-    private static native long CvKNearest_3(long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj);
-    private static native long CvKNearest_4(long trainData_nativeObj, long responses_nativeObj);
+    private static native long CvKNearest_2(long trainData_nativeObj, long responses_nativeObj);
 
     // C++:  float CvKNearest::find_nearest(Mat samples, int k, Mat& results, Mat& neighborResponses, Mat& dists)
     private static native float find_nearest_0(long nativeObj, long samples_nativeObj, int k, long results_nativeObj, long neighborResponses_nativeObj, long dists_nativeObj);
 
     // C++:  bool CvKNearest::train(Mat trainData, Mat responses, Mat sampleIdx = cv::Mat(), bool isRegression = false, int maxK = 32, bool updateBase = false)
     private static native boolean train_0(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj, boolean isRegression, int maxK, boolean updateBase);
-    private static native boolean train_1(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj, boolean isRegression, int maxK);
-    private static native boolean train_2(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj, boolean isRegression);
-    private static native boolean train_3(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long sampleIdx_nativeObj);
-    private static native boolean train_4(long nativeObj, long trainData_nativeObj, long responses_nativeObj);
+    private static native boolean train_1(long nativeObj, long trainData_nativeObj, long responses_nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);
