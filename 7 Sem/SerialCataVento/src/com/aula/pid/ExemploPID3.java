@@ -4,39 +4,57 @@
  */
 package com.aula.pid;
 
+import com.aula.catavento.JPID;
+
 /**
  *
  * @author rogerio
  */
 public class ExemploPID3 {
+    private double error;
+    private JPID jpid;
+    private Double ideal = 512d;
 
     public ExemploPID3(double p_factor, double i_factor, double d_factor) {
         p = p_factor;
         i = i_factor;
         d = d_factor;
         sumErrors = 0;
-        previousValue = 0;
+        valorAnterior = 0;
         System.out.println("STARTEO PID: P:" + p_factor + " I:" + i_factor + " D:" + d_factor);
     }
 
-    public double controller(double setPoint, double processValue) {
+    public double controller(double valorLido) {
         System.out.println("**************Calculo Maluco*************");
-        double error = setPoint - processValue;
+        error = ideal - valorLido;
         System.out.println("error: " + error);
         System.out.println("sumErrors: " + sumErrors);
-        double ret = p * (error) + i * sumErrors + d * (previousValue - processValue);
+        double ret = p * (error) + i * sumErrors + d * (valorAnterior - valorLido);
 
-        previousValue = processValue;
+        valorAnterior = valorLido;
         sumErrors += error;
 
         System.out.println("**************FIM  Calculo Maluco*************");
+        
+        //Atualiza Valores TELA
+        if(jpid!=null){
+            jpid.atualizaValores(valorLido,error,sumErrors,ret);
+            jpid.addLog("PID: {p: "+p+" ,\n"
+                    + "i: "+i+" ,\n"
+                    + "d: "+d+" ,\n"
+                    + "ideal: "+ideal+" ,\n"
+                    + "Valor Lido: "+valorLido+" ,\n"
+                    + "Soma Erros: "+sumErrors+" ,\n"
+                    + "Calc: "+p+" * ("+error+") + "+i+" * "+sumErrors+" + "+d+" * ("+valorAnterior+" - "+valorLido+") ,\n"
+                    + "Res: "+ret+"}");
+        }
 
         return ret;
     }
     private volatile double p;
     private volatile double i;
     private volatile double d;
-    private volatile double previousValue;
+    private volatile double valorAnterior;
     private volatile double sumErrors;
 
     public void setP(double p) {
@@ -62,4 +80,16 @@ public class ExemploPID3 {
     public double getD() {
         return d;
     }
+    
+    public void setTela(JPID jpid){
+        this.jpid = jpid;
+    }
+
+    public double getIdeal() {
+        return ideal;
+    }
+    public void setIdeal(Double ideal) {
+       this.ideal = ideal;
+    }
+    
 }
