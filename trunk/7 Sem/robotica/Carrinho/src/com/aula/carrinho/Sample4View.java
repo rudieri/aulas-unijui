@@ -75,6 +75,8 @@ public class Sample4View extends SampleViewBase {
         mYuv.put(0, 0, data);
 
         Imgproc.resize(mYuv, mYuv, new Size(getRedFrameWidth(), getRedFrameHeight()));
+        //Monocromatico
+        Imgproc.threshold(mYuv, mYuv, 128d, 255d, Imgproc.THRESH_BINARY);
 
         mGraySubmat = mYuv.submat(0, getRedFrameHeight(), 0, getRedFrameWidth());
 
