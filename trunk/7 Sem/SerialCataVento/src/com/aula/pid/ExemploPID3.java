@@ -14,6 +14,7 @@ public class ExemploPID3 {
     private double error;
     private JPID jpid;
     private Double ideal = 512d;
+    private boolean inercia = true;
 
     public ExemploPID3(double p_factor, double i_factor, double d_factor) {
         p = p_factor;
@@ -29,7 +30,12 @@ public class ExemploPID3 {
         error = ideal - valorLido;
         System.out.println("error: " + error);
         System.out.println("sumErrors: " + sumErrors);
-        double ret = p * (error) + i * sumErrors + d * (valorAnterior - valorLido);
+        double auxP = p;
+        if(inercia && error<0 ){
+            auxP = 0;
+        }
+        
+        double ret = auxP * (error) + i * sumErrors + d * (valorAnterior - valorLido);
 
         valorAnterior = valorLido;
         sumErrors += error;
@@ -45,15 +51,15 @@ public class ExemploPID3 {
                     + "ideal: "+ideal+" ,\n"
                     + "Valor Lido: "+valorLido+" ,\n"
                     + "Soma Erros: "+sumErrors+" ,\n"
-                    + "Calc: "+p+" * ("+error+") + "+i+" * "+sumErrors+" + "+d+" * ("+valorAnterior+" - "+valorLido+") ,\n"
+                    + "Calc: "+auxP+" * ("+error+") + "+i+" * "+sumErrors+" + "+d+" * ("+valorAnterior+" - "+valorLido+") ,\n"
                     + "Res: "+ret+"}");
         }
 
         return ret;
     }
-    private volatile double p;
-    private volatile double i;
-    private volatile double d;
+    private volatile double p = 0.01;
+    private volatile double i = 0.05;
+    private volatile double d = 0.0;
     private volatile double valorAnterior;
     private volatile double sumErrors;
 
@@ -90,6 +96,10 @@ public class ExemploPID3 {
     }
     public void setIdeal(Double ideal) {
        this.ideal = ideal;
+    }
+
+    public void setInercia(boolean inercia) {
+        this.inercia = inercia;
     }
     
 }

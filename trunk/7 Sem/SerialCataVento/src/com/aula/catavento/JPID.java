@@ -68,6 +68,8 @@ public class JPID extends javax.swing.JFrame {
         jSpinnerI = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         jSpinnerD = new javax.swing.JSpinner();
+        jLabel10 = new javax.swing.JLabel();
+        jCheckBox_inercia = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         jSpinnerIdeal = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
@@ -126,6 +128,16 @@ public class JPID extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jSpinnerD);
+        jPanel1.add(jLabel10);
+
+        jCheckBox_inercia.setSelected(true);
+        jCheckBox_inercia.setText("Inércia");
+        jCheckBox_inercia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBox_inerciaItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(jCheckBox_inercia);
 
         jLabel9.setText("Ideal:");
         jPanel1.add(jLabel9);
@@ -264,6 +276,10 @@ public class JPID extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void jCheckBox_inerciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox_inerciaItemStateChanged
+        exemploPID3.setInercia(jCheckBox_inercia.isSelected());
+    }//GEN-LAST:event_jCheckBox_inerciaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -306,7 +322,9 @@ public class JPID extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox_inercia;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
