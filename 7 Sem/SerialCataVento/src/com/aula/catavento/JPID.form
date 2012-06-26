@@ -98,6 +98,17 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerDStateChanged"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JLabel" name="jLabel10">
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="jCheckBox_inercia">
+          <Properties>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="In&#xe9;rcia"/>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBox_inerciaItemStateChanged"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ideal:"/>
