@@ -2027,29 +2027,463 @@
   <node uin="b7el9450qeo_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Pessoa" />
+    <node uin="ow4e9jz5xfsexk80j_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="2lo6r9g1sosa99p8p_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Endereco" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="h00ttm6hfwi_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Cidade" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="6al020e5waq_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="CEP" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="dmlur5q9d1o_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="E-mail" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <link uin="t0l0adta2ohokzg0f_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <property name="aggregation" value="True" />
+      <property name="composition" value="True" />
+      <participant referencedUin="design:node:::b7el9450qeo_n" role="Client" />
+      <participant referencedUin="design:node:::nomllp2yz1mk7zmvo_n" role="Supplier" />
+    </link>
+    <link uin="2n4060vopffgx2s5k_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association2" />
+      <participant referencedUin="design:node:::b7el9450qeo_n" role="Client" />
+      <participant referencedUin="design:node:::hsys93y07zf_n" role="Supplier" />
+    </link>
   </node>
   <node uin="hsys93y07zf_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Evento" />
+    <node uin="6ayfutyg4vg_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Data" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="w2s019g8vpr_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Hora" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="p4729xdabhj_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Local" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <link uin="nm572wwzgisnbok0m_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::hsys93y07zf_n" role="Client" />
+      <participant referencedUin="design:node:::n1ekfveyoigjnwpxm_n" role="Supplier" />
+    </link>
+    <link uin="jdxxkuq0p9o_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association2" />
+      <property name="aggregation" value="True" />
+      <property name="composition" value="True" />
+      <participant referencedUin="design:node:::hsys93y07zf_n" role="Client" />
+      <participant referencedUin="design:node:::c23ib32596j_n" role="Supplier" />
+    </link>
+    <link uin="0i2g3dl5wyq_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association3" />
+      <property name="aggregation" value="True" />
+      <property name="composition" value="True" />
+      <participant referencedUin="design:node:::hsys93y07zf_n" role="Client" />
+      <participant referencedUin="design:node:::d1ua9lecejh_n" role="Supplier" />
+    </link>
   </node>
   <node uin="hb0sa80cp0j_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Reuniao" />
+    <node uin="27evv84q8jevi8z2h_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Data" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="a5nsudk8ggwe6z6f_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Local" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <link uin="rey85hu4rr15woqjs_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <property name="aggregation" value="True" />
+      <property name="composition" value="True" />
+      <participant referencedUin="design:node:::hb0sa80cp0j_n" role="Client" />
+      <participant referencedUin="design:node:::hsys93y07zf_n" role="Supplier" />
+    </link>
   </node>
   <node uin="vjcvr5rqxdnxjvk7m_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Bens" />
+    <node uin="e8lo3d9lm2st0h5zn_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="q1awra2r1sg_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Qtde" />
+      <property name="mod__type" value="Integer" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
   </node>
   <node uin="d6zc3c5y12owt0der_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Funcoes" />
+    <node uin="tifryj0z2li01eblt_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="i5i4e8kbqpj238dtf_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Salario" />
+      <property name="mod__type" value="Double" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
   </node>
   <node uin="jcbilmj2z0shayrlo_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Empresa" />
+    <property name="mod__extends" value="PessoaJuridica" />
+    <link uin="uweib70wlqt_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="PessoaJuridica" />
+      <participant referencedUin="design:node:::jcbilmj2z0shayrlo_n" role="Client" />
+      <participant referencedUin="design:node:::k90mg20xmmm2gkayr_n" role="Supplier" />
+    </link>
+    <link uin="fjklqqweo0opk3h1o_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <property name="aggregation" value="True" />
+      <participant referencedUin="design:node:::jcbilmj2z0shayrlo_n" role="Client" />
+      <participant referencedUin="design:node:::vjcvr5rqxdnxjvk7m_n" role="Supplier" />
+    </link>
+    <node uin="oqhwarfojus_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="NomeFantasia" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
   </node>
   <node uin="019r7p8osrs5n386t_n">
     <property name="$metaclass" value="Class20" />
     <property name="$name" value="Usuario" />
+    <node uin="ddl94w9adgjij1wgf_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Login" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="o0b0eyxznnme4cuet_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Senha" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="t5k13oso6os_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DtInclusao" />
+      <property name="mod__type" value="TDateTime" />
+    </node>
+    <node uin="ndkpvqpb1tl_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DtExclusao" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="g2961z5hsoho04lft_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="PessoaFisica" />
+    <property name="mod__extends" value="Pessoa" />
+    <link uin="e3t3h6tp39qslnj4r_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="Pessoa" />
+      <participant referencedUin="design:node:::g2961z5hsoho04lft_n" role="Client" />
+      <participant referencedUin="design:node:::b7el9450qeo_n" role="Supplier" />
+    </link>
+    <node uin="t8euayjltko_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="CI" />
+      <property name="mod__type" value="Integer" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="ztrn8hknkfq_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DataNasc" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="5w3telqrx06ylai0n_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="CPF" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="g4n4di1qepof0mpwq_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="NomePai" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="ubpbfuoiipg_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="NomeMae" />
+      <property name="mod__type" value="Integer" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="k90mg20xmmm2gkayr_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="PessoaJuridica" />
+    <property name="mod__extends" value="Pessoa" />
+    <link uin="4cltfcdkddpr6vohs_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="Pessoa" />
+      <participant referencedUin="design:node:::k90mg20xmmm2gkayr_n" role="Client" />
+      <participant referencedUin="design:node:::b7el9450qeo_n" role="Supplier" />
+    </link>
+    <node uin="36u46q50spm_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="CNPJ" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="c23ib32596j_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Foto" />
+    <node uin="0ljzpttrcwo_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="d1ua9lecejh_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Video" />
+    <node uin="88c2clqkg1g_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="um43i3ke7agv82q1h_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Duracao" />
+      <property name="mod__type" value="Integer" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="n1ekfveyoigjnwpxm_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Cursos" />
+    <node uin="0lar19ub3008n9d4f_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="j03w2squfps_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Cor" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="mmqdepmld57n03hhl_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Simbolo" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="9i2sjbg87ukwhwy1k_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Pacote" />
+    <link uin="uuozx360vhk_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <participant referencedUin="design:node:::9i2sjbg87ukwhwy1k_n" role="Client" />
+      <participant referencedUin="design:node:::hsys93y07zf_n" role="Supplier" />
+    </link>
+    <node uin="zrt0q0owzdt_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="ggkllsr6s1s_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Valor" />
+      <property name="mod__type" value="Double" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <link uin="jjk09pvd4i2sux3rn_l">
+      <property name="$metaclass" value="Dependency20" />
+      <property name="$name" value="Dependency1" />
+      <participant referencedUin="design:node:::9i2sjbg87ukwhwy1k_n" role="Client" />
+      <participant referencedUin="design:node:::wfqws0le9qs_n" role="Supplier" />
+    </link>
+    <node uin="0rnr650ipbm_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Tipo" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="wfqws0le9qs_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Itens_Pacote" />
+    <node uin="558q573vb6p_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Nome" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="xv2gcydnwlt_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Qtde" />
+      <property name="mod__type" value="Integer" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="7s76q0pzh28e4msht_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Funcionarios" />
+    <property name="mod__extends" value="PessoaFisica" />
+    <node uin="at8ormyxr1exg20ht_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DataAdm" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <link uin="qr8ojxnitwowb2sro_l">
+      <property name="$metaclass" value="Dependency20" />
+      <property name="$name" value="Dependency1" />
+      <participant referencedUin="design:node:::7s76q0pzh28e4msht_n" role="Client" />
+      <participant referencedUin="design:node:::d6zc3c5y12owt0der_n" role="Supplier" />
+    </link>
+    <link uin="jdkfl840mg_l">
+      <property name="$metaclass" value="Generalization20" />
+      <property name="$name" value="Generalization1" />
+      <property name="mod__cachedBaseName" value="PessoaFisica" />
+      <participant referencedUin="design:node:::7s76q0pzh28e4msht_n" role="Client" />
+      <participant referencedUin="design:node:::g2961z5hsoho04lft_n" role="Supplier" />
+    </link>
+    <link uin="vni1ydv91vt_l">
+      <property name="$metaclass" value="KernelAssociation20" />
+      <property name="$name" value="Association1" />
+      <property name="aggregation" value="True" />
+      <property name="composition" value="True" />
+      <participant referencedUin="design:node:::7s76q0pzh28e4msht_n" role="Client" />
+      <participant referencedUin="design:node:::019r7p8osrs5n386t_n" role="Supplier" />
+    </link>
+    <node uin="q3e36qgwzyo_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DtRescisao" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="ilzj57ncxz3kzq8zg_n">
+    <property name="$body" value="Criptografada" />
+    <property name="$metaclass" value="Constraint" />
+    <property name="$name" value="Constraint1" />
+    <node uin="63n9k7ncxz3ac1obp_n">
+      <property name="$metaclass" value="ValueSpecification" />
+      <property name="$name" value="Value Specification1" />
+    </node>
+  </node>
+  <node uin="nomllp2yz1mk7zmvo_n">
+    <property name="$metaclass" value="Class20" />
+    <property name="$name" value="Conta" />
+    <node uin="krp4rs27mi_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DtCriacao" />
+      <property name="mod__type" value="Integer" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="ls6xgnurgtj57m4se_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="DtQuitacao" />
+      <property name="mod__type" value="TDateTime" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="ncugjz75nz2sjlqgt_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="Valor" />
+      <property name="mod__type" value="Double" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="jyal4x3hwct2g2d3i_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="FormaPgto" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+    <node uin="kptba7w9vc3ia1lpf_n">
+      <property name="$metaclass" value="Property20" />
+      <property name="$name" value="TipoConta" />
+      <property name="mod__type" value="String" />
+      <property name="mod_Visibility" value="$private" />
+    </node>
+  </node>
+  <node uin="q8lzjmyc32i_n">
+    <property name="$metaclass" value="Activity20" />
+    <property name="$name" value="Cadastrar Evento" />
+    <node uin="gxc3wepm17o_n">
+      <property name="$metaclass" value="InitialNode20" />
+      <property name="$name" value="Initial1" />
+      <link uin="p0m3ox9fesi_l">
+        <property name="$metaclass" value="ObjectFlow20" />
+        <property name="$name" value="Object Flow1" />
+        <participant referencedUin="design:node:::gxc3wepm17o_n:q8lzjmyc32i_n" role="Client" />
+      </link>
+      <link uin="lpsrvsz0wfow1l2xt_l">
+        <property name="$metaclass" value="ControlFlow20" />
+        <property name="$name" value="Control Flow1" />
+        <participant referencedUin="design:node:::gxc3wepm17o_n:q8lzjmyc32i_n" role="Client" />
+        <participant referencedUin="design:node:::i6wzxkeol3dj7d0xh_n:q8lzjmyc32i_n" role="Supplier" />
+      </link>
+    </node>
+    <node uin="i6wzxkeol3dj7d0xh_n">
+      <property name="$metaclass" value="Action20" />
+      <property name="$name" value="Incluir Evento" />
+    </node>
   </node>
 </nodeSet>

@@ -1,17 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2012/06/25 11:49:53.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
-    <Transaction>2012/06/25 11:49:53.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\Sequence Diagram.txvSequenceDiagram20</Transaction>
-    <Transaction>2012/06/25 11:49:53.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
-    <Transaction>2012/06/25 11:49:53.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
-    <Transaction>2012/06/25 11:49:53.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
-    <Transaction>2012/06/25 11:51:35.035,c:\users\-monge_\documents\aulas\7 sem\engenhariadesoftware\delphiprojects\modelagemsf\modelsupport_sf\sequence diagram.txvsequencediagram20=</Transaction>
-    <Transaction>2012/06/25 11:51:35.080,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
-    <Transaction>2012/06/25 11:52:29.448,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\Sequence Diagram.txvSequenceDiagram20</Transaction>
-    <Transaction>2012/06/25 11:52:53.823,c:\users\-monge_\documents\aulas\7 sem\engenhariadesoftware\delphiprojects\modelagemsf\modelsupport_sf\sequence diagram.txvsequencediagram20=</Transaction>
-    <Transaction>2012/06/25 11:52:53.825,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
-    <Transaction>2012/06/25 11:59:21.569,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
-    <Transaction>2012/06/25 11:59:21.571,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+	<Transactions>
+    <Transaction>2012/06/25 11:49:53.000.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/25 11:49:53.000.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\Sequence Diagram.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/25 11:49:53.000.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/25 11:49:53.000.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/25 11:49:53.000.671,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/25 11:51:35.000.080,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/25 11:51:35.000.035,c:\users\-monge_\documents\aulas\7 sem\engenhariadesoftware\delphiprojects\modelagemsf\modelsupport_sf\sequence diagram.txvsequencediagram20=</Transaction>
+    <Transaction>2012/06/25 11:52:29.000.448,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\Sequence Diagram.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/25 11:52:53.000.823,c:\users\-monge_\documents\aulas\7 sem\engenhariadesoftware\delphiprojects\modelagemsf\modelsupport_sf\sequence diagram.txvsequencediagram20=</Transaction>
+    <Transaction>2012/06/25 11:52:53.000.825,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/25 11:59:21.000.569,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/25 11:59:21.000.571,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:50:12.000.091,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.002,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.003,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.003,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.002,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.002,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.002,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.003,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 11:51:40.000.003,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 19:07:07.000.908,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/26 21:38:52.000.582,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DCasoUsoSF.txvUseCaseDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DClasseSF.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txvClassDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DSequenciaCadEventoSF.txvSequenceDiagram20</Transaction>
+    <Transaction>2012/06/26 21:39:08.006,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\default.txaPackage</Transaction>
+    <Transaction>2012/06/26 21:48:04.567,=C:\Users\-moNGe_\Documents\Aulas\7 Sem\EngenhariadeSoftware\DelphiProjects\ModelagemSF\ModelSupport_SF\DAtividadeSF.txvActivityDiagram20</Transaction>
   </Transactions>
 </BorlandProject>

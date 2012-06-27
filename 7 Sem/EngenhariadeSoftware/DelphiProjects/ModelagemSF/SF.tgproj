@@ -11,6 +11,7 @@
 			<None Include="ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20"/>
 			<None Include="ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20"/>
 			<None Include="ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20"/>
+			<None Include="ModelSupport_SF\DAtividadeSF.txvActivityDiagram20"/>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Design.Personality.12</Borland.Personality>
