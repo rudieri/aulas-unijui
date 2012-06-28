@@ -11,7 +11,9 @@
 			<None Include="ModelSupport_SF\DSequenciaCadVerContasPagarReceberSF.txvSequenceDiagram20"/>
 			<None Include="ModelSupport_SF\DSequenciaEventoSF.txvSequenceDiagram20"/>
 			<None Include="ModelSupport_SF\DSequenciaSF.txvSequenceDiagram20"/>
-			<None Include="ModelSupport_SF\DMaquinaEstadosSF.txvStateDiagram20"/>
+			<None Include="ModelSupport_SF\DMaquinaEstadosCadEventoSF.txvStateDiagram20"/>
+			<None Include="ModelSupport_SF\DMaquinaEstadosCadCursosSF.txvStateDiagram20"/>
+			<None Include="ModelSupport_SF\DMaquinaEstadosContasReceberSF.txvStateDiagram20"/>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Design.Personality.12</Borland.Personality>
