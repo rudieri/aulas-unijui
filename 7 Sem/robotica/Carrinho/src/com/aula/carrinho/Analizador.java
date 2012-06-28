@@ -33,7 +33,7 @@ public class Analizador {
 //        Mat linhasAngulares = new Mat();
 //        Imgproc.HoughLinesP(mat, linhasVerticais, 2, Math.PI / 2, 5, 5);
         Date inicial = new Date();
-        Imgproc.HoughLinesP(mat, linhas, 2, Math.PI / 180, 1, 5, 8);
+        Imgproc.HoughLinesP(mat, linhas, 2, Math.PI / 180, 1, 100, 40);
         Log.d("DELAY", "HoughLinesP: " + (new Date().getTime() - inicial.getTime()) + " ms");
 //        Imgproc.HoughLinesP(mat, linhasAngulares, 1, Math.PI / 3, 5, 5);
 //        Mat tudo = new Mat(1, linhasAngulares.cols() + linhasVerticais.cols(), linhasAngulares.type());
