@@ -138,8 +138,8 @@ public class Sample4View extends SampleViewBase {
             Mat pontos = Analizador.analizarCanny(mIntermediateMat, bmp);
             Analizador.facaAlgoComCarrinho(pontos, bmp);
 
-            Mat aux = new Mat(getRedFrameWidth(), getRedFrameWidth(), CvType.CV_8UC1);
-            Utils.bitmapToMat(bmp, aux);
+//            Mat aux = new Mat(getRedFrameWidth(), getRedFrameWidth(), CvType.CV_8UC1);
+//            Utils.bitmapToMat(bmp, aux);
 //            if (aux.rows() > 0 && aux.cols() > 0) {
 //                Log.i("IMAGEM", aux.rows() + " + " + aux.cols());
 //                Imgproc.resize(aux, aux, new Size(getCameraFrameWidth(), getCameraFrameHeight()));
