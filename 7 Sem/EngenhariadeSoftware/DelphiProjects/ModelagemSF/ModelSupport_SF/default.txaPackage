@@ -2268,7 +2268,7 @@
     <node uin="ztrn8hknkfq_n">
       <property name="$metaclass" value="Property20" />
       <property name="$name" value="DataNasc" />
-      <property name="mod__type" value="TDateTime" />
+      <property name="mod__type" value="TDate" />
       <property name="mod_Visibility" value="$private" />
     </node>
     <node uin="5w3telqrx06ylai0n_n">
@@ -2452,7 +2452,7 @@
     <node uin="q3e36qgwzyo_n">
       <property name="$metaclass" value="Property20" />
       <property name="$name" value="DtRescisao" />
-      <property name="mod__type" value="TDateTime" />
+      <property name="mod__type" value="TDate" />
       <property name="mod_Visibility" value="$private" />
     </node>
   </node>
@@ -2630,6 +2630,22 @@
           <property name="$metaclass" value="Region20" />
           <property name="$name" value="Region1" />
         </node>
+        <link uin="61awovile1azbpeet_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <property name="__trigger" value="" />
+          <participant referencedUin="design:node:::eza73onxye9yowgum_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Client" />
+          <participant referencedUin="design:node:::80o7bmrzagmnegx7r_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Supplier" />
+          <node uin="i7nnbzqe0ds5pnlhm_n">
+            <property name="$body" value="Retorna e mostra evento" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="1khcm02m0dsj3t5up_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
       </node>
       <node uin="a13wty7v03pmctg3p_n">
         <property name="$metaclass" value="State20" />
@@ -2729,6 +2745,34 @@
           <property name="$name" value="Transition Link1" />
           <participant referencedUin="design:node:::v6znfhg014m_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Client" />
           <participant referencedUin="design:node:::a13wty7v03pmctg3p_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Supplier" />
+        </link>
+      </node>
+      <node uin="optieftc4fq5x6qe_n">
+        <property name="$metaclass" value="FinalState20" />
+        <property name="$name" value="Final1" />
+      </node>
+      <node uin="80o7bmrzagmnegx7r_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Evento" />
+        <property name="@mod__doActivity" value="Mostra evento" />
+        <node uin="2jx0sw27bgm3y8f5j_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="sbzsv3lpd0g_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::80o7bmrzagmnegx7r_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Client" />
+          <participant referencedUin="design:node:::optieftc4fq5x6qe_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Supplier" />
+          <node uin="z2xn6jk7o2j166ple_n">
+            <property name="$body" value="Terminou processo" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="f8hf3uvdo2jj8udwm_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
         </link>
       </node>
     </node>
@@ -2920,5 +2964,726 @@
       <participant referencedUin="design:node:::otlsrl0d46h_n" role="Client" />
       <participant referencedUin="design:node:::gu9um2plzuk6dz7nr_n" role="Supplier" />
     </link>
+  </node>
+  <node uin="dt5mpy5qgqm_n">
+    <property name="$metaclass" value="StateMachine" />
+    <property name="$name" value="Usuário" />
+    <node uin="1bayxwokafq_n">
+      <property name="$metaclass" value="Region20" />
+      <property name="$name" value="Region1" />
+      <node uin="elexm2q653o_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Usuário" />
+        <property name="@mod__doActivity" value="Acessar o sistema" />
+        <node uin="tzv3qw5glpm_n">
+          <property name="$doc" value="sdsdds" />
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="9rhggngd5ws_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::elexm2q653o_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::3gwbu70hv5h_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Supplier" />
+          <node uin="h2zth2d8fwj_n">
+            <property name="$body" value="Pesquisar" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="am8wk0cnq7k_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="no17i420lnn_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Initial1" />
+        <property name="$kind" value="initial" />
+        <link uin="ljsyc5gr86f_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::no17i420lnn_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::elexm2q653o_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Supplier" />
+        </link>
+      </node>
+      <node uin="jxkt9a2esjq_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Banco de Dados" />
+        <property name="@mod__doActivity" value="Busca no banco de dados" />
+        <node uin="ixehj7uowgi_n">
+          <property name="$doc" value="Busca usuário" />
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+      </node>
+      <node uin="3gwbu70hv5h_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Verifica se é válido" />
+        <property name="$kind" value="choice" />
+        <link uin="poutoz8t26r_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::3gwbu70hv5h_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::jxkt9a2esjq_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Supplier" />
+          <node uin="wqm4jhlejnl_n">
+            <property name="$body" value="Procura" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="pu57khnqkwo_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="3uppwvvcxyl_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link3" />
+          <participant referencedUin="design:node:::3gwbu70hv5h_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::h5ki2ej08f6udrj7r_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Supplier" />
+          <node uin="m7a50fk4san_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="5y0uw0g3ems_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="l2i5jrb34es_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::3gwbu70hv5h_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::lnzh0qtls0l_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Supplier" />
+          <node uin="osdqjgsxj3h_n">
+            <property name="$body" value="False" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="ep6uv46zrwr_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="gf0iy91zysepu7ef_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link4" />
+          <participant referencedUin="design:node:::3gwbu70hv5h_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::7ikqjmx38zl_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="jp360000se2vrsxzr_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="sbwky000se2yxey5f_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="lnzh0qtls0l_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Exceção" />
+        <property name="@mod__doActivity" value="Lança mensagem de exceção" />
+        <node uin="aaegbcqqjrs_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="soxpywoa3jl_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::lnzh0qtls0l_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Client" />
+          <participant referencedUin="design:node:::m7b61cku2ts_n:1bayxwokafq_n:dt5mpy5qgqm_n" role="Supplier" />
+          <node uin="c70dsko1m8g_n">
+            <property name="$body" value="Não acessa o sistema" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="tspcfcorl0g_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="m7b61cku2ts_n">
+        <property name="$metaclass" value="FinalState20" />
+        <property name="$name" value="Final1" />
+      </node>
+    </node>
+  </node>
+  <node uin="300ac4g2taj_n">
+    <property name="$metaclass" value="StateMachine" />
+    <property name="$name" value="Cadastrar Curso" />
+    <node uin="tpepfxz7tor_n">
+      <property name="$metaclass" value="Region20" />
+      <property name="$name" value="Region1" />
+      <node uin="7ikqjmx38zl_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Funcionário" />
+        <property name="@mod__doActivity" value="Verificar cursos" />
+        <node uin="8x5w6hjt6al_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="p0ouskazq14zjoznm_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::7ikqjmx38zl_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::xzz6wef70mf_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="mu0hej6mkz4lyb14i_n">
+            <property name="$body" value="Pesquisa" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="4v971tgtkz4vn0nqe_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="c7tp9p02idk_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::7ikqjmx38zl_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::z32r93o30go_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="zno4h9eaoke_n">
+            <property name="$body" value="Incluir" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="i7c6wna4fn_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="xzz6wef70mf_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Curso" />
+        <property name="@mod__doActivity" value="Mostra cursos já cadastrados" />
+        <node uin="lkbc9z2p1gs_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="561u072y23i7hol7s_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::xzz6wef70mf_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::ou7glwqq23i18p3lh_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="iaa7cwl9gnofpz25t_n">
+            <property name="$body" value="Pesquisar" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="dydkt6xfgno2z3gph_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="ou7glwqq23i18p3lh_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Verifica se tem dados" />
+        <property name="$kind" value="choice" />
+        <link uin="yxgrxx0va0qi68k0m_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::ou7glwqq23i18p3lh_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::xzz6wef70mf_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="21lkwauyo4rz08gir_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="htmpxl56p4r713p1l_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="xrm0o03a15h_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::ou7glwqq23i18p3lh_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::hctgp16ek4t_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="gqvna4vhef_n">
+            <property name="$body" value="Procura" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="cssnhe3zu1l_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="fj055qad4di_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link3" />
+          <participant referencedUin="design:node:::ou7glwqq23i18p3lh_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::ppuk1hf0g6i_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="31pg2341suf_n">
+            <property name="$body" value="False" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="qllpkwe2gan_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="hctgp16ek4t_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Banco de Dados" />
+        <property name="@mod__doActivity" value="Busca no banco de dados" />
+        <node uin="zmqf8xy44go_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+      </node>
+      <node uin="ppuk1hf0g6i_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Mensagem" />
+        <property name="@mod__doActivity" value="Lança mensagem de informação" />
+        <node uin="s7ovfmaz1kp_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+      </node>
+      <node uin="l5fgd7nabhf_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Banco de dados" />
+        <property name="@mod__doActivity" value="Inserir no banco de dados" />
+        <node uin="4wzfji42yie_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="umzks0clbcf_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::l5fgd7nabhf_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::3ukwprf50esxac9ah_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="032jjqt28k_n">
+            <property name="$body" value="Retorna e mostra curso" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="gto38syb6lq_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="z32r93o30go_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Validar dados" />
+        <property name="$kind" value="choice" />
+        <link uin="0adnglep81r_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::z32r93o30go_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::7ikqjmx38zl_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="csst7xwap6r_n">
+            <property name="$body" value="False" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="89cpor5rd2s_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="mkvtq3vdz0t_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::z32r93o30go_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::l5fgd7nabhf_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="nwert7cvqgm_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="x0hik8ez31m_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="3ukwprf50esxac9ah_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Evento" />
+        <property name="@mod__doActivity" value="Mostra curso" />
+        <node uin="diwsa1rb0esx1lv8p_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="f0s9h0ktmdl_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::3ukwprf50esxac9ah_n:tpepfxz7tor_n:300ac4g2taj_n" role="Client" />
+          <participant referencedUin="design:node:::poj5anl1m4o_n:tpepfxz7tor_n:300ac4g2taj_n" role="Supplier" />
+          <node uin="vikv1hxa7fo_n">
+            <property name="$body" value="Terminou processo" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="03n39pl803h_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="poj5anl1m4o_n">
+        <property name="$metaclass" value="FinalState20" />
+        <property name="$name" value="Final1" />
+      </node>
+    </node>
+  </node>
+  <node uin="od6def4eme09exidp_n">
+    <property name="$metaclass" value="StateMachine" />
+    <property name="$name" value="Usuário" />
+    <node uin="b89wla10ne0zd6tok_n">
+      <property name="$metaclass" value="Region20" />
+      <property name="$name" value="Region1" />
+      <node uin="89oso6ykne0ix70oi_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Usuário" />
+        <property name="@mod__doActivity" value="Acessar o sistema" />
+        <node uin="jexqp6w9xe0ctugzp_n">
+          <property name="$doc" value="sdsdds" />
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="z34r0f7gxe0htpk3q_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::89oso6ykne0ix70oi_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::opvq2g0r5f0gmkost_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Supplier" />
+          <node uin="u906bf7gxe0tszwge_n">
+            <property name="$body" value="Pesquisar" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="w0zbhqhnxe0y4i8hp_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="hh0ah1tuxe03qh6ep_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Initial1" />
+        <property name="$kind" value="initial" />
+        <link uin="wtkhn1tuxe09wi1nm_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::hh0ah1tuxe03qh6ep_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::89oso6ykne0ix70oi_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Supplier" />
+        </link>
+      </node>
+      <node uin="bqlzja42ye0sqd69h_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Banco de Dados" />
+        <property name="@mod__doActivity" value="Busca no banco de dados" />
+        <node uin="gwx4w6pj5f0w2lmwm_n">
+          <property name="$doc" value="Busca usuário" />
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+      </node>
+      <node uin="opvq2g0r5f0gmkost_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Verifica se é válido" />
+        <property name="$kind" value="choice" />
+        <link uin="8qt4eqay5f0e78cne_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::opvq2g0r5f0gmkost_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::bqlzja42ye0sqd69h_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Supplier" />
+          <node uin="gxbfc1m56f0pn5a0i_n">
+            <property name="$body" value="Procura" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="010axaxb6f0jkkwup_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="4kmhkl8j6f0thvh4k_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link3" />
+          <participant referencedUin="design:node:::opvq2g0r5f0gmkost_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::h5ki2ej08f6udrj7r_n:gbr63lqasgq_n:t8eua8vye8t_n" role="Supplier" />
+          <node uin="s0m1m6ux6f0vw0mvq_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="b8ik46ux6f0nmze8h_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="ypb1cg557f007iagp_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::opvq2g0r5f0gmkost_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::yqmkh1ri7f0f8l5xs_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Supplier" />
+          <node uin="4shigqfb7f0old3mh_n">
+            <property name="$body" value="False" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="oy08mqfb7f0krmtum_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="zkg8edv01xtrf3ryl_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link4" />
+          <participant referencedUin="design:node:::opvq2g0r5f0gmkost_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::zxa9lkve72g_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="56pka68avvm_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="49ji7ta3n0m_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="yqmkh1ri7f0f8l5xs_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Exceção" />
+        <property name="@mod__doActivity" value="Lança mensagem de exceção" />
+        <node uin="171eaq9mef0f9r59o_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="f4cvx1ktef0t2ossl_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::yqmkh1ri7f0f8l5xs_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Client" />
+          <participant referencedUin="design:node:::uafw7l68ff0aulrls_n:b89wla10ne0zd6tok_n:od6def4eme09exidp_n" role="Supplier" />
+          <node uin="r6iuu1ktef0u28sdh_n">
+            <property name="$body" value="Não acessa o sistema" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="nb1v1av0ff098sfpf_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="uafw7l68ff0aulrls_n">
+        <property name="$metaclass" value="FinalState20" />
+        <property name="$name" value="Final1" />
+      </node>
+    </node>
+  </node>
+  <node uin="frxiil97ywa4xntxi_n">
+    <property name="$metaclass" value="StateMachine" />
+    <property name="$name" value="Cadastrar contas a receber" />
+    <node uin="9oy84wjdywa3knl8q_n">
+      <property name="$metaclass" value="Region20" />
+      <property name="$name" value="Region1" />
+      <node uin="zxa9lkve72g_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Funcionário" />
+        <property name="@mod__doActivity" value="Verificar contas a receber" />
+        <node uin="h39b839n07r_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="gvf19v7704s_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::zxa9lkve72g_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::6wwys4xybkr_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="sihvxx84cjs_n">
+            <property name="$body" value="Pesquisa" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="gqc6v2up2cn_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="8onpx2i9uzr_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::zxa9lkve72g_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::6hsbwy8rhes_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="poxspfv099q_n">
+            <property name="$body" value="Incluir" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="33h3mskpcfp_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="6wwys4xybkr_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="ContasaReceber" />
+        <node uin="m080i5jhwnl_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="8520vayktjp_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::6wwys4xybkr_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::9gp0yh642cm_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="d2uie4lnw7p_n">
+            <property name="$body" value="Pesquisar" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="tvd65b9yiuk_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="9gp0yh642cm_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Verifica se tem dados" />
+        <property name="$kind" value="choice" />
+        <link uin="z6rw9r4il69ywc4eo_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::9gp0yh642cm_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::0q9q2bbzzt3esnqet_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="inalvemyrx9qbi9eh_n">
+            <property name="$body" value="Procura" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="3wowppx5sx90mve9h_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="o5qfg53ol4dx87lnf_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::9gp0yh642cm_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::6wwys4xybkr_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="v2rnw8o3rtd3danyk_n">
+            <property name="$body" value="True ou False" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="7e0u5iz0rtd70w0tf_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="0q9q2bbzzt3esnqet_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Banco de dados" />
+        <property name="@mod__doActivity" value="Busca no banco de dados" />
+        <node uin="1gmwfmm60u3ejd9ts_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+      </node>
+      <node uin="89yyp10hi9g_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="Banco de dados" />
+        <property name="@mod__doActivity" value="Inserir no banco de dados" />
+        <node uin="em611yhpyug_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="b9n4o93qwa4nuyjqi_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::89yyp10hi9g_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::k72t8zriwa4dnk5nh_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="8xitaqumgq8f7h6cm_n">
+            <property name="$body" value="Retorna e mostra contas a receber" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="6rvupqumgq874ebvg_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="6hsbwy8rhes_n">
+        <property name="$metaclass" value="PseudoState20" />
+        <property name="$name" value="Validar dados" />
+        <property name="$kind" value="choice" />
+        <link uin="l5gixuv0i0l_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::6hsbwy8rhes_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::zxa9lkve72g_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="zbt7l5bcjpf_n">
+            <property name="$body" value="False" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="cqpq84mom7n_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+        <link uin="cvifj9u8cmi_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link2" />
+          <participant referencedUin="design:node:::6hsbwy8rhes_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::89yyp10hi9g_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="skwprlm6awj_n">
+            <property name="$body" value="True" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="b2k8y609vbs_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="k72t8zriwa4dnk5nh_n">
+        <property name="$metaclass" value="State20" />
+        <property name="$name" value="ContasaReceber" />
+        <property name="@mod__doActivity" value="Mostra contas a receber" />
+        <node uin="t4jzrjdxwa4l91sim_n">
+          <property name="$metaclass" value="Region20" />
+          <property name="$name" value="Region1" />
+        </node>
+        <link uin="zm94mgzjqim7m3gwq_l">
+          <property name="$metaclass" value="TransitionLink20" />
+          <property name="$name" value="Transition Link1" />
+          <participant referencedUin="design:node:::k72t8zriwa4dnk5nh_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Client" />
+          <participant referencedUin="design:node:::fbuqjkcc6jjdf56sk_n:9oy84wjdywa3knl8q_n:frxiil97ywa4xntxi_n" role="Supplier" />
+          <node uin="q25smi2uvqv0klzp_n">
+            <property name="$body" value="Terminou processo" />
+            <property name="$metaclass" value="Constraint" />
+            <property name="$name" value="guard" />
+            <node uin="0n8zqxt9uvqnnv8rq_n">
+              <property name="$metaclass" value="ValueSpecification" />
+              <property name="$name" value="Value Specification1" />
+            </node>
+          </node>
+        </link>
+      </node>
+      <node uin="fbuqjkcc6jjdf56sk_n">
+        <property name="$metaclass" value="FinalState20" />
+        <property name="$name" value="Final1" />
+      </node>
+    </node>
   </node>
 </nodeSet>
