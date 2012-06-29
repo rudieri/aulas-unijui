@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
+import com.aula.carrinho.v2.CarrinhoV2View;
 import com.utils.LogMod;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -140,7 +141,8 @@ public class TelaActivity extends BaseGameActivity {
                 new Thread(new Runnable() {
 
                     public void run() {
-                        while (true) {
+                        boolean ativo = true;
+                        while (ativo) {
                             try {
                                 InputStream inputStream = bluetoothSocket.getInputStream();
 //                                BufferedInputStream bis = new BufferedInputStream(inputStream);
@@ -149,6 +151,7 @@ public class TelaActivity extends BaseGameActivity {
                                 LogMod.i("ARDUINO", br.readLine());
                             } catch (IOException ex) {
                                 Logger.getLogger(TelaActivity.class.getName()).log(Level.SEVERE, null, ex);
+                                ativo = false;
                             }
                             
                         }
@@ -271,7 +274,7 @@ public class TelaActivity extends BaseGameActivity {
         frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
         LogMod.init();
         LogMod.i("CARRINHO", "CRUZEI SEtCONTENTVIEW");
-        Sample4View view = new Sample4View(this, modoCaseiro);
+        CarrinhoV2View view = new CarrinhoV2View(this);
 
         frameLayout.addView(view);
 
@@ -289,7 +292,7 @@ public class TelaActivity extends BaseGameActivity {
     // Inner and Anonymous Classes
     // ===========================================================
 
-    void enviarPotencia(int potenciaEsquerda, int potenciaDireita) {
+    public void enviarPotencia(int potenciaEsquerda, int potenciaDireita) {
         String pd = String.valueOf(potenciaDireita);
         String pe = String.valueOf(potenciaEsquerda);
         if (pd.length() == 1) {

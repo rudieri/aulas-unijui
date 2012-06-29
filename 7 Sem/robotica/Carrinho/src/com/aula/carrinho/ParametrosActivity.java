@@ -17,7 +17,7 @@ import android.widget.ToggleButton;
  * @author manchini
  */
 public class ParametrosActivity extends Activity {
-    static boolean comFlash = true;
+    public static boolean comFlash = true;
 
     /**
      * Called when the activity is first created.
