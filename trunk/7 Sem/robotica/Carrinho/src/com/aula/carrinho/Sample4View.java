@@ -76,77 +76,30 @@ public class Sample4View extends SampleViewBase {
 
         Imgproc.resize(mYuv, mYuv, new Size(getRedFrameWidth(), getRedFrameHeight()));
         //Monocromatico
-        Imgproc.threshold(mYuv, mYuv, 128d, 255d, Imgproc.THRESH_BINARY);
+        Imgproc.threshold(mYuv, mYuv, 116, 255d, Imgproc.THRESH_BINARY);
 
         mGraySubmat = mYuv.submat(0, getRedFrameHeight(), 0, getRedFrameWidth());
-
-
-        //Modo Canny
+        
+        
         Date inicial = new Date();
-        Imgproc.Canny(mGraySubmat, mIntermediateMat, 80, 100);
-        Log.d("DELAY", "Canny: " + (new Date().getTime() - inicial.getTime()) + " ms");
-        if (!modoCaseiro) {
-            inicial = new Date();
-            Imgproc.cvtColor(mIntermediateMat, mRgba, Imgproc.COLOR_GRAY2BGR, 4);
-            Log.d("DELAY", "cvtColor: " + (new Date().getTime() - inicial.getTime()) + " ms");
-        }
-
-////        Imgproc.cvtColor(mGraySubmat, mIntermediateMat, Imgproc.COLOR_YUV420sp2BGR, 4);
-//        ArrayList<Mat> contornos = new ArrayList<Mat>();
-////        Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(3, 3));
-//        Imgproc.Canny(mGraySubmat, mIntermediateMat, 100, 200, 3);
-//        Imgproc.findContours(mIntermediateMat, contornos, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
-//        for (int i = 0; i < contornos.size(); i++) {
-//            Mat mat = contornos.get(i);
-//            System.out.println("r: " + mat.rows());
-//            System.out.println("c: " + mat.cols());
-//            mat.get(0, 0)
-//        }
-
-        inicial = new Date();
         Bitmap bmp = Bitmap.createBitmap(getRedFrameWidth(), getRedFrameHeight(), Bitmap.Config.ARGB_8888);
         Log.d("DELAY", "createBitmap: " + (new Date().getTime() - inicial.getTime()) + " ms");
 
-//        System.out.println("Print");
-//        contaPrint = 0;
         inicial = new Date();
         bmp.setPixels(arrayInicializacaoBitmap, 0, getRedFrameWidth(), 0, 0, getRedFrameWidth(), getRedFrameHeight());
-//        for (int i = 0; i < bmp.getWidth(); i++) {
-//            for (int j = 0; j < bmp.getHeight(); j++) {
-//                bmp.setPixel(i, j, Color.BLACK);
-//            }
-//        }
         Log.d("DELAY", "bmp.setPixel: " + (new Date().getTime() - inicial.getTime()) + " ms");
-//        if (true) {
-//            Mat mat = Mat.zeros(mIntermediateMat.size(), CvType.CV_8UC1);
-////            Range range = new Range(0, 255);
-//            
-//            Scalar color = new Scalar(127);
-//            for (int i = 0; i < contornos.size()-1; i++) {
-//                Imgproc.drawContours(mat, contornos, i, color);
-////                Mat mat = contornos.get(i);
-////                Mat proxMat = contornos.get(i);
-//                
-////                linhaToBmp(mat.get(0, 0)[0], mat.get(0, 0)[1], proxMat.get(0, 0)[0], proxMat.get(0, 0)[0], bmp);
-////                Utils.matToBitmap(mat, bmp);
-//                System.out.println("Mapping");
-//            }
-//            Utils.matToBitmap(mat, bmp);
-//            return bmp;
-//        }
-        if (!modoCaseiro) {
-            Mat pontos = Analizador.analizarCanny(mIntermediateMat, bmp);
-            Analizador.facaAlgoComCarrinho(pontos, bmp);
 
-//            Mat aux = new Mat(getRedFrameWidth(), getRedFrameWidth(), CvType.CV_8UC1);
-//            Utils.bitmapToMat(bmp, aux);
-//            if (aux.rows() > 0 && aux.cols() > 0) {
-//                Log.i("IMAGEM", aux.rows() + " + " + aux.cols());
-//                Imgproc.resize(aux, aux, new Size(getCameraFrameWidth(), getCameraFrameHeight()));
-//                Utils.matToBitmap(aux, bmp);
-//            }
+        if (!modoCaseiro) {
             return bmp;
         }
+        /* ####################################
+         * 
+         * ACHO QUE DA PARA APAGAR DAQUI PR BAIXO...
+         * 
+         * #########################################3
+         */
+        
+       
         ArrayList<Ponto2D> pontos;
 //            boolean[][] pretoBranco = converterParaPretoBranco(mRgba);
         pontos = Vetorizador.vetorizar(mRgba);

@@ -40,7 +40,7 @@ public abstract class SampleViewBase extends SurfaceView implements SurfaceHolde
     public int getCameraFrameHeight() {
         return mFrameHeight;
     }
-    
+
     public int getRedFrameWidth() {
         return mFrameWidth;
     }
