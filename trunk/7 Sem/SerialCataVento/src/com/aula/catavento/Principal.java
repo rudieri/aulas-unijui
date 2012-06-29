@@ -16,7 +16,7 @@ public class Principal implements EventoListener {
     boolean temComando = false;
     String comando = "";
     int valor = 1500;
-    ExemploPID3 pid3 = new ExemploPID3(1.0, 0.05, 1.0);
+    ExemploPID3 pid3 = new ExemploPID3();
     private JPID jpiD;
     private Serial serial;
 

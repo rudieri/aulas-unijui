@@ -73,9 +73,9 @@
             <Property name="text" type="java.lang.String" value="P"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinnerP">
+        <Component class="javax.swing.JTextField" name="jTextFieldP">
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerPStateChanged"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldPKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

@@ -5,51 +5,58 @@
 package com.aula.catavento;
 
 import com.aula.pid.ExemploPID3;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author root
  */
 public class JPID extends javax.swing.JFrame {
+
     private final ExemploPID3 exemploPID3;
     private final Serial serial;
 
     /**
      * Creates new form JPID
      */
-
     JPID(ExemploPID3 pid3, Serial serial) {
         this.serial = serial;
-        if (pid3==null) {
+        if (pid3 == null) {
             pid3 = new ExemploPID3(0, 0.1, 0);
         }
         this.exemploPID3 = pid3;
-        
+        exemploPID3.setTela(this);
+
         initComponents();
-        
-        SpinnerNumberModel spinnerNumberModelP = new SpinnerNumberModel(exemploPID3.getP(), 0d, 2d, 0.01);
-        SpinnerNumberModel spinnerNumberModelI = new SpinnerNumberModel(exemploPID3.getI(), 0d, 2d, 0.01);
-        SpinnerNumberModel spinnerNumberModelD = new SpinnerNumberModel(exemploPID3.getD(), 0d, 2d, 0.01);
+
+        jTextFieldP.setText(String.valueOf(exemploPID3.getP()));
+        SpinnerNumberModel spinnerNumberModelI = new SpinnerNumberModel(exemploPID3.getI(), 0d, 2d, 0.001);
+        SpinnerNumberModel spinnerNumberModelD = new SpinnerNumberModel(exemploPID3.getD(), 0d, 2d, 0.001);
         SpinnerNumberModel spinnerNumberModeIdeal = new SpinnerNumberModel(exemploPID3.getIdeal(), 0d, 1024d, 1d);
-        jSpinnerP.setModel(spinnerNumberModelP);
+        
+        
         jSpinnerI.setModel(spinnerNumberModelI);
         jSpinnerD.setModel(spinnerNumberModelD);
         jSpinnerIdeal.setModel(spinnerNumberModeIdeal);
     }
-    
+
     public void atualizaValores(Double valorLido, Double error, Double sumErrors, Double ret) {
-       jTextField_Lido.setText(valorLido.toString());
-       jTextField_Erro.setText(error.toString());
-       jTextField_SomaErros.setText(sumErrors.toString());
-       jTextField_Retorno.setText(ret.toString());
+        jTextField_Lido.setText(valorLido.toString());
+        jTextField_Erro.setText(error.toString());
+        jTextField_SomaErros.setText(sumErrors.toString());
+        jTextField_Retorno.setText(ret.toString());
     }
+
     public void addLog(String string) {
-        jTextArea_log.append(string+"\n");
+        jTextArea_log.append(string + "\n");
+        System.out.println(string);
     }
 
     /**
@@ -63,7 +70,7 @@ public class JPID extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jSpinnerP = new javax.swing.JSpinner();
+        jTextFieldP = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jSpinnerI = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
@@ -102,12 +109,12 @@ public class JPID extends javax.swing.JFrame {
         jLabel1.setText("P");
         jPanel1.add(jLabel1);
 
-        jSpinnerP.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinnerPStateChanged(evt);
+        jTextFieldP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldPKeyPressed(evt);
             }
         });
-        jPanel1.add(jSpinnerP);
+        jPanel1.add(jTextFieldP);
 
         jLabel3.setText("I");
         jPanel1.add(jLabel3);
@@ -231,16 +238,12 @@ public class JPID extends javax.swing.JFrame {
         setBounds((screenSize.width-717)/2, (screenSize.height-523)/2, 717, 523);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jSpinnerPStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerPStateChanged
-        exemploPID3.setP((Double)jSpinnerP.getValue());
-    }//GEN-LAST:event_jSpinnerPStateChanged
-
     private void jSpinnerIStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerIStateChanged
-        exemploPID3.setI((Double)jSpinnerI.getValue());
+        exemploPID3.setI((Double) jSpinnerI.getValue());
     }//GEN-LAST:event_jSpinnerIStateChanged
 
     private void jSpinnerDStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerDStateChanged
-        exemploPID3.setD((Double)jSpinnerD.getValue());
+        exemploPID3.setD((Double) jSpinnerD.getValue());
     }//GEN-LAST:event_jSpinnerDStateChanged
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -264,12 +267,12 @@ public class JPID extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_RetornoActionPerformed
 
     private void jSpinnerIdealStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerIdealStateChanged
-        exemploPID3.setIdeal((Double)jSpinnerIdeal.getValue());
+        exemploPID3.setIdeal((Double) jSpinnerIdeal.getValue());
     }//GEN-LAST:event_jSpinnerIdealStateChanged
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {
-            FileUtils.gravaArquivo(new StringBuffer(jTextArea_log.getText()), "log/"+new Date().getTime()+".txt");
+            FileUtils.gravaArquivo(new StringBuffer(jTextArea_log.getText()), "log/" + new Date().getTime() + ".txt");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao Salvar Arquivo");
             ex.printStackTrace();
@@ -279,6 +282,13 @@ public class JPID extends javax.swing.JFrame {
     private void jCheckBox_inerciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBox_inerciaItemStateChanged
         exemploPID3.setInercia(jCheckBox_inercia.isSelected());
     }//GEN-LAST:event_jCheckBox_inerciaItemStateChanged
+
+    private void jTextFieldPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            exemploPID3.setP(new Double(jTextFieldP.getText()));
+        }
+    }//GEN-LAST:event_jTextFieldPKeyPressed
 
     /**
      * @param args the command line arguments
@@ -342,15 +352,69 @@ public class JPID extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinnerD;
     private javax.swing.JSpinner jSpinnerI;
     private javax.swing.JSpinner jSpinnerIdeal;
-    private javax.swing.JSpinner jSpinnerP;
     private javax.swing.JTextArea jTextArea_log;
+    private javax.swing.JTextField jTextFieldP;
     private javax.swing.JTextField jTextField_Erro;
     private javax.swing.JTextField jTextField_Lido;
     private javax.swing.JTextField jTextField_Retorno;
     private javax.swing.JTextField jTextField_SomaErros;
     // End of variables declaration//GEN-END:variables
 
-    
+    private class MeuModelo implements SpinnerModel {
 
-    
+        private double valor;
+        private double passo;
+        private double minimo;
+        private double maximo;
+        private ArrayList<ChangeListener> listeners = new ArrayList<>();
+
+        public MeuModelo(double valor, double minimo, double maximo, double passo) {
+            this.valor = valor;
+            this.passo = passo;
+            this.minimo = minimo;
+            this.maximo = maximo;
+        }
+
+        
+        
+        @Override
+        public Object getValue() {
+            return valor;
+        }
+
+        @Override
+        public void setValue(Object value) {
+            this.valor = (Double) value;
+            for (int i = 0; i < listeners.size(); i++) {
+                listeners.get(i).stateChanged(new ChangeEvent(value));
+            }
+        }
+
+        @Override
+        public Object getNextValue() {
+            if (valor + passo > maximo) {
+                return maximo;
+            }
+            
+            return valor + passo;
+        }
+
+        @Override
+        public Object getPreviousValue() {
+            if (valor - passo < minimo) {
+                return minimo;
+            }
+            return valor - passo;
+        }
+
+        @Override
+        public void addChangeListener(ChangeListener l) {
+            listeners.add(l);
+        }
+
+        @Override
+        public void removeChangeListener(ChangeListener l) {
+            listeners.remove(l);
+        }
+    }
 }
