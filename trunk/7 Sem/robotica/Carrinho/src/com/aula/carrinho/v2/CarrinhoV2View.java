@@ -55,6 +55,12 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         int maxRow = 10;
         int auxC = 0;//getRedFrameWidth()/maxCols;
         int auxR = 0;//getRedFrameHeight()/maxRow;
+        int potenciaEsq = 80;
+        int potenciaDir = 80;
+        int ultimaLinha = maxRow - 1;
+        int meio = (maxCols / 2) - 1;
+        String view = "";
+        int[][] pontos = new int[maxCols][maxRow];
         Mat[][] matrix = new Mat[maxCols][maxRow];
         for (int c = 0; c < maxCols; c++) {
             for (int r = 0; r < maxRow; r++) {
@@ -65,22 +71,8 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 //                Log.i(TAG, "Submat " + "[" + c + "][" + r + "] " + auxR + "," + fimR + "," + auxC + "," + fimC);
                 Mat submat = imagemCamera.submat(auxC, fimC, auxR, fimR);
                 matrix[c][r] = submat;
-
-
-            }
-        }
-
-        int potenciaEsq = 99;
-        int potenciaDir = 99;
-        int ultimaLinha = maxRow - 1;
-        int meio = (maxCols / 2) - 1;
-        String view = "";
-        int[][] pontos = new int[maxCols][maxRow];
-        //Processa Matrizes
-        for (int r = 0; r < maxRow; r++) {
-            for (int c = 0; c < maxCols; c++) {
-                Mat submat = matrix[c][r]; // Apenas Ultima Linha
-//            Log.i(TAG, "Submat [" + c + "][" + r + "]");
+                
+                
                 Bitmap aux = Bitmap.createBitmap(submat.cols(), submat.rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(submat, aux);
                 int totalPreto = 0;
@@ -103,32 +95,105 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 //                Log.i(TAG, "Coluna: " + c + " Branco: " + totalBranco + " Preto: " + totalPreto);
 
 
-                if (r == maxRow - 1) {//Ultima Linha
-                    if (c < meio && pontos[c][r] == Color.BLACK) {
-                        potenciaEsq = potenciaEsq - ((meio + 1 - c) * (10));
-                    } else if (c > meio && pontos[c][r] == Color.BLACK) {
-                        potenciaDir = potenciaDir - ((c - meio + 1) * (10));
+//                if (r == maxRow - 1) {//Ultima Linha
+                if(r>3 && r%2!=0){
+                    int ajust = (int) ((-(maxRow-1-r)+maxCols)*0.8);
+                    if (c < meio-(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
+                        int dif = (int)((meio + 1 - c)* 1.3 * ajust);
+                        potenciaEsq = potenciaEsq - dif;
+                        potenciaDir = potenciaDir + dif;
+                    } else if (c > meio+(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
+                        int dif =  (int)((c - meio + 1)*1.3 * (ajust));
+                        potenciaDir = potenciaDir - dif;
+                        potenciaEsq = potenciaEsq + dif;
                     }
                 }
-                
-                if (r == maxRow - 6) {//Bem na Frente
-                    if (c < meio && pontos[c][r] == Color.BLACK) {
-                        potenciaEsq = potenciaEsq - ((meio + 1 - c) * (5));
-                    } else if (c > meio && pontos[c][r] == Color.BLACK) {
-                        potenciaDir = potenciaDir - ((c - meio + 1) * (5));
-                    }
-                }
+//                }                
+//                if (r == maxRow - 3) {//Bem na Frente
+//                    if (c < meio-1 && pontos[c][r] == Color.BLACK) {
+//                        int dif = ((meio + 1 - c) * (5));
+//                        potenciaEsq = potenciaEsq - dif;
+//                        potenciaDir = potenciaDir + dif;
+//                    } else if (c > meio+1 && pontos[c][r] == Color.BLACK) {
+//                        int dif =  ((c - meio + 1) * (5));
+//                        potenciaDir = potenciaDir - dif;
+//                        potenciaEsq = potenciaEsq + dif;
+//                    }
+//                }
+//                
+//                if (r == maxRow - 7) {//Bem na Frente
+//                    if (c < meio-2 && pontos[c][r] == Color.BLACK) {
+//                        int dif = ((meio + 1 - c) * (10));
+//                        potenciaEsq = potenciaEsq - dif;
+//                        potenciaDir = potenciaDir + dif;
+//                    } else if (c > meio +2 && pontos[c][r] == Color.BLACK) {
+//                        int dif =  ((c - meio + 1) * (10));
+//                        potenciaDir = potenciaDir - dif;
+//                        potenciaEsq = potenciaEsq + dif;
+//                    }
+//                }
 
                 //Monta Matriz de Preto e banco
                 view += (pontos[c][r] == Color.BLACK ? "1" : "0");
 
 
             }
-            view += "\r\n";
         }
 
-
-
+//        
+//        //Processa Matrizes
+//        for (int r = 0; r < maxRow; r++) {
+//            for (int c = 0; c < maxCols; c++) {
+//                Mat submat = matrix[c][r]; // Apenas Ultima Linha
+////            Log.i(TAG, "Submat [" + c + "][" + r + "]");
+//                Bitmap aux = Bitmap.createBitmap(submat.cols(), submat.rows(), Bitmap.Config.ARGB_8888);
+//                Utils.matToBitmap(submat, aux);
+//                int totalPreto = 0;
+//                int totalBranco = 0;
+//                for (int i = 0; i < submat.cols(); i += 10) {//amostragem de 10 e 10
+//                    for (int j = 0; j < submat.rows(); j += 10) {
+//                        int pixel = aux.getPixel(i, j);
+//                        if (pixel == Color.BLACK) {
+//                            totalPreto++;
+//                        } else {
+//                            totalBranco++;
+//                        }
+//                    }
+//                }
+//                if (totalPreto > totalBranco) {
+//                    pontos[c][r] = Color.BLACK;
+//                } else {
+//                    pontos[c][r] = Color.WHITE;
+//                }
+////                Log.i(TAG, "Coluna: " + c + " Branco: " + totalBranco + " Preto: " + totalPreto);
+//
+//
+//                if (r == maxRow - 1) {//Ultima Linha
+//                    if (c < meio && pontos[c][r] == Color.BLACK) {
+//                        potenciaEsq = potenciaEsq - ((meio + 1 - c) * (10));
+//                    } else if (c > meio && pontos[c][r] == Color.BLACK) {
+//                        potenciaDir = potenciaDir - ((c - meio + 1) * (10));
+//                    }
+//                }
+//                
+//                if (r == maxRow - 6) {//Bem na Frente
+//                    if (c < meio && pontos[c][r] == Color.BLACK) {
+//                        potenciaEsq = potenciaEsq - ((meio + 1 - c) * (5));
+//                    } else if (c > meio && pontos[c][r] == Color.BLACK) {
+//                        potenciaDir = potenciaDir - ((c - meio + 1) * (5));
+//                    }
+//                }
+//
+//                //Monta Matriz de Preto e banco
+//                view += (pontos[c][r] == Color.BLACK ? "1" : "0");
+//
+//
+//            }
+//            view += "\r\n";
+//        }
+//
+//
+//
 
 
         if (potenciaDir < 0) {
@@ -136,6 +201,12 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         }
         if (potenciaEsq < 0) {
             potenciaEsq = 0;
+        }
+        if (potenciaDir > 100) {
+            potenciaDir = 99;
+        }
+        if (potenciaEsq > 100) {
+            potenciaEsq = 99;
         }
 
         Log.d(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);
