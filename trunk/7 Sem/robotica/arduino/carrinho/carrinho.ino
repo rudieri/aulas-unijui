@@ -62,6 +62,8 @@ void manual (char sentido1, int potencia1,char sentido2,int potencia2)          
   digitalWrite(V1,sentido1);   
   analogWrite (S2,potencia2);   
   digitalWrite(V2,sentido2);
+   Serial.print("Deu Certo"); 
+  
 }
 
 void setup(void)
@@ -180,17 +182,17 @@ void serialEvent() {
 }
 
 int StringToInt(String st) {
-  Serial.println("StringToInt");
-  Serial.println(st);
-  Serial.println("to");
+  //Serial.println("StringToInt");
+  //Serial.println(st);
+  //Serial.println("to");
 
   char aux[st.length()] ;
   for(int i =0; i < st.length();i++){
     aux[i] = st.charAt(i);
   }
 
-  Serial.print(aux);
-  Serial.println(atoi(aux));
+  //Serial.print(aux);
+  //Serial.println(atoi(aux));
 
   return atoi(aux);
 
