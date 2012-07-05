@@ -4,13 +4,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" 
-    android:id="@+dados/btTela" android:text="Fritar Tela"/>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" 
-    android:id="@+dados/btHoug" android:text="Com Hough"/>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" 
-    android:id="@+dados/btCaseiro" android:text="Algoritmo caseiro"/>
+    <Button android:layout_width="fill_parent" android:layout_height="wrap_content" 
+    android:id="@+dados/btTela" android:text="Andar"/>
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Flash"/>
     <ToggleButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
     android:id="@+dados/comFlash"  android:text="Flash Ligado" />
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Manual"/>
+    <ToggleButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/manual"  android:text="Manual" />
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Preview"/>
+    <ToggleButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/preview"  android:text="Preview" />
 </LinearLayout>
 
