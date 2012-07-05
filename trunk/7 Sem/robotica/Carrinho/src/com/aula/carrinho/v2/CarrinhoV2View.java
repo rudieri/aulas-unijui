@@ -1,12 +1,17 @@
 package com.aula.carrinho.v2;
 
+import android.R;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.*;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import com.aula.carrinho.TelaActivity;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.anddev.andengine.audio.music.MusicFactory;
 import org.opencv.android.Utils;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -15,10 +20,26 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 
     private Mat imagemCamera;
     private final TelaActivity tela;
+    MediaPlayer mediaPlayer;
 
     public CarrinhoV2View(Context context) {
         super(context);
+
         this.tela = (TelaActivity) context;
+        MusicFactory.setAssetBasePath("mfx/");
+        mediaPlayer = new MediaPlayer() {
+        };
+        try {
+            mediaPlayer.reset();
+            mediaPlayer.setLooping(true);
+            AssetFileDescriptor assetFileDescritor = context.getAssets().openFd("mfx/acelera.mp3");
+            mediaPlayer.setDataSource(assetFileDescritor.getFileDescriptor(), assetFileDescritor.getStartOffset(), assetFileDescritor.getLength());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (Exception ex) {
+            Log.e(TAG, "Erro ao Statea Musica", ex);
+        }
+
     }
 
     @Override
@@ -32,6 +53,12 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         }
     }
 
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        super.surfaceDestroyed(holder);
+        mediaPlayer.stop();
+    }
+
     protected Bitmap processFrame(byte[] data) {
 
 
@@ -40,7 +67,7 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 
         Imgproc.resize(imagemCamera, imagemCamera, new Size(getCameraFrameWidth(), getCameraFrameHeight()));
         //Monocromatico
-        Imgproc.threshold(imagemCamera, imagemCamera, 116, 255d, Imgproc.THRESH_BINARY);
+        Imgproc.threshold(imagemCamera, imagemCamera, 100, 255d, Imgproc.THRESH_BINARY);
 
 
 
@@ -51,19 +78,38 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
          */
 
         //Numero de Divisoes Matrix
-        int maxCols = 10;
-        int maxRow = 10;
+        int maxCols = 9;
+        int maxRow = 9;
         int auxC = 0;//getRedFrameWidth()/maxCols;
         int auxR = 0;//getRedFrameHeight()/maxRow;
         int potenciaEsq = 80;
         int potenciaDir = 80;
-        int ultimaLinha = maxRow - 1;
-        int meio = (maxCols / 2) - 1;
+
+        int meio = (maxCols / 2);
         String view = "";
         int[][] pontos = new int[maxCols][maxRow];
         Mat[][] matrix = new Mat[maxCols][maxRow];
-        for (int c = 0; c < maxCols; c++) {
-            for (int r = 0; r < maxRow; r++) {
+        //
+        int columSel = -1;
+        int rowSel = -1;
+        //
+        for (int r = maxRow - 1; r != 0; r--) {
+            for (int c = 0; c < maxCols; c++) {
+
+                if (r < 3) {
+//                    Log.v(TAG + "Ignorou", c + "x" + r);
+                    continue;
+                }
+                if ((r == 3 && (c == 2 || c == 3 || c == 4 || c == 5 || c == 6))
+                        || (r == 4 && (c == 3 || c == 4 || c == 5))
+                        || (r == 5 && (c == 3 || c == 4 || c == 5))
+                        || (r == 6 && c == 5)
+                        || (r == 7 && c == 5)
+                        || (r == 8 && c == 5)) {//Ignorar Meios em forma de cone
+//                    Log.v(TAG + "Ignorou", c + "x" + r);
+                    continue;
+                }
+                //Quebra a Imagem em Subimagens
                 auxC = (c * (imagemCamera.rows() / maxCols));
                 auxR = (r * (imagemCamera.cols() / maxRow));
                 int fimC = (c * (imagemCamera.rows() / maxCols)) + (imagemCamera.rows() / maxCols);
@@ -71,8 +117,9 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 //                Log.i(TAG, "Submat " + "[" + c + "][" + r + "] " + auxR + "," + fimR + "," + auxC + "," + fimC);
                 Mat submat = imagemCamera.submat(auxC, fimC, auxR, fimR);
                 matrix[c][r] = submat;
-                
-                
+                // FIm 
+
+                //Varre a Subimagem para ver se é branco ou preto
                 Bitmap aux = Bitmap.createBitmap(submat.cols(), submat.rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(submat, aux);
                 int totalPreto = 0;
@@ -92,129 +139,93 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                 } else {
                     pontos[c][r] = Color.WHITE;
                 }
+                //FIM
+
+
 //                Log.i(TAG, "Coluna: " + c + " Branco: " + totalBranco + " Preto: " + totalPreto);
 
-
-//                if (r == maxRow - 1) {//Ultima Linha
-                if(r>3 && r%2!=0){
-                    int ajust = (int) ((-(maxRow-1-r)+maxCols)*0.8);
-                    if (c < meio-(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
-                        int dif = (int)((meio + 1 - c)* 1.3 * ajust);
-                        potenciaEsq = potenciaEsq - dif;
-                        potenciaDir = potenciaDir + dif;
-                    } else if (c > meio+(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
-                        int dif =  (int)((c - meio + 1)*1.3 * (ajust));
-                        potenciaDir = potenciaDir - dif;
-                        potenciaEsq = potenciaEsq + dif;
-                    }
+                if (pontos[c][r] == Color.BLACK && columSel < Math.abs(c - meio)) {
+                    columSel = c;
+                    rowSel = r;
                 }
-//                }                
-//                if (r == maxRow - 3) {//Bem na Frente
-//                    if (c < meio-1 && pontos[c][r] == Color.BLACK) {
-//                        int dif = ((meio + 1 - c) * (5));
+
+
+
+//OLD CODEC
+//                if(r>3){
+//                    int ajust = (int) ((-(maxRow-1-r)+maxCols)*0.8);
+//                    if (c < meio-(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
+//                        int dif = (int)((meio + 1 - c)* 1.3 * ajust);
 //                        potenciaEsq = potenciaEsq - dif;
 //                        potenciaDir = potenciaDir + dif;
-//                    } else if (c > meio+1 && pontos[c][r] == Color.BLACK) {
-//                        int dif =  ((c - meio + 1) * (5));
+//                    } else if (c > meio+(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
+//                        int dif =  (int)((c - meio + 1)*1.3 * (ajust));
 //                        potenciaDir = potenciaDir - dif;
 //                        potenciaEsq = potenciaEsq + dif;
-//                    }
-//                }
-//                
-//                if (r == maxRow - 7) {//Bem na Frente
-//                    if (c < meio-2 && pontos[c][r] == Color.BLACK) {
-//                        int dif = ((meio + 1 - c) * (10));
-//                        potenciaEsq = potenciaEsq - dif;
-//                        potenciaDir = potenciaDir + dif;
-//                    } else if (c > meio +2 && pontos[c][r] == Color.BLACK) {
-//                        int dif =  ((c - meio + 1) * (10));
-//                        potenciaDir = potenciaDir - dif;
-//                        potenciaEsq = potenciaEsq + dif;
-//                    }
-//                }
-
-                //Monta Matriz de Preto e banco
-                view += (pontos[c][r] == Color.BLACK ? "1" : "0");
-
-
-            }
-        }
-
-//        
-//        //Processa Matrizes
-//        for (int r = 0; r < maxRow; r++) {
-//            for (int c = 0; c < maxCols; c++) {
-//                Mat submat = matrix[c][r]; // Apenas Ultima Linha
-////            Log.i(TAG, "Submat [" + c + "][" + r + "]");
-//                Bitmap aux = Bitmap.createBitmap(submat.cols(), submat.rows(), Bitmap.Config.ARGB_8888);
-//                Utils.matToBitmap(submat, aux);
-//                int totalPreto = 0;
-//                int totalBranco = 0;
-//                for (int i = 0; i < submat.cols(); i += 10) {//amostragem de 10 e 10
-//                    for (int j = 0; j < submat.rows(); j += 10) {
-//                        int pixel = aux.getPixel(i, j);
-//                        if (pixel == Color.BLACK) {
-//                            totalPreto++;
-//                        } else {
-//                            totalBranco++;
-//                        }
-//                    }
-//                }
-//                if (totalPreto > totalBranco) {
-//                    pontos[c][r] = Color.BLACK;
-//                } else {
-//                    pontos[c][r] = Color.WHITE;
-//                }
-////                Log.i(TAG, "Coluna: " + c + " Branco: " + totalBranco + " Preto: " + totalPreto);
-//
-//
-//                if (r == maxRow - 1) {//Ultima Linha
-//                    if (c < meio && pontos[c][r] == Color.BLACK) {
-//                        potenciaEsq = potenciaEsq - ((meio + 1 - c) * (10));
-//                    } else if (c > meio && pontos[c][r] == Color.BLACK) {
-//                        potenciaDir = potenciaDir - ((c - meio + 1) * (10));
-//                    }
-//                }
-//                
-//                if (r == maxRow - 6) {//Bem na Frente
-//                    if (c < meio && pontos[c][r] == Color.BLACK) {
-//                        potenciaEsq = potenciaEsq - ((meio + 1 - c) * (5));
-//                    } else if (c > meio && pontos[c][r] == Color.BLACK) {
-//                        potenciaDir = potenciaDir - ((c - meio + 1) * (5));
 //                    }
 //                }
 //
 //                //Monta Matriz de Preto e banco
 //                view += (pontos[c][r] == Color.BLACK ? "1" : "0");
-//
-//
-//            }
-//            view += "\r\n";
-//        }
-//
-//
-//
 
-
-        if (potenciaDir < 0) {
-            potenciaDir = 0;
-        }
-        if (potenciaEsq < 0) {
-            potenciaEsq = 0;
-        }
-        if (potenciaDir > 100) {
-            potenciaDir = 99;
-        }
-        if (potenciaEsq > 100) {
-            potenciaEsq = 99;
+            }
         }
 
-        Log.d(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);
+        /**
+         * CODE OLD if (potenciaDir < 0) { potenciaDir = 0; } if (potenciaEsq <
+         * 0) { potenciaEsq = 0; } if (potenciaDir > 100) { potenciaDir = 99; }
+         * if (potenciaEsq > 100) { potenciaEsq = 99; }
+         */
+        Log.v(TAG, columSel + "x" + rowSel);
+        switch (columSel) {
+            case 0://Bem no canto                 
+                potenciaDir = 99;
+                potenciaEsq = -99;
+                break;
+            case 1:
+                potenciaDir = 99;
+                potenciaEsq = 0;
+                break;
+            case 2:
+                potenciaDir = 99;
+                potenciaEsq = 50;
+                break;
+            case 3:// um pouco pra esquerda ajuste
+                potenciaDir = 90;
+                potenciaEsq = 80;
+                break;
+            case 4: // no meio Potencia Maxima a frente
+                potenciaDir = 99;
+                potenciaEsq = 99;
+                break;
+            case 5:
+                potenciaEsq = 99;
+                potenciaDir = 80;
+                break;
+            case 6:
+                potenciaEsq = 90;
+                potenciaDir = 50;
+                break;
+            case 7:
+                potenciaEsq = 99;
+                potenciaDir = 0;
+                break;
+            case 8:
+                potenciaEsq = 99;
+                potenciaDir = -99;
+                break;
+            default://Fudeu Engata RE
+                potenciaEsq = -30;
+                potenciaDir = -30;
+                break;
+
+        }
+
+        Log.v(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);
         tela.enviarPotencia(potenciaEsq, potenciaDir);
 
 
         Bitmap bmp = Bitmap.createBitmap(getCameraFrameWidth(), getCameraFrameHeight(), Bitmap.Config.ARGB_8888);
-
 
         Utils.matToBitmap(imagemCamera, bmp);
 

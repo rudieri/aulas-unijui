@@ -130,16 +130,16 @@ public class Analizador {
         } else {
             contagemParaParada--;
             if (contagemParaParada <= 0) {
-                if (tela.isModoAutonomo()) {
+//                if (tela.isModoAutonomo()) {
 
                     tela.enviarPotencia(0, 0);
-                    tela.setModoAutonomo(false);
-                }
+//                    tela.setModoAutonomo(false);
+//                }
                 contagemParaParada = 3;
             }
             return;
         }
-        tela.setModoAutonomo(true);
+//        tela.setModoAutonomo(true);
         System.out.println("Procurando melhor linha...");
         Date inicial = new Date();
         double[] melhorLinha = getMelhorLinha(pontos);
