@@ -126,7 +126,7 @@ public abstract class CarrinhoV2ViewBase extends SurfaceView implements SurfaceH
                 }
             }
 
-            if (bmp != null) {
+            if (bmp != null && ParametrosActivity.preview) {
                 Canvas canvas = mHolder.lockCanvas();
                 if (canvas != null) {
                     canvas.drawBitmap(bmp, (canvas.getWidth() - getCameraFrameWidth()) / 2, (canvas.getHeight() - getCameraFrameHeight()) / 2, null);

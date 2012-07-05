@@ -62,21 +62,13 @@ public class TelaActivity extends BaseGameActivity {
     private BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
-    private boolean modoAutonomo = true;
-    private  boolean modoCaseiro;
+    
 
     @Override
     protected void onStart() {
         super.onStart();
-        this.modoCaseiro = this.getIntent().getBooleanExtra("modoCaseiro", true);
     }
 
-    
-    
-    
-    
-   
-    
     private void carregaBluetooth() {
         if (procurando) {
             return;
@@ -85,7 +77,7 @@ public class TelaActivity extends BaseGameActivity {
         }
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            LogMod.e("CARRINHO", "NÂO PEGO O BLUETOOTH",null);
+            LogMod.e("CARRINHO", "NÂO PEGO O BLUETOOTH", null);
 //            Alert alert = new Alert(this);
 //            alert.setMessage("HAAA HAAA.. Tu não tem Bluetooth");
 //            alert.addButton(" Então Tá.", new DialogInterface.OnClickListener() {
@@ -153,7 +145,7 @@ public class TelaActivity extends BaseGameActivity {
                                 Logger.getLogger(TelaActivity.class.getName()).log(Level.SEVERE, null, ex);
                                 ativo = false;
                             }
-                            
+
                         }
                     }
                 }).start();
@@ -194,16 +186,8 @@ public class TelaActivity extends BaseGameActivity {
         this.mEngine.getTextureManager().loadTextures(this.mBitmapTextureAtlas, this.mOnScreenControlTexture);
     }
 
-    public void setModoAutonomo(boolean modoAutonomo) {
-        this.modoAutonomo = modoAutonomo;
-    }
-
-    public boolean isModoAutonomo() {
-        return modoAutonomo;
-    }
-
     
-    
+
     @Override
     public Scene onLoadScene() {
         carregaBluetooth();
@@ -212,17 +196,13 @@ public class TelaActivity extends BaseGameActivity {
 
         final Scene scene = new Scene();
         scene.setBackground(new ColorBackground(0.0f, 0.0f, 0.0f));
-
-
-
+        
         ionScreenControlListener = new IOnScreenControlListener() {
-
-            
 
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
 
-                if (modoAutonomo) {
+                if(!ParametrosActivity.manual){
                     return;
                 }
                 String tecla = "x";
@@ -237,7 +217,7 @@ public class TelaActivity extends BaseGameActivity {
                 }
                 if (!tecla.equals("")) {
                     try {
-//                        LogMod.i("CARRINHO", tecla);
+                        LogMod.i("CARRINHO", tecla);
                         if (bluetoothSocket != null) {
                             tecla += "\n";
                             bluetoothSocket.getOutputStream().write(tecla.getBytes());
@@ -274,10 +254,11 @@ public class TelaActivity extends BaseGameActivity {
         frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
         LogMod.init();
         LogMod.i("CARRINHO", "CRUZEI SEtCONTENTVIEW");
-        CarrinhoV2View view = new CarrinhoV2View(this);
+        if (!ParametrosActivity.manual) {
+            CarrinhoV2View view = new CarrinhoV2View(this);
 
-        frameLayout.addView(view);
-
+            frameLayout.addView(view);
+        }
         this.setContentView(frameLayout, frameLayoutLayoutParams);
     }
 
@@ -297,21 +278,30 @@ public class TelaActivity extends BaseGameActivity {
         String pe = String.valueOf(potenciaEsquerda);
         if (pd.length() == 1) {
             pd = "0" + pd;
+
+        }
+        if (potenciaDireita >= 0) {
+            pd = "+" + pd;
         }
         if (pe.length() == 1) {
             pe = "0" + pe;
+
         }
-        String tecla = "+" + pd + "+" + pe;
+        if (potenciaEsquerda >= 0) {
+            pe = "+" + pe;
+        }
+        String tecla = pd + pe;
         System.out.println("Tentando mandar... " + tecla);
         if (bluetoothSocket != null) {
             try {
                 tecla += "\n";
                 System.out.println("Mandei: " + tecla);
                 bluetoothSocket.getOutputStream().write(tecla.getBytes());
-            } catch (IOException ex) {
+                Thread.sleep(100);
+            } catch (Exception ex) {
                 LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
             }
-        }else{
+        } else {
             System.out.println("Falhou");
         }
     }
@@ -321,7 +311,4 @@ public class TelaActivity extends BaseGameActivity {
         enviarPotencia(0, 0);
         super.onStop();
     }
-    
-    
-    
 }

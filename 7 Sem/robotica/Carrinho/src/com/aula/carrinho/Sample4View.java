@@ -111,16 +111,16 @@ public class Sample4View extends SampleViewBase {
         } else {
             contagemParaParada--;
             if (contagemParaParada <= 0) {
-                if (tela.isModoAutonomo()) {
-
-                    tela.enviarPotencia(0, 0);
-                    tela.setModoAutonomo(false);
-                }
+//                if (tela.isModoAutonomo()) {
+//
+//                    tela.enviarPotencia(0, 0);
+//                    tela.setModoAutonomo(false);
+//                }
                 contagemParaParada = 3;
             }
             return bmp;
         }
-        tela.setModoAutonomo(true);
+//        tela.setModoAutonomo(true);
         Vetor2D centro = new Vetor2D(new Ponto2D(mRgba.rows() / 2, 0), new Ponto2D(mRgba.rows() / 2, mRgba.cols()));
 
         ArrayList<Ponto2D> otm = new ArrayList<Ponto2D>(3);
