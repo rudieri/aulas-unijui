@@ -1,4 +1,4 @@
-package com.aula.carrinho;
+package com.aula.carrinho.v1;
 
 import android.app.Activity;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import com.aula.carrinho.ParametrosActivity;
 
 public abstract class SampleViewBase extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 

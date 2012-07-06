@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aula.carrinho;
+package com.aula.carrinho.v1;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
+import com.aula.carrinho.TelaActivity;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;
 import java.util.Date;

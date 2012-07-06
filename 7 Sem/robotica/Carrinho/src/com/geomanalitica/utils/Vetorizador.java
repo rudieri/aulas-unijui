@@ -4,7 +4,7 @@
  */
 package com.geomanalitica.utils;
 
-import com.aula.carrinho.Sample4View;
+import com.aula.carrinho.v1.Sample4View;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;
 import java.util.ArrayList;
