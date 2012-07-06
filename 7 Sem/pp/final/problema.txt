@@ -1,0 +1,2 @@
+-Ordenar um Vetor de 1000000 de posições usando algoritmo de simples(Selection Sort)
+Será Ordenado um vetor de 1000000 de posições, alimentado aleatoriamente, utilizando técnica Selection Sort para ordenar.
