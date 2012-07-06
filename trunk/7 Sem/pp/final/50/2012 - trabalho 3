@@ -1,0 +1,51 @@
+Trabalho III - Busca de sequência
+Data de entrega: julho/2012
+Local de entrega: Somente no portal
+Peso 50 pontos
+Individual
+=============================================================
+
+Disponibilizado:
+-----------------------
+- 1 programa fonte em lgg C (criar.c) que gera um arquivo de 1 MByte e o exibe na tela como uma sequência de caracteres 
+- 1 programa fonte em lgg C (testar.c) que faz a procura sequencial top-down no arquivo (SEM OPÇÃO INVERTIDO)
+- 1 programa (Makefile) que compila estes os dois programas
+
+Dica: 
+-----------------
+Estudar e utilizar estas funções para realização o trabalho de:
+Arquivos em C: 		fopen(), fclose(), getc(), putc(), fread(), fwrite(), fseek()
+Comunicacao MPI:	MPI_Init(), MPI_Finalize(), MPI_Comm_size(), MPI_Comm_rank(), MPI_Send(), MPI_Recv()
+
+
+Objetivo:
+-------------
+Encontrar paralelamente utilizando "MPI" a quantidade de vezes que a sequência de caracteres está presente no arquivo.
+A busca deve considerar também a sequência invertida de caracteres.
+
+
+Avaliação do trabalho:
+--------------------------------
+Ganhos de tempo(speed-up) e eficiência obtida com a paralelização utilizando arquivo de 1 GB.
+a) top-down (início-fim do arquivo) - 10 pontos
+b) botton-up (fim-início do arquivo) - 10 pontos
+c) diagonal principal considerando os dados do arquivo uma matriz - 10 pontos
+d) diagonal secundária considerando os dados do arquivo uma matriz  - 10 pontos
+e) relatório final (texto) contendo as seguites seções: - 10 pontos 
+	- introdução - introdução, motivação, ...
+	- descrição do problema - descrever o problema
+	- ambiente de execução - descrever o equipamento onde foi executado os testes
+	- resultados (tabelas tempo, speed-up e eficiencia) e gráficos - semelhantes aos da aula
+	- conclusão - discussão dos resultados e trabalhos futuros
+	- bibliografia - bibliografia utilizada para realização do trabalho
+
+
+Entrega do trabalho:
+-----------------------------
+Arquivo zipado com o nome (seu-nome.zip) contendo 4 arquivos:
+- 1 arquivo com nome (sequencial.c) que contem o programa sequencial 
+- 1 arquivo com nome (paralelo.c) que contem o programa paralelo 
+- 1 arquivo com nome (texto.pdf) que descreve o trabalho
+- 1 arquivo com nome (medidas.xls)  que contem os calculos do speed-up e da eficiência dos programas paralelos 
+ 
+
