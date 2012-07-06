@@ -1,9 +1,11 @@
-package com.aula.carrinho;
+package com.aula.carrinho.v1;
 
+import com.aula.carrinho.v1.Analizador;
 import android.content.Context;
 import android.graphics.*;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import com.aula.carrinho.TelaActivity;
 import com.geomanalitica.utils.Vetorizador;
 import com.geomanalitica.utils._2d.Ponto2D;
 import com.geomanalitica.utils._2d.Vetor2D;

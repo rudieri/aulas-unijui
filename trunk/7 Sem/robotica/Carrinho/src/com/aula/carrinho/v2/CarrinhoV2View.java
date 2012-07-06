@@ -21,6 +21,8 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
     private Mat imagemCamera;
     private final TelaActivity tela;
     MediaPlayer mediaPlayer;
+    private int ultimaDirValido;
+    private int ultimaEsqValido;
 
     public CarrinhoV2View(Context context) {
         super(context);
@@ -100,12 +102,9 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 //                    Log.v(TAG + "Ignorou", c + "x" + r);
                     continue;
                 }
-                if ((r == 3 && (c == 2 || c == 3 || c == 4 || c == 5 || c == 6))
-                        || (r == 4 && (c == 3 || c == 4 || c == 5))
-                        || (r == 5 && (c == 3 || c == 4 || c == 5))
-                        || (r == 6 && c == 5)
-                        || (r == 7 && c == 5)
-                        || (r == 8 && c == 5)) {//Ignorar Meios em forma de cone
+                if ((r == 3 && (c >= 2 && c <= 6))
+                        || ((r == 4 || r == 5) && (c == 3 || c == 4 || c == 5))
+                        || ((r == 6 || r == 7) && c == 5)) {//Ignorar Meios em forma de cone
 //                    Log.v(TAG + "Ignorou", c + "x" + r);
                     continue;
                 }
@@ -148,26 +147,6 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     columSel = c;
                     rowSel = r;
                 }
-
-
-
-//OLD CODEC
-//                if(r>3){
-//                    int ajust = (int) ((-(maxRow-1-r)+maxCols)*0.8);
-//                    if (c < meio-(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
-//                        int dif = (int)((meio + 1 - c)* 1.3 * ajust);
-//                        potenciaEsq = potenciaEsq - dif;
-//                        potenciaDir = potenciaDir + dif;
-//                    } else if (c > meio+(((maxRow-r)/2)) && pontos[c][r] == Color.BLACK) {
-//                        int dif =  (int)((c - meio + 1)*1.3 * (ajust));
-//                        potenciaDir = potenciaDir - dif;
-//                        potenciaEsq = potenciaEsq + dif;
-//                    }
-//                }
-//
-//                //Monta Matriz de Preto e banco
-//                view += (pontos[c][r] == Color.BLACK ? "1" : "0");
-
             }
         }
 
@@ -215,10 +194,24 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                 potenciaDir = -99;
                 break;
             default://Fudeu Engata RE
-                potenciaEsq = -30;
-                potenciaDir = -30;
+                potenciaEsq = -60;
+                potenciaDir = -60;
                 break;
 
+        }
+        if (potenciaEsq == -50 && potenciaDir == -50) {
+            /* se for igual, não muda nada
+             * se esquerda é maior, estava andando para a direita, logo, a ré deve tender para a direita
+             * a mesma coisa (só que ao contrário) para a direita maior
+            */
+            if (ultimaEsqValido > ultimaDirValido) {
+                potenciaEsq = -30;
+            } else {
+                potenciaDir = -30;
+            }
+        } else {
+            ultimaEsqValido = potenciaEsq;
+            ultimaDirValido = potenciaDir;
         }
 
         Log.v(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);

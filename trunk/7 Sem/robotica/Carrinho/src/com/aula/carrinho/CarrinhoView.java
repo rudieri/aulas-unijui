@@ -4,6 +4,7 @@
  */
 package com.aula.carrinho;
 
+import com.aula.carrinho.v1.Analizador;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

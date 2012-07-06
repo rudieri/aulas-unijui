@@ -59,7 +59,7 @@ public class TelaActivity extends BaseGameActivity {
     private TextureRegion mOnScreenControlBaseTextureRegion;
     private TextureRegion mOnScreenControlKnobTextureRegion;
     private DigitalOnScreenControl mDigitalOnScreenControl;
-    private BluetoothSocket bluetoothSocket;
+    private static BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
     
@@ -127,8 +127,14 @@ public class TelaActivity extends BaseGameActivity {
                 UUID MY_UUID =
                         UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
                 LogMod.i("CARRINHO", MY_UUID.toString());
-                bluetoothSocket = carrinho.createRfcommSocketToServiceRecord(MY_UUID);
-                bluetoothSocket.connect();
+                if (bluetoothSocket==null) {
+                    bluetoothSocket = carrinho.createRfcommSocketToServiceRecord(MY_UUID);
+                    bluetoothSocket.connect();
+                }else{
+                    if (!bluetoothSocket.isConnected()) {
+                        bluetoothSocket.connect();
+                    }
+                }
                 LogMod.i("CARRINHO", "DEU CERTO ....");
                 new Thread(new Runnable() {
 
@@ -300,10 +306,22 @@ public class TelaActivity extends BaseGameActivity {
                 Thread.sleep(100);
             } catch (Exception ex) {
                 LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
+                LogMod.i("CARRINHO", "Tentando conectar de novo...");
+                try {
+                    bluetoothSocket.connect();
+                } catch (IOException ex1) {
+                    LogMod.e("CARRINHO", "Erro ao reconectar", ex1);
+                }
             }
         } else {
             System.out.println("Falhou");
         }
+    }
+
+    @Override
+    protected void onPause() {
+        enviarPotencia(0, 0);
+        super.onPause();
     }
 
     @Override
