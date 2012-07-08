@@ -279,6 +279,23 @@ public class TelaActivity extends BaseGameActivity {
     // Inner and Anonymous Classes
     // ===========================================================
 
+    public void enviarCamera(int valor){
+        try {
+                String tecla = "c"+valor+"\n";
+                System.out.println("Mandei: " + tecla);
+                bluetoothSocket.getOutputStream().write(tecla.getBytes());
+                Thread.sleep(100);
+            } catch (Exception ex) {
+                LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
+                LogMod.i("CARRINHO", "Tentando conectar de novo...");
+                try {
+                    bluetoothSocket.connect();
+                } catch (IOException ex1) {
+                    LogMod.e("CARRINHO", "Erro ao reconectar", ex1);
+                }
+            }
+    }
+    
     public void enviarPotencia(int potenciaEsquerda, int potenciaDireita) {
         String pd = String.valueOf(potenciaDireita);
         String pe = String.valueOf(potenciaEsquerda);
