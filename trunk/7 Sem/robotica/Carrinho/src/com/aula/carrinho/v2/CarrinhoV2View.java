@@ -1,16 +1,13 @@
 package com.aula.carrinho.v2;
 
-import android.R;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.*;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import com.aula.carrinho.ParametrosActivity;
 import com.aula.carrinho.TelaActivity;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.anddev.andengine.audio.music.MusicFactory;
 import org.opencv.android.Utils;
 import org.opencv.core.*;
@@ -95,15 +92,17 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         int columSel = -1;
         int rowSel = -1;
         //
+
         for (int r = maxRow - 1; r != 0; r--) {
+            boolean todoLadoEsquerdo = true;
+            boolean todoLadoDireito = true;
             for (int c = 0; c < maxCols; c++) {
 
                 if (r < 3) {
 //                    Log.v(TAG + "Ignorou", c + "x" + r);
                     continue;
                 }
-                if ((r == 3 && (c >= 2 && c <= 6))
-                        || ((r == 4 || r == 5) && (c == 3 || c == 4 || c == 5))
+                if (((r == 2 || r == 3 || r == 4 || r == 5) && (c == 3 || c == 4 || c == 5))
                         || ((r == 6 || r == 7) && c == 5)) {//Ignorar Meios em forma de cone
 //                    Log.v(TAG + "Ignorou", c + "x" + r);
                     continue;
@@ -137,6 +136,12 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     pontos[c][r] = Color.BLACK;
                 } else {
                     pontos[c][r] = Color.WHITE;
+                    if (c < meio) {
+                        todoLadoEsquerdo = false;
+                    }
+                    if (c > meio) {
+                        todoLadoDireito = false;
+                    }
                 }
                 //FIM
 
@@ -148,6 +153,15 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     rowSel = r;
                 }
             }
+//            if (todoLadoEsquerdo) {
+//                columSel = 0;
+//                break;
+//            } else if (todoLadoDireito) {
+//                columSel = 8;
+//                break;
+//            }
+
+
         }
 
         /**
@@ -155,7 +169,7 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
          * 0) { potenciaEsq = 0; } if (potenciaDir > 100) { potenciaDir = 99; }
          * if (potenciaEsq > 100) { potenciaEsq = 99; }
          */
-        Log.v(TAG, columSel + "x" + rowSel);
+//        Log.v(TAG, columSel + "x" + rowSel);
         switch (columSel) {
             case 0://Bem no canto                 
                 potenciaDir = 99;
@@ -163,11 +177,11 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                 break;
             case 1:
                 potenciaDir = 99;
-                potenciaEsq = 0;
+                potenciaEsq = -60;
                 break;
             case 2:
                 potenciaDir = 99;
-                potenciaEsq = 50;
+                potenciaEsq = -50;
                 break;
             case 3:// um pouco pra esquerda ajuste
                 potenciaDir = 90;
@@ -183,27 +197,28 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                 break;
             case 6:
                 potenciaEsq = 90;
-                potenciaDir = 50;
+                potenciaDir = -50;
                 break;
             case 7:
                 potenciaEsq = 99;
-                potenciaDir = 0;
+                potenciaDir = -60;
                 break;
             case 8:
                 potenciaEsq = 99;
                 potenciaDir = -99;
                 break;
             default://Fudeu Engata RE
-                potenciaEsq = -60;
-                potenciaDir = -60;
+                potenciaEsq = -50;
+                potenciaDir = -50;
                 break;
 
         }
         if (potenciaEsq == -50 && potenciaDir == -50) {
-            /* se for igual, não muda nada
-             * se esquerda é maior, estava andando para a direita, logo, a ré deve tender para a direita
-             * a mesma coisa (só que ao contrário) para a direita maior
-            */
+            /*
+             * se for igual, não muda nada se esquerda é maior, estava andando
+             * para a direita, logo, a ré deve tender para a direita a mesma
+             * coisa (só que ao contrário) para a direita maior
+             */
             if (ultimaEsqValido > ultimaDirValido) {
                 potenciaEsq = -30;
             } else {
@@ -214,15 +229,25 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
             ultimaDirValido = potenciaDir;
         }
 
-        Log.v(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);
+        if (potenciaDir == 99 && potenciaEsq == 99) {
+            tela.enviarCamera(90);
+        } else {
+            tela.enviarCamera(0);
+        }
+
+
+//        Log.v(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);
         tela.enviarPotencia(potenciaEsq, potenciaDir);
 
+        if (ParametrosActivity.preview) {
+            Bitmap bmp = Bitmap.createBitmap(getCameraFrameWidth(), getCameraFrameHeight(), Bitmap.Config.ARGB_8888);
 
-        Bitmap bmp = Bitmap.createBitmap(getCameraFrameWidth(), getCameraFrameHeight(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(imagemCamera, bmp);
 
-        Utils.matToBitmap(imagemCamera, bmp);
-
-        return bmp;
+            return bmp;
+        } else {
+            return null;
+        }
 
     }
 

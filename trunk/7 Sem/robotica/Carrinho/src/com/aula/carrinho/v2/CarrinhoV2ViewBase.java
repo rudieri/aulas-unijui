@@ -40,7 +40,6 @@ public abstract class CarrinhoV2ViewBase extends SurfaceView implements SurfaceH
         return mFrameHeight;
     }
 
-
     public void surfaceChanged(SurfaceHolder _holder, int format, int width, int height) {
         Log.i(TAG, "surfaceCreated");
         if (mCamera != null) {
@@ -63,7 +62,7 @@ public abstract class CarrinhoV2ViewBase extends SurfaceView implements SurfaceH
                     }
                 }
             }
-
+            
             params.setPreviewSize(getCameraFrameWidth(), getCameraFrameHeight());
             mCamera.setParameters(params);
             try {
@@ -83,7 +82,7 @@ public abstract class CarrinhoV2ViewBase extends SurfaceView implements SurfaceH
         }
         mCamera.getParameters().setPreviewFormat(ImageFormat.RGB_565);
         mCamera.setParameters(mCamera.getParameters());
-       
+
         mCamera.setPreviewCallback(new PreviewCallback() {
 
             public void onPreviewFrame(byte[] data, Camera camera) {
