@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ToggleButton;
 
 /**
@@ -17,9 +18,12 @@ import android.widget.ToggleButton;
  * @author manchini
  */
 public class ParametrosActivity extends Activity {
+
     public static boolean comFlash = true;
     public static boolean manual = false;
     public static boolean preview = false;
+    public static Integer potencia = 99;
+    public static Integer ignorarLinhas = 3;
 
     /**
      * Called when the activity is first created.
@@ -28,16 +32,22 @@ public class ParametrosActivity extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.parametros);
-        
-        
-        Button btFritar = (Button)findViewById(R.dados.btTela);
+
+        final EditText editPotencia = (EditText) findViewById(R.dados.potencia);
+        final EditText editIgnorar = (EditText) findViewById(R.dados.ignorarLinhas);
+
+        Button btFritar = (Button) findViewById(R.dados.btTela);
         btFritar.setOnClickListener(new View.OnClickListener() {
+
             public void onClick(View arg0) {
-               Intent it = new Intent(ParametrosActivity.this,TelaActivity.class);
-               startActivity(it);
+                potencia = new Integer(editPotencia.getText().toString());
+                ignorarLinhas = new Integer(editIgnorar.getText().toString());
+                
+                Intent it = new Intent(ParametrosActivity.this, TelaActivity.class);
+                startActivity(it);
             }
         });
-        ToggleButton btFlash = (ToggleButton)findViewById(R.dados.comFlash);
+        ToggleButton btFlash = (ToggleButton) findViewById(R.dados.comFlash);
         btFlash.setChecked(comFlash);
         btFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -45,7 +55,7 @@ public class ParametrosActivity extends Activity {
                 comFlash = arg1;
             }
         });
-        ToggleButton btManual = (ToggleButton)findViewById(R.dados.manual);
+        ToggleButton btManual = (ToggleButton) findViewById(R.dados.manual);
         btManual.setChecked(manual);
         btManual.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -53,7 +63,7 @@ public class ParametrosActivity extends Activity {
                 manual = arg1;
             }
         });
-        ToggleButton btPreview = (ToggleButton)findViewById(R.dados.preview);
+        ToggleButton btPreview = (ToggleButton) findViewById(R.dados.preview);
         btPreview.setChecked(preview);
         btPreview.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -61,6 +71,6 @@ public class ParametrosActivity extends Activity {
                 preview = arg1;
             }
         });
-    }
 
+    }
 }

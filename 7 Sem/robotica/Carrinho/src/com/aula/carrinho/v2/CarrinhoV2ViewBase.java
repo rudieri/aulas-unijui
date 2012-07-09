@@ -41,7 +41,7 @@ public abstract class CarrinhoV2ViewBase extends SurfaceView implements SurfaceH
     }
 
     public void surfaceChanged(SurfaceHolder _holder, int format, int width, int height) {
-        Log.i(TAG, "surfaceCreated");
+//        Log.i(TAG, "surfaceCreated");
         if (mCamera != null) {
             Camera.Parameters params = mCamera.getParameters();
             if (ParametrosActivity.comFlash) {
@@ -75,7 +75,7 @@ public abstract class CarrinhoV2ViewBase extends SurfaceView implements SurfaceH
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.i(TAG, "surfaceCreated");
+//        Log.i(TAG, "surfaceCreated");
         mCamera = Camera.open();
         if (ParametrosActivity.comFlash) {
             mCamera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
