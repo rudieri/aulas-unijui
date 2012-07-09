@@ -20,6 +20,8 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
     MediaPlayer mediaPlayer;
     private int ultimaDirValido;
     private int ultimaEsqValido;
+    int potencia = 0;
+    int ignorarLinhas = 0;
 
     public CarrinhoV2View(Context context) {
         super(context);
@@ -38,7 +40,9 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         } catch (Exception ex) {
             Log.e(TAG, "Erro ao Statea Musica", ex);
         }
-
+        
+        potencia = ParametrosActivity.potencia;
+        ignorarLinhas = ParametrosActivity.ignorarLinhas;
     }
 
     @Override
@@ -98,7 +102,7 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
             boolean todoLadoDireito = true;
             for (int c = 0; c < maxCols; c++) {
 
-                if (r < 3) {
+                if (r < ignorarLinhas) {
 //                    Log.v(TAG + "Ignorou", c + "x" + r);
                     continue;
                 }
@@ -172,64 +176,64 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 //        Log.v(TAG, columSel + "x" + rowSel);
         switch (columSel) {
             case 0://Bem no canto                 
-                potenciaDir = 99;
-                potenciaEsq = -99;
+                potenciaDir = potencia*1;
+                potenciaEsq = (int) (potencia*-0.1);
                 break;
             case 1:
-                potenciaDir = 99;
-                potenciaEsq = -60;
+                potenciaDir = potencia*1;
+                potenciaEsq = (int) (potencia*-0.6);
                 break;
             case 2:
-                potenciaDir = 99;
-                potenciaEsq = -50;
+                potenciaDir =potencia*1;
+                potenciaEsq = (int) (potencia*-0.5);
                 break;
             case 3:// um pouco pra esquerda ajuste
-                potenciaDir = 90;
-                potenciaEsq = 80;
+                potenciaDir = (int) (potencia*0.90);
+                potenciaEsq = (int) (potencia*0.80);
                 break;
             case 4: // no meio Potencia Maxima a frente
-                potenciaDir = 99;
-                potenciaEsq = 99;
+                potenciaDir = (int) (potencia*1);
+                potenciaEsq = (int) (potencia*1);
                 break;
             case 5:
-                potenciaEsq = 99;
-                potenciaDir = 80;
+                potenciaEsq = potencia*1;
+                potenciaDir = (int) (potencia*0.80);
                 break;
             case 6:
-                potenciaEsq = 90;
-                potenciaDir = -50;
+                potenciaEsq = (int) (potencia*0.90);
+                potenciaDir = (int) (potencia*-.050);
                 break;
             case 7:
-                potenciaEsq = 99;
-                potenciaDir = -60;
+                potenciaEsq = potencia*1;
+                potenciaDir = (int) (potencia*-0.60);
                 break;
             case 8:
-                potenciaEsq = 99;
-                potenciaDir = -99;
+                potenciaEsq = potencia*1;
+                potenciaDir = potencia*-1;
                 break;
             default://Fudeu Engata RE
-                potenciaEsq = -50;
-                potenciaDir = -50;
+                potenciaEsq = (int) (potencia*-0.50);
+                potenciaDir = (int) (potencia*-0.50);
                 break;
 
         }
-        if (potenciaEsq == -50 && potenciaDir == -50) {
+        if (potenciaEsq == (int)(potencia*-0.50) && potenciaDir == (int)(potencia*-0.50)) {
             /*
              * se for igual, não muda nada se esquerda é maior, estava andando
              * para a direita, logo, a ré deve tender para a direita a mesma
              * coisa (só que ao contrário) para a direita maior
              */
             if (ultimaEsqValido > ultimaDirValido) {
-                potenciaEsq = -30;
+                potenciaEsq = (int) (potencia*-0.30);
             } else {
-                potenciaDir = -30;
+                potenciaDir = (int) (potencia*-0.30);
             }
         } else {
             ultimaEsqValido = potenciaEsq;
             ultimaDirValido = potenciaDir;
         }
 
-        if (potenciaDir == 99 && potenciaEsq == 99) {
+        if (potenciaDir == (int)(potencia*1) && potenciaEsq == (int)(potencia*1) ) {
             tela.enviarCamera(90);
         } else {
             tela.enviarCamera(0);
