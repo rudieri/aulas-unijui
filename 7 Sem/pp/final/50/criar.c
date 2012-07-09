@@ -24,7 +24,7 @@ void cria_arq()
 	file = fopen("texto.txt","w");	    
 	int n=0, cont;
 	char c;
-
+        int aux = 0;
 	for (cont=TAM; cont > 0; cont --){
 
 		do {
@@ -36,6 +36,11 @@ void cria_arq()
 		//printf("%c ",c);
 
 		putc(c,file);
+                aux++;
+                 if(aux == 1000){
+                 putc('\n',file);
+                 aux=0;
+                 }
 	}
 
 	fclose(file);    

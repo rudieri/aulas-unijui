@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
         mostra_vetor(vetorAux[0]);
         mostra_vetor(vetorAux[1]);
 */
-#pragma omp for 
+#pragma omp for private (x) 
     for (x = 0; x < nrT; x++) {
         organiza(x);
     }
@@ -66,9 +66,9 @@ int main(int argc, char *argv[]) {
 
     tempo2();
     tempoFinal("mili segundos", argv[0], MSGLOG, argv[1]);
-/*
+
     mostra_vetor(novo);
-*/
+
 
 
 

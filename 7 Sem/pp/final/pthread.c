@@ -12,6 +12,7 @@ int novo[TAM];
 int nrT;
 int vetorAux[20][TAM];
 int maxVetor[20];
+int x;
 //
 void inicializa_vetor();
 void mostra_vetor();
@@ -24,7 +25,7 @@ int main(int argc, char *argv[]) {
     //sleep(1);
     pthread_t t[nrT];
     int aux = 0;
-    int x;
+
 
     tempo1();
     inicializa_vetor();
@@ -76,7 +77,7 @@ int main(int argc, char *argv[]) {
 
 void * organiza(void *arg) {
 
-    int thread = *((int*) arg);
+    int thread = x;
 
     printf("\n Crio a Thread %d ...", thread);
     int i, j, aux;
