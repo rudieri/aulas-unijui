@@ -15,5 +15,11 @@
     <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Preview"/>
     <ToggleButton android:layout_width="wrap_content" android:layout_height="wrap_content" 
     android:id="@+dados/preview"  android:text="Preview" />
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Potencia"/>
+    <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/potencia"  android:text="99" />
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Ignorar Linhas"/>
+    <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" 
+    android:id="@+dados/ignorarLinhas"  android:text="3" />
 </LinearLayout>
 

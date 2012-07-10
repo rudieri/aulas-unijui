@@ -103,7 +103,9 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
             for (int c = 0; c < maxCols; c++) {
 
                 if (r < ignorarLinhas) {
-//                    Log.v(TAG + "Ignorou", c + "x" + r);
+//                    Log.v(TAG + "Ignorou", c + "x" + r);+
+                    todoLadoEsquerdo = false;
+                    todoLadoDireito = false;
                     continue;
                 }
                 if (((r == 2 || r == 3 || r == 4 || r == 5) && (c == 3 || c == 4 || c == 5))
@@ -157,13 +159,13 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     rowSel = r;
                 }
             }
-//            if (todoLadoEsquerdo) {
-//                columSel = 0;
-//                break;
-//            } else if (todoLadoDireito) {
-//                columSel = 8;
-//                break;
-//            }
+            if (todoLadoEsquerdo) {
+                columSel = 0;
+                break;
+            } else if (todoLadoDireito) {
+                columSel = 8;
+                break;
+            }
 
 
         }
@@ -234,7 +236,7 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         }
 
         if (potenciaDir == (int)(potencia*1) && potenciaEsq == (int)(potencia*1) ) {
-            tela.enviarCamera(90);
+            tela.enviarCamera(45);
         } else {
             tela.enviarCamera(0);
         }
