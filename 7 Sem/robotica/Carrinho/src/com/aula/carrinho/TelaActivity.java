@@ -62,7 +62,6 @@ public class TelaActivity extends BaseGameActivity {
     private static BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
-    
 
     @Override
     protected void onStart() {
@@ -127,10 +126,10 @@ public class TelaActivity extends BaseGameActivity {
                 UUID MY_UUID =
                         UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
                 LogMod.i("CARRINHO", MY_UUID.toString());
-                if (bluetoothSocket==null) {
+                if (bluetoothSocket == null) {
                     bluetoothSocket = carrinho.createRfcommSocketToServiceRecord(MY_UUID);
                     bluetoothSocket.connect();
-                }else{
+                } else {
                     if (!bluetoothSocket.isConnected()) {
                         bluetoothSocket.connect();
                     }
@@ -192,8 +191,6 @@ public class TelaActivity extends BaseGameActivity {
         this.mEngine.getTextureManager().loadTextures(this.mBitmapTextureAtlas, this.mOnScreenControlTexture);
     }
 
-    
-
     @Override
     public Scene onLoadScene() {
         carregaBluetooth();
@@ -202,13 +199,13 @@ public class TelaActivity extends BaseGameActivity {
 
         final Scene scene = new Scene();
         scene.setBackground(new ColorBackground(0.0f, 0.0f, 0.0f));
-        
+
         ionScreenControlListener = new IOnScreenControlListener() {
 
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
 
-                if(!ParametrosActivity.manual){
+                if (!ParametrosActivity.manual) {
                     return;
                 }
                 String tecla = "x";
@@ -279,39 +276,55 @@ public class TelaActivity extends BaseGameActivity {
     // Inner and Anonymous Classes
     // ===========================================================
 
-    public void enviarCamera(int valor){
+    public void enviarCamera(int valor) {
         try {
-                String tecla = "c"+valor+"\n";
-                System.out.println("Mandei: " + tecla);
-                bluetoothSocket.getOutputStream().write(tecla.getBytes());
-                Thread.sleep(100);
-            } catch (Exception ex) {
-                LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
-                LogMod.i("CARRINHO", "Tentando conectar de novo...");
-                try {
-                    bluetoothSocket.connect();
-                } catch (IOException ex1) {
-                    LogMod.e("CARRINHO", "Erro ao reconectar", ex1);
-                }
+            String tecla = "c" + valor + "\n";
+            System.out.println("Mandei: " + tecla);
+            bluetoothSocket.getOutputStream().write(tecla.getBytes());
+            Thread.sleep(100);
+        } catch (Exception ex) {
+            LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
+            LogMod.i("CARRINHO", "Tentando conectar de novo...");
+            try {
+                bluetoothSocket.connect();
+            } catch (IOException ex1) {
+                LogMod.e("CARRINHO", "Erro ao reconectar", ex1);
             }
+        }
     }
-    
+
     public void enviarPotencia(int potenciaEsquerda, int potenciaDireita) {
-        String pd = String.valueOf(potenciaDireita);
-        String pe = String.valueOf(potenciaEsquerda);
-        if (pd.length() == 1) {
-            pd = "0" + pd;
-
+        String pe;
+        String pd;
+        if (potenciaEsquerda > 0) {
+            if (potenciaEsquerda < 10) {
+                pe = "+0" + potenciaEsquerda;
+            } else {
+                pe = "+" + potenciaEsquerda;
+            }
+        } else if (potenciaEsquerda < 0) {
+            if (potenciaEsquerda > -10) {
+                pe = "-0" + String.valueOf(Math.abs(potenciaEsquerda));
+            } else {
+                pe = String.valueOf(potenciaEsquerda);
+            }
+        } else {
+            pe = String.valueOf("+00");
         }
-        if (potenciaDireita >= 0) {
-            pd = "+" + pd;
-        }
-        if (pe.length() == 1) {
-            pe = "0" + pe;
-
-        }
-        if (potenciaEsquerda >= 0) {
-            pe = "+" + pe;
+        if (potenciaDireita > 0) {
+            if (potenciaDireita < 10) {
+                pd = "+0" + potenciaDireita;
+            } else {
+                pd = "+" + potenciaDireita;
+            }
+        } else if (potenciaDireita < 0) {
+            if (potenciaDireita > -10) {
+                pd = "-0" + String.valueOf(Math.abs(potenciaDireita));
+            } else {
+                pd = String.valueOf(potenciaDireita);
+            }
+        } else {
+            pd = String.valueOf("+00");
         }
         String tecla = pd + pe;
         System.out.println("Tentando mandar... " + tecla);
