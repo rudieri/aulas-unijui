@@ -40,7 +40,7 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         } catch (Exception ex) {
             Log.e(TAG, "Erro ao Statea Musica", ex);
         }
-        
+
         potencia = ParametrosActivity.potencia;
         ignorarLinhas = ParametrosActivity.ignorarLinhas;
     }
@@ -98,14 +98,9 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         //
 
         for (int r = maxRow - 1; r != 0; r--) {
-            boolean todoLadoEsquerdo = true;
-            boolean todoLadoDireito = true;
             for (int c = 0; c < maxCols; c++) {
 
                 if (r < ignorarLinhas) {
-//                    Log.v(TAG + "Ignorou", c + "x" + r);+
-                    todoLadoEsquerdo = false;
-                    todoLadoDireito = false;
                     continue;
                 }
                 if (((r == 2 || r == 3 || r == 4 || r == 5) && (c == 3 || c == 4 || c == 5))
@@ -142,12 +137,6 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     pontos[c][r] = Color.BLACK;
                 } else {
                     pontos[c][r] = Color.WHITE;
-                    if (c < meio) {
-                        todoLadoEsquerdo = false;
-                    }
-                    if (c > meio) {
-                        todoLadoDireito = false;
-                    }
                 }
                 //FIM
 
@@ -159,13 +148,7 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     rowSel = r;
                 }
             }
-            if (todoLadoEsquerdo) {
-                columSel = 0;
-                break;
-            } else if (todoLadoDireito) {
-                columSel = 8;
-                break;
-            }
+
 
 
         }
@@ -178,68 +161,68 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
 //        Log.v(TAG, columSel + "x" + rowSel);
         switch (columSel) {
             case 0://Bem no canto                 
-                potenciaDir = potencia*1;
-                potenciaEsq = (int) (potencia*-0.1);
+                potenciaDir = potencia * 1;
+                potenciaEsq = (int) (potencia * -1);
                 break;
             case 1:
-                potenciaDir = potencia*1;
-                potenciaEsq = (int) (potencia*-0.6);
+                potenciaDir = potencia * 1;
+                potenciaEsq = (int) (potencia * -0.7);
                 break;
             case 2:
-                potenciaDir =potencia*1;
-                potenciaEsq = (int) (potencia*-0.5);
+                potenciaDir = potencia * 1;
+                potenciaEsq = (int) (potencia * 0.1);
                 break;
             case 3:// um pouco pra esquerda ajuste
-                potenciaDir = (int) (potencia*0.90);
-                potenciaEsq = (int) (potencia*0.80);
+                potenciaDir = (int) (potencia * 1);
+                potenciaEsq = (int) (potencia * 0.8);
                 break;
             case 4: // no meio Potencia Maxima a frente
-                potenciaDir = (int) (potencia*1);
-                potenciaEsq = (int) (potencia*1);
+                potenciaDir = (int) (potencia * 1);
+                potenciaEsq = (int) (potencia * 1);
                 break;
             case 5:
-                potenciaEsq = potencia*1;
-                potenciaDir = (int) (potencia*0.80);
+                potenciaEsq = potencia * 1;
+                potenciaDir = (int) (potencia * 0.8);
                 break;
             case 6:
-                potenciaEsq = (int) (potencia*0.90);
-                potenciaDir = (int) (potencia*-.050);
+                potenciaEsq = (int) (potencia * 1);
+                potenciaDir = (int) (potencia * 0.1);
                 break;
             case 7:
-                potenciaEsq = potencia*1;
-                potenciaDir = (int) (potencia*-0.60);
+                potenciaEsq = potencia * 1;
+                potenciaDir = (int) (potencia * -0.70);
                 break;
             case 8:
-                potenciaEsq = potencia*1;
-                potenciaDir = potencia*-1;
+                potenciaEsq = potencia * 1;
+                potenciaDir = potencia * -1;
                 break;
             default://Fudeu Engata RE
-                potenciaEsq = (int) (potencia*-0.50);
-                potenciaDir = (int) (potencia*-0.50);
+                potenciaEsq = (int) (potencia * -0.50);
+                potenciaDir = (int) (potencia * -0.50);
                 break;
 
         }
-        if (potenciaEsq == (int)(potencia*-0.50) && potenciaDir == (int)(potencia*-0.50)) {
+        if (potenciaEsq == (int) (potencia * -0.50) && potenciaDir == (int) (potencia * -0.50)) {
             /*
              * se for igual, não muda nada se esquerda é maior, estava andando
              * para a direita, logo, a ré deve tender para a direita a mesma
              * coisa (só que ao contrário) para a direita maior
              */
             if (ultimaEsqValido > ultimaDirValido) {
-                potenciaEsq = (int) (potencia*-0.30);
+                potenciaEsq = (int) (potencia * -0.2);
             } else {
-                potenciaDir = (int) (potencia*-0.30);
+                potenciaDir = (int) (potencia * -0.2);
             }
         } else {
             ultimaEsqValido = potenciaEsq;
             ultimaDirValido = potenciaDir;
         }
 
-        if (potenciaDir == (int)(potencia*1) && potenciaEsq == (int)(potencia*1) ) {
-            tela.enviarCamera(45);
-        } else {
-            tela.enviarCamera(0);
-        }
+//        if (potenciaDir == (int)(potencia*1) && potenciaEsq == (int)(potencia*1) ) {
+//            tela.enviarCamera(90);
+//        } else {
+//            tela.enviarCamera(0);
+//        }
 
 
 //        Log.v(TAG + " Potencia", potenciaEsq + "x" + potenciaDir + "   \n" + view);
