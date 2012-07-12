@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include<string.h>
 
-#define TAM 1000000
+#define TAM 100000000
+
 
 void cria_arq();
 void mostra_arq();
@@ -36,11 +37,13 @@ void cria_arq()
 		//printf("%c ",c);
 
 		putc(c,file);
+/*
                 aux++;
                  if(aux == 1000){
                  putc('\n',file);
                  aux=0;
                  }
+*/
 	}
 
 	fclose(file);    
