@@ -12,7 +12,7 @@ int novo[TAM];
 int nrT;
 int vetorAux[20][TAM];
 int maxVetor[20];
-int x;
+
 //
 void inicializa_vetor();
 void mostra_vetor();
@@ -43,12 +43,13 @@ int main(int argc, char *argv[]) {
     mostra_vetor(vetorAux[0]);
     mostra_vetor(vetorAux[1]);
 */
+    int x;
     for (x = 0; x < nrT; x++) {
         pthread_create(&t[x], NULL, organiza, (void *) &x);
     }
 
-    for (x = 0; x < nrT; x++) {
-        pthread_join(t[x], NULL);
+    for (i = 0; i < nrT; i++) {
+        pthread_join(t[i], NULL);
     }
 /*
     mostra_vetor(vetorAux[0]);
@@ -75,9 +76,9 @@ int main(int argc, char *argv[]) {
 
 }
 
-void * organiza(void *arg) {
+void * organiza(void *p) {
 
-    int thread = x;
+    int thread = *((int*) p);
 
     printf("\n Crio a Thread %d ...", thread);
     int i, j, aux;

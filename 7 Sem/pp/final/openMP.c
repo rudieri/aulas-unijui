@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
     tempo1();
     inicializa_vetor();
     int i = 0;
-#pragma omp for private (i) 
     for (i = 0; i < TAM; i++) {
         aux = vetor[i];
         //printf("\n Valor %d", aux);
@@ -39,35 +38,36 @@ int main(int argc, char *argv[]) {
         vetorAux[auxThRead][maxVetor[auxThRead]] = aux;
         maxVetor[auxThRead]++;
     }
+#pragma omp parallel 
+    {
 
-
-/*
-        mostra_vetor(vetorAux[0]);
-        mostra_vetor(vetorAux[1]);
-*/
-#pragma omp for private (x) 
-    for (x = 0; x < nrT; x++) {
-        organiza(x);
-    }
-/*
-        mostra_vetor(vetorAux[0]);
-        mostra_vetor(vetorAux[1]);
-*/
-
-    aux = 0;
-    for (i = 0; i < nrT; i++) {
-        for (x = 0; x < maxVetor[i]; x++) {
-            novo[aux] = vetorAux[i][x];
-            aux++;
+        /*
+                mostra_vetor(vetorAux[0]);
+                mostra_vetor(vetorAux[1]);
+         */
+#pragma omp for private(x)
+        for (x = 0; x < nrT; x++) {
+            organiza(x);
         }
-
+        /*
+                mostra_vetor(vetorAux[0]);
+                mostra_vetor(vetorAux[1]);
+         */
     }
+        aux = 0;
+        for (i = 0; i < nrT; i++) {
+            for (x = 0; x < maxVetor[i]; x++) {
+                novo[aux] = vetorAux[i][x];
+                aux++;
+            }
+
+        }    
 
 
     tempo2();
     tempoFinal("mili segundos", argv[0], MSGLOG, argv[1]);
 
-    mostra_vetor(novo);
+    //    mostra_vetor(novo);
 
 
 
@@ -76,24 +76,23 @@ int main(int argc, char *argv[]) {
 
 void * organiza(int thread) {
 
+        printf("\n Crio a Thread %d ...", thread);
+        int i, j, aux;
+        for (i = 0; i < maxVetor[thread]; i++) {
 
-    printf("\n Crio a Thread %d ...", thread);
-    int i, j, aux;
-    for (i = 0; i < maxVetor[thread]; i++) {
+            j = i;
 
-        j = i;
+            while (vetorAux[thread][j] < vetorAux[thread][j - 1]) {
 
-        while (vetorAux[thread][j] < vetorAux[thread][j - 1]) {
+                aux = vetorAux[thread][j];
+                vetorAux[thread][j] = vetorAux[thread][j - 1];
+                vetorAux[thread][j - 1] = aux;
+                j--;
 
-            aux = vetorAux[thread][j];
-            vetorAux[thread][j] = vetorAux[thread][j - 1];
-            vetorAux[thread][j - 1] = aux;
-            j--;
-
-            if (j == 0)break;
+                if (j == 0)break;
+            }
         }
-    }
-
+    
     return (NULL);
 }
 

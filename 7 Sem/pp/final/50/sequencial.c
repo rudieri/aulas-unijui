@@ -1,103 +1,46 @@
-
-#include "mpi.h"
-#include <stdio.h>
+#include<stdio.h>
+#include <stdlib.h>
+#include<string.h>
 #include <time.h> //necessária para usar o time(NULL)   
 #include "tempo.h"
 
-#define TOPDOWN  0
-#define DOWNTOP  1
-#define DIAGONAL_ESQ_DIR  2
-#define DIAGONAL_DIR_ESQ  3
+int TOPDOWN = 0;
+int DOWNTOP = 1;
+int DIAGONAL_ESQ_DIR = 2;
+int DIAGONAL_DIR_ESQ = 3;
+int DIAGONAL_ESQ_DIR_INV = 4;
+int DIAGONAL_DIR_ESQ_iNV = 5;
+int CIMA_BAIXO = 6;
+int BAIXO_CIMA = 7;
+
 #define TAMANHO 1000000
 
 
-void encontrar(int tipo, char code[]);
+
+void testar();
 void encontrarDiagonal(int tipo, char code[]);
-void encontrarTD(int tipo, char code[]);
+
+void encontrar(int tipo, char code[]);
 
 int main(int argc, char *argv[]) {
-    MPI_Status status;
-    int tipo, myid, numprocs, namelen;
-    char code[4] = {"GHVA"};
-tempo1();
-
-    double startwtime = 0.0,
-            endwtime = 0.0;
-    char processor_name[MPI_MAX_PROCESSOR_NAME];
-
-    MPI_Init(&argc, &argv);
-
-    MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
-    printf("\nNumero total de processos: %d", numprocs);
-
-    MPI_Comm_rank(MPI_COMM_WORLD, &myid);
-    printf("\nMeu id: %d", myid);
-
-    MPI_Get_processor_name(processor_name, &namelen);
-    printf("\nNome da Maquina : %s\n", processor_name);
-
-    if (myid == 0) /*mestre*/ {
-
-        startwtime = MPI_Wtime();
-
-        int aux = TOPDOWN;
-        
-
-        MPI_Send(&aux, 1, MPI_INT, 1, 4, MPI_COMM_WORLD);
-        aux = DOWNTOP; 
-        MPI_Send(&aux, 1, MPI_INT, 2, 4, MPI_COMM_WORLD);
-        aux = DIAGONAL_DIR_ESQ;
-        MPI_Send(&aux, 1, MPI_INT, 3, 4, MPI_COMM_WORLD);
-        aux = DIAGONAL_ESQ_DIR;
-        MPI_Send(&aux, 1, MPI_INT, 4, 4, MPI_COMM_WORLD);
-         
-
-
-        endwtime = MPI_Wtime();
-        printf("\nTempo de execucao = %f\n", endwtime - startwtime);
-        fflush(stdout);
-    }
-    if (myid == 1) /*id 1 */ {
-
-        MPI_Recv(&tipo, 1, MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
-        encontrar(tipo, code);
-
-    }
-    if (myid == 2) /*id 1 */ {
-
-        MPI_Recv(&tipo, 1, MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
-        encontrar(tipo, code);
-
-    }
-    if (myid == 3) /*id 1 */ {
-
-        MPI_Recv(&tipo, 1, MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
-        encontrar(tipo, code);
-
-    }
-    if (myid == 4) /*id 1 */ {
-
-        MPI_Recv(&tipo, 1, MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
-        encontrar(tipo, code);
-
-    }
-
-    MPI_Finalize();
-tempo2();
+    tempo1();
+    testar();
+    tempo2();
     tempoFinal("mili segundos", argv[0], MSGLOG, argv[1]);
+}
 
-    return 0;
+void testar() {
+    char code[4] = {"PITI"};
+
+     encontrar(TOPDOWN, code);
+      encontrar(DOWNTOP, code);
+     encontrarDiagonal(DIAGONAL_DIR_ESQ,code);
+    encontrarDiagonal(DIAGONAL_ESQ_DIR, code);
+
+
 }
 
 void encontrar(int tipo, char code[]) {
-    if (tipo == TOPDOWN || tipo == DOWNTOP) {
-        encontrarTD(tipo, code);
-    } else {
-        encontrarDiagonal(tipo, code);
-    }
-}
-
-void encontrarTD(int tipo, char code[]) {
     FILE *file;
     file = fopen("texto.txt", "r");
 
@@ -164,14 +107,15 @@ void encontrarDiagonal(int tipo, char code[]) {
     FILE *file;
     file = fopen("texto.txt", "r");
     int num = 0;
-    /*
-        char arquivo[TAMANHO];
-        int aux = 0;
-        while ((c = getc(file)) != EOF) {
-            arquivo[aux] = c;
-            aux++;
-        }
-     */
+    char c;
+/*
+    char arquivo[TAMANHO];
+    int aux = 0;
+    while ((c = getc(file)) != EOF) {
+        arquivo[aux] = c;
+        aux++;
+    }
+*/
 
     //1000000 =1000 x 1000
     long aux = 0;
@@ -242,9 +186,7 @@ void encontrarDiagonal(int tipo, char code[]) {
     if (tipo == DIAGONAL_DIR_ESQ) {
         printf("\n\nsequencia encontrada %d vezes na procura diagonal DIR_ESQ.\n\n", num);
     }
-    fclose(file);
+fclose(file);
 
 }
-
-
 
