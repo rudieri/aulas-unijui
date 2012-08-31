@@ -4,13 +4,25 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Sistema Gerador de Provas</title>
     </h:head>
     <h:body>
-        <p:calendar />
-       
-      
-       
+        <h:form >
+            <h:panelGrid columns="2" cellpadding="5" style="margin: 0 auto;">
+
+                <h:outputLabel value="Login:"/>
+                <p:inputText value="Gauderio"/>
+
+                <h:outputLabel value="Senha:"/>
+                <p:password />
+
+                <p:button href="Menu.xhtml" value="Entrar"/>
+                <p:button value="Limpar"/>
+                <p:button value="Cadastrar-se"/>
+
+            </h:panelGrid>
+        </h:form>
+
     </h:body>
 </html>
 
