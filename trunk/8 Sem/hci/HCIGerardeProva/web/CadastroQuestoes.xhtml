@@ -12,8 +12,8 @@
         <h:form>
             <h:panelGrid columns="2"   >
                 <h:outputLabel value="Matérias" for="idMaterias" style="width:200px!important"/> 
-                <p:selectOneMenu value="#" var="mateira" id="idMaterias" >
-                    <f:selectItems value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}"/> 
+                <p:selectOneMenu value="#{cadastroQuestoes.selecionado}" var="mateira" id="idMaterias"  >
+                    <f:selectItems value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
                 </p:selectOneMenu>
 
             </h:panelGrid>
