@@ -6,19 +6,35 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Menu - Sistema Gerador de Provas</title>
+        <script>
+            function mandar(){
+                PrimeFaces.ab({formId:'xxx',source:'xxx:idMaterias',process:'@all',update:'xxx'});
+            };
+        </script>
     </h:head>
     <h:body>
 
-        <h:form>
-            <h:panelGrid columns="2"   >
-                <h:outputLabel value="Matérias" for="idMaterias" style="width:200px!important"/> 
-                <p:selectOneMenu value="#{cadastroQuestoes.selecionado}" var="mateira" id="idMaterias"  >
-                    <f:selectItems value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
-                </p:selectOneMenu>
+        <p:panel header="Cadastro de Questões" >
 
-            </h:panelGrid>
-        </h:form>
+            <h:form id="xxx">
+                <h:panelGrid columns="2"  >
+                    <h:outputLabel value="Matérias:" for="idMaterias" /> 
+                    <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
+                        <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Assunto:"  /> 
+                    <p:selectOneMenu value="#" var="assunto"  >
+                        <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Tipo de Questão:"  /> 
+                    <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
+                        <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                    </p:selectOneMenu>
 
+                </h:panelGrid>
+            </h:form>
+
+        </p:panel>
 
     </h:body>
 </html>
