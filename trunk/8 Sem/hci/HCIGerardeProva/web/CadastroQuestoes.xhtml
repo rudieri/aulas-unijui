@@ -17,21 +17,42 @@
         <p:panel header="Cadastro de Questões" >
 
             <h:form id="xxx">
-                <h:panelGrid columns="2"  >
-                    <h:outputLabel value="Matérias:" for="idMaterias" /> 
-                    <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
-                        <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
-                    </p:selectOneMenu>
-                    <h:outputLabel value="Assunto:"  /> 
-                    <p:selectOneMenu value="#" var="assunto"  >
-                        <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
-                    </p:selectOneMenu>
-                    <h:outputLabel value="Tipo de Questão:"  /> 
-                    <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
-                        <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
-                    </p:selectOneMenu>
-
+                <h:panelGrid columns="2" style="width:100%">
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="Matérias:" for="idMaterias" /> 
+                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
+                            <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Assunto:"  /> 
+                        <p:selectOneMenu value="#" var="assunto"  >
+                            <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Tipo de Questão:"  /> 
+                        <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
+                            <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" rendered="true">
+                        <h:outputLabel rendered="#{cadastroQuestoes.questoeEhObjetiva()}" value="Tipo de Questão Objetiva:"/>
+                        <p:selectOneMenu rendered="#{cadastroQuestoes.questoeEhObjetiva()}" onchange="mandar()" value="#{cadastroQuestoes.tipoQuestaoObjetiva}" var="mateira" id="idTpQuestaoObj"  >
+                            <f:selectItems  value="#{cadastroQuestoes.listarTipoQuestaoObjetiva()}" var="tpQuestaoObj" itemLabel="#{tpQuestaoObj}" itemValue="#{tpQuestaoObj}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Peso da Questão (em %):"/>
+                        <p:inputText value="#"/>
+                        
+                    </h:panelGrid>
                 </h:panelGrid>
+                <p:panel header="Questão" >
+                    <p:inputTextarea rows="7" style="width:100%;"/>
+                    <h:outputLabel value="Resposta:"/>
+                    <p:inputText value="#"/>
+                </p:panel>
+                <br/>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Salvar"/>
+                    <p:commandButton value="Limpar"/>
+                </h:panelGrid>
+
             </h:form>
 
         </p:panel>
