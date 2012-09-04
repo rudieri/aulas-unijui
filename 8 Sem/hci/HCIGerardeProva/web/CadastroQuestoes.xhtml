@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title>Menu - Sistema Gerador de Provas</title>
         <script>
@@ -20,32 +21,61 @@
                 <h:panelGrid columns="2" style="width:100%">
                     <h:panelGrid columns="2" >
                         <h:outputLabel value="Matérias:" for="idMaterias" /> 
-                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
+                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}"  var="mateira" id="idMaterias"  >
                             <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Assunto:"  /> 
                         <p:selectOneMenu value="#" var="assunto"  >
-                            <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                            <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}"  itemValue="#{assunto}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Tipo de Questão:"  /> 
-                        <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
+                        <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}"  onchange="mandar()" var="tpQuestao"  >
                             <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     <h:panelGrid columns="2" rendered="true">
                         <h:outputLabel rendered="#{cadastroQuestoes.questoeEhObjetiva()}" value="Tipo de Questão Objetiva:"/>
-                        <p:selectOneMenu rendered="#{cadastroQuestoes.questoeEhObjetiva()}" onchange="mandar()" value="#{cadastroQuestoes.tipoQuestaoObjetiva}" var="mateira" id="idTpQuestaoObj"  >
+                        <p:selectOneMenu rendered="#{cadastroQuestoes.questoeEhObjetiva()}" onchange="mandar()"  value="#{cadastroQuestoes.tipoQuestaoObjetiva}" var="mateira" id="idTpQuestaoObj"  >
                             <f:selectItems  value="#{cadastroQuestoes.listarTipoQuestaoObjetiva()}" var="tpQuestaoObj" itemLabel="#{tpQuestaoObj}" itemValue="#{tpQuestaoObj}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Peso da Questão (em %):"/>
                         <p:inputText value="#"/>
-                        
+
                     </h:panelGrid>
                 </h:panelGrid>
                 <p:panel header="Questão" >
                     <p:inputTextarea rows="7" style="width:100%;"/>
-                    <h:outputLabel value="Resposta:"/>
-                    <p:inputText value="#"/>
+                    <c:if test="#{cadastroQuestoes.questoeEhObjetiva() == false}" >
+                        <h:outputLabel value="Resposta:"/>
+                        <p:inputText value="#"/>
+                    </c:if>
+                    <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Múltipla escolha (3 opções)' || cadastroQuestoes.tipoQuestaoObjetiva eq 'Múltipla escolha (5 opções)'}">
+                        <br/>  <br/>
+                        <h:outputLabel value="a) "/>   <p:inputText style="width:50%" /><br/><br/>
+                        <h:outputLabel value="b) "/>   <p:inputText style="width:50%"  /><br/><br/>
+                        <h:outputLabel value="c) "/>   <p:inputText style="width:50%"  /><br/><br/>
+                        <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Múltipla escolha (5 opções)'}">
+                            <h:outputLabel value="d) "/>   <p:inputText style="width:50%"  /><br/><br/>
+                            <h:outputLabel value="e) "/>   <p:inputText style="width:50%"  /><br/><br/>
+
+                        </c:if>
+
+
+                    </c:if>
+
+                    <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Verdadeiro ou Falso'}">
+                        <h:outputLabel value="Adicionar opções:"/><br/><br/>
+                        <p:inputText value="#{cadastroQuestoes.perguntaVF}" style="width:50%"/> <p:commandButton value="Adiconar" update="xxx"/><br/><br/>
+                        <p:dataTable value="#{cadastroQuestoes.questoesVF}" var="item">
+                            <p:column >
+                                <h:outputText value="( &nbsp;) "/>
+                                <h:outputText value="#{item}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </c:if>
+                    <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Relacional'}">
+                        Em construção... 
+                    </c:if>
                 </p:panel>
                 <br/>
                 <h:panelGrid columns="2">
