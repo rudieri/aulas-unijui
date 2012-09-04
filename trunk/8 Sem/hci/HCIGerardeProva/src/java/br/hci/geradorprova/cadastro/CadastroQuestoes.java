@@ -4,8 +4,8 @@
  */
 package br.hci.geradorprova.cadastro;
 
-import br.hci.geradorprova.utils.constantes.TipoQuestao;
-import br.hci.geradorprova.utils.constantes.TipoQuestaoObjetiva;
+import br.hci.questoes.TipoQuestao;
+import br.hci.questoes.TipoQuestaoObjetiva;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +21,8 @@ public class CadastroQuestoes implements Serializable {
     private TipoQuestaoObjetiva tipoQuestaoObjetiva;
     private String materiaSelecionada;
     private HashMap<String, ArrayList<String>> assuntos = new HashMap<>();
+    private ArrayList<String> questoesVF = new ArrayList<>();
+    private String perguntaVF;
 
     public CadastroQuestoes() {
         materias.add("Matemática");
@@ -98,6 +100,9 @@ public class CadastroQuestoes implements Serializable {
 
     public void setTipoQuestaoObjetiva(String tipoQuestaoObjetiva) {
         this.tipoQuestaoObjetiva = TipoQuestaoObjetiva.getPorNome(tipoQuestaoObjetiva);
+        if (this.tipoQuestaoObjetiva != TipoQuestaoObjetiva.VERDADEIRO_FALSO) {
+            questoesVF.clear();
+        }
     }
 
     public ArrayList<String> listarTipoQuestaoObjetiva() {
@@ -111,4 +116,24 @@ public class CadastroQuestoes implements Serializable {
     public boolean questoeEhObjetiva() {
         return tipoQuestao != null && tipoQuestao == TipoQuestao.OBJETIVA;
     }
+
+    public ArrayList<String> getQuestoesVF() {
+        return questoesVF;
+    }
+
+    public void setQuestoesVF(ArrayList<String> questoesVF) {
+        this.questoesVF = questoesVF;
+    }
+
+    public String getPerguntaVF() {
+        return perguntaVF;
+    }
+
+    public void setPerguntaVF(String perguntaVF) {
+        questoesVF.add(perguntaVF);
+        this.perguntaVF = null;
+    }
+    
+    
+    
 }
