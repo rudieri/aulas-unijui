@@ -35,8 +35,12 @@
                     </h:panelGrid>
                     <h:panelGrid columns="2" rendered="true">
                         <h:outputLabel rendered="#{cadastroQuestoes.questoeEhObjetiva()}" value="Tipo de Questão Objetiva:"/>
-                        <p:selectOneMenu rendered="#{cadastroQuestoes.questoeEhObjetiva()}" onchange="mandar()"  value="#{cadastroQuestoes.tipoQuestaoObjetiva}" var="mateira" id="idTpQuestaoObj"  >
+                        <p:selectOneMenu rendered="#{cadastroQuestoes.questoeEhObjetiva()}" onchange="mandar()"  value="#{cadastroQuestoes.tipoQuestaoObjetiva}" var="mateira" >
                             <f:selectItems  value="#{cadastroQuestoes.listarTipoQuestaoObjetiva()}" var="tpQuestaoObj" itemLabel="#{tpQuestaoObj}" itemValue="#{tpQuestaoObj}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel rendered="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Relacional'}" value="Tipo de Questão Relacional:"/>
+                        <p:selectOneMenu rendered="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Relacional'}" onchange="mandar()"  value="#{cadastroQuestoes.tipoQuestaoObjetiva}" var="mateira" >
+                            <f:selectItems  value="#{cadastroQuestoes.listarTipoQuestaoRelacional()}" var="tpQuestaoObj" itemLabel="#{tpQuestaoObj}" itemValue="#{tpQuestaoObj}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Peso da Questão (em %):"/>
                         <p:inputText value="#"/>
@@ -74,7 +78,17 @@
                         </p:dataTable>
                     </c:if>
                     <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Relacional'}">
-                        Em construção... 
+                        <h:outputLabel value="Adicionar opções:"/><br/><br/>
+                        <p:inputText value="#{cadastroQuestoes.perguntaRelacionalEsquerda}" style="width:45%"/> <span style="width:8%;display:inline-block;text-align:center">X</span> <p:inputText value="#{cadastroQuestoes.perguntaRelacionalDireita}" style="width:45%;"/>
+                        <br/><br/><p:commandButton value="Adiconar" update="xxx"/><br/><br/>
+                        <p:dataTable value="#{cadastroQuestoes.questoesRelacionais}"     var="qRelacional">
+                            <p:column >
+                                <h:outputText value="#{qRelacional.textoEsquerda}"/>
+                            </p:column>
+                            <p:column  >
+                                <h:outputText style="text-align:right;display:block" value="#{qRelacional.textoDireito}"/>
+                            </p:column>
+                        </p:dataTable>
                     </c:if>
                 </p:panel>
                 <br/>
