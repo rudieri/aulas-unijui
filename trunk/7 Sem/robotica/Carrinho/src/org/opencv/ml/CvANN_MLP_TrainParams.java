@@ -288,11 +288,6 @@ public class CvANN_MLP_TrainParams {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvANN_MLP_TrainParams::CvANN_MLP_TrainParams()
     private static native long CvANN_MLP_TrainParams_0();
 

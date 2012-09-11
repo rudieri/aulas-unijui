@@ -1,10 +1,13 @@
 package com.aula.carrinho;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
 import com.aula.carrinho.v2.CarrinhoV2View;
@@ -35,6 +38,9 @@ import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextur
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.view.RenderSurfaceView;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
 
 /**
  * (c) 2010 Nicolas Gramlich (c) 2011 Zynga
@@ -47,6 +53,7 @@ public class TelaActivity extends BaseGameActivity {
     // Constants
     // ===========================================================
 
+    private String TAG = "CARRINHO PRE-lOAD";
     private static final int CAMERA_WIDTH = 180;
     private static final int CAMERA_HEIGHT = 320;
     private static final int DIALOG_ALLOWDIAGONAL_ID = 0;
@@ -62,10 +69,30 @@ public class TelaActivity extends BaseGameActivity {
     private static BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
+    private CarrinhoV2View carrinhoV2View;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (carrinhoV2View != null) {
+            carrinhoV2View.releaseCamera();
+        }
+    }
+  
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (!ParametrosActivity.manual) {
+            if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_2, this, mOpenCVCallBack)) {
+                Log.e(TAG, "Cannot connect to OpenCV Manager");
+            }
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
     }
 
     private void carregaBluetooth() {
@@ -111,7 +138,6 @@ public class TelaActivity extends BaseGameActivity {
                     Alert alert = new Alert(this);
                     alert.setMessage("Da uma olhada que ta Desligado o Carrinho.");
                     alert.addButton(" Então Tá.", new DialogInterface.OnClickListener() {
-
                         public void onClick(DialogInterface di, int i) {
 //                    finish();
                         }
@@ -136,7 +162,6 @@ public class TelaActivity extends BaseGameActivity {
                 }
                 LogMod.i("CARRINHO", "DEU CERTO ....");
                 new Thread(new Runnable() {
-
                     public void run() {
                         boolean ativo = true;
                         while (ativo) {
@@ -201,7 +226,6 @@ public class TelaActivity extends BaseGameActivity {
         scene.setBackground(new ColorBackground(0.0f, 0.0f, 0.0f));
 
         ionScreenControlListener = new IOnScreenControlListener() {
-
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
 
@@ -245,6 +269,44 @@ public class TelaActivity extends BaseGameActivity {
 
         return scene;
     }
+    private BaseLoaderCallback mOpenCVCallBack = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS: {
+                    Log.i(TAG, "OpenCV loaded successfully");
+
+                    // Create and set View
+                    boolean eraNull = false;
+                    if (carrinhoV2View == null) {
+                        eraNull = true;
+                        carrinhoV2View = new CarrinhoV2View(mAppContext);
+                    }
+                    setContentView(carrinhoV2View);
+
+                    // Check native OpenCV camera
+                    if (eraNull && !carrinhoV2View.openCamera()) {
+                        AlertDialog ad = new AlertDialog.Builder(mAppContext).create();
+                        ad.setCancelable(false); // This blocks the 'BACK' button
+                        ad.setMessage("Fatal error: can't open camera!");
+                        ad.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                        ad.show();
+                    }
+                }
+                break;
+                default: {
+                    super.onManagerConnected(status);
+                }
+                break;
+            }
+        }
+    };
 
     @Override
     protected void onSetContentView() {
@@ -257,11 +319,7 @@ public class TelaActivity extends BaseGameActivity {
         frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
         LogMod.init();
         LogMod.i("CARRINHO", "CRUZEI SEtCONTENTVIEW");
-        if (!ParametrosActivity.manual) {
-            CarrinhoV2View view = new CarrinhoV2View(this);
 
-            frameLayout.addView(view);
-        }
         this.setContentView(frameLayout, frameLayoutLayoutParams);
     }
 
@@ -335,13 +393,13 @@ public class TelaActivity extends BaseGameActivity {
                 bluetoothSocket.getOutputStream().write(tecla.getBytes());
                 Thread.sleep(100);
             } catch (Exception ex) {
-                LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
-                LogMod.i("CARRINHO", "Tentando conectar de novo...");
-                try {
-                    bluetoothSocket.connect();
-                } catch (IOException ex1) {
-                    LogMod.e("CARRINHO", "Erro ao reconectar", ex1);
-                }
+//                LogMod.e("CARRINHO", "Erro ao mandar comando ", ex);
+//                LogMod.i("CARRINHO", "Tentando conectar de novo...");
+//                try {
+////                    bluetoothSocket.connect();
+//                } catch (IOException ex1) {
+////                    LogMod.e("CARRINHO", "Erro ao reconectar", ex1);
+//                }
             }
         } else {
             System.out.println("Falhou");
@@ -352,6 +410,8 @@ public class TelaActivity extends BaseGameActivity {
     protected void onPause() {
         enviarPotencia(0, 0);
         super.onPause();
+        if (null != carrinhoV2View)
+			carrinhoV2View.releaseCamera();
     }
 
     @Override

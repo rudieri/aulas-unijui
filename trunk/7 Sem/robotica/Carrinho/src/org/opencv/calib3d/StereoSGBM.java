@@ -464,11 +464,6 @@ public class StereoSGBM {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   StereoSGBM::StereoSGBM()
     private static native long StereoSGBM_0();
 

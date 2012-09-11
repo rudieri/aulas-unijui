@@ -657,11 +657,6 @@ public class Moments {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   Moments::Moments()
     private static native long Moments_0();
 

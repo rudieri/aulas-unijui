@@ -242,11 +242,6 @@ public class FeatureDetector {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++: static javaFeatureDetector* javaFeatureDetector::create(int detectorType)
     private static native long create_0(int detectorType);
 

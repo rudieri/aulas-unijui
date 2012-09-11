@@ -164,11 +164,6 @@ public class CvDTree extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvDTree::CvDTree()
     private static native long CvDTree_0();
 

@@ -324,11 +324,6 @@ public class EM extends Algorithm {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   EM::EM(int nclusters = EM::DEFAULT_NCLUSTERS, int covMatType = EM::COV_MAT_DIAGONAL, TermCriteria termCrit = TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, EM::DEFAULT_MAX_ITERS, FLT_EPSILON))
     private static native long EM_0(int nclusters, int covMatType, int termCrit_type, int termCrit_maxCount, double termCrit_epsilon);
     private static native long EM_1();

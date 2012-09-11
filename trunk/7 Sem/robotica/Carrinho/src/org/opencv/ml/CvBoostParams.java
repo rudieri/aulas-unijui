@@ -159,11 +159,6 @@ public class CvBoostParams extends CvDTreeParams {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvBoostParams::CvBoostParams()
     private static native long CvBoostParams_0();
 

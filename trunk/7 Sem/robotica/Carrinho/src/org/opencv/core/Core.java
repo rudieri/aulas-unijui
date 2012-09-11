@@ -7434,11 +7434,6 @@ public class Core {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  void LUT(Mat src, Mat lut, Mat& dst, int interpolation = 0)
     private static native void LUT_0(long src_nativeObj, long lut_nativeObj, long dst_nativeObj, int interpolation);
     private static native void LUT_1(long src_nativeObj, long lut_nativeObj, long dst_nativeObj);

@@ -204,11 +204,6 @@ public class CvKNearest extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvKNearest::CvKNearest()
     private static native long CvKNearest_0();
 

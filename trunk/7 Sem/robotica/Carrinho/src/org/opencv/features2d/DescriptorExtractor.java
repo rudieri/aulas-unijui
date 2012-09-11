@@ -210,11 +210,6 @@ public class DescriptorExtractor {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  void javaDescriptorExtractor::compute(Mat image, vector_KeyPoint keypoints, Mat descriptors)
     private static native void compute_0(long nativeObj, long image_nativeObj, long keypoints_mat_nativeObj, long descriptors_nativeObj);
 

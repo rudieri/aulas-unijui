@@ -120,11 +120,6 @@ public class CvRTParams extends CvDTreeParams {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvRTParams::CvRTParams()
     private static native long CvRTParams_0();
 

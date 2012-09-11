@@ -232,11 +232,6 @@ public class CascadeClassifier {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CascadeClassifier::CascadeClassifier()
     private static native long CascadeClassifier_0();
 

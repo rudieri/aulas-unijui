@@ -5,23 +5,28 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.*;
 import android.media.MediaPlayer;
 import android.util.Log;
-import android.view.SurfaceHolder;
 import com.aula.carrinho.ParametrosActivity;
 import com.aula.carrinho.TelaActivity;
 import org.anddev.andengine.audio.music.MusicFactory;
 import org.opencv.android.Utils;
 import org.opencv.core.*;
+import org.opencv.highgui.Highgui;
+import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 
 public class CarrinhoV2View extends CarrinhoV2ViewBase {
 
-    private Mat imagemCamera;
+    private Mat mgray;
+    private Mat mRgba;
     private final TelaActivity tela;
     MediaPlayer mediaPlayer;
     private int ultimaDirValido;
     private int ultimaEsqValido;
     int potencia = 0;
     int ignorarLinhas = 0;
+    private Bitmap mBitmap;
+    private int previewWidtd;
+    private int previewHeight;
 
     public CarrinhoV2View(Context context) {
         super(context);
@@ -46,31 +51,50 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder _holder, int format, int width, int height) {
-        super.surfaceChanged(_holder, format, width, height);
+    protected void onPreviewStarted(int previewWidtd, int previewHeight) {
+        // initialize Mats before usage
+        mgray = new Mat(getFrameHeight() + getFrameHeight() / 2, getFrameWidth(), CvType.CV_8UC1);
 
-        synchronized (this) {
-            // initialize Mats before usage
-            imagemCamera = new Mat(getCameraFrameWidth(), getCameraFrameHeight(), CvType.CV_8UC1);
+        mRgba = new Mat();
 
-        }
+
+        mBitmap = Bitmap.createBitmap(previewWidtd, previewHeight, Bitmap.Config.ARGB_8888);
+        this.previewWidtd = previewWidtd;
+        this.previewHeight = previewHeight;
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        super.surfaceDestroyed(holder);
-        mediaPlayer.stop();
+    protected void onPreviewStopped() {
+
+        if (mBitmap != null) {
+            mBitmap.recycle();
+            mBitmap = null;
+        }
+
+        // Explicitly deallocate Mats
+        if (mgray != null) {
+            mgray.release();
+        }
+        if (mRgba != null) {
+            mRgba.release();
+        }
+
+        mgray = null;
+        mRgba = null;
+
     }
 
     protected Bitmap processFrame(byte[] data) {
+        mgray.put(0, 0, data);
 
 
-        imagemCamera.put(0, 0, data);
+        Imgproc.resize(mgray, mgray, new Size(getFrameWidth(), getFrameHeight()));
+
+        Imgproc.cvtColor(mgray, mRgba, Imgproc.COLOR_YUV420sp2RGB, 0);
 
 
-        Imgproc.resize(imagemCamera, imagemCamera, new Size(getCameraFrameWidth(), getCameraFrameHeight()));
         //Monocromatico
-        Imgproc.threshold(imagemCamera, imagemCamera, 100, 255d, Imgproc.THRESH_BINARY);
+        Imgproc.threshold(mgray, mgray, 100, 255d, Imgproc.THRESH_BINARY);
 
 
 
@@ -109,12 +133,12 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
                     continue;
                 }
                 //Quebra a Imagem em Subimagens
-                auxC = (c * (imagemCamera.rows() / maxCols));
-                auxR = (r * (imagemCamera.cols() / maxRow));
-                int fimC = (c * (imagemCamera.rows() / maxCols)) + (imagemCamera.rows() / maxCols);
-                int fimR = (r * (imagemCamera.cols() / maxRow)) + (imagemCamera.cols() / maxRow);
+                auxC = (c * (mgray.rows() / maxCols));
+                auxR = (r * (mgray.cols() / maxRow));
+                int fimC = (c * (mgray.rows() / maxCols)) + (mgray.rows() / maxCols);
+                int fimR = (r * (mgray.cols() / maxRow)) + (mgray.cols() / maxRow);
 //                Log.i(TAG, "Submat " + "[" + c + "][" + r + "] " + auxR + "," + fimR + "," + auxC + "," + fimC);
-                Mat submat = imagemCamera.submat(auxC, fimC, auxR, fimR);
+                Mat submat = mgray.submat(auxC, fimC, auxR, fimR);
                 matrix[c][r] = submat;
                 // FIm 
 
@@ -229,36 +253,20 @@ public class CarrinhoV2View extends CarrinhoV2ViewBase {
         tela.enviarPotencia(potenciaEsq, potenciaDir);
 
         if (ParametrosActivity.preview) {
-            Bitmap bmp = Bitmap.createBitmap(getCameraFrameWidth(), getCameraFrameHeight(), Bitmap.Config.ARGB_8888);
-
-            Utils.matToBitmap(imagemCamera, bmp);
-
+//            Imgproc.resize(mRgba, mRgba, new Size(mBitmap.getWidth(),mBitmap.getHeight()));
+            Bitmap bmp = mBitmap;
+            try {
+                if(ParametrosActivity.rgb){
+                Utils.matToBitmap(mRgba, bmp);
+                }else{
+                     Utils.matToBitmap(mgray, bmp);
+                }
+            } catch (Exception ex) {
+            }
             return bmp;
         } else {
             return null;
         }
 
-    }
-
-    @Override
-    public void run() {
-        super.run();
-
-        synchronized (this) {
-            // Explicitly deallocate Mats
-            if (imagemCamera != null) {
-                imagemCamera.release();
-            }
-
-
-            imagemCamera = null;
-
-        }
-    }
-
-    public native void FindFeatures(long matAddrGr, long matAddrRgba);
-
-    static {
-        System.loadLibrary("mixed_sample");
     }
 }

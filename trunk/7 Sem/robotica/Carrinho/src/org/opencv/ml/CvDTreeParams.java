@@ -257,11 +257,6 @@ public class CvDTreeParams {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvDTreeParams::CvDTreeParams()
     private static native long CvDTreeParams_0();
 

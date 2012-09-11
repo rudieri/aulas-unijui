@@ -301,11 +301,6 @@ public class Subdiv2D {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   Subdiv2D::Subdiv2D()
     private static native long Subdiv2D_0();
 

@@ -621,11 +621,6 @@ public class Video {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  RotatedRect CamShift(Mat probImage, Rect& window, TermCriteria criteria)
     private static native double[] CamShift_0(long probImage_nativeObj, int window_x, int window_y, int window_width, int window_height, double[] window_out, int criteria_type, int criteria_maxCount, double criteria_epsilon);
 

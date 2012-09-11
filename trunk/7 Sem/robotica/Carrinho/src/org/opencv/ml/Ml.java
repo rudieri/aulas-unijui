@@ -10,9 +10,4 @@ public class Ml {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
 }

@@ -601,11 +601,6 @@ public class DescriptorMatcher {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  void javaDescriptorMatcher::add(vector_Mat descriptors)
     private static native void add_0(long nativeObj, long descriptors_mat_nativeObj);
 
