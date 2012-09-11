@@ -121,11 +121,6 @@ public class CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  void CvStatModel::load(c_string filename, c_string name = 0)
     private static native void load_0(long nativeObj, String filename, String name);
     private static native void load_1(long nativeObj, String filename);

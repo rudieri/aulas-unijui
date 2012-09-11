@@ -345,11 +345,6 @@ public class Algorithm {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  bool Algorithm::getBool(string name)
     private static native boolean getBool_0(long nativeObj, String name);
 

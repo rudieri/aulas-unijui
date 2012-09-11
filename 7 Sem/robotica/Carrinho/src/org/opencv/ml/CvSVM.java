@@ -199,6 +199,33 @@ public class CvSVM extends CvStatModel {
 
 
     //
+    // C++:  void CvSVM::predict(Mat samples, Mat& results)
+    //
+
+/**
+ * <p>Predicts the response for input sample(s).</p>
+ *
+ * <p>If you pass one sample then prediction result is returned. If you want to get
+ * responses for several samples then you should pass the <code>results</code>
+ * matrix where prediction results will be stored.</p>
+ *
+ * <p>The function is parallelized with the TBB library.</p>
+ *
+ * @param samples Input samples for prediction.
+ * @param results Output prediction responses for corresponding samples.
+ *
+ * @see <a href="http://docs.opencv.org/modules/ml/doc/support_vector_machines.html#cvsvm-predict">org.opencv.ml.CvSVM.predict</a>
+ */
+    public  void predict_all(Mat samples, Mat results)
+    {
+
+        predict_all_0(nativeObj, samples.nativeObj, results.nativeObj);
+
+        return;
+    }
+
+
+    //
     // C++:  bool CvSVM::train(Mat trainData, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), CvSVMParams params = CvSVMParams())
     //
 
@@ -303,8 +330,8 @@ public class CvSVM extends CvStatModel {
  * @param sampleIdx a sampleIdx
  * @param params a params
  * @param k_fold Cross-validation parameter. The training set is divided into
- * <code>k_fold</code> subsets. One subset is used to train the model, the
- * others form the test set. So, the SVM algorithm is executed <code>k_fold</code>
+ * <code>k_fold</code> subsets. One subset is used to test the model, the others
+ * form the train set. So, the SVM algorithm is executed <code>k_fold</code>
  * times.
  * @param Cgrid a Cgrid
  * @param gammaGrid Iteration grid for the corresponding SVM parameter.
@@ -378,11 +405,6 @@ public class CvSVM extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvSVM::CvSVM()
     private static native long CvSVM_0();
 
@@ -402,6 +424,9 @@ public class CvSVM extends CvStatModel {
     // C++:  float CvSVM::predict(Mat sample, bool returnDFVal = false)
     private static native float predict_0(long nativeObj, long sample_nativeObj, boolean returnDFVal);
     private static native float predict_1(long nativeObj, long sample_nativeObj);
+
+    // C++:  void CvSVM::predict(Mat samples, Mat& results)
+    private static native void predict_all_0(long nativeObj, long samples_nativeObj, long results_nativeObj);
 
     // C++:  bool CvSVM::train(Mat trainData, Mat responses, Mat varIdx = cv::Mat(), Mat sampleIdx = cv::Mat(), CvSVMParams params = CvSVMParams())
     private static native boolean train_0(long nativeObj, long trainData_nativeObj, long responses_nativeObj, long varIdx_nativeObj, long sampleIdx_nativeObj, long params_nativeObj);

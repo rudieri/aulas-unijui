@@ -250,11 +250,6 @@ public class CvBoost extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvBoost::CvBoost()
     private static native long CvBoost_0();
 

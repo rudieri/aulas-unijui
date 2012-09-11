@@ -151,11 +151,6 @@ public class CvGBTreesParams extends CvDTreeParams {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvGBTreesParams::CvGBTreesParams()
     private static native long CvGBTreesParams_0();
 

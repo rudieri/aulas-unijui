@@ -68,6 +68,8 @@ public class Imgproc {
             CV_GAUSSIAN_5x5 = 7,
             CV_SCHARR = -1,
             CV_MAX_SOBEL_KSIZE = 7,
+            CV_RGBA2mRGBA = 125,
+            CV_mRGBA2RGBA = 126,
             CV_WARP_FILL_OUTLIERS = 8,
             CV_WARP_INVERSE_MAP = 16,
             CV_SHAPE_RECT = 0,
@@ -86,6 +88,7 @@ public class Imgproc {
             CV_COMP_CHISQR = 1,
             CV_COMP_INTERSECT = 2,
             CV_COMP_BHATTACHARYYA = 3,
+            CV_COMP_HELLINGER = CV_COMP_BHATTACHARYYA,
             CV_DIST_MASK_3 = 3,
             CV_DIST_MASK_5 = 5,
             CV_DIST_MASK_PRECISE = 0,
@@ -336,7 +339,9 @@ public class Imgproc {
             COLOR_YUV2GRAY_YVYU = COLOR_YUV2GRAY_YUY2,
             COLOR_YUV2GRAY_YUYV = COLOR_YUV2GRAY_YUY2,
             COLOR_YUV2GRAY_YUNV = COLOR_YUV2GRAY_YUY2,
-            COLOR_COLORCVT_MAX = 125,
+            COLOR_RGBA2mRGBA = 125,
+            COLOR_mRGBA2RGBA = 126,
+            COLOR_COLORCVT_MAX = 127,
             TM_SQDIFF = 0,
             TM_SQDIFF_NORMED = 1,
             TM_CCORR = 2,
@@ -2309,7 +2314,7 @@ public class Imgproc {
  * <p>The functions <code>compareHist</code> compare two dense or two sparse
  * histograms using the specified method:</p>
  * <ul>
- *   <li> Correlation (method=CV_COMP_CORREL)
+ *   <li> Correlation (<code>method=CV_COMP_CORREL</code>)
  * </ul>
  *
  * <p><em>d(H_1,H_2) = (sum_I(H_1(I) - H_1")(H_2(I) - H_2"))/(sqrt(sum_I(H_1(I) -
@@ -2321,19 +2326,21 @@ public class Imgproc {
  *
  * <p>and <em>N</em> is a total number of histogram bins.</p>
  * <ul>
- *   <li> Chi-Square (method=CV_COMP_CHISQR)
+ *   <li> Chi-Square (<code>method=CV_COMP_CHISQR</code>)
  * </ul>
  *
  * <p><em>d(H_1,H_2) = sum _I((H_1(I)-H_2(I))^2)/(H_1(I))</em></p>
  *
  * <ul>
- *   <li> Intersection (method=CV_COMP_INTERSECT)
+ *   <li> Intersection (<code>method=CV_COMP_INTERSECT</code>)
  * </ul>
  *
  * <p><em>d(H_1,H_2) = sum _I min(H_1(I), H_2(I))</em></p>
  *
  * <ul>
- *   <li> Bhattacharyya distance (method=CV_COMP_BHATTACHARYYA)
+ *   <li> Bhattacharyya distance (<code>method=CV_COMP_BHATTACHARYYA</code> or
+ * <code>method=CV_COMP_HELLINGER</code>). In fact, OpenCV computes Hellinger
+ * distance, which is related to Bhattacharyya coefficient.
  * </ul>
  *
  * <p><em>d(H_1,H_2) = sqrt(1 - frac(1)(sqrt(H_1" H_2" N^2)) sum_I sqrt(H_1(I) *
@@ -2356,6 +2363,7 @@ public class Imgproc {
  *   <li> CV_COMP_CHISQR Chi-Square
  *   <li> CV_COMP_INTERSECT Intersection
  *   <li> CV_COMP_BHATTACHARYYA Bhattacharyya distance
+ *   <li> CV_COMP_HELLINGER Synonym for <code>CV_COMP_BHATTACHARYYA</code>
  * </ul>
  *
  * @see <a href="http://docs.opencv.org/modules/imgproc/doc/histograms.html#comparehist">org.opencv.imgproc.Imgproc.compareHist</a>
@@ -6831,14 +6839,14 @@ public class Imgproc {
  * the inverse DFT:
  * </ul>
  *
- * <p><em>r = mathcal(F)^(-1)(R)</p>
- * <ul>
- *   <li>
- * </ul>
- * <p>Finally, it computes the peak location and computes a 5x5 weighted centroid
- * around the peak to achieve sub-pixel accuracy... math.</em></p>
+ * <p><em>r = mathcal(F)^(-1)(R)</em></p>
  *
- * <p>(Delta x, Delta y) = texttt{weighted_centroid}{arg max_{(x, y)}{r}}</p>
+ * <ul>
+ *   <li> Finally, it computes the peak location and computes a 5x5 weighted
+ * centroid around the peak to achieve sub-pixel accuracy.
+ * </ul>
+ *
+ * <p><em>(Delta x, Delta y) = weightedCentroid (arg max_((x, y))(r))</em></p>
  *
  * @param src1 Source floating point array (CV_32FC1 or CV_64FC1)
  * @param src2 Source floating point array (CV_32FC1 or CV_64FC1)
@@ -6895,14 +6903,14 @@ public class Imgproc {
  * the inverse DFT:
  * </ul>
  *
- * <p><em>r = mathcal(F)^(-1)(R)</p>
- * <ul>
- *   <li>
- * </ul>
- * <p>Finally, it computes the peak location and computes a 5x5 weighted centroid
- * around the peak to achieve sub-pixel accuracy... math.</em></p>
+ * <p><em>r = mathcal(F)^(-1)(R)</em></p>
  *
- * <p>(Delta x, Delta y) = texttt{weighted_centroid}{arg max_{(x, y)}{r}}</p>
+ * <ul>
+ *   <li> Finally, it computes the peak location and computes a 5x5 weighted
+ * centroid around the peak to achieve sub-pixel accuracy.
+ * </ul>
+ *
+ * <p><em>(Delta x, Delta y) = weightedCentroid (arg max_((x, y))(r))</em></p>
  *
  * @param src1 Source floating point array (CV_32FC1 or CV_64FC1)
  * @param src2 Source floating point array (CV_32FC1 or CV_64FC1)
@@ -7741,7 +7749,7 @@ public class Imgproc {
  * The function returns the computed threshold value.
  * Currently, the Otsu's method is implemented only for 8-bit images.</p>
  *
- * @param src Source array (single-channel, 8-bit of 32-bit floating point).
+ * @param src Source array (single-channel, 8-bit or 32-bit floating point).
  * @param dst Destination array of the same size and type as <code>src</code>.
  * @param thresh Threshold value.
  * @param maxval Maximum value to use with the <code>THRESH_BINARY</code> and
@@ -8257,11 +8265,6 @@ public class Imgproc {
 
 
 
-
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
 
     // C++:  void Canny(Mat image, Mat& edges, double threshold1, double threshold2, int apertureSize = 3, bool L2gradient = false)
     private static native void Canny_0(long image_nativeObj, long edges_nativeObj, double threshold1, double threshold2, int apertureSize, boolean L2gradient);

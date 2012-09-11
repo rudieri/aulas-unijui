@@ -693,11 +693,6 @@ public class GenericDescriptorMatcher {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  void javaGenericDescriptorMatcher::add(vector_Mat images, vector_vector_KeyPoint keypoints)
     private static native void add_0(long nativeObj, long images_mat_nativeObj, long keypoints_mat_nativeObj);
 

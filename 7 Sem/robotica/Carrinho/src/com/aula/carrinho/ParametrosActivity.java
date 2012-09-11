@@ -24,6 +24,7 @@ public class ParametrosActivity extends Activity {
     public static boolean preview = false;
     public static Integer potencia = 99;
     public static Integer ignorarLinhas = 3;
+    public static boolean rgb;
 
     /**
      * Called when the activity is first created.
@@ -69,6 +70,14 @@ public class ParametrosActivity extends Activity {
 
             public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
                 preview = arg1;
+            }
+        });
+        ToggleButton btBrg = (ToggleButton) findViewById(R.dados.rgb);
+        btBrg.setChecked(rgb);
+        btBrg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+                rgb = arg1;
             }
         });
 

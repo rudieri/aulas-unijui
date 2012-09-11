@@ -272,11 +272,6 @@ public class CvGBTrees extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvGBTrees::CvGBTrees()
     private static native long CvGBTrees_0();
 

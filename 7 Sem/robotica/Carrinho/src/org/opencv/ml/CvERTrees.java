@@ -62,11 +62,6 @@ public class CvERTrees extends CvRTrees {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvERTrees::CvERTrees()
     private static native long CvERTrees_0();
 

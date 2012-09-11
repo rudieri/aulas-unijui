@@ -444,11 +444,6 @@ public class HOGDescriptor {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   HOGDescriptor::HOGDescriptor()
     private static native long HOGDescriptor_0();
 

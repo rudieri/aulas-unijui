@@ -93,11 +93,6 @@ public class BackgroundSubtractorMOG extends BackgroundSubtractor {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   BackgroundSubtractorMOG::BackgroundSubtractorMOG()
     private static native long BackgroundSubtractorMOG_0();
 

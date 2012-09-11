@@ -66,11 +66,6 @@ public class BackgroundSubtractor extends Algorithm {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:  void BackgroundSubtractor::operator ()(Mat image, Mat& fgmask, double learningRate = 0)
     private static native void apply_0(long nativeObj, long image_nativeObj, long fgmask_nativeObj, double learningRate);
     private static native void apply_1(long nativeObj, long image_nativeObj, long fgmask_nativeObj);

@@ -282,11 +282,6 @@ public class CvSVMParams {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvSVMParams::CvSVMParams()
     private static native long CvSVMParams_0();
 

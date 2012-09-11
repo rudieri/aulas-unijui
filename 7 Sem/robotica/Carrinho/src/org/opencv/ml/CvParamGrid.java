@@ -146,11 +146,6 @@ public class CvParamGrid {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvParamGrid::CvParamGrid()
     private static native long CvParamGrid_0();
 

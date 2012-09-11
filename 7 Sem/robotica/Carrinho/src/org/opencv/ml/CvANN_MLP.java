@@ -270,11 +270,6 @@ public class CvANN_MLP extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvANN_MLP::CvANN_MLP()
     private static native long CvANN_MLP_0();
 

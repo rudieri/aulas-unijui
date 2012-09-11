@@ -219,11 +219,6 @@ public class CvNormalBayesClassifier extends CvStatModel {
 
 
 
-    //
-    // native stuff
-    //
-    static { System.loadLibrary("opencv_java"); }
-
     // C++:   CvNormalBayesClassifier::CvNormalBayesClassifier()
     private static native long CvNormalBayesClassifier_0();
 
