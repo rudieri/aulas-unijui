@@ -4,6 +4,7 @@
  */
 package br.hci.geradorprova.cadastro;
 
+import br.hci.geradorprova.bancofake.BancoMaterias;
 import br.hci.questoes.QuestaoRelacional;
 import br.hci.questoes.TipoQuestao;
 import br.hci.questoes.TipoQuestaoObjetiva;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  */
 public class CadastroQuestoes implements Serializable {
 
-    private ArrayList<String> materias = new ArrayList<>();
+    
     private TipoQuestao tipoQuestao;
     private TipoQuestaoObjetiva tipoQuestaoObjetiva;
     private TipoQuestaoRelacional tipoQuestaoRelacional;
@@ -32,14 +33,7 @@ public class CadastroQuestoes implements Serializable {
     private QuestaoRelacional questaoRelacional;
 
     public CadastroQuestoes() {
-        materias.add("Matemática");
-        materias.add("Português");
-        materias.add("Física");
-        materias.add("Química");
-        materias.add("Geografia");
-        materias.add("História");
-        materias.add("Biologia");
-        materias.add("Filosofia");
+        
         adicionarAssunto("Matemática", "Expressões");
         adicionarAssunto("Matemática", "Frações");
         adicionarAssunto("Matemática", "Equação 1º Grau");
@@ -58,14 +52,6 @@ public class CadastroQuestoes implements Serializable {
             assuntos.put(materia, listaAssuntosMateria);
         }
         listaAssuntosMateria.add(assunto);
-    }
-
-    public ArrayList<String> getMaterias() {
-        return materias;
-    }
-
-    public void setMaterias(ArrayList<String> materias) {
-        this.materias = materias;
     }
 
     public ArrayList<String> getAssuntos() {
