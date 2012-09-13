@@ -6,19 +6,25 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Sistema Gerador de Provas</title>
+        <script>
+            function mandar(){
+                PrimeFaces.ab({formId:'xxx',source:'xxx:idMaterias',process:'@all',update:'xxx'});
+            };
+        </script>
     </h:head>
+    
     <h:body>
-        <h:form >            
+        <h:form id="xxx">            
             <h:panelGrid columns="2" cellpadding="5" style="margin: 0 auto;"> 
 
               
                         <h:outputLabel value="Matérias:" for="idMaterias" /> 
-                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
+                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroAssuntos.materiaSelecionada}" var="mateira" id="idMaterias"  >
                             <f:selectItems  value="#{cadastroMaterias.listarMaterias()}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Assunto:"  /> 
                         <p:selectOneMenu value="#" var="assunto"  >
-                            <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                            <f:selectItems value="#{cadastroAssuntos.listarAssuntos()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Tipo da Prova: "  /> 
                         <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
