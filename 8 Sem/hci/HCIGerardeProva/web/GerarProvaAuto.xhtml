@@ -14,17 +14,20 @@
               
                         <h:outputLabel value="Matérias:" for="idMaterias" /> 
                         <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
-                            <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                            <f:selectItems  value="#{cadastroMaterias.listarMaterias()}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
                         </p:selectOneMenu>
                         <h:outputLabel value="Assunto:"  /> 
                         <p:selectOneMenu value="#" var="assunto"  >
                             <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
                         </p:selectOneMenu>
-                        <h:outputLabel value="Tipo de Questão:"  /> 
+                        <h:outputLabel value="Tipo da Prova: "  /> 
                         <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
                             <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
                         </p:selectOneMenu>
-        
+                                
+                         <h:outputLabel value="Tempo em Minutos: " /> 
+                         <p:inputText/>
+                         
                         <p:button href="GerarProvaManual.xhtml" value="Gerar Prova"/>
                         <p:button href="Menu.xhtml" value="Voltar" />
 

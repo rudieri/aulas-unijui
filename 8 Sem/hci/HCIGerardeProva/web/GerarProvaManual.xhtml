@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Sistema Gerador de Provas - Manual</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+            >  
+
+            <p:layoutUnit position="west" size="300" header="Left" resizable="true" >  
+
+            </p:layoutUnit>  
+
+
+
+            <p:layoutUnit position="center">  
+
+                <h:panelGroup id="dir">
+
+                    <p:panel id="gpnl" header="Pergunta 1" closable="true">
+                        <h:outputText value="Bla bla bla bla bla bla bla " />
+                    </p:panel>
+                    <p:draggable for="gpnl" axis="y" containment="dir"/>
+
+                    <p:panel id="gpn2" header="Pergunta 3" closable="true">
+                        <h:outputText value="Bla bla bla bla bla bla bla " />
+                        <h:outputText value="Bla bla bla bla bla bla bla " />
+
+
+                    </p:panel>
+                    <p:draggable for="gpn2"  axis="y" containment="dir" />
+
+                    <p:panel id="gpn3" header="Pergunta 2" closable="true">
+                        <h:outputText value="Bla bla bla bla bla bla bla " />
+                        <h:outputText value="Bla bla bla bla bla bla bla " />
+
+                    </p:panel>
+                    <p:draggable for="gpn3"  axis="y" containment="dir" />
+                </h:panelGroup> 
+
+
+            </p:layoutUnit>  
+
+        </p:layout>   
+
+
+
+
+    </h:body>
+</html>
+
