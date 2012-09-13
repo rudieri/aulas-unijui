@@ -23,6 +23,18 @@
                         <p:commandButton value="Cancelar" onclick="dlgCadMat.hide()"/>
                     </h:panelGrid>
                 </p:dialog>
+            <p:dialog widgetVar="dlgCadAssunto" closable="true" modal="true" header="Cadastro de Assuntos" >
+                    <h:panelGrid columns="2">
+                         <h:outputLabel value="Matérias:" /> 
+                        <p:selectOneMenu immediate="true" value="#{cadastroAssuntos.materiaSelecionada}"  var="mateira"  >
+                            <f:selectItems  value="#{cadastroMaterias.listarMaterias()}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Informe o nome da assuntos"/>
+                        <p:inputText value="#{cadastroAssuntos.assunto}"/>
+                        <p:commandButton value="Salvar" action="#{cadastroAssuntos.salvarAssunto()}" onclick="dlgCadAssunto.hide()" update=":xxx,dlgs"/>
+                        <p:commandButton value="Cancelar" onclick="dlgCadAssunto.hide()"/>
+                    </h:panelGrid>
+                </p:dialog>
         </h:form>
         
         <p:panel header="Cadastro de Questões" >
@@ -31,14 +43,15 @@
                 <h:panelGrid columns="2" style="width:100%">
                     <h:panelGrid columns="3" >
                         <h:outputLabel value="Matérias:" for="idMaterias" /> 
-                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}"  var="mateira" id="idMaterias"  >
+                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroAssuntos.materiaSelecionada}"  var="mateira" id="idMaterias"  >
                             <f:selectItems  value="#{cadastroMaterias.listarMaterias()}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
                         </p:selectOneMenu>
                         <p:commandButton value="Cadastar" action="#" onclick="dlgCadMat.show()"/>
                         <h:outputLabel value="Assunto:"  /> 
                         <p:selectOneMenu value="#" var="assunto"  >
-                            <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}"  itemValue="#{assunto}" />
+                            <f:selectItems value="#{cadastroAssuntos.listarAssuntos()}" var="assunto" itemLabel="#{assunto}"  itemValue="#{assunto}" />
                         </p:selectOneMenu>
+                        <p:commandButton value="Cadastar" action="#" onclick="dlgCadAssunto.show()"/>
                         <h:outputLabel value="Tipo de Questão:"  /> 
                         <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}"  onchange="mandar()" var="tpQuestao"  >
                             <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
@@ -103,9 +116,10 @@
                     </c:if>
                 </p:panel>
                 <br/>
-                <h:panelGrid columns="2">
-                    <p:commandButton value="Salvar"/>
-                    <p:commandButton value="Limpar"/>
+                <h:panelGrid columns="3" style="width:100%">
+                    <p:commandButton value="Salvar" style="width:100%"/>
+                    <p:commandButton value="Limpar" style="width:100%"/>
+                    <p:button value="Voltar" style="width:100%" href="Menu.xhtml"/>
                 </h:panelGrid>
 
             </h:form>
