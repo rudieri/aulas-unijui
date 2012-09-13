@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Sistema Gerador de Provas</title>
+    </h:head>
+    <h:body>
+        <h:form >            
+            <h:panelGrid columns="2" cellpadding="5" style="margin: 0 auto;"> 
+
+              
+                        <h:outputLabel value="Matérias:" for="idMaterias" /> 
+                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}" var="mateira" id="idMaterias"  >
+                            <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Assunto:"  /> 
+                        <p:selectOneMenu value="#" var="assunto"  >
+                            <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Tipo de Questão:"  /> 
+                        <p:selectOneMenu value="#{cadastroQuestoes.tipoQuestao}" onchange="mandar()" var="tpQuestao"  >
+                            <f:selectItems value="#{cadastroQuestoes.listarTipoQuestao()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                        </p:selectOneMenu>
+        
+                        <p:button href="GerarProvaManual.xhtml" value="Gerar Prova"/>
+                        <p:button href="Menu.xhtml" value="Voltar" />
+
+            </h:panelGrid>
+        </h:form>
+
+    </h:body>
+</html>
+
