@@ -14,16 +14,27 @@
         </script>
     </h:head>
     <h:body>
-
+        <h:form id="dlgs">
+            <p:dialog widgetVar="dlgCadMat" closable="true" modal="true" header="Cadastro de Matérias" >
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Informe o nome da matéria:"/>
+                        <p:inputText value="#{cadastroMaterias.materia}"/>
+                        <p:commandButton value="Salvar" action="#{cadastroMaterias.salvarMateria()}" onclick="dlgCadMat.hide()" update=":xxx,dlgs"/>
+                        <p:commandButton value="Cancelar" onclick="dlgCadMat.hide()"/>
+                    </h:panelGrid>
+                </p:dialog>
+        </h:form>
+        
         <p:panel header="Cadastro de Questões" >
-
             <h:form id="xxx">
+                
                 <h:panelGrid columns="2" style="width:100%">
-                    <h:panelGrid columns="2" >
+                    <h:panelGrid columns="3" >
                         <h:outputLabel value="Matérias:" for="idMaterias" /> 
                         <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroQuestoes.materiaSelecionada}"  var="mateira" id="idMaterias"  >
-                            <f:selectItems  value="#{cadastroQuestoes.materias}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                            <f:selectItems  value="#{cadastroMaterias.listarMaterias()}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
                         </p:selectOneMenu>
+                        <p:commandButton value="Cadastar" action="#" onclick="dlgCadMat.show()"/>
                         <h:outputLabel value="Assunto:"  /> 
                         <p:selectOneMenu value="#" var="assunto"  >
                             <f:selectItems value="#{cadastroQuestoes.assuntos}" var="assunto" itemLabel="#{assunto}"  itemValue="#{assunto}" />
