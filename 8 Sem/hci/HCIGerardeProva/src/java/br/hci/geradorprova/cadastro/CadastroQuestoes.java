@@ -23,7 +23,6 @@ public class CadastroQuestoes implements Serializable {
     private TipoQuestao tipoQuestao;
     private TipoQuestaoObjetiva tipoQuestaoObjetiva;
     private TipoQuestaoRelacional tipoQuestaoRelacional;
-    private String materiaSelecionada;
     private HashMap<String, ArrayList<String>> assuntos = new HashMap<>();
     private ArrayList<String> questoesVF = new ArrayList<>();
     private String perguntaVF;
@@ -33,43 +32,10 @@ public class CadastroQuestoes implements Serializable {
     private QuestaoRelacional questaoRelacional;
 
     public CadastroQuestoes() {
-        
-        adicionarAssunto("Matemática", "Expressões");
-        adicionarAssunto("Matemática", "Frações");
-        adicionarAssunto("Matemática", "Equação 1º Grau");
-        adicionarAssunto("Matemática", "Equação 2º Grau");
-        adicionarAssunto("Química", "Funções Orgânicas");
-        adicionarAssunto("Química", "Funções Inorgânicas");
-        adicionarAssunto("Filosofia", "O que se estuda nisso?");
-        adicionarAssunto("Filosofia", "WTF?");
 
     }
 
-    private void adicionarAssunto(String materia, String assunto) {
-        ArrayList<String> listaAssuntosMateria = assuntos.get(materia);
-        if (listaAssuntosMateria == null) {
-            listaAssuntosMateria = new ArrayList<>();
-            assuntos.put(materia, listaAssuntosMateria);
-        }
-        listaAssuntosMateria.add(assunto);
-    }
-
-    public ArrayList<String> getAssuntos() {
-        return assuntos.get(materiaSelecionada);
-    }
-
-    public void setAssuntos(ArrayList<String> assuntos) {
-        this.assuntos.put(materiaSelecionada, assuntos);
-    }
-
-    public String getMateriaSelecionada() {
-        return materiaSelecionada;
-    }
-
-    public void setMateriaSelecionada(String materiaSelecionada) {
-        System.out.println("WTF? " + materiaSelecionada);
-        this.materiaSelecionada = materiaSelecionada;
-    }
+   
 
     public String getTipoQuestao() {
         return tipoQuestao == null ? "" : tipoQuestao.getNome();
