@@ -37,7 +37,6 @@
                 </p:dialog>
         </h:form>
         
-        <p:panel header="Cadastro de Questões" >
             <h:form id="xxx">
                 
                 <h:panelGrid columns="2" style="width:100%">
@@ -68,6 +67,9 @@
                         </p:selectOneMenu>
                         <h:outputLabel value="Peso da Questão (em %):"/>
                         <p:inputText value="#"/>
+                        <h:outputLabel value="Grau de dificuldade: "/>
+                        <p:inputText value="#"/>
+                        
 
                     </h:panelGrid>
                 </h:panelGrid>
@@ -93,7 +95,7 @@
 
                     <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Verdadeiro ou Falso'}">
                         <h:outputLabel value="Adicionar opções:"/><br/><br/>
-                        <p:inputText value="#{cadastroQuestoes.perguntaVF}" style="width:50%"/> <p:commandButton value="Adiconar" update="xxx"/><br/><br/>
+                        <p:inputText value="#{cadastroQuestoes.perguntaVF}" style="width:50%"/> <p:commandButton value="Adicionar" update="xxx"/><br/><br/>
                         <p:dataTable value="#{cadastroQuestoes.questoesVF}" var="item">
                             <p:column >
                                 <h:outputText value="( &nbsp;) "/>
@@ -104,7 +106,7 @@
                     <c:if test="#{cadastroQuestoes.tipoQuestaoObjetiva eq 'Relacional'}">
                         <h:outputLabel value="Adicionar opções:"/><br/><br/>
                         <p:inputText value="#{cadastroQuestoes.perguntaRelacionalEsquerda}" style="width:45%"/> <span style="width:8%;display:inline-block;text-align:center">X</span> <p:inputText value="#{cadastroQuestoes.perguntaRelacionalDireita}" style="width:45%;"/>
-                        <br/><br/><p:commandButton value="Adiconar" update="xxx"/><br/><br/>
+                        <br/><br/><p:commandButton value="Adicionar" update="xxx"/><br/><br/>
                         <p:dataTable value="#{cadastroQuestoes.questoesRelacionais}"     var="qRelacional">
                             <p:column >
                                 <h:outputText value="#{qRelacional.textoEsquerda}"/>
@@ -124,7 +126,6 @@
 
             </h:form>
 
-        </p:panel>
 
     </h:body>
 </html>

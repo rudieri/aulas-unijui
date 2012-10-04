@@ -8,19 +8,21 @@
     </h:head>
     <h:body>
         <h:form >
-            <h:panelGrid columns="2" cellpadding="5" style="margin: 0 auto;">
+            <p:panel header="Sistema gerador de provas" >
 
-                <h:outputLabel value="Login:"/>
-                <p:inputText value="Gauderio"/>
+                <h:panelGrid columns="2" cellpadding="5" width="350"> 
 
-                <h:outputLabel value="Senha:"/>
-                <p:password />
+                    <h:outputLabel value="Login:"/>
+                    <p:inputText value="" style="width:100%"/>
+                    <h:outputLabel value="Senha:"/>
+                    <p:password style="width:100%"/>
+                </h:panelGrid>
+                <h:panelGrid columns="1" cellpadding="5" width="360"> 
+                    <p:button href="Menu.xhtml" value="Entrar" style="width:100%"/>
+                    <p:button value="Cadastre-se" style="width:100%"/>
+                </h:panelGrid>
 
-                <p:button href="Menu.xhtml" value="Entrar"/>
-                <p:button value="Limpar"/>
-                <p:button value="Cadastrar-se"/>
-
-            </h:panelGrid>
+            </p:panel>
         </h:form>
 
     </h:body>
