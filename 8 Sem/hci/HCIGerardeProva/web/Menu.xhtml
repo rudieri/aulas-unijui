@@ -2,20 +2,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Menu - Sistema Gerador de Provas</title>
     </h:head>
     <h:body>
-       
-            <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;" >
 
-               <p:button href="CadastroQuestoes.xhtml" value="Cadastro Questão"/>
-               <p:button href="GerarProvaAuto.xhtml" value="Modo Prova Automatica"/>
-               <p:button href="GerarProvaManual.xhtml" value="Modo Manual"/>
+
+      
+        <p:panel header="Sistema gerador de provas" >
+
+            <h:panelGrid columns="1" cellpadding="5"  >
+
+                <p:button href="CadastroQuestoes.xhtml" value="Cadastro Questão" style="width:100%"/>
+                <p:button href="GerarProvaAuto.xhtml" value="Modo Prova Automatica" style="width:100%"/>
+                <p:button href="GerarProvaManual.xhtml" value="Modo Manual" style="width:100%"/>
 
             </h:panelGrid>
-        
+
+        </p:panel>
 
     </h:body>
 </html>
