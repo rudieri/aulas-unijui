@@ -9,23 +9,53 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true">  
-            >  
+            
 
-            <p:layoutUnit position="west" size="300" header="Outras Perguntas" resizable="true" >  
+            <p:layoutUnit position="north" size="200"  header="Dados Prova">  
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Cod:"/>
+                        <h:inputText/>
+                    </h:panelGrid>
+                <h:panelGrid columns="1">
+                <h:outputLabel value="Cabeçalho Prova:"/>
+                <p:inputTextarea style="width: 500px;"></p:inputTextarea>
+                </h:panelGrid>
+
+            </p:layoutUnit> 
+            <p:layoutUnit position="west" size="300" header="Questões Disponivel" resizable="true" >  
+                <p:panel  header="Filtros" >
+                    <h:panelGrid columns="2">
+                       <h:outputLabel value="Matérias:" for="idMaterias" /> 
+                        <p:selectOneMenu immediate="true" onchange="mandar()" value="#{cadastroAssuntos.materiaSelecionada}" var="mateira" id="idMaterias"  >
+                            <f:selectItems  value="#{cadastroMaterias.listarMaterias()}" var="mateira" itemLabel="#{mateira}" itemValue="#{mateira}" />
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Assunto:"  /> 
+                        <p:selectOneMenu value="#" var="assunto"  >
+                            <f:selectItems value="#{cadastroAssuntos.listarAssuntos()}" var="assunto" itemLabel="#{assunto}" itemValue="#{assunto}" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                        
+            </p:panel>
+                <p:panel id="gpnl" header="Pergunta H" closable="true">
+                    <h:outputText value="Bla bla bla bla bla bla bla " />
+                    </p:panel>
+                <p:panel id="gpnl" header="Pergunta G" closable="true">
+                        <h:outputText value="Bla bla bla bla bla bla bla " />
+                    </p:panel>
 
             </p:layoutUnit>  
 
 
-            <p:layoutUnit position="center" header="Perguntas da Prova">  
+            <p:layoutUnit position="center" header="Questões da Prova">  
 
                 <h:panelGroup id="dir">
 
-                    <p:panel id="gpnl" header="Pergunta 1" closable="true">
+                    <p:panel id="gpnl" header="Pergunta x" closable="true">
                         <h:outputText value="Bla bla bla bla bla bla bla " />
                     </p:panel>
                     <p:draggable for="gpnl" axis="y" containment="dir"/>
 
-                    <p:panel id="gpn2" header="Pergunta 3" closable="true">
+                    <p:panel id="gpn2" header="Pergunta y" closable="true">
                         <h:outputText value="Bla bla bla bla bla bla bla " />
                         <h:outputText value="Bla bla bla bla bla bla bla " />
 
@@ -33,7 +63,7 @@
                     </p:panel>
                     <p:draggable for="gpn2"  axis="y" containment="dir" />
 
-                    <p:panel id="gpn3" header="Pergunta 2" closable="true">
+                    <p:panel id="gpn3" header="Pergunta Y" closable="true">
                         <h:outputText value="Bla bla bla bla bla bla bla " />
                         <h:outputText value="Bla bla bla bla bla bla bla " />
 
@@ -43,6 +73,17 @@
 
 
             </p:layoutUnit>  
+            
+            <p:layoutUnit position="south" size="100" >  
+                 <h:panelGrid columns="5">
+                    <p:button value="Salvar"/>
+                    <p:button value="Imprimir"/>
+                    <p:button value="Exportar"/>
+                    <p:button value="Consultar"/>
+                    <p:button value="Voltar"/>
+                 </h:panelGrid>
+
+            </p:layoutUnit> 
 
         </p:layout>   
 
