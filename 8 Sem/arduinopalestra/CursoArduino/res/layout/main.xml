@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="LED"
+    />
+<ToggleButton android:layout_width="fill_parent"
+    android:layout_height="wrap_content"    
+    android:textOn="Desliga"
+    android:textOff="Liga"
+    android:id="@+tela/btLed"
+    />
+
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Porta"
+    />
+<ToggleButton android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textOn="Fecha"
+    android:textOff="Abre"
+    android:id="@+tela/btPorta"
+    />
+
+</LinearLayout>
+
