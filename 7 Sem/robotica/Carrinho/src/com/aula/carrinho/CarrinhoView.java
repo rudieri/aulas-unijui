@@ -4,7 +4,6 @@
  */
 package com.aula.carrinho;
 
-import com.aula.carrinho.v1.Analizador;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,6 +12,7 @@ import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import com.aula.carrinho.v1.Analizador;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

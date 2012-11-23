@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
 import com.aula.carrinho.v2.CarrinhoV2View;
+import com.aula.carrinho.v3.CarrinhoV3View;
 import com.utils.LogMod;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,6 +41,7 @@ import org.anddev.andengine.opengl.view.RenderSurfaceView;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.NativeCameraView;
 import org.opencv.android.OpenCVLoader;
 
 /**
@@ -69,13 +71,14 @@ public class TelaActivity extends BaseGameActivity {
     private static BluetoothSocket bluetoothSocket;
     private boolean procurando = false;
     private IOnScreenControlListener ionScreenControlListener;
-    private CarrinhoV2View carrinhoV2View;
+    private CarrinhoV3View carrinhoV3View;
+    private NativeCameraView nativeCameraView;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (carrinhoV2View != null) {
-            carrinhoV2View.releaseCamera();
+        if (nativeCameraView != null) {
+            nativeCameraView.disableView();
         }
     }
   
@@ -84,7 +87,7 @@ public class TelaActivity extends BaseGameActivity {
     protected void onStart() {
         super.onStart();
         if (!ParametrosActivity.manual) {
-            if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_2, this, mOpenCVCallBack)) {
+            if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mOpenCVCallBack)) {
                 Log.e(TAG, "Cannot connect to OpenCV Manager");
             }
         }
@@ -144,7 +147,7 @@ public class TelaActivity extends BaseGameActivity {
                     });
                     alert.show();
 
-                    return;
+//                    return;
                 }
                 //21:03:30.026	225	#225	DEBUG	BluetoothService	    uuid(application): 00001101-0000-1000-8000-00805f9b34fb 1
                 mBluetoothAdapter.cancelDiscovery();
@@ -278,26 +281,26 @@ public class TelaActivity extends BaseGameActivity {
                     Log.i(TAG, "OpenCV loaded successfully");
 
                     // Create and set View
-                    boolean eraNull = false;
-                    if (carrinhoV2View == null) {
-                        eraNull = true;
-                        carrinhoV2View = new CarrinhoV2View(mAppContext);
+                    if (carrinhoV3View == null) {
+                        nativeCameraView= new NativeCameraView(TelaActivity.this, null);
+                        carrinhoV3View = new CarrinhoV3View();
+                        nativeCameraView.setCvCameraViewListener(carrinhoV3View);
+                        setContentView(nativeCameraView);
                     }
-                    setContentView(carrinhoV2View);
 
                     // Check native OpenCV camera
-                    if (eraNull && !carrinhoV2View.openCamera()) {
-                        AlertDialog ad = new AlertDialog.Builder(mAppContext).create();
-                        ad.setCancelable(false); // This blocks the 'BACK' button
-                        ad.setMessage("Fatal error: can't open camera!");
-                        ad.setButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                finish();
-                            }
-                        });
-                        ad.show();
-                    }
+//                    if (eraNull && !carrinhoV3View.openCamera()) {
+//                        AlertDialog ad = new AlertDialog.Builder(mAppContext).create();
+//                        ad.setCancelable(false); // This blocks the 'BACK' button
+//                        ad.setMessage("Fatal error: can't open camera!");
+//                        ad.setButton("OK", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                                finish();
+//                            }
+//                        });
+//                        ad.show();
+//                    }
                 }
                 break;
                 default: {
@@ -410,8 +413,9 @@ public class TelaActivity extends BaseGameActivity {
     protected void onPause() {
         enviarPotencia(0, 0);
         super.onPause();
-        if (null != carrinhoV2View)
-			carrinhoV2View.releaseCamera();
+        if (null != nativeCameraView) {
+            nativeCameraView.disableView();
+        }
     }
 
     @Override
