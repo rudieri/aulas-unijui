@@ -283,9 +283,10 @@ public class TelaActivity extends BaseGameActivity {
                     // Create and set View
                     if (carrinhoV3View == null) {
                         nativeCameraView= new NativeCameraView(TelaActivity.this, null);
-                        carrinhoV3View = new CarrinhoV3View();
+                        carrinhoV3View = new CarrinhoV3View(TelaActivity.this);
                         nativeCameraView.setCvCameraViewListener(carrinhoV3View);
                         setContentView(nativeCameraView);
+                        nativeCameraView.enableView();
                     }
 
                     // Check native OpenCV camera
