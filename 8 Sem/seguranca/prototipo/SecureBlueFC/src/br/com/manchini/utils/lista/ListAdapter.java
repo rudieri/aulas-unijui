@@ -23,22 +23,26 @@ public class ListAdapter<E> implements  android.widget.ListAdapter {
 
     private final Context context;
     private final ArrayList<ListItem<E>> lista;
+    private final ArrayList<DataSetObserver> listaDataSetObservers;
     private final boolean comImagem;
 
     public ListAdapter(Context context, boolean comImagem) {
-        lista = new ArrayList<ListItem<E>>();
+        lista = new ArrayList<ListItem<E>>(10);
         this.context = context;
         this.comImagem = comImagem;
+        listaDataSetObservers = new ArrayList<DataSetObserver>(3);
     }
 
     public ListAdapter(Context context, ArrayList<ListItem<E>> lista, boolean comImagem) {
         this.context = context;
         this.lista = lista;
         this.comImagem = comImagem;
+        listaDataSetObservers = new ArrayList<DataSetObserver>(3);
     }
 
     public void addToList(ListItem<E> listItem) {
         lista.add(listItem);
+        dispararOnDataChanged();
     }
 
     public void addToList(int icone, String name, String path) {
@@ -93,17 +97,20 @@ public class ListAdapter<E> implements  android.widget.ListAdapter {
 
     public void clear() {
         lista.clear();
+        dispararOnDataInvalidated();
     }
     public ListItem<E> remove(int index){
-        return lista.remove(index);
+        ListItem<E> remove = lista.remove(index);
+        dispararOnDataChanged();
+        return remove;
     }
 
     public void registerDataSetObserver(DataSetObserver dso) {
-//        System.out.println("WTF??? Observer (add)");
+        listaDataSetObservers.add(dso);
     }
 
     public void unregisterDataSetObserver(DataSetObserver dso) {
-//        System.out.println("WTF??? Observer (remove)");
+        listaDataSetObservers.remove(dso);
     }
 
     public boolean hasStableIds() {
@@ -129,4 +136,16 @@ public class ListAdapter<E> implements  android.widget.ListAdapter {
     public boolean isEnabled(int i) {
        return true;
     }
+
+    private void dispararOnDataChanged() {
+        for (int i = 0; i < listaDataSetObservers.size(); i++) {
+            listaDataSetObservers.get(i).onChanged();
+        }
+    }
+    private void dispararOnDataInvalidated() {
+        for (int i = 0; i < listaDataSetObservers.size(); i++) {
+            listaDataSetObservers.get(i).onInvalidated();
+        }
+    }
 }
+

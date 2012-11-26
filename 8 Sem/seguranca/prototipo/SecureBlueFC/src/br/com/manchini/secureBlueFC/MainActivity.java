@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -62,14 +63,28 @@ public class MainActivity extends Activity {
 
         ToggleButton brBlue = (ToggleButton) findViewById(R.tela.btBlue);
         brBlue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            private BluetoothAdapter mBluetoothAdapter;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 try {
                     Log.d("LISTA", "Crico no botão.");
                     if (isChecked) {
-                        IntentFilter filter = new IntentFilter();
-                        registerReceiver(broadcastReceiver, filter);//
-                    }else{
+                        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                        if (mBluetoothAdapter == null) {
+                            Log.e("BLUETOOTH", "NÂO PEGO O BLUETOOTH", null);
+                        } else {
+                            if (!mBluetoothAdapter.isEnabled()) {
+                                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                                startActivityForResult(enableBtIntent, 0);
+                            }
+                            IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+                            
+                            registerReceiver(broadcastReceiver, filter);//  
+                            mBluetoothAdapter.startDiscovery();
+                        }
+
+                    } else {
                         unregisterReceiver(broadcastReceiver);
+                        
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
