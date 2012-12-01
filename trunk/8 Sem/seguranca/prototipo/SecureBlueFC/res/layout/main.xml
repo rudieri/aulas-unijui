@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="BUSCAR Bluetooth Sem Vergonha"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Qtd de Dispositivos"
     />
-<ToggleButton android:layout_width="fill_parent"
-    android:layout_height="wrap_content"    
-    android:textOn="Chega"
-    android:textOff="Buscar"
-    android:id="@+tela/btBlue"
+    <EditText android:layout_width="fill_parent"
+          android:layout_height="wrap_content"   
+          android:text="1"
+          android:id="@+tela/txtNr"
     />
-<LinearLayout android:id="@+tela/listaBlue"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    <ToggleButton android:layout_width="fill_parent"
+              android:layout_height="wrap_content"    
+              android:textOn="Parar"
+              android:textOff="Ambiente de Risco"
+              android:id="@+tela/btAmbiente"
+    />
 
-</LinearLayout>
+    <ToggleButton android:layout_width="fill_parent"
+              android:layout_height="wrap_content"    
+              android:textOn="Parar"
+              android:textOff="Teste de Dispositivos Vulneraveis"
+              android:id="@+tela/btBlue"
+    />
+    <LinearLayout android:id="@+tela/listaBlue"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent" >
+
+    </LinearLayout>
 </LinearLayout>
 
