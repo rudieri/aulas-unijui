@@ -54,9 +54,9 @@ public class CarrinhoV3View implements CameraBridgeViewBase.CvCameraViewListener
         mRgba = mat;
         Imgproc.cvtColor(mRgba, mgray, Imgproc.COLOR_RGBA2GRAY);
 
-        Imgproc.threshold(mgray, mgray, 100, 255d, Imgproc.THRESH_BINARY);
+        Imgproc.threshold(mgray, mgray, 80, 255d, Imgproc.THRESH_BINARY);
 
-        boolean temVermelho = CorUtils.temVermelho(mRgba);
+        boolean temVerde = CorUtils.temVerde(mRgba);
 
         ///Processa
         ////
@@ -80,7 +80,7 @@ public class CarrinhoV3View implements CameraBridgeViewBase.CvCameraViewListener
         int columSel = -1;
         int rowSel = -1;
         //
-        if (!temVermelho) {
+        if (!temVerde) {
 
             for (int r = maxRow - 1; r != 0; r--) {
                 for (int c = 0; c < maxCols; c++) {
@@ -137,71 +137,77 @@ public class CarrinhoV3View implements CameraBridgeViewBase.CvCameraViewListener
 
 
             }
-        } else {
-            potenciaDir = 0;
-            potenciaEsq = 0;
-            Log.i("TEMVERMELHO", "TRUE");
-        }
+
 
 
 //        Log.v(TAG, columSel + "x" + rowSel);
-        switch (columSel) {
-            case 0://Bem no canto                 
-                potenciaDir = potencia * 1;
-                potenciaEsq = (int) (potencia * -1);
-                break;
-            case 1:
-                potenciaDir = potencia * 1;
-                potenciaEsq = (int) (potencia * -0.7);
-                break;
-            case 2:
-                potenciaDir = potencia * 1;
-                potenciaEsq = (int) (potencia * 0.1);
-                break;
-            case 3:// um pouco pra esquerda ajuste
-                potenciaDir = (int) (potencia * 1);
-                potenciaEsq = (int) (potencia * 0.8);
-                break;
-            case 4: // no meio Potencia Maxima a frente
-                potenciaDir = (int) (potencia * 1);
-                potenciaEsq = (int) (potencia * 1);
-                break;
-            case 5:
-                potenciaEsq = potencia * 1;
-                potenciaDir = (int) (potencia * 0.8);
-                break;
-            case 6:
-                potenciaEsq = (int) (potencia * 1);
-                potenciaDir = (int) (potencia * 0.1);
-                break;
-            case 7:
-                potenciaEsq = potencia * 1;
-                potenciaDir = (int) (potencia * -0.70);
-                break;
-            case 8:
-                potenciaEsq = potencia * 1;
-                potenciaDir = potencia * -1;
-                break;
-            default://Fudeu Engata RE
-                potenciaEsq = (int) (potencia * -0.50);
-                potenciaDir = (int) (potencia * -0.50);
-                break;
+            switch (columSel) {
+                case 0://Bem no canto                 
+                    potenciaDir = (int)(potencia * 0.9);
+                    potenciaEsq = (int) ((int)(potencia * -0.9));
+                    break;
+                case 1:
+                    potenciaDir = (int)(potencia * 0.9);
+                    potenciaEsq = (int) (potencia * -0.6);
+                    break;
+                case 2:
+                    potenciaDir = (int)(potencia * 0.9);
+                    potenciaEsq = (int) (potencia * 0.1);
+                    break;
+                case 3:// um pouco pra esquerda ajuste
+                    potenciaDir = (int) ((int)(potencia * 0.9));
+                    potenciaEsq = (int) (potencia * 0.7);
+                    break;
+                case 4: // no meio Potencia Maxima a frente
+                    potenciaDir = (int) ((int)(potencia * 0.9));
+                    potenciaEsq = (int) ((int)(potencia * 0.9));
+                    break;
+                case 5:
+                    potenciaEsq = (int)(potencia * 0.9);
+                    potenciaDir = (int) (potencia * 0.7);
+                    break;
+                case 6:
+                    potenciaEsq = (int) ((int)(potencia * 0.9));
+                    potenciaDir = (int) (potencia * 0.1);
+                    break;
+                case 7:
+                    potenciaEsq = (int)(potencia * 0.9);
+                    potenciaDir = (int) (potencia * -0.60);
+                    break;
+                case 8:
+                    potenciaEsq = (int)(potencia * 0.9);
+                    potenciaDir = (int)(potencia * -0.9);
+                    break;
+                default://Fudeu Engata RE
+                    potenciaEsq = (int) (potencia * -0.50);
+                    potenciaDir = (int) (potencia * -0.50);
+                    break;
 
-        }
-        if (potenciaEsq == (int) (potencia * -0.50) && potenciaDir == (int) (potencia * -0.50)) {
-            /*
-             * se for igual, não muda nada se esquerda é maior, estava andando
-             * para a direita, logo, a ré deve tender para a direita a mesma
-             * coisa (só que ao contrário) para a direita maior
-             */
-            if (ultimaEsqValido > ultimaDirValido) {
-                potenciaEsq = (int) (potencia * -0.2);
+            }
+            if (potenciaEsq == (int) (potencia * -0.50) && potenciaDir == (int) (potencia * -0.50)) {
+                /*
+                 * se for igual, não muda nada se esquerda é maior, estava andando
+                 * para a direita, logo, a ré deve tender para a direita a mesma
+                 * coisa (só que ao contrário) para a direita maior
+                 */
+                if (ultimaEsqValido > ultimaDirValido) {
+                    potenciaEsq = (int) (potencia * -0.2);
+                } else {
+                    potenciaDir = (int) (potencia * -0.2);
+                }
             } else {
-                potenciaDir = (int) (potencia * -0.2);
+                ultimaEsqValido = potenciaEsq;
+                ultimaDirValido = potenciaDir;
             }
         } else {
-            ultimaEsqValido = potenciaEsq;
-            ultimaDirValido = potenciaDir;
+            if (potenciaEsq == -50 && potenciaDir == -50 ) {
+                potenciaDir = 0;
+                potenciaEsq = 0;
+            }else{
+                potenciaDir = -50;
+                potenciaEsq = -50;
+            }
+            Log.i("TEMVERDE", "TRUE");
         }
 
 //        if (potenciaDir == (int)(potencia*1) && potenciaEsq == (int)(potencia*1) ) {

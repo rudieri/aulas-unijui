@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
 import com.aula.carrinho.utils.Alert;
@@ -282,7 +283,7 @@ public class TelaActivity extends BaseGameActivity {
 
                     // Create and set View
                     if (carrinhoV3View == null) {
-                        nativeCameraView= new NativeCameraView(TelaActivity.this, null);
+                        nativeCameraView= new NativeCameraView(TelaActivity.this, null);                        
                         carrinhoV3View = new CarrinhoV3View(TelaActivity.this);
                         nativeCameraView.setCvCameraViewListener(carrinhoV3View);
                         setContentView(nativeCameraView);
