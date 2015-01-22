@@ -5,15 +5,12 @@
 package com.crepz.limpador;
 
 import com.crepz.config.Configuracaoes;
-import com.crepz.tela.JGravador;
 import com.crepz.utils.FileUtils;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +25,7 @@ public class LimparWaves {
     private static final Thread thread;
     private static final File fileBase;
     private static boolean estaRodando = false;
+    private static final String[] MESES = {"Jan", "Fev", "Mar", "Abr", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"};
     public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat simpleDateFormatDia = new SimpleDateFormat("dd");
     public static final SimpleDateFormat simpleDateFormatAno = new SimpleDateFormat("yyyy");
@@ -42,7 +40,9 @@ public class LimparWaves {
     }
 
     public static String getMes(Calendar calendario) {
-        return calendario.getDisplayName(Calendar.MONTH, Calendar.ALL_STYLES, Locale.getDefault());
+        // Não funciona no Java 8, Win 7
+        //return calendario.getDisplayName(Calendar.MONTH, Calendar.ALL_STYLES, Locale.getDefault());
+        return MESES[calendario.get(Calendar.MONTH)];
     }
 
     public static String getData(Calendar calendar) {
