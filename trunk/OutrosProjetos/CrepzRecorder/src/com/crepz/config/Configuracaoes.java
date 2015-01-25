@@ -5,6 +5,7 @@
 package com.crepz.config;
 
 import com.crepz.config.constantes.TelaPadrao;
+import com.crepz.log.NivelLog;
 import com.crepz.utils.FileUtils;
 import java.io.File;
 import java.util.ArrayList;
@@ -40,8 +41,12 @@ public class Configuracaoes {
     
     public static final Byte CONF_TEMPO_SALVAR_ARQUIVOS = 3;
     private static Integer tempoSalvarArquivos = 60;
+    
     public static final Byte CONF_APAGAR_GRAVACOES_VELHAS = 4;
     private static boolean apagarGravacoesVelhas = true;
+    
+    public static final Byte CONF_NIVEL_LOG = 5;
+    private static NivelLog nivelLog = NivelLog.ERROR;
     // lista de todas as configs
     private static final Object[] configs;
     private static final File ARQUIVO = new File("crepz/etc/crepz-recorder.conf");
@@ -54,7 +59,9 @@ public class Configuracaoes {
             telaPadrao,
             atalhosGlobaisAtivos,
             tempoSalvarArquivos,
-            apagarGravacoesVelhas
+            apagarGravacoesVelhas,
+            nivelLog
+                
         };
 //        configs[CONF_PASTAS_SCANER] = pastasScaner;
         acoes = new HashMap<Byte, Acao>(configs.length);

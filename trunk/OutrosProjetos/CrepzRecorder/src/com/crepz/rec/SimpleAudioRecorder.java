@@ -35,16 +35,15 @@ package com.crepz.rec;
  * |<--- this code is formatted to fit into 80 columns --->|
  */
 import com.crepz.log.Log;
-import java.io.IOException;
 import java.io.File;
-
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.TargetDataLine;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.LineUnavailableException;
+import java.io.IOException;
 import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.TargetDataLine;
 
 /**
  * <titleabbrev>SimpleAudioRecorder</titleabbrev> <title>Recording to an audio
@@ -141,6 +140,7 @@ public class SimpleAudioRecorder extends Thread {
     public SimpleAudioRecorder(TargetDataLine line,
             AudioFileFormat.Type targetType,
             File file) {
+        super("Gravadando...");
         m_line = line;
         m_audioInputStream = new AudioInputStream(line);
         m_targetType = targetType;
