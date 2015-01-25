@@ -71,7 +71,7 @@ public final class Carregador {
     }
 
     private void createLog() {
-        Log.setNivelLog(NivelLog.INFO);
+        Log.setNivelLog((NivelLog) Configuracaoes.getEnum(Configuracaoes.CONF_NIVEL_LOG));
         Log.info("Programa inicializado " + DateFormat.getDateTimeInstance().format(new Date()));
 //        File mk = new File("nbproject");
 //        if (!mk.exists()) {

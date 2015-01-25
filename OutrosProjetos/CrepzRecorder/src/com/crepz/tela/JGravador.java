@@ -5,11 +5,9 @@ import com.crepz.config.Configuracaoes;
 import com.crepz.limpador.LimparWaves;
 import com.crepz.log.Log;
 import com.crepz.rec.SimpleAudioRecorder;
-import com.crepz.rec.mp3.MP3Bitrate;
-import com.crepz.rec.mp3.Mp3Encoder;
+import com.crepz.rec.ogg.OggEncoder;
 import com.crepz.utils.FileUtils;
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,9 +33,9 @@ public class JGravador extends javax.swing.JFrame {
     public JGravador(Carregador carregador) {
         initComponents();
         this.carregador = carregador;
-        Mp3Encoder.setTraceConverters(true);
-        Mp3Encoder.setBitrate(MP3Bitrate._64);
-        Mp3Encoder.setVBR(false);
+//        Mp3Encoder.setTraceConverters(true);
+//        Mp3Encoder.setBitrate(MP3Bitrate._64);
+//        Mp3Encoder.setVBR(false);
         try {
             setIconImage(ImageIO.read(getClass().getResource("/com/crepz/img/icon.png").toURI().toURL()));
         } catch (Exception ex) {
@@ -94,7 +92,8 @@ public class JGravador extends javax.swing.JFrame {
                             setTarefa("Salvando os dados...");
                             if (recorder != null) {
                                 recorder.stopRecording();
-                                Mp3Encoder.converter(ultimoArquivo.getAbsolutePath());
+//                                Mp3Encoder.converter(ultimoArquivo.getAbsolutePath());
+                                OggEncoder.converter(ultimoArquivo);
                                 if (!ultimoArquivo.delete()) {
                                     ultimoArquivo.deleteOnExit();
                                 }
@@ -116,7 +115,7 @@ public class JGravador extends javax.swing.JFrame {
                     gravarJa();
                     Log.info("Convertendo o arquivo: " + ultimoArquivo.getAbsolutePath());
                     setTarefa("Convertendo o arquivo: " + ultimoArquivo.getAbsolutePath());
-                    Mp3Encoder.converter(ultimoArquivo.getAbsolutePath());
+                    OggEncoder.converter(ultimoArquivo);
                     Log.info("Arquivo convertido: " + ultimoArquivo.getAbsolutePath());
 
                     setTarefa("");
@@ -130,7 +129,7 @@ public class JGravador extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(JGravador.this, "Erro na gravação... (sleep não está funcionando)", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }).start();
+        }, "Gerenciador de Gravacoes").start();
     }
 
     private void setTarefa(String tarefa) {

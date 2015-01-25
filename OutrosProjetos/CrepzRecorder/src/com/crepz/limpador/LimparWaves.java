@@ -73,7 +73,7 @@ public class LimparWaves {
                     }
                 }
             }
-        });
+        }, "Limpador de Waves");
         waveFileFilter = new FileFilter() {
             @Override
             public boolean accept(File pathname) {

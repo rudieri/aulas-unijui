@@ -70,6 +70,9 @@ public class Log {
         }
     }
 
+    public static void error(String error) {
+        error(error, null);
+    }
     public static void error(String error, Throwable tw) {
         if (nivelLog.getNivel() > NivelLog.ERROR.getNivel()) {
             return;
@@ -77,10 +80,12 @@ public class Log {
         try {
             try (FileWriter fileWriter = new FileWriter(filoLog, true)) {
                 write(error, fileWriter);
-                fileWriter.append(tw.getMessage()).append('\n');
-                StackTraceElement[] stackTrace = tw.getStackTrace();
-                for (int i = 0; i < stackTrace.length; i++) {
-                    write(stackTrace[i].toString(), fileWriter);
+                if (tw != null) {
+                    fileWriter.append(tw.getMessage()).append('\n');
+                    StackTraceElement[] stackTrace = tw.getStackTrace();
+                    for (StackTraceElement stackTraceItem : stackTrace) {
+                        write(stackTraceItem.toString(), fileWriter);
+                    }
                 }
             }
         } catch (IOException ex) {

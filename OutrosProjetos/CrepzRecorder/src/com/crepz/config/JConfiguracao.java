@@ -11,6 +11,7 @@
 package com.crepz.config;
 
 import com.crepz.config.constantes.TelaPadrao;
+import com.crepz.log.NivelLog;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 
@@ -54,6 +55,8 @@ public class JConfiguracao extends javax.swing.JDialog {
             jComboBoxTelaPadrao.setModel(new DefaultComboBoxModel(TelaPadrao.getNomesFakes()));
             jComboBoxTelaPadrao.setSelectedIndex(Configuracaoes.getEnum(Configuracaoes.CONF_TELA_PADRAO).ordinal());
             jTextField_Pasta1.setText(Configuracaoes.getString(Configuracaoes.CONF_PASTA_SALVAR));
+            jComboBoxNivelLog.setModel(new DefaultComboBoxModel(NivelLog.getNomesFakes()));
+            jComboBoxNivelLog.setSelectedIndex(Configuracaoes.getEnum(Configuracaoes.CONF_NIVEL_LOG).ordinal());
             //java -classpath /home/rudieri/NetBeansProjects/CrepzPlayer/build/classes/ com.hotkey.linux.DisparaComando --prev
 //            String local = getClass().getResource("/").getFile();
 //            jTextFieldPlay.setText("java -classpath " + local + " com.hotkey.linux.DisparaComando --play");
@@ -91,6 +94,9 @@ public class JConfiguracao extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jSpinnerTempo = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBoxNivelLog = new javax.swing.JComboBox();
         jPanel11 = new javax.swing.JPanel();
         jButtonSalvar = new javax.swing.JButton();
         jButtonFechar = new javax.swing.JButton();
@@ -124,6 +130,7 @@ public class JConfiguracao extends javax.swing.JDialog {
         jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel9.setText("Tela Inicial ao Abrir o Crepz:");
+        jLabel9.setPreferredSize(new java.awt.Dimension(165, 13));
         jPanel15.add(jLabel9);
 
         jComboBoxTelaPadrao.setToolTipText("O que acontece quando eu clido 2 vezes numa música...");
@@ -131,13 +138,13 @@ public class JConfiguracao extends javax.swing.JDialog {
 
         jPanel1.add(jPanel15);
 
-        jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel20.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel11.setText("Pasta para salvar Arquivos:");
-        jLabel11.setPreferredSize(new java.awt.Dimension(175, 18));
+        jLabel11.setPreferredSize(new java.awt.Dimension(165, 18));
         jPanel20.add(jLabel11);
 
-        jTextField_Pasta1.setPreferredSize(new java.awt.Dimension(250, 30));
+        jTextField_Pasta1.setPreferredSize(new java.awt.Dimension(400, 30));
         jPanel20.add(jTextField_Pasta1);
 
         jButtonProcurar.setMnemonic('P');
@@ -167,6 +174,17 @@ public class JConfiguracao extends javax.swing.JDialog {
         jPanel2.add(jLabel3);
 
         jPanel1.add(jPanel2);
+
+        jPanel17.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel10.setText("Nível Mínimo do Log:");
+        jLabel10.setPreferredSize(new java.awt.Dimension(165, 13));
+        jPanel17.add(jLabel10);
+
+        jComboBoxNivelLog.setToolTipText("O que acontece quando eu clido 2 vezes numa música...");
+        jPanel17.add(jComboBoxNivelLog);
+
+        jPanel1.add(jPanel17);
 
         jPanel_Geral.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -198,8 +216,8 @@ public class JConfiguracao extends javax.swing.JDialog {
 
         getContentPane().add(jPanel11, java.awt.BorderLayout.PAGE_END);
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-706)/2, (screenSize.height-330)/2, 706, 330);
+        setSize(new java.awt.Dimension(706, 330));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -211,6 +229,7 @@ public class JConfiguracao extends javax.swing.JDialog {
         Configuracaoes.set(Configuracaoes.CONF_TELA_PADRAO, TelaPadrao.values()[jComboBoxTelaPadrao.getSelectedIndex()]);
         Configuracaoes.set(Configuracaoes.CONF_PASTA_SALVAR, jTextField_Pasta1.getText());
         Configuracaoes.set(Configuracaoes.CONF_TEMPO_SALVAR_ARQUIVOS, (Integer)jSpinnerTempo.getValue());
+        Configuracaoes.set(Configuracaoes.CONF_NIVEL_LOG, NivelLog.values()[jComboBoxNivelLog.getSelectedIndex()]);
         dispose();
 //        setDadosBanco();
 
@@ -233,8 +252,10 @@ public class JConfiguracao extends javax.swing.JDialog {
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonProcurar;
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JComboBox jComboBoxNivelLog;
     private javax.swing.JComboBox jComboBoxTelaPadrao;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -243,6 +264,7 @@ public class JConfiguracao extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel4;
